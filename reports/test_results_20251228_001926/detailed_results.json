@@ -1,0 +1,5894 @@
+[
+  {
+    "question_id": 1,
+    "question": "Türkiye Cumhuriyeti hangi niteliklere sahip bir devlettir?",
+    "category": "unknown",
+    "difficulty": "kolay",
+    "source": "T.C. Anayasası",
+    "generated_answer": "BÖLÜM 1 - AÇIKLAMA\nTürkiye Cumhuriyeti, toplumun huzurunu, milli dayanışmayı ve adalet anlayışını esas alır. İnsan haklarına saygılıdır ve Atatürk milliyetçiliğine bağlıdır. Anayasada belirtilen temel ilkelere dayanarak demokratik, laik ve sosyal bir hukuk devleti olma niteliği taşır.\n\nBÖLÜM 2 - HUKUKİ DAYANAKLAR\nT.C. Anayasası, Madde 2",
+    "expected_answer": "Türkiye Cumhuriyeti; Atatürk milliyetçiliğine bağlı, demokratik, laik ve sosyal bir hukuk devletidir.",
+    "retrieved_articles": [
+      "Madde 2",
+      "Madde 4",
+      "Giriş",
+      "Giriş",
+      "Madde 70",
+      "Madde 12",
+      "Giriş",
+      "Madde 6",
+      "Madde 3"
+    ],
+    "total_latency_ms": 1759.6044540405273,
+    "heuristic_metrics": [
+      {
+        "name": "keyword_coverage",
+        "score": 1.0,
+        "weight": 1.0,
+        "details": {
+          "must_include_found": 5,
+          "must_include_total": 5,
+          "should_include_found": 0,
+          "should_include_total": 0,
+          "missing_must": []
+        }
+      },
+      {
+        "name": "citation_accuracy",
+        "score": 1.0,
+        "weight": 1.5,
+        "details": {
+          "expected": "Madde 2",
+          "expected_numbers": [
+            "2"
+          ],
+          "retrieved": [
+            "Madde 2",
+            "Madde 4",
+            "Giriş"
+          ],
+          "source": "T.C. Anayasası",
+          "exact_match": true,
+          "number_match": false,
+          "partial_match": false
+        }
+      },
+      {
+        "name": "response_quality",
+        "score": 0.8133333333333332,
+        "weight": 0.5,
+        "details": {
+          "word_count": 46,
+          "question_type": "unknown",
+          "expected_range": "50-300",
+          "has_structure": true,
+          "is_uncertain": false,
+          "length_score": 0.73,
+          "structure_score": 1.0
+        }
+      },
+      {
+        "name": "answer_consistency",
+        "score": 1.0,
+        "weight": 0.8,
+        "details": {
+          "expected_numbers": {},
+          "generated_numbers": {
+            "articles": [
+              "1",
+              "2",
+              "2"
+            ],
+            "plain_numbers": [
+              "1",
+              "2",
+              "2"
+            ]
+          },
+          "matches": 0,
+          "total_checks": 0,
+          "inconsistencies": []
+        }
+      },
+      {
+        "name": "latency",
+        "score": 1.0,
+        "weight": 0.3,
+        "details": {
+          "latency_ms": 1759.6044540405273,
+          "threshold_ms": 5000
+        }
+      }
+    ],
+    "judge_scores": {
+      "relevance": 0.8,
+      "faithfulness": 0.9,
+      "correctness": 0.9,
+      "completeness": 0.8,
+      "overall": 0.85
+    },
+    "judge_reasoning": "Cevap, genel olarak soruya uygun ve doğru bilgiler içermektedir. Ancak, belirli anahtar kelimelerin eksikliği ve daha fazla detayın olmaması nedeniyle tam puan verilememiştir.",
+    "strengths": [
+      "Cevapta Türkiye Cumhuriyeti'nin Atatürk milliyetçiliğine bağlı, demokratik, laik ve sosyal bir hukuk devleti olduğu vurgulanmış.",
+      "Cevap, T.C. Anayasası'ndan alınan doğru bilgilerle desteklenmiş."
+    ],
+    "weaknesses": [
+      "Cevapta belirli anahtar kelimeler eksik veya yetersiz kullanılmış.",
+      "Cevapta daha fazla detay ve açıklama olabilirdi."
+    ],
+    "passed": true,
+    "final_score": 0.8901,
+    "failure_reasons": []
+  },
+  {
+    "question_id": 5,
+    "question": "Anayasa'da düzenlenen eşitlik ilkesi neyi ifade eder?",
+    "category": "unknown",
+    "difficulty": "orta",
+    "source": "T.C. Anayasası",
+    "generated_answer": "BÖLÜM 1 - AÇIKLAMA\n\nAnayasa'da yer alan eşitlik ilkesi, herkesin dil, ırk, renk, cinsiyet, siyasi düşünce, felsefi inanç, din, mezhep ve benzeri nedenlerle ayrım yapılmaksızın kanun önünde eşit olduğunu belirtir. Kadınlar ve erkekler eşit haklara sahiptir ve devlet bu eşitliğin sağlanması için gerekli önlemleri almakla yükümlüdür. Çocuklar, yaşlılar, engelliler, şehit yakınları ve gaziler gibi gruplar için alınacak özel tedbirler, eşitlik ilkesine aykırı olarak değerlendirilmez. Devlet organları ve idare makamları, tüm işlemlerinde bu ilkeye uygun hareket etmek zorundadır.\n\nBÖLÜM 2 - HUKUKİ DAYANAKLAR\nT.C. Anayasası, Madde 10",
+    "expected_answer": "Herkes, dil, ırk, renk, cinsiyet, siyasi düşünce, felsefi inanç, din, mezhep ve benzeri sebeplerle ayırım gözetilmeksizin kanun önünde eşittir.",
+    "retrieved_articles": [
+      "Madde 10",
+      "Madde 41",
+      "Giriş",
+      "Madde 2",
+      "Madde 148",
+      "Madde 55",
+      "Geçici Madde 19",
+      "Madde 5",
+      "Madde 42"
+    ],
+    "total_latency_ms": 1994.5290088653564,
+    "heuristic_metrics": [
+      {
+        "name": "keyword_coverage",
+        "score": 0.7666666666666666,
+        "weight": 1.0,
+        "details": {
+          "must_include_found": 2,
+          "must_include_total": 3,
+          "should_include_found": 0,
+          "should_include_total": 0,
+          "missing_must": [
+            "ayırım yasağı"
+          ]
+        }
+      },
+      {
+        "name": "citation_accuracy",
+        "score": 1.0,
+        "weight": 1.5,
+        "details": {
+          "expected": "Madde 10",
+          "expected_numbers": [
+            "10"
+          ],
+          "retrieved": [
+            "Madde 10",
+            "Madde 41",
+            "Giriş"
+          ],
+          "source": "T.C. Anayasası",
+          "exact_match": true,
+          "number_match": false,
+          "partial_match": false
+        }
+      },
+      {
+        "name": "response_quality",
+        "score": 1.0,
+        "weight": 0.5,
+        "details": {
+          "word_count": 86,
+          "question_type": "unknown",
+          "expected_range": "50-300",
+          "has_structure": true,
+          "is_uncertain": false,
+          "length_score": 1.0,
+          "structure_score": 1.0
+        }
+      },
+      {
+        "name": "answer_consistency",
+        "score": 1.0,
+        "weight": 0.8,
+        "details": {
+          "expected_numbers": {},
+          "generated_numbers": {
+            "articles": [
+              "1",
+              "2",
+              "10"
+            ],
+            "plain_numbers": [
+              "1",
+              "2",
+              "10"
+            ]
+          },
+          "matches": 0,
+          "total_checks": 0,
+          "inconsistencies": []
+        }
+      },
+      {
+        "name": "latency",
+        "score": 1.0,
+        "weight": 0.3,
+        "details": {
+          "latency_ms": 1994.5290088653564,
+          "threshold_ms": 5000
+        }
+      }
+    ],
+    "judge_scores": {
+      "relevance": 0.8,
+      "faithfulness": 0.9,
+      "correctness": 0.9,
+      "completeness": 0.9,
+      "overall": 0.875
+    },
+    "judge_reasoning": "Cevap, soruda belirtilen eşitlik ilkesini doğru bir şekilde açıklıyor ve Anayasa maddesine uygun bilgiler içeriyor. Ancak bazı gereksiz detaylar bulunabilir ve daha öz olabilirdi. Genel olarak, cevap yeterli düzeyde ilgili, sadık, doğru ve tam.",
+    "strengths": [
+      "Cevapta eşitlik ilkesinin detaylı ve doğru bir şekilde açıklandı.",
+      "Anayasa maddesi referans alındı ve doğru bilgiler verildi."
+    ],
+    "weaknesses": [
+      "Cevapta gereksiz detaylar bulunabilir, daha öz olabilirdi."
+    ],
+    "passed": true,
+    "final_score": 0.8985000000000001,
+    "failure_reasons": []
+  },
+  {
+    "question_id": 16,
+    "question": "Çalışma hakkı ve ödevi nasıl tanımlanmıştır?",
+    "category": "unknown",
+    "difficulty": "kolay",
+    "source": "T.C. Anayasası",
+    "generated_answer": "BÖLÜM 1 - AÇIKLAMA\nÇalışma, herkesin hem hakkı hem de ödevidir. Devlet, çalışanların yaşam düzeyini yükseltmek ve çalışma hayatını iyileştirmek için çeşitli önlemler alır. Bu kapsamda çalışanları ve işsizleri korur, çalışmayı destekler, işsizliği azaltmaya yönelik uygun bir ekonomik ortam oluşturur ve çalışma barışını sağlamaya çalışır.\n\nBÖLÜM 2 - HUKUKİ DAYANAKLAR\nT.C. Anayasası, Madde 49",
+    "expected_answer": "Çalışma, herkesin hakkı ve ödevidir. Devlet, çalışanların hayat seviyesini yükseltmek ve işsizliği önlemek için gerekli tedbirleri alır.",
+    "retrieved_articles": [
+      "Madde 49",
+      "Madde 50",
+      "Madde 395",
+      "Madde 397",
+      "Madde 398",
+      "Madde 463",
+      "Madde 400",
+      "Madde 402",
+      "Madde 427"
+    ],
+    "total_latency_ms": 1327.8412818908691,
+    "heuristic_metrics": [
+      {
+        "name": "keyword_coverage",
+        "score": 0.7666666666666666,
+        "weight": 1.0,
+        "details": {
+          "must_include_found": 2,
+          "must_include_total": 3,
+          "should_include_found": 0,
+          "should_include_total": 0,
+          "missing_must": [
+            "devletin görevi"
+          ]
+        }
+      },
+      {
+        "name": "citation_accuracy",
+        "score": 1.0,
+        "weight": 1.5,
+        "details": {
+          "expected": "Madde 49",
+          "expected_numbers": [
+            "49"
+          ],
+          "retrieved": [
+            "Madde 49",
+            "Madde 50",
+            "Madde 395"
+          ],
+          "source": "T.C. Anayasası",
+          "exact_match": true,
+          "number_match": false,
+          "partial_match": false
+        }
+      },
+      {
+        "name": "response_quality",
+        "score": 1.0,
+        "weight": 0.5,
+        "details": {
+          "word_count": 54,
+          "question_type": "unknown",
+          "expected_range": "50-300",
+          "has_structure": true,
+          "is_uncertain": false,
+          "length_score": 1.0,
+          "structure_score": 1.0
+        }
+      },
+      {
+        "name": "answer_consistency",
+        "score": 1.0,
+        "weight": 0.8,
+        "details": {
+          "expected_numbers": {},
+          "generated_numbers": {
+            "articles": [
+              "1",
+              "2",
+              "49"
+            ],
+            "plain_numbers": [
+              "1",
+              "2",
+              "49"
+            ]
+          },
+          "matches": 0,
+          "total_checks": 0,
+          "inconsistencies": []
+        }
+      },
+      {
+        "name": "latency",
+        "score": 1.0,
+        "weight": 0.3,
+        "details": {
+          "latency_ms": 1327.8412818908691,
+          "threshold_ms": 5000
+        }
+      }
+    ],
+    "judge_scores": {
+      "relevance": 0.9,
+      "faithfulness": 0.8,
+      "correctness": 0.9,
+      "completeness": 0.9,
+      "overall": 0.875
+    },
+    "judge_reasoning": "Cevap, soruya oldukça ilgili ve doğru bilgiler içermektedir. Ancak, bazı gereksiz detaylar bulunmakta ve hukuki terminoloji daha vurgulu olabilirdi. Bu nedenle sadakat ve tamlık puanları düşük kalmıştır.",
+    "strengths": [
+      "Cevapta çalışma hakkı ve ödevi tanımı doğru ve detaylı bir şekilde verilmiş.",
+      "Cevap, T.C. Anayasası'ndan alıntı yaparak referans göstermiş."
+    ],
+    "weaknesses": [
+      "Cevapta gereksiz detaylar bulunmakta, daha öz olabilirdi.",
+      "Cevapta belirli hukuki terimlerin açıklanması veya vurgulanması eksik."
+    ],
+    "passed": true,
+    "final_score": 0.895,
+    "failure_reasons": []
+  },
+  {
+    "question_id": 21,
+    "question": "Cumhurbaşkanının görev süresi ne kadardır?",
+    "category": "unknown",
+    "difficulty": "kolay",
+    "source": "T.C. Anayasası",
+    "generated_answer": "BÖLÜM 1 - AÇIKLAMA\nCumhurbaşkanının görev süresi beş yıldır. Bir kişi en fazla iki defa Cumhurbaşkanı seçilebilir.\n\nBÖLÜM 2 - HUKUKİ DAYANAKLAR\nT.C. Anayasası, Madde 101",
+    "expected_answer": "Cumhurbaşkanının görev süresi beş yıldır. Bir kimse en fazla iki defa Cumhurbaşkanı seçilebilir.",
+    "retrieved_articles": [
+      "Madde 101",
+      "Madde 106",
+      "Madde 105",
+      "Madde 77",
+      "Geçici Madde 1",
+      "Geçici Madde 1",
+      "Madde 104",
+      "Madde 104",
+      "Madde 106"
+    ],
+    "total_latency_ms": 1023.2338905334473,
+    "heuristic_metrics": [
+      {
+        "name": "keyword_coverage",
+        "score": 0.3,
+        "weight": 1.0,
+        "details": {
+          "must_include_found": 0,
+          "must_include_total": 2,
+          "should_include_found": 0,
+          "should_include_total": 0,
+          "missing_must": [
+            "5 yıl",
+            "iki dönem"
+          ]
+        }
+      },
+      {
+        "name": "citation_accuracy",
+        "score": 1.0,
+        "weight": 1.5,
+        "details": {
+          "expected": "Madde 101",
+          "expected_numbers": [
+            "101"
+          ],
+          "retrieved": [
+            "Madde 101",
+            "Madde 106",
+            "Madde 105"
+          ],
+          "source": "T.C. Anayasası",
+          "exact_match": true,
+          "number_match": false,
+          "partial_match": false
+        }
+      },
+      {
+        "name": "response_quality",
+        "score": 0.58,
+        "weight": 0.5,
+        "details": {
+          "word_count": 26,
+          "question_type": "unknown",
+          "expected_range": "50-300",
+          "has_structure": true,
+          "is_uncertain": false,
+          "length_score": 0.4,
+          "structure_score": 1.0
+        }
+      },
+      {
+        "name": "answer_consistency",
+        "score": 1.0,
+        "weight": 0.8,
+        "details": {
+          "expected_numbers": {},
+          "generated_numbers": {
+            "articles": [
+              "1",
+              "2",
+              "101"
+            ],
+            "plain_numbers": [
+              "1",
+              "2",
+              "101"
+            ]
+          },
+          "matches": 0,
+          "total_checks": 0,
+          "inconsistencies": []
+        }
+      },
+      {
+        "name": "latency",
+        "score": 1.0,
+        "weight": 0.3,
+        "details": {
+          "latency_ms": 1023.2338905334473,
+          "threshold_ms": 5000
+        }
+      }
+    ],
+    "judge_scores": {
+      "relevance": 1.0,
+      "faithfulness": 1.0,
+      "correctness": 1.0,
+      "completeness": 1.0,
+      "overall": 1.0
+    },
+    "judge_reasoning": "Cevap, soruya doğrudan cevap veriyor, verilen referans cevapla hukuki olarak örtüşüyor, context'teki bilgilere sadık kalınmış ve beklenen anahtar bilgiler tamamen kapsanmış.",
+    "strengths": [
+      "Cevap doğru ve eksiksiz.",
+      "Hukuki terminoloji doğru kullanılmış."
+    ],
+    "weaknesses": [],
+    "passed": true,
+    "final_score": 0.9390999999999999,
+    "failure_reasons": []
+  },
+  {
+    "question_id": 24,
+    "question": "Olağanüstü hal ilan etme yetkisi kime aittir?",
+    "category": "unknown",
+    "difficulty": "orta",
+    "source": "T.C. Anayasası",
+    "generated_answer": "BÖLÜM 1 - AÇIKLAMA\nOlağanüstü hal ilan etme yetkisi Cumhurbaşkanı'na aittir. Cumhurbaşkanı, savaş, savaşı gerektirecek bir durumun ortaya çıkması, seferberlik, ayaklanma, vatana veya Cumhuriyete karşı güçlü bir kalkışma, ülkenin ve milletin bölünmezliğini içten veya dıştan tehlikeye düşüren şiddet hareketlerinin yaygınlaşması, anayasal düzeni veya temel hak ve hürriyetleri ortadan kaldırmaya yönelik yaygın şiddet hareketlerinin ortaya çıkması, şiddet olayları nedeniyle kamu düzeninin ciddi şekilde bozulması, doğal afet veya tehlikeli salgın hastalık ya da ağır ekonomik bunalımın ortaya çıkması hallerinde olağanüstü hal ilan edebilir.\n\nBÖLÜM 2 - HUKUKİ DAYANAKLAR\nT.C. Anayasası, Madde 119",
+    "expected_answer": "Cumhurbaşkanı; savaş, afet, tehlikeli salgın hastalık veya ağır ekonomik bunalım gibi hallerde yurdun tamamında veya bir bölgesinde, süresi altı ayı geçmemek üzere olağanüstü hal ilan edebilir.",
+    "retrieved_articles": [
+      "Madde 119",
+      "Madde 119",
+      "Madde 119",
+      "Geçici Madde 2",
+      "Madde 92",
+      "Madde 37",
+      "Madde 12",
+      "Madde 15",
+      "Madde 33"
+    ],
+    "total_latency_ms": 2016.54052734375,
+    "heuristic_metrics": [
+      {
+        "name": "keyword_coverage",
+        "score": 0.7666666666666666,
+        "weight": 1.0,
+        "details": {
+          "must_include_found": 2,
+          "must_include_total": 3,
+          "should_include_found": 0,
+          "should_include_total": 0,
+          "missing_must": [
+            "6 ay"
+          ]
+        }
+      },
+      {
+        "name": "citation_accuracy",
+        "score": 1.0,
+        "weight": 1.5,
+        "details": {
+          "expected": "Madde 119",
+          "expected_numbers": [
+            "119"
+          ],
+          "retrieved": [
+            "Madde 119",
+            "Madde 119",
+            "Madde 119"
+          ],
+          "source": "T.C. Anayasası",
+          "exact_match": true,
+          "number_match": false,
+          "partial_match": false
+        }
+      },
+      {
+        "name": "response_quality",
+        "score": 1.0,
+        "weight": 0.5,
+        "details": {
+          "word_count": 90,
+          "question_type": "unknown",
+          "expected_range": "50-300",
+          "has_structure": true,
+          "is_uncertain": false,
+          "length_score": 1.0,
+          "structure_score": 1.0
+        }
+      },
+      {
+        "name": "answer_consistency",
+        "score": 1.0,
+        "weight": 0.8,
+        "details": {
+          "expected_numbers": {},
+          "generated_numbers": {
+            "articles": [
+              "1",
+              "2",
+              "119"
+            ],
+            "plain_numbers": [
+              "1",
+              "2",
+              "119"
+            ]
+          },
+          "matches": 0,
+          "total_checks": 0,
+          "inconsistencies": []
+        }
+      },
+      {
+        "name": "latency",
+        "score": 1.0,
+        "weight": 0.3,
+        "details": {
+          "latency_ms": 2016.54052734375,
+          "threshold_ms": 5000
+        }
+      }
+    ],
+    "judge_scores": {
+      "relevance": 0.8,
+      "faithfulness": 0.9,
+      "correctness": 0.7,
+      "completeness": 0.8,
+      "overall": 0.8
+    },
+    "judge_reasoning": "Cevap genel olarak ilgili, sadık, doğru ve tam olmakla birlikte gereksiz detaylar ve geniş açıklamalar içermektedir. Daha odaklı ve öz bir şekilde verilmiş olsaydı puanı daha yüksek olabilirdi.",
+    "strengths": [
+      "Cevapta olağanüstü hal ilan etme yetkisinin Cumhurbaşkanı'na ait olduğu doğru şekilde belirtilmiş.",
+      "Cevapta referans alınan Anayasa maddesi (Madde 119) doğru bir şekilde verilmiş."
+    ],
+    "weaknesses": [
+      "Cevapta gereksiz detaylar bulunmakta, daha öz ve net olabilirdi.",
+      "Cevapta belirli durumlar için olağanüstü hal ilan edilme sebepleri geniş bir şekilde verilmiş, daha odaklı olabilirdi."
+    ],
+    "passed": true,
+    "final_score": 0.8494999999999999,
+    "failure_reasons": []
+  },
+  {
+    "question_id": 25,
+    "question": "Yargı yetkisi kime aittir?",
+    "category": "unknown",
+    "difficulty": "kolay",
+    "source": "T.C. Anayasası",
+    "generated_answer": "BÖLÜM 1 - AÇIKLAMA\n\nYasama yetkisi Türk Milleti adına Türkiye Büyük Millet Meclisi'ne aittir ve bu yetki devredilemez.\n\nBÖLÜM 2 - HUKUKİ DAYANAKLAR\nT.C. Anayasası, Madde 7",
+    "expected_answer": "Yargı yetkisi, Türk Milleti adına bağımsız ve tarafsız mahkemelerce kullanılır.",
+    "retrieved_articles": [
+      "Madde 138",
+      "Madde 7",
+      "Madde 135",
+      "Madde 158",
+      "Madde 37",
+      "Madde 159",
+      "Madde 159",
+      "Madde 54",
+      "Madde 154"
+    ],
+    "total_latency_ms": 1109.3015670776367,
+    "heuristic_metrics": [
+      {
+        "name": "keyword_coverage",
+        "score": 0.475,
+        "weight": 1.0,
+        "details": {
+          "must_include_found": 1,
+          "must_include_total": 4,
+          "should_include_found": 0,
+          "should_include_total": 0,
+          "missing_must": [
+            "yargı yetkisi",
+            "bağımsız mahkemeler",
+            "tarafsız"
+          ]
+        }
+      },
+      {
+        "name": "citation_accuracy",
+        "score": 0.0,
+        "weight": 1.5,
+        "details": {
+          "expected": "Madde 9",
+          "expected_numbers": [
+            "9"
+          ],
+          "retrieved": [
+            "Madde 138",
+            "Madde 7",
+            "Madde 135"
+          ],
+          "source": "T.C. Anayasası",
+          "exact_match": false,
+          "number_match": false,
+          "partial_match": false
+        }
+      },
+      {
+        "name": "response_quality",
+        "score": 0.5916666666666666,
+        "weight": 0.5,
+        "details": {
+          "word_count": 27,
+          "question_type": "unknown",
+          "expected_range": "50-300",
+          "has_structure": true,
+          "is_uncertain": false,
+          "length_score": 0.42,
+          "structure_score": 1.0
+        }
+      },
+      {
+        "name": "answer_consistency",
+        "score": 1.0,
+        "weight": 0.8,
+        "details": {
+          "expected_numbers": {},
+          "generated_numbers": {
+            "articles": [
+              "1",
+              "2",
+              "7"
+            ],
+            "plain_numbers": [
+              "1",
+              "2",
+              "7"
+            ]
+          },
+          "matches": 0,
+          "total_checks": 0,
+          "inconsistencies": []
+        }
+      },
+      {
+        "name": "latency",
+        "score": 1.0,
+        "weight": 0.3,
+        "details": {
+          "latency_ms": 1109.3015670776367,
+          "threshold_ms": 5000
+        }
+      }
+    ],
+    "judge_scores": {
+      "relevance": 0.2,
+      "faithfulness": 0.5,
+      "correctness": 0.3,
+      "completeness": 0.4,
+      "overall": 0.35
+    },
+    "judge_reasoning": "Cevap, yargı yetkisi yerine yasama yetkisi hakkında bilgi vermiş ve referans cevapla uyumsuzluk göstermiştir. Ayrıca, cevap beklenen anahtar bilgileri eksik kapsamıştır.",
+    "strengths": [
+      "Cevapta yasama yetkisinin Türk Milleti adına olduğu doğru şekilde belirtilmiş."
+    ],
+    "weaknesses": [
+      "Cevapta yargı yetkisi ile ilgili yanlış bilgi verilmiş.",
+      "Cevap referans cevapla uyumsuz."
+    ],
+    "passed": false,
+    "final_score": 0.393625,
+    "failure_reasons": [
+      "Düşük ilgililik (0.20)",
+      "Yanlış/eksik atıf (0.00)"
+    ]
+  },
+  {
+    "question_id": 31,
+    "question": "İş Kanunu hangi işyerleri ve çalışanlar için geçerlidir?",
+    "category": "unknown",
+    "difficulty": "kolay",
+    "source": "4857 Sayılı İş Kanunu",
+    "generated_answer": "BÖLÜM 1 - AÇIKLAMA\nİş Kanunu, genel olarak işverenler ile bir iş sözleşmesine dayanarak çalıştırılan işçilerin çalışma şartları ve ortamına ilişkin hak ve sorumlulukları düzenlemektedir. Kanun, bazı istisnalar dışında tüm işyerleri, bu işyerlerinin işverenleri, işveren vekilleri ve işçilere uygulanır, faaliyet konusuna bakılmaksızın. Ancak, deniz ve hava taşıma işleri, belirli sayıda işçi çalıştırılan tarım ve orman işleri, aile ekonomisi sınırları içindeki tarım işleri, ev hizmetleri, çıraklar, sporcular ve rehabilite edilenler gibi bazı iş ve iş ilişkileri bu kanunun kapsamı dışındadır.\n\nBÖLÜM 2 - HUKUKİ DAYANAKLAR\n4857 Sayılı İş Kanunu, Madde 1\n4857 Sayılı İş Kanunu, Madde 4",
+    "expected_answer": "İş Kanunu, istisnalar dışında kalan bütün işyerlerine, bu işyerlerinin işverenleri ile işveren vekillerine ve işçilerine faaliyet konularına bakılmaksızın uygulanır.",
+    "retrieved_articles": [
+      "Madde 1",
+      "Madde 6",
+      "Madde 2",
+      "Madde 113",
+      "Madde 2",
+      "Madde 38",
+      "Madde 3",
+      "Madde 4",
+      "Madde 8"
+    ],
+    "total_latency_ms": 2029.2878150939941,
+    "heuristic_metrics": [
+      {
+        "name": "keyword_coverage",
+        "score": 0.7666666666666666,
+        "weight": 1.0,
+        "details": {
+          "must_include_found": 2,
+          "must_include_total": 3,
+          "should_include_found": 0,
+          "should_include_total": 0,
+          "missing_must": [
+            "işyeri"
+          ]
+        }
+      },
+      {
+        "name": "citation_accuracy",
+        "score": 0.9,
+        "weight": 1.5,
+        "details": {
+          "expected": "Madde 1, 4",
+          "expected_numbers": [
+            "1"
+          ],
+          "retrieved": [
+            "Madde 1",
+            "Madde 6",
+            "Madde 2"
+          ],
+          "source": "4857 Sayılı İş Kanunu",
+          "exact_match": false,
+          "number_match": true,
+          "partial_match": false
+        }
+      },
+      {
+        "name": "response_quality",
+        "score": 1.0,
+        "weight": 0.5,
+        "details": {
+          "word_count": 96,
+          "question_type": "unknown",
+          "expected_range": "50-300",
+          "has_structure": true,
+          "is_uncertain": true,
+          "length_score": 1.0,
+          "structure_score": 1.0
+        }
+      },
+      {
+        "name": "answer_consistency",
+        "score": 1.0,
+        "weight": 0.8,
+        "details": {
+          "expected_numbers": {},
+          "generated_numbers": {
+            "articles": [
+              "1",
+              "2",
+              "4857",
+              "1",
+              "4857",
+              "4"
+            ],
+            "plain_numbers": [
+              "1",
+              "2",
+              "4857",
+              "1",
+              "4857",
+              "4"
+            ]
+          },
+          "matches": 0,
+          "total_checks": 0,
+          "inconsistencies": []
+        }
+      },
+      {
+        "name": "latency",
+        "score": 1.0,
+        "weight": 0.3,
+        "details": {
+          "latency_ms": 2029.2878150939941,
+          "threshold_ms": 5000
+        }
+      }
+    ],
+    "judge_scores": {
+      "relevance": 0.7,
+      "faithfulness": 0.8,
+      "correctness": 0.6,
+      "completeness": 0.7,
+      "overall": 0.7
+    },
+    "judge_reasoning": "Cevap genel olarak ilgili ve sadık kalmış ancak gereksiz detaylar ve belirli istisnaların ayrıntılı açıklamaları doğruluk ve tamlık puanını düşürmüş.",
+    "strengths": [
+      "Cevapta iş kanununun genel kapsamı ve istisnaları açıklanmış"
+    ],
+    "weaknesses": [
+      "Cevapta gereksiz detaylar var",
+      "Cevapta belirli istisnaların detaylı açıklaması yer alıyor"
+    ],
+    "passed": true,
+    "final_score": 0.7689999999999999,
+    "failure_reasons": []
+  },
+  {
+    "question_id": 34,
+    "question": "İş sözleşmesi ne demektir ve hangi unsurları içermelidir?",
+    "category": "unknown",
+    "difficulty": "orta",
+    "source": "4857 Sayılı İş Kanunu",
+    "generated_answer": "BÖLÜM 1 - AÇIKLAMA\n\nİş sözleşmesi, bir işçinin bağımlı olarak iş görmeyi ve bir işverenin de buna karşılık ücret ödemeyi üstlendiği sözleşmedir. Bu sözleşme, kanunda aksi belirtilmedikçe özel bir şekle tabi değildir. Ancak, süresi bir yıl veya daha fazla olan iş sözleşmelerinin yazılı olarak yapılması zorunludur. Yazılı sözleşme yapılmadığı durumlarda, işveren işçiye en geç iki ay içinde bazı temel bilgileri içeren yazılı bir belge vermekle yükümlüdür. Bu bilgiler arasında genel ve özel çalışma koşulları, günlük ya da haftalık çalışma süresi, temel ücret ve varsa ek ödemeler, ücret ödeme dönemi, sözleşmenin süresi (belirli ise) ve fesih halinde tarafların uyması gereken hükümler yer alır. Süresi bir ayı geçmeyen belirli süreli iş sözleşmelerinde bu yükümlülük geçerli değildir.\n\nToplu iş sözleşmesi ise, iş sözleşmesinin yapılması, içeriği ve sona ermesine ilişkin hususları düzenlemek üzere işçi sendikası ile işveren sendikası veya sendika üyesi olmayan işveren arasında yapılan sözleşmedir. Bu sözleşme, iş sözleşmesinin yapılması, içeriği ve sona ermesine ilişkin hükümleri içerebilir. Ayrıca, tarafların karşılıklı hak ve borçları ile sözleşmenin uygulanması, denetimi ve uyuşmazlıkların çözümü için başvurulacak yolları düzenleyen hükümleri de içerebilir.\n\nBÖLÜM 2 - HUKUKİ DAYANAKLAR\n* 4857 Sayılı İş Kanunu, Madde 8\n* 6356 Sayılı Sendikalar ve Toplu İş Sözleşmesi Kanunu, Madde 2\n* 6356 Sayılı Sendikalar ve Toplu İş Sözleşmesi Kanunu, Madde 33",
+    "expected_answer": "İş sözleşmesi, bir tarafın (işçi) bağımlı olarak iş görmeyi, diğer tarafın (işveren) da ücret ödemeyi üstlenmesinden oluşan sözleşmedir.",
+    "retrieved_articles": [
+      "Madde 33",
+      "Madde 8",
+      "Madde 2",
+      "Madde 48",
+      "Madde 9",
+      "Madde 34",
+      "Madde 1",
+      "Madde 1",
+      "Madde 2"
+    ],
+    "total_latency_ms": 3026.240587234497,
+    "heuristic_metrics": [
+      {
+        "name": "keyword_coverage",
+        "score": 0.825,
+        "weight": 1.0,
+        "details": {
+          "must_include_found": 3,
+          "must_include_total": 4,
+          "should_include_found": 0,
+          "should_include_total": 0,
+          "missing_must": [
+            "bağımlılık"
+          ]
+        }
+      },
+      {
+        "name": "citation_accuracy",
+        "score": 1.0,
+        "weight": 1.5,
+        "details": {
+          "expected": "Madde 8",
+          "expected_numbers": [
+            "8"
+          ],
+          "retrieved": [
+            "Madde 33",
+            "Madde 8",
+            "Madde 2"
+          ],
+          "source": "4857 Sayılı İş Kanunu",
+          "exact_match": true,
+          "number_match": false,
+          "partial_match": false
+        }
+      },
+      {
+        "name": "response_quality",
+        "score": 1.0,
+        "weight": 0.5,
+        "details": {
+          "word_count": 208,
+          "question_type": "unknown",
+          "expected_range": "50-300",
+          "has_structure": true,
+          "is_uncertain": false,
+          "length_score": 1.0,
+          "structure_score": 1.0
+        }
+      },
+      {
+        "name": "answer_consistency",
+        "score": 1.0,
+        "weight": 0.8,
+        "details": {
+          "expected_numbers": {},
+          "generated_numbers": {
+            "articles": [
+              "1",
+              "2",
+              "4857",
+              "8",
+              "6356",
+              "2",
+              "6356",
+              "33"
+            ],
+            "plain_numbers": [
+              "1",
+              "2",
+              "4857",
+              "8",
+              "6356",
+              "2",
+              "6356",
+              "33"
+            ]
+          },
+          "matches": 0,
+          "total_checks": 0,
+          "inconsistencies": []
+        }
+      },
+      {
+        "name": "latency",
+        "score": 0.8,
+        "weight": 0.3,
+        "details": {
+          "latency_ms": 3026.240587234497,
+          "threshold_ms": 5000
+        }
+      }
+    ],
+    "judge_scores": {
+      "relevance": 0.8,
+      "faithfulness": 0.9,
+      "correctness": 0.9,
+      "completeness": 0.8,
+      "overall": 0.85
+    },
+    "judge_reasoning": "Cevap genel olarak ilgili, sadık, doğru ve kısmen tam. Ancak gereksiz detaylar ve referans cevapla tam örtüşmeyen bilgiler puanı düşürdü.",
+    "strengths": [
+      "Cevap iş sözleşmesinin tanımını doğru veriyor.",
+      "Cevapta iş sözleşmesinin unsurlarına değiniliyor."
+    ],
+    "weaknesses": [
+      "Cevapta gereksiz detaylar bulunmakta.",
+      "Referans cevapla tam örtüşmeyen bilgiler var."
+    ],
+    "passed": true,
+    "final_score": 0.888,
+    "failure_reasons": []
+  },
+  {
+    "question_id": 35,
+    "question": "Belirli süreli ve belirsiz süreli iş sözleşmeleri arasındaki farklar nelerdir?",
+    "category": "unknown",
+    "difficulty": "orta",
+    "source": "4857 Sayılı İş Kanunu",
+    "generated_answer": "BÖLÜM 1 - AÇIKLAMA\nİş ilişkisinin bir süreye bağlı olarak yapılmadığı durumlarda, sözleşme belirsiz süreli olarak kabul edilir. Ancak, belirli süreli işlerde veya belli bir işin tamamlanması ya da belirli bir olgunun ortaya çıkması gibi objektif koşullara bağlı olarak işveren ve işçi arasında yazılı olarak yapılan sözleşme, belirli süreli iş sözleşmesidir. Belirli süreli iş sözleşmeleri, esaslı bir neden olmadıkça üst üste yapılamaz; aksi takdirde iş sözleşmesi başlangıçtan itibaren belirsiz süreli kabul edilir.\n\nBÖLÜM 2 - HUKUKİ DAYANAKLAR\n4857 Sayılı İş Kanunu Madde 11",
+    "expected_answer": "Belirli süreli iş sözleşmesi, belirli bir işin tamamlanması veya belirli bir süre için yapılır ve objektif koşul gerektirir. Belirsiz süreli sözleşmede süre belirlenmemiştir. Esaslı neden olmadıkça belirli süreli sözleşme zincirleme yapılamaz.",
+    "retrieved_articles": [
+      "Madde 11",
+      "Madde 12",
+      "Madde 10",
+      "Madde 9",
+      "Madde 430",
+      "Madde 431",
+      "Madde 5",
+      "Madde 17",
+      "Madde 432"
+    ],
+    "total_latency_ms": 1698.293685913086,
+    "heuristic_metrics": [
+      {
+        "name": "keyword_coverage",
+        "score": 0.825,
+        "weight": 1.0,
+        "details": {
+          "must_include_found": 3,
+          "must_include_total": 4,
+          "should_include_found": 0,
+          "should_include_total": 0,
+          "missing_must": [
+            "zincirleme"
+          ]
+        }
+      },
+      {
+        "name": "citation_accuracy",
+        "score": 1.0,
+        "weight": 1.5,
+        "details": {
+          "expected": "Madde 11",
+          "expected_numbers": [
+            "11"
+          ],
+          "retrieved": [
+            "Madde 11",
+            "Madde 12",
+            "Madde 10"
+          ],
+          "source": "4857 Sayılı İş Kanunu",
+          "exact_match": true,
+          "number_match": false,
+          "partial_match": false
+        }
+      },
+      {
+        "name": "response_quality",
+        "score": 1.0,
+        "weight": 0.5,
+        "details": {
+          "word_count": 83,
+          "question_type": "unknown",
+          "expected_range": "50-300",
+          "has_structure": true,
+          "is_uncertain": false,
+          "length_score": 1.0,
+          "structure_score": 1.0
+        }
+      },
+      {
+        "name": "answer_consistency",
+        "score": 1.0,
+        "weight": 0.8,
+        "details": {
+          "expected_numbers": {},
+          "generated_numbers": {
+            "articles": [
+              "1",
+              "2",
+              "4857",
+              "11"
+            ],
+            "plain_numbers": [
+              "1",
+              "2",
+              "4857",
+              "11"
+            ]
+          },
+          "matches": 0,
+          "total_checks": 0,
+          "inconsistencies": []
+        }
+      },
+      {
+        "name": "latency",
+        "score": 1.0,
+        "weight": 0.3,
+        "details": {
+          "latency_ms": 1698.293685913086,
+          "threshold_ms": 5000
+        }
+      }
+    ],
+    "judge_scores": {
+      "relevance": 0.9,
+      "faithfulness": 0.9,
+      "correctness": 0.9,
+      "completeness": 0.9,
+      "overall": 0.9
+    },
+    "judge_reasoning": "Cevap, soruya ve referans cevaba oldukça uygun. Hukuki terminoloji doğru kullanılmış ve önemli anahtar bilgiler kapsamlı bir şekilde açıklanmış. Ancak, bazı gereksiz detaylar bulunmakta ve cümlelerin daha açık olması gerekebilir.",
+    "strengths": [
+      "Cevap belirli süreli ve belirsiz süreli iş sözleşmeleri arasındaki farkları açıklayıcı ve detaylı.",
+      "Cevap, referans cevapla uyumlu ve hukuki terminolojiye uygun."
+    ],
+    "weaknesses": [
+      "Cevapta gereksiz detaylar bulunabilir.",
+      "Bazı cümlelerin daha açık ve anlaşılır olması gerekebilir."
+    ],
+    "passed": true,
+    "final_score": 0.9195,
+    "failure_reasons": []
+  },
+  {
+    "question_id": 38,
+    "question": "Deneme süreli iş sözleşmesi ne kadardır?",
+    "category": "unknown",
+    "difficulty": "kolay",
+    "source": "4857 Sayılı İş Kanunu",
+    "generated_answer": "BÖLÜM 1 - AÇIKLAMA\nİş sözleşmesine deneme kaydı konulduğunda, bu süre en fazla iki ay olabilir. Ancak, toplu iş sözleşmeleri ile bu süre dört aya kadar uzatılabilir. Pazarlamacıların deneme süresi de en fazla iki ay olabilir. Çıraklıkta ise deneme süresi, mesleğin özelliğine göre bir aydan az, üç aydan fazla olamaz ve bu süre ilgili bakanlıkça belirlenir.\n\nBÖLÜM 2 - HUKUKİ DAYANAKLAR\n* 4857 Sayılı İş Kanunu, Madde 15\n* 6098 Sayılı Türk Borçlar Kanunu, Madde 454\n* 3308 Sayılı Mesleki Eğitim Kanunu, Madde 14",
+    "expected_answer": "Deneme süresi en çok iki ay olabilir. Ancak toplu iş sözleşmeleriyle dört aya kadar uzatılabilir.",
+    "retrieved_articles": [
+      "Madde 468",
+      "Madde 433",
+      "Madde 15",
+      "Madde 9",
+      "Madde 454",
+      "Madde 10",
+      "Madde 14",
+      "Madde 432",
+      "Madde 53"
+    ],
+    "total_latency_ms": 1811.307668685913,
+    "heuristic_metrics": [
+      {
+        "name": "keyword_coverage",
+        "score": 1.0,
+        "weight": 1.0,
+        "details": {
+          "must_include_found": 3,
+          "must_include_total": 3,
+          "should_include_found": 0,
+          "should_include_total": 0,
+          "missing_must": []
+        }
+      },
+      {
+        "name": "citation_accuracy",
+        "score": 1.0,
+        "weight": 1.5,
+        "details": {
+          "expected": "Madde 15",
+          "expected_numbers": [
+            "15"
+          ],
+          "retrieved": [
+            "Madde 468",
+            "Madde 433",
+            "Madde 15"
+          ],
+          "source": "4857 Sayılı İş Kanunu",
+          "exact_match": true,
+          "number_match": false,
+          "partial_match": false
+        }
+      },
+      {
+        "name": "response_quality",
+        "score": 1.0,
+        "weight": 0.5,
+        "details": {
+          "word_count": 84,
+          "question_type": "unknown",
+          "expected_range": "50-300",
+          "has_structure": true,
+          "is_uncertain": false,
+          "length_score": 1.0,
+          "structure_score": 1.0
+        }
+      },
+      {
+        "name": "answer_consistency",
+        "score": 1.0,
+        "weight": 0.8,
+        "details": {
+          "expected_numbers": {},
+          "generated_numbers": {
+            "articles": [
+              "1",
+              "2",
+              "4857",
+              "15",
+              "6098",
+              "454",
+              "3308",
+              "14"
+            ],
+            "plain_numbers": [
+              "1",
+              "2",
+              "4857",
+              "15",
+              "6098",
+              "454",
+              "3308",
+              "14"
+            ]
+          },
+          "matches": 0,
+          "total_checks": 0,
+          "inconsistencies": []
+        }
+      },
+      {
+        "name": "latency",
+        "score": 1.0,
+        "weight": 0.3,
+        "details": {
+          "latency_ms": 1811.307668685913,
+          "threshold_ms": 5000
+        }
+      }
+    ],
+    "judge_scores": {
+      "relevance": 0.8,
+      "faithfulness": 0.9,
+      "correctness": 0.9,
+      "completeness": 0.8,
+      "overall": 0.85
+    },
+    "judge_reasoning": "Cevap, deneme süreli iş sözleşmesinin süresi ve uzatılabilirliği konusunda doğru bilgiler içermektedir. Ancak, gereksiz detaylar ve çıraklık deneme süresi ile ilgili bilgiler cevabın odaklanmasını azaltmaktadır. Bu nedenle puanlama yapıldığında bu zayıf yönler dikkate alınmıştır.",
+    "strengths": [
+      "Cevapta deneme süresinin en fazla iki ay olabileceği ve toplu iş sözleşmeleriyle dört aya kadar uzatılabileceği doğru şekilde belirtilmiş.",
+      "Cevapta referans kanun maddesi doğru bir şekilde verilmiş."
+    ],
+    "weaknesses": [
+      "Cevapta gereksiz detaylar bulunmakta.",
+      "Cevapta çıraklık deneme süresi ile ilgili gereksiz bilgi bulunmakta."
+    ],
+    "passed": true,
+    "final_score": 0.8985,
+    "failure_reasons": []
+  },
+  {
+    "question_id": 40,
+    "question": "Haftalık azami çalışma süresi kaç saattir?",
+    "category": "unknown",
+    "difficulty": "kolay",
+    "source": "4857 Sayılı İş Kanunu",
+    "generated_answer": "BÖLÜM 1 - AÇIKLAMA\nGenel olarak, bir iş yerinde haftalık en fazla çalışma süresi 45 saattir. Eğer işveren ve işçi arasında farklı bir anlaşma yoksa, bu 45 saat haftanın çalışılan günlerine eşit olarak bölünür. Ancak, taraflar anlaşarak haftalık normal çalışma süresini farklı şekilde dağıtabilirler. Bu durumda, günlük çalışma 11 saati aşmamak koşuluyla, 2 ay içinde işçinin haftalık ortalama çalışma süresi yine de normal haftalık çalışma süresini aşmamalıdır. Toplu iş sözleşmeleri ile bu denkleştirme süresi 4 aya kadar, turizm sektöründe ise 6 aya kadar uzatılabilir.\n\nBÖLÜM 2 - HUKUKİ DAYANAKLAR\n4857 Sayılı İş Kanunu, Madde 63",
+    "expected_answer": "Genel bakımdan çalışma süresi haftada en çok kırk beş saattir.",
+    "retrieved_articles": [
+      "Madde 63",
+      "Madde 14",
+      "Madde 71",
+      "Madde 8",
+      "Madde 41",
+      "Madde 63",
+      "Madde 41",
+      "Madde 64",
+      "Madde 76"
+    ],
+    "total_latency_ms": 2311.0711574554443,
+    "heuristic_metrics": [
+      {
+        "name": "keyword_coverage",
+        "score": 1.0,
+        "weight": 1.0,
+        "details": {
+          "must_include_found": 2,
+          "must_include_total": 2,
+          "should_include_found": 0,
+          "should_include_total": 0,
+          "missing_must": []
+        }
+      },
+      {
+        "name": "citation_accuracy",
+        "score": 1.0,
+        "weight": 1.5,
+        "details": {
+          "expected": "Madde 63",
+          "expected_numbers": [
+            "63"
+          ],
+          "retrieved": [
+            "Madde 63",
+            "Madde 14",
+            "Madde 71"
+          ],
+          "source": "4857 Sayılı İş Kanunu",
+          "exact_match": true,
+          "number_match": false,
+          "partial_match": false
+        }
+      },
+      {
+        "name": "response_quality",
+        "score": 1.0,
+        "weight": 0.5,
+        "details": {
+          "word_count": 95,
+          "question_type": "unknown",
+          "expected_range": "50-300",
+          "has_structure": true,
+          "is_uncertain": false,
+          "length_score": 1.0,
+          "structure_score": 1.0
+        }
+      },
+      {
+        "name": "answer_consistency",
+        "score": 1.0,
+        "weight": 0.8,
+        "details": {
+          "expected_numbers": {},
+          "generated_numbers": {
+            "months": [
+              "2",
+              "4",
+              "6"
+            ],
+            "articles": [
+              "1",
+              "45",
+              "45",
+              "11",
+              "2",
+              "4",
+              "6",
+              "2",
+              "4857",
+              "63"
+            ],
+            "plain_numbers": [
+              "1",
+              "45",
+              "45",
+              "11",
+              "2",
+              "4",
+              "6",
+              "2",
+              "4857",
+              "63"
+            ]
+          },
+          "matches": 0,
+          "total_checks": 0,
+          "inconsistencies": []
+        }
+      },
+      {
+        "name": "latency",
+        "score": 1.0,
+        "weight": 0.3,
+        "details": {
+          "latency_ms": 2311.0711574554443,
+          "threshold_ms": 5000
+        }
+      }
+    ],
+    "judge_scores": {
+      "relevance": 0.7,
+      "faithfulness": 0.8,
+      "correctness": 0.9,
+      "completeness": 0.8,
+      "overall": 0.8
+    },
+    "judge_reasoning": "Cevap soruya doğrudan odaklanmış ve genel olarak referans cevapla uyumludur. Madde numarası ve anahtar bilgilerin doğru kullanımı takdir edilebilir. Ancak, gereksiz detaylara fazla yer verilmiş ve bazı cümleler karmaşık olabilir. Bu nedenle puanlama yapılmıştır.",
+    "strengths": [
+      "Doğru madde numarası kullanımı",
+      "Anahtar bilgilerin çoğunun doğru aktarımı"
+    ],
+    "weaknesses": [
+      "Gereksiz detaylara fazla yer verme",
+      "Bazı cümlelerin karmaşıklığı"
+    ],
+    "passed": true,
+    "final_score": 0.8599999999999999,
+    "failure_reasons": []
+  },
+  {
+    "question_id": 43,
+    "question": "Yıllık ücretli izin süresi nasıl hesaplanır?",
+    "category": "unknown",
+    "difficulty": "orta",
+    "source": "4857 Sayılı İş Kanunu",
+    "generated_answer": "BÖLÜM 1 - AÇIKLAMA\n\nYıllık ücretli izin süresi, işyerinde işe başlama tarihinden itibaren, deneme süresi de dahil olmak üzere en az bir yıl çalışmış olan işçiler için geçerlidir. Mevsimlik veya kampanya işlerinde çalışanlara bu hükümler uygulanmaz.\n\nİzin süreleri hizmet süresine göre belirlenir:\n\n*   Bir yıldan beş yıla kadar (beş yıl dahil) olanlar için 14 gün,\n*   Beş yıldan fazla on beş yıldan az olanlar için 20 gün,\n*   On beş yıl (dahil) ve daha fazla olanlar için 26 gün.\n\nYer altı işlerinde çalışan işçilerin izin süreleri 4 gün artırılır. On sekiz ve daha küçük yaştaki işçilerle elli ve daha yukarı yaştaki işçilerin izin süresi 20 günden az olamaz. İş sözleşmeleri ve toplu iş sözleşmeleri ile bu süreler artırılabilir.\n\nYıllık izne hak kazanmak için gerekli sürenin hesabında, işçinin aynı işverenin farklı işyerlerindeki çalışma süreleri birleştirilir. Bir yıllık süre içinde işçinin devamsızlığı olması durumunda, bu boşluklar hizmet süresine eklenerek izin hakkının elde edilmesi için gereken bir yıllık sürenin bitiş tarihi uzatılır.\n\nBÖLÜM 2 - HUKUKİ DAYANAKLAR\n\n*   4857 Sayılı İş Kanunu Madde 53\n*   4857 Sayılı İş Kanunu Madde 54",
+    "expected_answer": "Hizmet süresi 1-5 yıl olanlara 14 gün, 5-15 yıl olanlara 20 gün, 15 yıldan fazla olanlara 26 günden az olmamak üzere izin verilir.",
+    "retrieved_articles": [
+      "Madde 424",
+      "Madde 425",
+      "Madde 57",
+      "Madde 54",
+      "Madde 60",
+      "Madde 53",
+      "Madde 56",
+      "Madde 56",
+      "Madde 58"
+    ],
+    "total_latency_ms": 2865.5996322631836,
+    "heuristic_metrics": [
+      {
+        "name": "keyword_coverage",
+        "score": 1.0,
+        "weight": 1.0,
+        "details": {
+          "must_include_found": 4,
+          "must_include_total": 4,
+          "should_include_found": 0,
+          "should_include_total": 0,
+          "missing_must": []
+        }
+      },
+      {
+        "name": "citation_accuracy",
+        "score": 1.0,
+        "weight": 1.5,
+        "details": {
+          "expected": "Madde 53",
+          "expected_numbers": [
+            "53"
+          ],
+          "retrieved": [
+            "Madde 424",
+            "Madde 425",
+            "Madde 57"
+          ],
+          "source": "4857 Sayılı İş Kanunu",
+          "exact_match": true,
+          "number_match": false,
+          "partial_match": false
+        }
+      },
+      {
+        "name": "response_quality",
+        "score": 1.0,
+        "weight": 0.5,
+        "details": {
+          "word_count": 178,
+          "question_type": "unknown",
+          "expected_range": "50-300",
+          "has_structure": true,
+          "is_uncertain": false,
+          "length_score": 1.0,
+          "structure_score": 1.0
+        }
+      },
+      {
+        "name": "answer_consistency",
+        "score": 0.5,
+        "weight": 0.8,
+        "details": {
+          "expected_numbers": {
+            "days": [
+              "14",
+              "20",
+              "26"
+            ],
+            "years": [
+              "5",
+              "15",
+              "15"
+            ],
+            "articles": [
+              "1",
+              "5",
+              "14",
+              "5",
+              "15",
+              "20",
+              "15",
+              "26"
+            ],
+            "plain_numbers": [
+              "1",
+              "5",
+              "14",
+              "5",
+              "15",
+              "20",
+              "15",
+              "26"
+            ]
+          },
+          "generated_numbers": {
+            "days": [
+              "14",
+              "20",
+              "26",
+              "4",
+              "20"
+            ],
+            "articles": [
+              "1",
+              "14",
+              "20",
+              "26",
+              "4",
+              "20",
+              "2",
+              "4857",
+              "53",
+              "4857",
+              "54"
+            ],
+            "plain_numbers": [
+              "1",
+              "14",
+              "20",
+              "26",
+              "4",
+              "20",
+              "2",
+              "4857",
+              "53",
+              "4857",
+              "54"
+            ]
+          },
+          "matches": 3,
+          "total_checks": 6,
+          "inconsistencies": [
+            "years: expected '5'",
+            "years: expected '15'",
+            "years: expected '15'"
+          ]
+        }
+      },
+      {
+        "name": "latency",
+        "score": 0.8,
+        "weight": 0.3,
+        "details": {
+          "latency_ms": 2865.5996322631836,
+          "threshold_ms": 5000
+        }
+      }
+    ],
+    "judge_scores": {
+      "relevance": 0.9,
+      "faithfulness": 0.8,
+      "correctness": 0.85,
+      "completeness": 0.9,
+      "overall": 0.85
+    },
+    "judge_reasoning": "Cevap genel olarak ilgili, sadık, doğru ve tam olmakla birlikte gereksiz detaylar ve düzensizlikler içeriyor. Daha öz ve düzenli bir şekilde sunulması durumunda daha yüksek bir puan alabilir.",
+    "strengths": [
+      "Cevapta yıllık izin sürelerinin hizmet süresine göre nasıl belirlendiği açık ve doğru bir şekilde açıklanmış.",
+      "İş Kanunu'ndan alıntılar yapılarak cevap desteklenmiş."
+    ],
+    "weaknesses": [
+      "Cevapta gereksiz detaylar bulunmakta, daha öz ve net olabilirdi.",
+      "Cevapta belirli bir sıralama ve yapı eksikliği var, daha düzenli olabilirdi."
+    ],
+    "passed": true,
+    "final_score": 0.85525,
+    "failure_reasons": []
+  },
+  {
+    "question_id": 46,
+    "question": "Asgari ücret nasıl belirlenir ve kim tarafından tespit edilir?",
+    "category": "unknown",
+    "difficulty": "kolay",
+    "source": "4857 Sayılı İş Kanunu",
+    "generated_answer": "BÖLÜM 1 - AÇIKLAMA\nAsgari ücret, iş sözleşmesi ile çalışan işçilerin ekonomik ve sosyal durumlarının düzenlenmesi amacıyla belirlenen en düşük ücrettir. Bu ücretin sınırları, Çalışma ve Sosyal Güvenlik Bakanlığı tarafından kurulan Asgari Ücret Tespit Komisyonu aracılığıyla belirlenir. Komisyon, ücretlerin asgari sınırlarını en geç iki yılda bir tespit eder. Komisyonun kararları kesindir ve Resmi Gazete'de yayımlanarak yürürlüğe girer. Asgari ücretin tespitinde, çalışanların geçim şartları ve ülkenin ekonomik durumu göz önünde bulundurulur.\n\nBÖLÜM 2 - HUKUKİ DAYANAKLAR\n*   4857 Sayılı İş Kanunu, Madde 39\n*   T.C. Anayasası, Madde 55",
+    "expected_answer": "Asgari ücret, Asgari Ücret Tespit Komisyonu tarafından belirlenir.",
+    "retrieved_articles": [
+      "Madde 39",
+      "Madde 38",
+      "Madde 55",
+      "Geçici Madde 3",
+      "Geçici Madde 28",
+      "Geçici Madde 27",
+      "Madde 102",
+      "Geçici Madde 27",
+      "Ek Madde 3"
+    ],
+    "total_latency_ms": 1850.1057624816895,
+    "heuristic_metrics": [
+      {
+        "name": "keyword_coverage",
+        "score": 1.0,
+        "weight": 1.0,
+        "details": {
+          "must_include_found": 1,
+          "must_include_total": 1,
+          "should_include_found": 0,
+          "should_include_total": 0,
+          "missing_must": []
+        }
+      },
+      {
+        "name": "citation_accuracy",
+        "score": 1.0,
+        "weight": 1.5,
+        "details": {
+          "expected": "Madde 39",
+          "expected_numbers": [
+            "39"
+          ],
+          "retrieved": [
+            "Madde 39",
+            "Madde 38",
+            "Madde 55"
+          ],
+          "source": "4857 Sayılı İş Kanunu",
+          "exact_match": true,
+          "number_match": false,
+          "partial_match": false
+        }
+      },
+      {
+        "name": "response_quality",
+        "score": 1.0,
+        "weight": 0.5,
+        "details": {
+          "word_count": 87,
+          "question_type": "unknown",
+          "expected_range": "50-300",
+          "has_structure": true,
+          "is_uncertain": false,
+          "length_score": 1.0,
+          "structure_score": 1.0
+        }
+      },
+      {
+        "name": "answer_consistency",
+        "score": 1.0,
+        "weight": 0.8,
+        "details": {
+          "expected_numbers": {},
+          "generated_numbers": {
+            "articles": [
+              "1",
+              "2",
+              "4857",
+              "39",
+              "55"
+            ],
+            "plain_numbers": [
+              "1",
+              "2",
+              "4857",
+              "39",
+              "55"
+            ]
+          },
+          "matches": 0,
+          "total_checks": 0,
+          "inconsistencies": []
+        }
+      },
+      {
+        "name": "latency",
+        "score": 1.0,
+        "weight": 0.3,
+        "details": {
+          "latency_ms": 1850.1057624816895,
+          "threshold_ms": 5000
+        }
+      }
+    ],
+    "judge_scores": {
+      "relevance": 1.0,
+      "faithfulness": 1.0,
+      "correctness": 1.0,
+      "completeness": 1.0,
+      "overall": 1.0
+    },
+    "judge_reasoning": "Cevap, soruya doğrudan cevap veriyor ve referans cevapla uyumlu. Ayrıca tüm anahtar bilgileri eksiksiz bir şekilde içeriyor. Bu nedenle yüksek puan verilmiştir.",
+    "strengths": [
+      "Cevap soruya doğrudan cevap veriyor.",
+      "Cevap referans cevapla uyumlu.",
+      "Cevap tüm anahtar bilgileri içeriyor."
+    ],
+    "weaknesses": [],
+    "passed": true,
+    "final_score": 0.9999999999999999,
+    "failure_reasons": []
+  },
+  {
+    "question_id": 49,
+    "question": "İhbar süresi ne kadardır?",
+    "category": "unknown",
+    "difficulty": "orta",
+    "source": "4857 Sayılı İş Kanunu",
+    "generated_answer": "BÖLÜM 1 - AÇIKLAMA\nBelirsiz süreli iş sözleşmelerinde, iş sözleşmesinin feshedilmesi durumunda karşı tarafa önceden bildirim yapılması gerekmektedir. Bu bildirim süreleri, işçinin o iş yerinde çalıştığı süreye göre değişir. Eğer işçi altı aydan az bir süredir çalışıyorsa, bildirimden itibaren iki hafta sonra fesih geçerli olur. Altı aydan bir buçuk yıla kadar çalışmışsa, bu süre dört hafta; bir buçuk yıldan üç yıla kadar çalışmışsa altı hafta ve üç yıldan fazla çalışmışsa sekiz hafta olarak uygulanır. Bu süreler asgari olup, iş sözleşmesi ile artırılabilir. Bildirim şartına uymayan taraf, karşı tarafa bildirim süresine ilişkin ücret tutarında tazminat ödemekle yükümlüdür. Ancak, işveren bu ücreti peşin ödeyerek sözleşmeyi hemen feshedebilir.\n\nBÖLÜM 2 - HUKUKİ DAYANAKLAR\n4857 Sayılı İş Kanunu, Madde 17",
+    "expected_answer": "İş sözleşmeleri; 6 aydan az kıdem için 2 hafta, 6 ay-1.5 yıl arası için 4 hafta, 1.5-3 yıl arası için 6 hafta, 3 yıldan fazla kıdem için 8 hafta sonra feshedilmiş sayılır.",
+    "retrieved_articles": [
+      "Madde 17",
+      "Madde 15",
+      "Madde 29",
+      "Madde 119",
+      "Madde 25",
+      "Madde 22",
+      "Madde 4",
+      "Madde 28",
+      "Madde 330"
+    ],
+    "total_latency_ms": 2531.934976577759,
+    "heuristic_metrics": [
+      {
+        "name": "keyword_coverage",
+        "score": 0.72,
+        "weight": 1.0,
+        "details": {
+          "must_include_found": 3,
+          "must_include_total": 5,
+          "should_include_found": 0,
+          "should_include_total": 0,
+          "missing_must": [
+            "ihbar süresi",
+            "6 hafta"
+          ]
+        }
+      },
+      {
+        "name": "citation_accuracy",
+        "score": 1.0,
+        "weight": 1.5,
+        "details": {
+          "expected": "Madde 17",
+          "expected_numbers": [
+            "17"
+          ],
+          "retrieved": [
+            "Madde 17",
+            "Madde 15",
+            "Madde 29"
+          ],
+          "source": "4857 Sayılı İş Kanunu",
+          "exact_match": true,
+          "number_match": false,
+          "partial_match": false
+        }
+      },
+      {
+        "name": "response_quality",
+        "score": 1.0,
+        "weight": 0.5,
+        "details": {
+          "word_count": 116,
+          "question_type": "unknown",
+          "expected_range": "50-300",
+          "has_structure": true,
+          "is_uncertain": false,
+          "length_score": 1.0,
+          "structure_score": 1.0
+        }
+      },
+      {
+        "name": "answer_consistency",
+        "score": 0.0,
+        "weight": 0.8,
+        "details": {
+          "expected_numbers": {
+            "months": [
+              "6",
+              "6"
+            ],
+            "years": [
+              "5",
+              "3",
+              "3"
+            ],
+            "articles": [
+              "6",
+              "2",
+              "6",
+              "1",
+              "5",
+              "4",
+              "1",
+              "5",
+              "3",
+              "6",
+              "3",
+              "8"
+            ],
+            "plain_numbers": [
+              "6",
+              "2",
+              "6",
+              "1",
+              "5",
+              "4",
+              "1",
+              "5",
+              "3",
+              "6",
+              "3",
+              "8"
+            ]
+          },
+          "generated_numbers": {
+            "articles": [
+              "1",
+              "2",
+              "4857",
+              "17"
+            ],
+            "plain_numbers": [
+              "1",
+              "2",
+              "4857",
+              "17"
+            ]
+          },
+          "matches": 0,
+          "total_checks": 5,
+          "inconsistencies": [
+            "months: expected '6'",
+            "months: expected '6'",
+            "years: expected '5'",
+            "years: expected '3'",
+            "years: expected '3'"
+          ]
+        }
+      },
+      {
+        "name": "latency",
+        "score": 0.8,
+        "weight": 0.3,
+        "details": {
+          "latency_ms": 2531.934976577759,
+          "threshold_ms": 5000
+        }
+      }
+    ],
+    "judge_scores": {
+      "relevance": 0.8,
+      "faithfulness": 0.9,
+      "correctness": 0.9,
+      "completeness": 0.9,
+      "overall": 0.875
+    },
+    "judge_reasoning": "Cevap, soruda belirtilen ihbar süresinin nasıl hesaplandığına dair detaylı bilgiler içeriyor. Ancak, kıdem tazminatı yerine ihbar tazminatı üzerinde durulması ve bazı cümlelerde anlaşılması zor ifadeler kullanılması puanı düşürdü.",
+    "strengths": [
+      "Cevapta ihbar süresinin kıdem süresine göre nasıl belirlendiği açıkça açıklanmış.",
+      "İş Kanunu'ndaki ihbar süresi hükümlerine uygun detaylı açıklamalar yapılmış."
+    ],
+    "weaknesses": [
+      "Cevapta kıdem tazminatı yerine ihbar tazminatı üzerinde durulmuş.",
+      "Bazı cümlelerde anlaşılması zor ifadeler kullanılmış."
+    ],
+    "passed": false,
+    "final_score": 0.8057000000000001,
+    "failure_reasons": [
+      "Sayısal tutarsızlık (0.00)"
+    ]
+  },
+  {
+    "question_id": 50,
+    "question": "İşverenin iş sözleşmesini haklı nedenle derhal fesih hakkı hangi durumlarda doğar?",
+    "category": "unknown",
+    "difficulty": "zor",
+    "source": "4857 Sayılı İş Kanunu",
+    "generated_answer": "BÖLÜM 1 - AÇIKLAMA\n\nİşveren, bazı durumlarda iş sözleşmesini derhal feshetme hakkına sahiptir. Bu durumlar genel olarak İş Kanunu'nda belirtilmiştir. Örneğin, işçinin kendi kusuru veya düzensiz yaşamı nedeniyle hastalanması ve bu durumun belirli bir süre devamsızlığa yol açması veya işçinin hastalığının tedavi edilemez nitelikte olması ve işyerinde çalışmasının sakıncalı bulunması gibi sağlık sebepleri işverene fesih hakkı verebilir. Ayrıca, işçinin ahlak ve iyi niyet kurallarına aykırı davranışları da işverene haklı nedenle fesih imkanı tanır. Bunun yanı sıra, işyerinde bir haftadan fazla süreyle işin durmasını gerektirecek zorlayıcı sebeplerin ortaya çıkması halinde de işveren sözleşmeyi feshedebilir.\n\nBÖLÜM 2 - HUKUKİ DAYANAKLAR\n\n*   4857 Sayılı İş Kanunu, Madde 24 (Zorlayıcı sebepler)\n*   4857 Sayılı İş Kanunu, Madde 25\n*   6098 Sayılı Türk Borçlar Kanunu, Madde 435\n*   6098 Sayılı Türk Borçlar Kanunu, Madde 436",
+    "expected_answer": "İşveren; sağlık sebepleri, ahlak ve iyi niyet kurallarına uymayan haller (örn: devamsızlık, hırsızlık) ve zorlayıcı sebepler hallerinde sözleşmeyi derhal feshedebilir.",
+    "retrieved_articles": [
+      "Madde 6",
+      "Madde 24",
+      "Madde 436",
+      "Madde 435",
+      "Madde 23",
+      "Madde 20",
+      "Geçici Madde 10",
+      "Madde 25",
+      "Madde 19"
+    ],
+    "total_latency_ms": 2460.289239883423,
+    "heuristic_metrics": [
+      {
+        "name": "keyword_coverage",
+        "score": 0.825,
+        "weight": 1.0,
+        "details": {
+          "must_include_found": 3,
+          "must_include_total": 4,
+          "should_include_found": 0,
+          "should_include_total": 0,
+          "missing_must": [
+            "devamsızlık"
+          ]
+        }
+      },
+      {
+        "name": "citation_accuracy",
+        "score": 1.0,
+        "weight": 1.5,
+        "details": {
+          "expected": "Madde 25",
+          "expected_numbers": [
+            "25"
+          ],
+          "retrieved": [
+            "Madde 6",
+            "Madde 24",
+            "Madde 436"
+          ],
+          "source": "4857 Sayılı İş Kanunu",
+          "exact_match": true,
+          "number_match": false,
+          "partial_match": false
+        }
+      },
+      {
+        "name": "response_quality",
+        "score": 1.0,
+        "weight": 0.5,
+        "details": {
+          "word_count": 130,
+          "question_type": "unknown",
+          "expected_range": "50-300",
+          "has_structure": true,
+          "is_uncertain": false,
+          "length_score": 1.0,
+          "structure_score": 1.0
+        }
+      },
+      {
+        "name": "answer_consistency",
+        "score": 1.0,
+        "weight": 0.8,
+        "details": {
+          "expected_numbers": {},
+          "generated_numbers": {
+            "articles": [
+              "1",
+              "2",
+              "4857",
+              "24",
+              "4857",
+              "25",
+              "6098",
+              "435",
+              "6098",
+              "436"
+            ],
+            "plain_numbers": [
+              "1",
+              "2",
+              "4857",
+              "24",
+              "4857",
+              "25",
+              "6098",
+              "435",
+              "6098",
+              "436"
+            ]
+          },
+          "matches": 0,
+          "total_checks": 0,
+          "inconsistencies": []
+        }
+      },
+      {
+        "name": "latency",
+        "score": 1.0,
+        "weight": 0.3,
+        "details": {
+          "latency_ms": 2460.289239883423,
+          "threshold_ms": 5000
+        }
+      }
+    ],
+    "judge_scores": {
+      "relevance": 0.8,
+      "faithfulness": 0.9,
+      "correctness": 0.85,
+      "completeness": 0.9,
+      "overall": 0.85
+    },
+    "judge_reasoning": "Cevap, soruda belirtilen işverenin iş sözleşmesini haklı nedenle derhal fesih hakkının hangi durumlarda doğduğunu açıklayarak ilgili ve doğru bilgiler vermiştir. Ancak gereksiz detaylar ve belirli maddelerin genel olarak açıklanması eksiklik olarak değerlendirilmiştir. Genel olarak, cevap yeterli düzeyde doğru, tamlık ve sadakat göstermektedir.",
+    "strengths": [
+      "Cevapta işverenin haklı nedenle derhal fesih hakkının hangi durumlarda doğduğu açık ve net bir şekilde açıklanmıştır.",
+      "Cevapta işverenin sağlık sebepleri, ahlak ve iyi niyet kurallarına uymayan haller ve zorlayıcı sebepler gibi durumlarda sözleşmeyi derhal feshetme hakkına sahip olduğu doğru bir şekilde belirtilmiştir."
+    ],
+    "weaknesses": [
+      "Cevapta gereksiz detaylara yer verilmiş, daha öz ve net bir şekilde ifade edilebilirdi.",
+      "Cevapta belirli maddelerin doğrudan referans verilmeden genel olarak açıklanması eksiklik olarak değerlendirilebilir."
+    ],
+    "passed": true,
+    "final_score": 0.89325,
+    "failure_reasons": []
+  },
+  {
+    "question_id": 52,
+    "question": "Kıdem tazminatı alma şartları nelerdir?",
+    "category": "unknown",
+    "difficulty": "orta",
+    "source": "4857 Sayılı İş Kanunu",
+    "generated_answer": "BÖLÜM 1 - AÇIKLAMA\n\nKıdem tazminatı, iş sözleşmesinin belirli şartlarda sona ermesi halinde işçiye ödenen bir tazminattır. Bu şartlar, işçinin işten çıkarılması, emeklilik, askerlik gibi durumları içerebilir. Ayrıca, işçinin belirli bir süre aynı işyerinde çalışmış olması da gerekir.\n\nBÖLÜM 2 - HUKUKİ DAYANAKLAR\n1475 Sayılı İş Kanunu, Madde 14\n4857 Sayılı İş Kanunu, Madde 112\n6356 Sayılı Sendikalar ve Toplu İş Sözleşmesi Kanunu, Madde 23",
+    "expected_answer": "En az bir yıl çalışmış olmak ve iş sözleşmesinin haklı fesih, emeklilik, askerlik, evlilik (kadın işçi için) veya işveren tarafından haksız fesih nedenleriyle sona ermesi gerekir.",
+    "retrieved_articles": [
+      "Madde 112",
+      "Madde 112",
+      "Madde 112",
+      "Madde 112",
+      "Madde 23",
+      "Madde 14",
+      "Madde 14",
+      "Madde 112",
+      "Madde 112"
+    ],
+    "total_latency_ms": 1728.8439273834229,
+    "heuristic_metrics": [
+      {
+        "name": "keyword_coverage",
+        "score": 0.7666666666666666,
+        "weight": 1.0,
+        "details": {
+          "must_include_found": 2,
+          "must_include_total": 3,
+          "should_include_found": 0,
+          "should_include_total": 0,
+          "missing_must": [
+            "fesih nedeni"
+          ]
+        }
+      },
+      {
+        "name": "citation_accuracy",
+        "score": 0.0,
+        "weight": 1.5,
+        "details": {
+          "expected": "Madde 120",
+          "expected_numbers": [
+            "120"
+          ],
+          "retrieved": [
+            "Madde 112",
+            "Madde 112",
+            "Madde 112"
+          ],
+          "source": "4857 Sayılı İş Kanunu",
+          "exact_match": false,
+          "number_match": false,
+          "partial_match": false
+        }
+      },
+      {
+        "name": "response_quality",
+        "score": 1.0,
+        "weight": 0.5,
+        "details": {
+          "word_count": 65,
+          "question_type": "unknown",
+          "expected_range": "50-300",
+          "has_structure": true,
+          "is_uncertain": false,
+          "length_score": 1.0,
+          "structure_score": 1.0
+        }
+      },
+      {
+        "name": "answer_consistency",
+        "score": 1.0,
+        "weight": 0.8,
+        "details": {
+          "expected_numbers": {},
+          "generated_numbers": {
+            "articles": [
+              "1",
+              "2",
+              "1475",
+              "14",
+              "4857",
+              "112",
+              "6356",
+              "23"
+            ],
+            "plain_numbers": [
+              "1",
+              "2",
+              "1475",
+              "14",
+              "4857",
+              "112",
+              "6356",
+              "23"
+            ]
+          },
+          "matches": 0,
+          "total_checks": 0,
+          "inconsistencies": []
+        }
+      },
+      {
+        "name": "latency",
+        "score": 1.0,
+        "weight": 0.3,
+        "details": {
+          "latency_ms": 1728.8439273834229,
+          "threshold_ms": 5000
+        }
+      }
+    ],
+    "judge_scores": {
+      "relevance": 0.7,
+      "faithfulness": 0.8,
+      "correctness": 0.9,
+      "completeness": 0.8,
+      "overall": 0.8
+    },
+    "judge_reasoning": "Cevap genel olarak ilgili, sadık, doğru ve kapsamlı olsa da gereksiz detaylar ve anlaşılması zor cümleler içermektedir. Bu nedenle puanlama dengeli bir şekilde yapılmıştır.",
+    "strengths": [
+      "Cevap kıdem tazminatıyla ilgili genel bilgileri doğru şekilde açıklıyor.",
+      "Hukuki referanslar doğru bir şekilde verilmiş."
+    ],
+    "weaknesses": [
+      "Cevapta gereksiz detaylar bulunmakta.",
+      "Bazı cümlelerin anlaşılması zor."
+    ],
+    "passed": false,
+    "final_score": 0.7409999999999999,
+    "failure_reasons": [
+      "Yanlış/eksik atıf (0.00)"
+    ]
+  },
+  {
+    "question_id": 53,
+    "question": "Kıdem tazminatı miktarı nasıl hesaplanır?",
+    "category": "unknown",
+    "difficulty": "orta",
+    "source": "4857 Sayılı İş Kanunu",
+    "generated_answer": "BÖLÜM 1 - AÇIKLAMA\nKıdem tazminatının hesaplanması, işçinin son ücreti üzerinden yapılır. Eğer işçinin ücreti sabit değilse (örneğin, parça başı, akort, götürü veya yüzde usulü gibi), son bir yıl içinde aldığı ücretin o süre içinde çalıştığı günlere bölünmesiyle elde edilen ortalama ücret kıdem tazminatının hesabında dikkate alınır. Ancak, son bir yıl içinde işçi ücretine zam yapıldıysa, tazminata esas ücret, işçinin işten ayrılma tarihi ile zammın yapıldığı tarih arasındaki ücretin aynı süre içinde çalışılan günlere bölünmesiyle hesaplanır.\n\nBÖLÜM 2 - HUKUKİ DAYANAKLAR\n1475 Sayılı İş Kanunu, Madde 14",
+    "expected_answer": "Her geçen tam yıl için 30 günlük brüt ücret tutarında ödenir. Brüt ücrete süreklilik arz eden yan haklar (yol, yemek vb.) dahildir.",
+    "retrieved_articles": [
+      "Madde 112",
+      "Madde 112",
+      "Madde 112",
+      "Madde 112",
+      "Madde 14",
+      "Geçici Madde 6",
+      "Madde 14",
+      "Madde 112",
+      "Ek Madde 3"
+    ],
+    "total_latency_ms": 1720.4596996307373,
+    "heuristic_metrics": [
+      {
+        "name": "keyword_coverage",
+        "score": 0.5333333333333333,
+        "weight": 1.0,
+        "details": {
+          "must_include_found": 1,
+          "must_include_total": 3,
+          "should_include_found": 0,
+          "should_include_total": 0,
+          "missing_must": [
+            "30 gün",
+            "brüt ücret"
+          ]
+        }
+      },
+      {
+        "name": "citation_accuracy",
+        "score": 0.0,
+        "weight": 1.5,
+        "details": {
+          "expected": "Madde 120",
+          "expected_numbers": [
+            "120"
+          ],
+          "retrieved": [
+            "Madde 112",
+            "Madde 112",
+            "Madde 112"
+          ],
+          "source": "4857 Sayılı İş Kanunu",
+          "exact_match": false,
+          "number_match": false,
+          "partial_match": false
+        }
+      },
+      {
+        "name": "response_quality",
+        "score": 1.0,
+        "weight": 0.5,
+        "details": {
+          "word_count": 87,
+          "question_type": "unknown",
+          "expected_range": "50-300",
+          "has_structure": true,
+          "is_uncertain": false,
+          "length_score": 1.0,
+          "structure_score": 1.0
+        }
+      },
+      {
+        "name": "answer_consistency",
+        "score": 0.0,
+        "weight": 0.8,
+        "details": {
+          "expected_numbers": {
+            "days": [
+              "30"
+            ],
+            "articles": [
+              "30"
+            ],
+            "plain_numbers": [
+              "30"
+            ]
+          },
+          "generated_numbers": {
+            "articles": [
+              "1",
+              "2",
+              "1475",
+              "14"
+            ],
+            "plain_numbers": [
+              "1",
+              "2",
+              "1475",
+              "14"
+            ]
+          },
+          "matches": 0,
+          "total_checks": 1,
+          "inconsistencies": [
+            "days: expected '30'"
+          ]
+        }
+      },
+      {
+        "name": "latency",
+        "score": 1.0,
+        "weight": 0.3,
+        "details": {
+          "latency_ms": 1720.4596996307373,
+          "threshold_ms": 5000
+        }
+      }
+    ],
+    "judge_scores": {
+      "relevance": 0.2,
+      "faithfulness": 0.4,
+      "correctness": 0.3,
+      "completeness": 0.5,
+      "overall": 0.35
+    },
+    "judge_reasoning": "Cevap ilgili konuyu açıklamaya çalışmış ancak yanlış bilgiler ve hatalı referanslar içermektedir. Bu nedenle düşük puanlar verilmiştir.",
+    "strengths": [
+      "Cevapta kıdem tazminatının hesaplanmasına dair detaylı açıklamalar var."
+    ],
+    "weaknesses": [
+      "Cevapta yanlış bilgiler ve hatalı hukuki referanslar bulunmaktadır.",
+      "Cevapta belirtilen bilgiler referans cevapla uyumlu değil."
+    ],
+    "passed": false,
+    "final_score": 0.31849999999999995,
+    "failure_reasons": [
+      "Düşük ilgililik (0.20)",
+      "Context'e sadakatsiz (0.40)",
+      "Yanlış/eksik atıf (0.00)",
+      "Sayısal tutarsızlık (0.00)"
+    ]
+  },
+  {
+    "question_id": 54,
+    "question": "İş güvencesi kapsamında geçerli fesih nedenleri nelerdir?",
+    "category": "unknown",
+    "difficulty": "zor",
+    "source": "4857 Sayılı İş Kanunu",
+    "generated_answer": "BÖLÜM 1 - AÇIKLAMA\nOtuz veya daha fazla işçi çalıştıran işyerlerinde en az altı aylık kıdemi olan işçinin belirsiz süreli iş sözleşmesini fesheden işveren, işçinin yeterliliğinden veya davranışlarından ya da işletmenin, işyerinin veya işin gereklerinden kaynaklanan geçerli bir sebebe dayanmak zorundadır. Sendika üyeliği veya çalışma saatleri dışında veya işverenin rızası ile çalışma saatleri içinde sendikal faaliyetlere katılmak, işyeri sendika temsilciliği yapmak, mevzuattan veya sözleşmeden doğan haklarını takip veya yükümlülüklerini yerine getirmek için işveren aleyhine idari veya adli makamlara başvurmak veya bu hususta başlatılmış sürece katılmak, ırk, renk, cinsiyet, medeni hal, aile yükümlülükleri, hamilelik, doğum, din, siyasi görüş ve benzeri nedenler geçerli fesih sebebi oluşturmaz.\n\nBÖLÜM 2 - HUKUKİ DAYANAKLAR\n4857 Sayılı İş Kanunu, Madde 18",
+    "expected_answer": "30 veya daha fazla işçi çalıştıran işyerlerinde, en az 6 aylık kıdemi olan işçinin sözleşmesi ancak yeterliliğinden, davranışlarından veya işletmenin gereklerinden kaynaklanan geçerli bir sebeple feshedilebilir.",
+    "retrieved_articles": [
+      "Madde 25",
+      "Madde 25",
+      "Madde 435",
+      "Madde 6",
+      "Madde 19",
+      "Madde 18",
+      "Madde 436",
+      "Madde 20",
+      "Madde 25"
+    ],
+    "total_latency_ms": 2169.7421073913574,
+    "heuristic_metrics": [
+      {
+        "name": "keyword_coverage",
+        "score": 0.6499999999999999,
+        "weight": 1.0,
+        "details": {
+          "must_include_found": 2,
+          "must_include_total": 4,
+          "should_include_found": 0,
+          "should_include_total": 0,
+          "missing_must": [
+            "30 işçi",
+            "6 ay"
+          ]
+        }
+      },
+      {
+        "name": "citation_accuracy",
+        "score": 1.0,
+        "weight": 1.5,
+        "details": {
+          "expected": "Madde 18",
+          "expected_numbers": [
+            "18"
+          ],
+          "retrieved": [
+            "Madde 25",
+            "Madde 25",
+            "Madde 435"
+          ],
+          "source": "4857 Sayılı İş Kanunu",
+          "exact_match": true,
+          "number_match": false,
+          "partial_match": false
+        }
+      },
+      {
+        "name": "response_quality",
+        "score": 1.0,
+        "weight": 0.5,
+        "details": {
+          "word_count": 115,
+          "question_type": "unknown",
+          "expected_range": "50-300",
+          "has_structure": true,
+          "is_uncertain": false,
+          "length_score": 1.0,
+          "structure_score": 1.0
+        }
+      },
+      {
+        "name": "answer_consistency",
+        "score": 0.0,
+        "weight": 0.8,
+        "details": {
+          "expected_numbers": {
+            "months": [
+              "6"
+            ],
+            "articles": [
+              "30",
+              "6"
+            ],
+            "plain_numbers": [
+              "30",
+              "6"
+            ]
+          },
+          "generated_numbers": {
+            "articles": [
+              "1",
+              "2",
+              "4857",
+              "18"
+            ],
+            "plain_numbers": [
+              "1",
+              "2",
+              "4857",
+              "18"
+            ]
+          },
+          "matches": 0,
+          "total_checks": 1,
+          "inconsistencies": [
+            "months: expected '6'"
+          ]
+        }
+      },
+      {
+        "name": "latency",
+        "score": 1.0,
+        "weight": 0.3,
+        "details": {
+          "latency_ms": 2169.7421073913574,
+          "threshold_ms": 5000
+        }
+      }
+    ],
+    "judge_scores": {
+      "relevance": 0.7,
+      "faithfulness": 0.8,
+      "correctness": 0.9,
+      "completeness": 0.8,
+      "overall": 0.8
+    },
+    "judge_reasoning": "Cevap, soruda belirtilen iş güvencesi kapsamında geçerli fesih nedenlerini doğru bir şekilde açıklamıştır. Ancak, bazı gereksiz detaylar ve anlaşılması zor cümleler bulunduğundan dolayı puanı düşürülmüştür.",
+    "strengths": [
+      "Cevap iş güvencesi kapsamında geçerli fesih nedenlerini detaylı bir şekilde açıklamıştır.",
+      "Cevap, işçinin kıdemi, işletmenin gerekleri ve davranışları gibi önemli unsurlara vurgu yapmıştır."
+    ],
+    "weaknesses": [
+      "Cevapta gereksiz detaylar bulunmaktadır.",
+      "Bazı cümlelerin anlaşılması zor olabilir."
+    ],
+    "passed": false,
+    "final_score": 0.7489999999999999,
+    "failure_reasons": [
+      "Sayısal tutarsızlık (0.00)"
+    ]
+  },
+  {
+    "question_id": 62,
+    "question": "Analık halinde çalışma ve süt izni nasıl düzenlenmiştir?",
+    "category": "unknown",
+    "difficulty": "orta",
+    "source": "4857 Sayılı İş Kanunu",
+    "generated_answer": "BÖLÜM 1 - AÇIKLAMA\nKadın işçilerin doğumdan önce sekiz ve doğumdan sonra sekiz hafta olmak üzere toplam on altı haftalık süre için çalıştırılmamaları esastır. Çoğul gebelik halinde doğumdan önce çalıştırılmayacak sekiz haftalık süreye iki hafta eklenir. Ancak, sağlık durumu uygunsa ve doktorun onayı olursa kadın işçi isterse doğumdan önceki üç haftaya kadar işyerinde çalışabilir. Bu durumda, kadın işçinin çalıştığı süreler doğum sonrası sürelere eklenir. Kadın işçinin erken doğum yapması halinde ise doğumdan önce kullanamadığı çalıştırılmayacak süreler, doğum sonrası sürelere eklenerek kullandırılır. Doğumda veya doğum sonrasında annenin ölümü hâlinde, doğum sonrası kullanılamayan süreler babaya kullandırılır. Kadın işçilere bir yaşından küçük çocuklarını emzirmeleri için günde toplam bir buçuk saat süt izni verilir ve bu sürenin hangi saatler arasında ve kaça bölünerek kullanılacağını işçi kendisi belirler. Bu süre günlük çalışma süresinden sayılır.\n\nBÖLÜM 2 - HUKUKİ DAYANAKLAR\n4857 Sayılı İş Kanunu Madde 73\n4857 Sayılı İş Kanunu Madde 74",
+    "expected_answer": "Doğumdan önce 8 ve sonra 8 hafta olmak üzere toplam 16 hafta analık izni vardır. 1 yaşından küçük çocuk için günde 1.5 saat süt izni verilir.",
+    "retrieved_articles": [
+      "Madde 74",
+      "Madde 74",
+      "Madde 74",
+      "Madde 74",
+      "Madde 66",
+      "Madde 73",
+      "Ek Madde 5",
+      "Ek Madde 5",
+      "Madde 66"
+    ],
+    "total_latency_ms": 2337.6290798187256,
+    "heuristic_metrics": [
+      {
+        "name": "keyword_coverage",
+        "score": 0.475,
+        "weight": 1.0,
+        "details": {
+          "must_include_found": 1,
+          "must_include_total": 4,
+          "should_include_found": 0,
+          "should_include_total": 0,
+          "missing_must": [
+            "16 hafta",
+            "analık izni",
+            "1.5 saat"
+          ]
+        }
+      },
+      {
+        "name": "citation_accuracy",
+        "score": 1.0,
+        "weight": 1.5,
+        "details": {
+          "expected": "Madde 74",
+          "expected_numbers": [
+            "74"
+          ],
+          "retrieved": [
+            "Madde 74",
+            "Madde 74",
+            "Madde 74"
+          ],
+          "source": "4857 Sayılı İş Kanunu",
+          "exact_match": true,
+          "number_match": false,
+          "partial_match": false
+        }
+      },
+      {
+        "name": "response_quality",
+        "score": 1.0,
+        "weight": 0.5,
+        "details": {
+          "word_count": 146,
+          "question_type": "unknown",
+          "expected_range": "50-300",
+          "has_structure": true,
+          "is_uncertain": false,
+          "length_score": 1.0,
+          "structure_score": 1.0
+        }
+      },
+      {
+        "name": "answer_consistency",
+        "score": 1.0,
+        "weight": 0.8,
+        "details": {
+          "expected_numbers": {
+            "articles": [
+              "8",
+              "8",
+              "16",
+              "1",
+              "1",
+              "5"
+            ],
+            "plain_numbers": [
+              "8",
+              "8",
+              "16",
+              "1",
+              "1",
+              "5"
+            ]
+          },
+          "generated_numbers": {
+            "articles": [
+              "1",
+              "2",
+              "4857",
+              "73",
+              "4857",
+              "74"
+            ],
+            "plain_numbers": [
+              "1",
+              "2",
+              "4857",
+              "73",
+              "4857",
+              "74"
+            ]
+          },
+          "matches": 0,
+          "total_checks": 0,
+          "inconsistencies": []
+        }
+      },
+      {
+        "name": "latency",
+        "score": 1.0,
+        "weight": 0.3,
+        "details": {
+          "latency_ms": 2337.6290798187256,
+          "threshold_ms": 5000
+        }
+      }
+    ],
+    "judge_scores": {
+      "relevance": 0.8,
+      "faithfulness": 0.9,
+      "correctness": 0.9,
+      "completeness": 0.8,
+      "overall": 0.85
+    },
+    "judge_reasoning": "Cevap, genel olarak soruya uygun ve doğru bilgiler içermektedir. Ancak, belirli anahtar kelimelerin eksik olması ve gereksiz detaylara fazla yer verilmesi nedeniyle tam puan verilememiştir.",
+    "strengths": [
+      "Cevapta analık izni ve süt izni detaylı bir şekilde açıklanmıştır.",
+      "Cevap, referans cevapla uyumlu ve hukuki terminolojiye uygun olarak yazılmıştır."
+    ],
+    "weaknesses": [
+      "Cevapta belirli anahtar kelimeler eksik olabilir.",
+      "Bazı detaylar gereksiz detaylı anlatılmış olabilir."
+    ],
+    "passed": true,
+    "final_score": 0.867,
+    "failure_reasons": []
+  },
+  {
+    "question_id": 63,
+    "question": "Bir işçi 7 yıl 4 ay çalışmışsa kaç gün yıllık izin hakkı vardır?",
+    "category": "unknown",
+    "difficulty": "orta",
+    "source": "4857 Sayılı İş Kanunu",
+    "generated_answer": "BÖLÜM 1 - AÇIKLAMA\nİş Kanunu'na göre, bir işçinin yıllık ücretli izin süresi, hizmet süresine göre belirlenir. 7 yıl 4 ay hizmet süresi olan bir işçi, beş yıldan fazla on beş yıldan az hizmet süresi olanlar kategorisine girer. Bu durumda, işçinin yıllık ücretli izin süresi yirmi günden az olamaz. İş sözleşmesi veya toplu iş sözleşmesi ile bu süre artırılabilir.\n\nBÖLÜM 2 - HUKUKİ DAYANAKLAR\n4857 Sayılı İş Kanunu Madde 53",
+    "expected_answer": "7 yıl 4 ay çalışmış işçi, 5-15 yıl aralığında olduğu için yıllık 20 gün ücretli izin hakkına sahiptir.",
+    "retrieved_articles": [
+      "Madde 74",
+      "Madde 422",
+      "Madde 74",
+      "Madde 56",
+      "Madde 74",
+      "Madde 421",
+      "Madde 424",
+      "Madde 53",
+      "Madde 74"
+    ],
+    "total_latency_ms": 1800.661563873291,
+    "heuristic_metrics": [
+      {
+        "name": "keyword_coverage",
+        "score": 0.3,
+        "weight": 1.0,
+        "details": {
+          "must_include_found": 0,
+          "must_include_total": 1,
+          "should_include_found": 0,
+          "should_include_total": 0,
+          "missing_must": [
+            "20 gün"
+          ]
+        }
+      },
+      {
+        "name": "citation_accuracy",
+        "score": 1.0,
+        "weight": 1.5,
+        "details": {
+          "expected": "Madde 53",
+          "expected_numbers": [
+            "53"
+          ],
+          "retrieved": [
+            "Madde 74",
+            "Madde 422",
+            "Madde 74"
+          ],
+          "source": "4857 Sayılı İş Kanunu",
+          "exact_match": true,
+          "number_match": false,
+          "partial_match": false
+        }
+      },
+      {
+        "name": "response_quality",
+        "score": 1.0,
+        "weight": 0.5,
+        "details": {
+          "word_count": 70,
+          "question_type": "unknown",
+          "expected_range": "50-300",
+          "has_structure": true,
+          "is_uncertain": false,
+          "length_score": 1.0,
+          "structure_score": 1.0
+        }
+      },
+      {
+        "name": "answer_consistency",
+        "score": 0.5,
+        "weight": 0.8,
+        "details": {
+          "expected_numbers": {
+            "days": [
+              "20"
+            ],
+            "months": [
+              "4"
+            ],
+            "years": [
+              "7",
+              "15"
+            ],
+            "articles": [
+              "7",
+              "4",
+              "5",
+              "15",
+              "20"
+            ],
+            "plain_numbers": [
+              "7",
+              "4",
+              "5",
+              "15",
+              "20"
+            ]
+          },
+          "generated_numbers": {
+            "months": [
+              "4"
+            ],
+            "years": [
+              "7"
+            ],
+            "articles": [
+              "1",
+              "7",
+              "4",
+              "2",
+              "4857",
+              "53"
+            ],
+            "plain_numbers": [
+              "1",
+              "7",
+              "4",
+              "2",
+              "4857",
+              "53"
+            ]
+          },
+          "matches": 2,
+          "total_checks": 4,
+          "inconsistencies": [
+            "days: expected '20'",
+            "years: expected '15'"
+          ]
+        }
+      },
+      {
+        "name": "latency",
+        "score": 1.0,
+        "weight": 0.3,
+        "details": {
+          "latency_ms": 1800.661563873291,
+          "threshold_ms": 5000
+        }
+      }
+    ],
+    "judge_scores": {
+      "relevance": 0.8,
+      "faithfulness": 0.9,
+      "correctness": 0.9,
+      "completeness": 0.8,
+      "overall": 0.85
+    },
+    "judge_reasoning": "Cevap soruya ve verilen context'e genel olarak uygun ve doğru bilgiler içeriyor. Ancak, beklenen anahtar bilgilerin tamamının verilmemesi ve gereksiz detaylara yer verilmesi puanı düşürmüştür.",
+    "strengths": [
+      "Hukuki terminoloji doğru kullanılmış",
+      "Referans cevapla uyumlu bilgiler verilmiş"
+    ],
+    "weaknesses": [
+      "Anahtar bilgilerin tamamı verilmemiş",
+      "Bazı gereksiz bilgiler eklenmiş"
+    ],
+    "passed": true,
+    "final_score": 0.8115000000000001,
+    "failure_reasons": []
+  },
+  {
+    "question_id": 71,
+    "question": "Borç ilişkisinin tanımı ve unsurları nelerdir?",
+    "category": "unknown",
+    "difficulty": "kolay",
+    "source": "6098 Sayılı Türk Borçlar Kanunu",
+    "generated_answer": "Bu konuda elimdeki yasal metinlerde yeterli bilgi bulunmamaktadır.",
+    "expected_answer": "Borç ilişkisi, alacaklıya borçludan bir edimin ifasını isteme hakkı veren hukuki bağdır. Unsurları: alacaklı, borçlu ve edimdir.",
+    "retrieved_articles": [
+      "Madde 519",
+      "Madde 1",
+      "Madde 77",
+      "Madde 167",
+      "Madde 90",
+      "Madde 164",
+      "Madde 116",
+      "Madde 136",
+      "Madde 168"
+    ],
+    "total_latency_ms": 818.9218044281006,
+    "heuristic_metrics": [
+      {
+        "name": "keyword_coverage",
+        "score": 0.3,
+        "weight": 1.0,
+        "details": {
+          "must_include_found": 0,
+          "must_include_total": 4,
+          "should_include_found": 0,
+          "should_include_total": 0,
+          "missing_must": [
+            "borç ilişkisi",
+            "alacaklı",
+            "borçlu",
+            "edim"
+          ]
+        }
+      },
+      {
+        "name": "citation_accuracy",
+        "score": 1.0,
+        "weight": 1.5,
+        "details": {
+          "expected": "Madde 1",
+          "expected_numbers": [
+            "1"
+          ],
+          "retrieved": [
+            "Madde 519",
+            "Madde 1",
+            "Madde 77"
+          ],
+          "source": "6098 Sayılı Türk Borçlar Kanunu",
+          "exact_match": true,
+          "number_match": false,
+          "partial_match": false
+        }
+      },
+      {
+        "name": "response_quality",
+        "score": 0.43499999999999994,
+        "weight": 0.5,
+        "details": {
+          "word_count": 8,
+          "question_type": "unknown",
+          "expected_range": "50-300",
+          "has_structure": false,
+          "is_uncertain": false,
+          "length_score": 0.3,
+          "structure_score": 0.75
+        }
+      },
+      {
+        "name": "answer_consistency",
+        "score": 1.0,
+        "weight": 0.8,
+        "details": {
+          "expected_numbers": {},
+          "generated_numbers": {},
+          "matches": 0,
+          "total_checks": 0,
+          "inconsistencies": []
+        }
+      },
+      {
+        "name": "latency",
+        "score": 1.0,
+        "weight": 0.3,
+        "details": {
+          "latency_ms": 818.9218044281006,
+          "threshold_ms": 5000
+        }
+      }
+    ],
+    "judge_scores": {
+      "relevance": 0.2,
+      "faithfulness": 0.1,
+      "correctness": 0.0,
+      "completeness": 0.0,
+      "overall": 0.075
+    },
+    "judge_reasoning": "Cevap, soruya doğrudan yanıt vermemekte, verilen context'e dayanmamakta ve hukuki doğruluk ile tamlık açısından yetersiz kalmaktadır. Bu nedenle genel olarak düşük bir puan verilmiştir.",
+    "strengths": [
+      "N/A"
+    ],
+    "weaknesses": [
+      "Cevap soruya doğrudan yanıt vermemektedir.",
+      "Cevap verilen context'e dayanmamaktadır.",
+      "Cevapta hukuki doğruluk ve tamlık eksikliği bulunmaktadır."
+    ],
+    "passed": false,
+    "final_score": 0.28857499999999997,
+    "failure_reasons": [
+      "Düşük ilgililik (0.20)",
+      "Context'e sadakatsiz (0.10)"
+    ]
+  },
+  {
+    "question_id": 73,
+    "question": "Hata (yanılma) sebebiyle sözleşme nasıl iptal edilir?",
+    "category": "unknown",
+    "difficulty": "zor",
+    "source": "6098 Sayılı Türk Borçlar Kanunu",
+    "generated_answer": "BÖLÜM 1 - AÇIKLAMA\nSözleşme yapılırken bir konuda esaslı bir hataya düşerseniz, bu durum sözleşmeyle bağlı olmamanızı sağlar. Ancak, hatanızı dürüstlük kurallarına aykırı bir şekilde ileri süremezsiniz. Eğer karşı taraf, sözleşmenin sizin kastettiğiniz şekilde kurulmasına razı olduğunu belirtirse, sözleşme o şekilde kurulmuş sayılır. Eğer hatanızda kusurluysanız, sözleşmenin geçersizliğinden doğan zararı gidermekle yükümlü olabilirsiniz. Ancak, karşı taraf hatanızı biliyor veya bilmesi gerekiyorsa, tazminat talep edemezsiniz. Hatanın bir aracı veya araç tarafından yanlış iletilmesi durumunda da yanılma hükümleri uygulanır. Yanıldığınız konuyu sözleşmenin temeli saymanız ve bunun dürüstlük kurallarına uygun olması durumunda, hatanız esaslı sayılabilir; ancak bu durumun karşı tarafça da bilinebilir olması gerekir. Yanılma veya aldatma sebebiyle sözleşme yapan taraf, bu durumu öğrendiği andan itibaren bir yıl içinde sözleşmeyle bağlı olmadığını bildirmezse, sözleşmeyi onaylamış sayılır.\n\nBÖLÜM 2 - HUKUKİ DAYANAKLAR\n* 6098 Sayılı Türk Borçlar Kanunu, Madde 30\n* 6098 Sayılı Türk Borçlar Kanunu, Madde 31\n* 6098 Sayılı Türk Borçlar Kanunu, Madde 32\n* 6098 Sayılı Türk Borçlar Kanunu, Madde 33\n* 6098 Sayılı Türk Borçlar Kanunu, Madde 34\n* 6098 Sayılı Türk Borçlar Kanunu, Madde 35\n* 6098 Sayılı Türk Borçlar Kanunu, Madde 39",
+    "expected_answer": "Esaslı yanılmaya düşen taraf sözleşmeyle bağlı değildir. Yanılmanın öğrenilmesinden itibaren bir yıl içinde sözleşme iptal edilebilir.",
+    "retrieved_articles": [
+      "Madde 31",
+      "Madde 34",
+      "Madde 30",
+      "Madde 35",
+      "Madde 33",
+      "Madde 32",
+      "Madde 39",
+      "Madde 617",
+      "Madde 13"
+    ],
+    "total_latency_ms": 3052.716016769409,
+    "heuristic_metrics": [
+      {
+        "name": "keyword_coverage",
+        "score": 0.825,
+        "weight": 1.0,
+        "details": {
+          "must_include_found": 3,
+          "must_include_total": 4,
+          "should_include_found": 0,
+          "should_include_total": 0,
+          "missing_must": [
+            "iptal"
+          ]
+        }
+      },
+      {
+        "name": "citation_accuracy",
+        "score": 0.9,
+        "weight": 1.5,
+        "details": {
+          "expected": "Madde 30-39",
+          "expected_numbers": [
+            "30"
+          ],
+          "retrieved": [
+            "Madde 31",
+            "Madde 34",
+            "Madde 30"
+          ],
+          "source": "6098 Sayılı Türk Borçlar Kanunu",
+          "exact_match": false,
+          "number_match": true,
+          "partial_match": false
+        }
+      },
+      {
+        "name": "response_quality",
+        "score": 1.0,
+        "weight": 0.5,
+        "details": {
+          "word_count": 184,
+          "question_type": "unknown",
+          "expected_range": "50-300",
+          "has_structure": true,
+          "is_uncertain": false,
+          "length_score": 1.0,
+          "structure_score": 1.0
+        }
+      },
+      {
+        "name": "answer_consistency",
+        "score": 1.0,
+        "weight": 0.8,
+        "details": {
+          "expected_numbers": {},
+          "generated_numbers": {
+            "articles": [
+              "1",
+              "2",
+              "6098",
+              "30",
+              "6098",
+              "31",
+              "6098",
+              "32",
+              "6098",
+              "33",
+              "6098",
+              "34",
+              "6098",
+              "35",
+              "6098",
+              "39"
+            ],
+            "plain_numbers": [
+              "1",
+              "2",
+              "6098",
+              "30",
+              "6098",
+              "31",
+              "6098",
+              "32",
+              "6098",
+              "33",
+              "6098",
+              "34",
+              "6098",
+              "35",
+              "6098",
+              "39"
+            ]
+          },
+          "matches": 0,
+          "total_checks": 0,
+          "inconsistencies": []
+        }
+      },
+      {
+        "name": "latency",
+        "score": 0.8,
+        "weight": 0.3,
+        "details": {
+          "latency_ms": 3052.716016769409,
+          "threshold_ms": 5000
+        }
+      }
+    ],
+    "judge_scores": {
+      "relevance": 0.7,
+      "faithfulness": 0.8,
+      "correctness": 0.9,
+      "completeness": 0.8,
+      "overall": 0.8
+    },
+    "judge_reasoning": "Cevap soruya genel olarak uygun ve doğru bilgiler içeriyor. Ancak, gereksiz detaylar ve bazı anahtar bilgilerin eksik olması puanı düşürdü.",
+    "strengths": [
+      "Cevapta hukuki terminoloji doğru kullanılmış.",
+      "Referans cevapla uyumlu bilgiler verilmiş."
+    ],
+    "weaknesses": [
+      "Cevapta gereksiz detaylar bulunmakta.",
+      "Bazı anahtar bilgiler eksik."
+    ],
+    "passed": true,
+    "final_score": 0.839,
+    "failure_reasons": []
+  },
+  {
+    "question_id": 77,
+    "question": "Borcun ifa edilmemesinin sonuçları nelerdir?",
+    "category": "unknown",
+    "difficulty": "orta",
+    "source": "6098 Sayılı Türk Borçlar Kanunu",
+    "generated_answer": "BÖLÜM 1 - AÇIKLAMA\nBorcun hiç ya da sözleşmede belirtildiği gibi gereği gibi ifa edilmemesi durumunda, borçlu kusurlu olmadığını kanıtlayamadığı sürece, alacaklının bu durumdan kaynaklanan zararını tazmin etmekle yükümlüdür.\n\nBÖLÜM 2 - HUKUKİ DAYANAKLAR\n6098 Sayılı Türk Borçlar Kanunu, Madde 112",
+    "expected_answer": "Borçlu kusursuzluğunu ispat etmedikçe, borcun hiç veya gereği gibi ifa edilmemesinden doğan zararı gidermekle yükümlüdür (tazminat).",
+    "retrieved_articles": [
+      "Madde 136",
+      "Madde 83",
+      "Madde 131",
+      "Madde 85",
+      "Madde 112",
+      "Madde 96",
+      "Madde 137",
+      "Madde 558",
+      "Madde 213"
+    ],
+    "total_latency_ms": 1514.4665241241455,
+    "heuristic_metrics": [
+      {
+        "name": "keyword_coverage",
+        "score": 0.6499999999999999,
+        "weight": 1.0,
+        "details": {
+          "must_include_found": 2,
+          "must_include_total": 4,
+          "should_include_found": 0,
+          "should_include_total": 0,
+          "missing_must": [
+            "ifa etmeme",
+            "tazminat"
+          ]
+        }
+      },
+      {
+        "name": "citation_accuracy",
+        "score": 1.0,
+        "weight": 1.5,
+        "details": {
+          "expected": "Madde 112",
+          "expected_numbers": [
+            "112"
+          ],
+          "retrieved": [
+            "Madde 136",
+            "Madde 83",
+            "Madde 131"
+          ],
+          "source": "6098 Sayılı Türk Borçlar Kanunu",
+          "exact_match": true,
+          "number_match": false,
+          "partial_match": false
+        }
+      },
+      {
+        "name": "response_quality",
+        "score": 0.7549999999999999,
+        "weight": 0.5,
+        "details": {
+          "word_count": 41,
+          "question_type": "unknown",
+          "expected_range": "50-300",
+          "has_structure": true,
+          "is_uncertain": false,
+          "length_score": 0.65,
+          "structure_score": 1.0
+        }
+      },
+      {
+        "name": "answer_consistency",
+        "score": 1.0,
+        "weight": 0.8,
+        "details": {
+          "expected_numbers": {},
+          "generated_numbers": {
+            "articles": [
+              "1",
+              "2",
+              "6098",
+              "112"
+            ],
+            "plain_numbers": [
+              "1",
+              "2",
+              "6098",
+              "112"
+            ]
+          },
+          "matches": 0,
+          "total_checks": 0,
+          "inconsistencies": []
+        }
+      },
+      {
+        "name": "latency",
+        "score": 1.0,
+        "weight": 0.3,
+        "details": {
+          "latency_ms": 1514.4665241241455,
+          "threshold_ms": 5000
+        }
+      }
+    ],
+    "judge_scores": {
+      "relevance": 0.8,
+      "faithfulness": 0.9,
+      "correctness": 0.9,
+      "completeness": 0.8,
+      "overall": 0.85
+    },
+    "judge_reasoning": "Cevap genel olarak ilgili, sadık, doğru ve kısmen tam. Ancak, bazı gereksiz detaylar ve eksik anahtar bilgiler bulunduğundan puan düşürüldü.",
+    "strengths": [
+      "Cevap soruya doğrudan odaklanmış.",
+      "Hukuki terminoloji doğru kullanılmış."
+    ],
+    "weaknesses": [
+      "Cevapta bazı gereksiz detaylar bulunmakta.",
+      "Bazı anahtar bilgiler eksik."
+    ],
+    "passed": true,
+    "final_score": 0.866475,
+    "failure_reasons": []
+  },
+  {
+    "question_id": 78,
+    "question": "Temerrüt (gecikme) faizi nedir?",
+    "category": "unknown",
+    "difficulty": "orta",
+    "source": "6098 Sayılı Türk Borçlar Kanunu",
+    "generated_answer": "BÖLÜM 1 - AÇIKLAMA\n\nParayı ödeme borcunda temerrüde düşülmesi durumunda, alacaklı icra takibi başlatmışsa veya dava açmışsa, borçlu bu tarihten itibaren temerrüt faizi ödemekle yükümlüdür. Temerrüt faizine ayrıca temerrüt faizi yürütülemez. Sözleşmede temerrüt faizi kararlaştırılmamışsa, uygulanacak yıllık temerrüt faizi oranı, faiz borcunun doğduğu tarihte yürürlükte olan mevzuat hükümlerine göre belirlenir. Sözleşmede kararlaştırılacak yıllık temerrüt faizi oranı, kanunda belirtilen yıllık faiz oranının yüzde yüz fazlasını aşamaz. Eğer sözleşmede akdi faiz oranı kararlaştırılmış fakat temerrüt faizi kararlaştırılmamışsa ve yıllık akdi faiz oranı da kanunda belirtilen faiz oranından yüksekse, temerrüt faizi oranı olarak akdi faiz oranı geçerli olur.\n\nBÖLÜM 2 - HUKUKİ DAYANAKLAR\n- 6098 Sayılı Türk Borçlar Kanunu, Madde 120\n- 6098 Sayılı Türk Borçlar Kanunu, Madde 121",
+    "expected_answer": "Para borcunu ödemeyen borçlu, alacaklının ihtarıyla temerrüde düşer ve temerrüt faizi ödemekle yükümlü olur.",
+    "retrieved_articles": [
+      "Madde 119",
+      "Madde 121",
+      "Madde 120",
+      "Madde 253",
+      "Madde 122",
+      "Madde 125",
+      "Madde 271",
+      "Madde 389",
+      "Madde 118"
+    ],
+    "total_latency_ms": 2357.020139694214,
+    "heuristic_metrics": [
+      {
+        "name": "keyword_coverage",
+        "score": 0.5333333333333333,
+        "weight": 1.0,
+        "details": {
+          "must_include_found": 1,
+          "must_include_total": 3,
+          "should_include_found": 0,
+          "should_include_total": 0,
+          "missing_must": [
+            "gecikme",
+            "ihtar"
+          ]
+        }
+      },
+      {
+        "name": "citation_accuracy",
+        "score": 0.0,
+        "weight": 1.5,
+        "details": {
+          "expected": "Madde 117",
+          "expected_numbers": [
+            "117"
+          ],
+          "retrieved": [
+            "Madde 119",
+            "Madde 121",
+            "Madde 120"
+          ],
+          "source": "6098 Sayılı Türk Borçlar Kanunu",
+          "exact_match": false,
+          "number_match": false,
+          "partial_match": false
+        }
+      },
+      {
+        "name": "response_quality",
+        "score": 1.0,
+        "weight": 0.5,
+        "details": {
+          "word_count": 116,
+          "question_type": "unknown",
+          "expected_range": "50-300",
+          "has_structure": true,
+          "is_uncertain": false,
+          "length_score": 1.0,
+          "structure_score": 1.0
+        }
+      },
+      {
+        "name": "answer_consistency",
+        "score": 1.0,
+        "weight": 0.8,
+        "details": {
+          "expected_numbers": {},
+          "generated_numbers": {
+            "articles": [
+              "1",
+              "2",
+              "6098",
+              "120",
+              "6098",
+              "121"
+            ],
+            "plain_numbers": [
+              "1",
+              "2",
+              "6098",
+              "120",
+              "6098",
+              "121"
+            ]
+          },
+          "matches": 0,
+          "total_checks": 0,
+          "inconsistencies": []
+        }
+      },
+      {
+        "name": "latency",
+        "score": 1.0,
+        "weight": 0.3,
+        "details": {
+          "latency_ms": 2357.020139694214,
+          "threshold_ms": 5000
+        }
+      }
+    ],
+    "judge_scores": {
+      "relevance": 0.8,
+      "faithfulness": 0.9,
+      "correctness": 0.85,
+      "completeness": 0.9,
+      "overall": 0.85
+    },
+    "judge_reasoning": "Cevap soruya genel olarak uygun ve doğru bilgiler içermektedir. Ancak, gereksiz detaylar ve karmaşık cümleler puanı düşürmüştür.",
+    "strengths": [
+      "Cevap temerrüt faizi kavramını doğru açıklamıştır.",
+      "Cevap, Türk Borçlar Kanunu'na dayanmaktadır."
+    ],
+    "weaknesses": [
+      "Cevapta gereksiz detaylar bulunmaktadır.",
+      "Bazı cümleler karmaşıktır."
+    ],
+    "passed": false,
+    "final_score": 0.77075,
+    "failure_reasons": [
+      "Yanlış/eksik atıf (0.00)"
+    ]
+  },
+  {
+    "question_id": 81,
+    "question": "Zamanaşımı süreleri Borçlar Kanunu'nda nasıl düzenlenmiştir?",
+    "category": "unknown",
+    "difficulty": "orta",
+    "source": "6098 Sayılı Türk Borçlar Kanunu",
+    "generated_answer": "BÖLÜM 1 - AÇIKLAMA\nTürk Borçlar Kanunu'nda zamanaşımı sürelerinin hesaplanması, başlangıcı, durması, kesilmesi ve sonuçları detaylı bir şekilde düzenlenmiştir. Zamanaşımının başladığı gün hesaba katılmaz ve zamanaşımı süresi, son günün de hak kullanılmadan geçmesiyle tamamlanır. Asıl alacak zamanaşımına uğradığında, ona bağlı olan faiz ve diğer alacaklar da zamanaşımına uğrar.\n\nZamanaşımının başlaması, alacağın muaccel olmasıyla gerçekleşir; eğer alacağın muaccel olması bir bildirime bağlıysa, zamanaşımı bu bildirimin yapılabileceği günden itibaren işlemeye başlar.\n\nBelirli durumlarda zamanaşımı işlemeye başlamaz veya başlamışsa durur. Bu durumlar arasında velayet, vesayet, evlilik süreci, hizmet ilişkisi, borçlunun alacak üzerinde intifa hakkına sahip olması, alacağın Türk mahkemelerinde ileri sürülememesi ve alacaklı ile borçlu sıfatının aynı kişide birleşmesi gibi haller yer alır. Zamanaşımını durduran sebeplerin ortadan kalktığı günün bitiminde zamanaşımı yeniden işlemeye başlar.\n\nZamanaşımının kesilmesi durumunda, yeni bir zamanaşımı süresi başlar. Borç bir senetle kabul edilmişse veya mahkeme ya da hakem kararıyla kesinleşmişse, yeni zamanaşımı süresi her zaman on yıldır. Zamanaşımı, borçlunun borcu kabul etmesi, faiz ödemesi, kısmi ödeme yapması, rehin vermesi veya kefil göstermesi durumlarında kesilir. Ayrıca, alacaklının dava açması, hakeme başvurması, icra takibi başlatması veya iflas masasına başvurması da zamanaşımını keser.\n\nAlacağın bir rehinle güvenceye alınmış olması, zamanaşımının işlemesini engellemez; ancak alacaklının rehin hakkı saklı kalır.\n\nBÖLÜM 2 - HUKUKİ DAYANAKLAR\n* 6098 Sayılı Türk Borçlar Kanunu, Madde 149\n* 6098 Sayılı Türk Borçlar Kanunu, Madde 151\n* 6098 Sayılı Türk Borçlar Kanunu, Madde 152\n* 6098 Sayılı Türk Borçlar Kanunu, Madde 153\n* 6098 Sayılı Türk Borçlar Kanunu, Madde 154\n* 6098 Sayılı Türk Borçlar Kanunu, Madde 156\n* 6098 Sayılı Türk Borçlar Kanunu, Madde 159",
+    "expected_answer": "Genel zamanaşımı süresi 10 yıldır. Ancak kira, faiz, ücret gibi dönemsel edimlerde zamanaşımı 5 yıldır.",
+    "retrieved_articles": [
+      "Madde 151",
+      "Madde 389",
+      "Madde 152",
+      "Madde 156",
+      "Madde 153",
+      "Madde 147",
+      "Madde 149",
+      "Madde 159",
+      "Madde 154"
+    ],
+    "total_latency_ms": 4593.691110610962,
+    "heuristic_metrics": [
+      {
+        "name": "keyword_coverage",
+        "score": 0.7666666666666666,
+        "weight": 1.0,
+        "details": {
+          "must_include_found": 2,
+          "must_include_total": 3,
+          "should_include_found": 0,
+          "should_include_total": 0,
+          "missing_must": [
+            "10 yıl"
+          ]
+        }
+      },
+      {
+        "name": "citation_accuracy",
+        "score": 0.0,
+        "weight": 1.5,
+        "details": {
+          "expected": "Madde 146-147",
+          "expected_numbers": [
+            "146"
+          ],
+          "retrieved": [
+            "Madde 151",
+            "Madde 389",
+            "Madde 152"
+          ],
+          "source": "6098 Sayılı Türk Borçlar Kanunu",
+          "exact_match": false,
+          "number_match": false,
+          "partial_match": false
+        }
+      },
+      {
+        "name": "response_quality",
+        "score": 1.0,
+        "weight": 0.5,
+        "details": {
+          "word_count": 257,
+          "question_type": "unknown",
+          "expected_range": "50-300",
+          "has_structure": true,
+          "is_uncertain": false,
+          "length_score": 1.0,
+          "structure_score": 1.0
+        }
+      },
+      {
+        "name": "answer_consistency",
+        "score": 0.0,
+        "weight": 0.8,
+        "details": {
+          "expected_numbers": {
+            "years": [
+              "10",
+              "5"
+            ],
+            "articles": [
+              "10",
+              "5"
+            ],
+            "plain_numbers": [
+              "10",
+              "5"
+            ]
+          },
+          "generated_numbers": {
+            "articles": [
+              "1",
+              "2",
+              "6098",
+              "149",
+              "6098",
+              "151",
+              "6098",
+              "152",
+              "6098",
+              "153",
+              "6098",
+              "154",
+              "6098",
+              "156",
+              "6098",
+              "159"
+            ],
+            "plain_numbers": [
+              "1",
+              "2",
+              "6098",
+              "149",
+              "6098",
+              "151",
+              "6098",
+              "152",
+              "6098",
+              "153",
+              "6098",
+              "154",
+              "6098",
+              "156",
+              "6098",
+              "159"
+            ]
+          },
+          "matches": 0,
+          "total_checks": 2,
+          "inconsistencies": [
+            "years: expected '10'",
+            "years: expected '5'"
+          ]
+        }
+      },
+      {
+        "name": "latency",
+        "score": 0.8,
+        "weight": 0.3,
+        "details": {
+          "latency_ms": 4593.691110610962,
+          "threshold_ms": 5000
+        }
+      }
+    ],
+    "judge_scores": {
+      "relevance": 0.7,
+      "faithfulness": 0.8,
+      "correctness": 0.9,
+      "completeness": 0.8,
+      "overall": 0.8
+    },
+    "judge_reasoning": "Cevap soruya genel anlamda uygun ve detaylı açıklamalar içeriyor. Hukuki terminoloji doğru kullanılmış. Ancak beklenen anahtar bilgilerin tamamının yer almaması ve bazı gereksiz detayların bulunması puanı düşürdü.",
+    "strengths": [
+      "Detaylı açıklamalar",
+      "Hukuki terminoloji kullanımı"
+    ],
+    "weaknesses": [
+      "Anahtar bilgilerin eksikliği",
+      "Bazı gereksiz detaylar"
+    ],
+    "passed": false,
+    "final_score": 0.6509999999999999,
+    "failure_reasons": [
+      "Yanlış/eksik atıf (0.00)",
+      "Sayısal tutarsızlık (0.00)"
+    ]
+  },
+  {
+    "question_id": 82,
+    "question": "Haksız fiilden doğan borç nasıl tanımlanır?",
+    "category": "unknown",
+    "difficulty": "orta",
+    "source": "6098 Sayılı Türk Borçlar Kanunu",
+    "generated_answer": "BÖLÜM 1 - AÇIKLAMA\nHaksız fiilden doğan borç, bir kişinin kusurlu ve hukuka aykırı bir davranışıyla başka birine zarar vermesi sonucu ortaya çıkar. Bu durumda, zararı veren kişi, verdiği zararı gidermekle yükümlü olur. Hatta zarar verici bir davranış, herhangi bir hukuk kuralını ihlal etmese bile, ahlaka aykırı bir şekilde kasten yapılmışsa ve başkasına zarar vermişse, bu durumda da zararı veren kişi bu zararı gidermekle yükümlüdür.\n\nBÖLÜM 2 - HUKUKİ DAYANAKLAR\n6098 Sayılı Türk Borçlar Kanunu, Madde 49",
+    "expected_answer": "Kusurlu ve hukuka aykırı bir fiille başkasına zarar veren, bu zararı gidermekle yükümlüdür. Unsurları: fiil, zarar, illiyet bağı, kusur ve hukuka aykırılık.",
+    "retrieved_articles": [
+      "Madde 49",
+      "Madde 63",
+      "Madde 47",
+      "Madde 77",
+      "Madde 136",
+      "Madde 476",
+      "Madde 114",
+      "Madde 64",
+      "Madde 128"
+    ],
+    "total_latency_ms": 1700.7415294647217,
+    "heuristic_metrics": [
+      {
+        "name": "keyword_coverage",
+        "score": 0.825,
+        "weight": 1.0,
+        "details": {
+          "must_include_found": 3,
+          "must_include_total": 4,
+          "should_include_found": 0,
+          "should_include_total": 0,
+          "missing_must": [
+            "tazminat"
+          ]
+        }
+      },
+      {
+        "name": "citation_accuracy",
+        "score": 1.0,
+        "weight": 1.5,
+        "details": {
+          "expected": "Madde 49",
+          "expected_numbers": [
+            "49"
+          ],
+          "retrieved": [
+            "Madde 49",
+            "Madde 63",
+            "Madde 47"
+          ],
+          "source": "6098 Sayılı Türk Borçlar Kanunu",
+          "exact_match": true,
+          "number_match": false,
+          "partial_match": false
+        }
+      },
+      {
+        "name": "response_quality",
+        "score": 1.0,
+        "weight": 0.5,
+        "details": {
+          "word_count": 77,
+          "question_type": "unknown",
+          "expected_range": "50-300",
+          "has_structure": true,
+          "is_uncertain": false,
+          "length_score": 1.0,
+          "structure_score": 1.0
+        }
+      },
+      {
+        "name": "answer_consistency",
+        "score": 1.0,
+        "weight": 0.8,
+        "details": {
+          "expected_numbers": {},
+          "generated_numbers": {
+            "articles": [
+              "1",
+              "2",
+              "6098",
+              "49"
+            ],
+            "plain_numbers": [
+              "1",
+              "2",
+              "6098",
+              "49"
+            ]
+          },
+          "matches": 0,
+          "total_checks": 0,
+          "inconsistencies": []
+        }
+      },
+      {
+        "name": "latency",
+        "score": 1.0,
+        "weight": 0.3,
+        "details": {
+          "latency_ms": 1700.7415294647217,
+          "threshold_ms": 5000
+        }
+      }
+    ],
+    "judge_scores": {
+      "relevance": 0.8,
+      "faithfulness": 0.9,
+      "correctness": 0.85,
+      "completeness": 0.9,
+      "overall": 0.85
+    },
+    "judge_reasoning": "Cevap soruya genel olarak uygun ve doğru bilgiler içermektedir. Hukuki terminoloji doğru kullanılmış ve referans cevapla uyumludur. Ancak, gereksiz detaylar ve bazı anlaşılması zor cümleler bulunduğundan puanı düşük tuttuk.",
+    "strengths": [
+      "Cevap haksız fiilden doğan borcun unsurlarını doğru şekilde açıklamış.",
+      "Cevap hukuki terminolojiyi doğru kullanmış."
+    ],
+    "weaknesses": [
+      "Cevapta gereksiz detaylar bulunmakta.",
+      "Bazı cümlelerin anlaşılması zor olabilir."
+    ],
+    "passed": true,
+    "final_score": 0.89325,
+    "failure_reasons": []
+  },
+  {
+    "question_id": 88,
+    "question": "Kira sözleşmesinde kiraya verenin yükümlülükleri nelerdir?",
+    "category": "unknown",
+    "difficulty": "orta",
+    "source": "6098 Sayılı Türk Borçlar Kanunu",
+    "generated_answer": "BÖLÜM 1 - AÇIKLAMA\nKiraya verenin temel yükümlülükleri şunlardır: Öncelikle, kiralananı sözleşmede belirtilen amaca uygun bir şekilde kullanılmaya ve işletilmeye elverişli bir durumda kiracıya teslim etmek ve sözleşme süresince bu durumu korumakla yükümlüdür. Eğer kiralananla birlikte kiralanmış taşınır şeyler de varsa, bunları da teslim etmelidir.\n\nKira süresi içinde yapılması gereken zorunlu ve esaslı onarımları, kiracı tarafından kendisine bildirilir bildirilmez, kendisi yapmakla yükümlüdür ve bu onarımların giderleri de kendisine aittir.\n\nBÖLÜM 2 - HUKUKİ DAYANAKLAR\n* 6098 Sayılı Türk Borçlar Kanunu Madde 360\n* 6098 Sayılı Türk Borçlar Kanunu Madde 361",
+    "expected_answer": "Kiraya veren, kiralananı kullanıma elverişli durumda teslim etmek ve sözleşme süresince bu durumda bulundurmakla yükümlüdür.",
+    "retrieved_articles": [
+      "Madde 361",
+      "Madde 323",
+      "Madde 365",
+      "Madde 334",
+      "Madde 362",
+      "Madde 299",
+      "Madde 318",
+      "Madde 364",
+      "Madde 360"
+    ],
+    "total_latency_ms": 2173.5243797302246,
+    "heuristic_metrics": [
+      {
+        "name": "keyword_coverage",
+        "score": 0.7666666666666666,
+        "weight": 1.0,
+        "details": {
+          "must_include_found": 2,
+          "must_include_total": 3,
+          "should_include_found": 0,
+          "should_include_total": 0,
+          "missing_must": [
+            "kullanıma elverişli"
+          ]
+        }
+      },
+      {
+        "name": "citation_accuracy",
+        "score": 0.0,
+        "weight": 1.5,
+        "details": {
+          "expected": "Madde 301",
+          "expected_numbers": [
+            "301"
+          ],
+          "retrieved": [
+            "Madde 361",
+            "Madde 323",
+            "Madde 365"
+          ],
+          "source": "6098 Sayılı Türk Borçlar Kanunu",
+          "exact_match": false,
+          "number_match": false,
+          "partial_match": false
+        }
+      },
+      {
+        "name": "response_quality",
+        "score": 1.0,
+        "weight": 0.5,
+        "details": {
+          "word_count": 90,
+          "question_type": "unknown",
+          "expected_range": "50-300",
+          "has_structure": true,
+          "is_uncertain": false,
+          "length_score": 1.0,
+          "structure_score": 1.0
+        }
+      },
+      {
+        "name": "answer_consistency",
+        "score": 1.0,
+        "weight": 0.8,
+        "details": {
+          "expected_numbers": {},
+          "generated_numbers": {
+            "articles": [
+              "1",
+              "2",
+              "6098",
+              "360",
+              "6098",
+              "361"
+            ],
+            "plain_numbers": [
+              "1",
+              "2",
+              "6098",
+              "360",
+              "6098",
+              "361"
+            ]
+          },
+          "matches": 0,
+          "total_checks": 0,
+          "inconsistencies": []
+        }
+      },
+      {
+        "name": "latency",
+        "score": 1.0,
+        "weight": 0.3,
+        "details": {
+          "latency_ms": 2173.5243797302246,
+          "threshold_ms": 5000
+        }
+      }
+    ],
+    "judge_scores": {
+      "relevance": 0.8,
+      "faithfulness": 0.9,
+      "correctness": 0.9,
+      "completeness": 0.8,
+      "overall": 0.85
+    },
+    "judge_reasoning": "Cevap genel olarak ilgili, sadık, doğru ve kısmen tam. Ancak, gereksiz detaylar ve bazı genel ifadeler puanı düşürdü.",
+    "strengths": [
+      "Cevap kira sözleşmesinde kiraya verenin yükümlülüklerini detaylı bir şekilde açıklamış.",
+      "Hukuki terminoloji doğru ve uygun bir şekilde kullanılmış."
+    ],
+    "weaknesses": [
+      "Cevapta gereksiz detaylar bulunmakta.",
+      "Bazı kısımlarda fazla genel ifadeler kullanılmış."
+    ],
+    "passed": false,
+    "final_score": 0.7795,
+    "failure_reasons": [
+      "Yanlış/eksik atıf (0.00)"
+    ]
+  },
+  {
+    "question_id": 94,
+    "question": "Hizmet sözleşmesi Borçlar Kanunu'nda nasıl tanımlanmıştır?",
+    "category": "unknown",
+    "difficulty": "orta",
+    "source": "6098 Sayılı Türk Borçlar Kanunu",
+    "generated_answer": "BÖLÜM 1 - AÇIKLAMA\n\nHizmet sözleşmesi, bir işçinin işverene bağımlı olarak belirli veya belirsiz bir süre boyunca iş görmeyi ve işverenin de buna karşılık olarak zamana veya yapılan işe göre bir ücret ödemeyi kabul ettiği sözleşmedir. Eğer bir işçi, işverene ait bir hizmeti kısmi süreli olarak düzenli bir şekilde yerine getirmeyi üstlenirse, bu da hizmet sözleşmesi olarak kabul edilir.\n\nBÖLÜM 2 - HUKUKİ DAYANAKLAR\n\n6098 Sayılı Türk Borçlar Kanunu, Madde 393",
+    "expected_answer": "Hizmet sözleşmesi, işçinin işverene bağımlı olarak belirli veya belirli olmayan süreyle iş görmeyi, işverenin de ücret ödemeyi üstlendiği sözleşmedir.",
+    "retrieved_articles": [
+      "Madde 393",
+      "Madde 115",
+      "Madde 461",
+      "Madde 426",
+      "Madde 394",
+      "Madde 427",
+      "Madde 430",
+      "Madde 469",
+      "Madde 470"
+    ],
+    "total_latency_ms": 1717.1573638916016,
+    "heuristic_metrics": [
+      {
+        "name": "keyword_coverage",
+        "score": 0.7666666666666666,
+        "weight": 1.0,
+        "details": {
+          "must_include_found": 2,
+          "must_include_total": 3,
+          "should_include_found": 0,
+          "should_include_total": 0,
+          "missing_must": [
+            "bağımlılık"
+          ]
+        }
+      },
+      {
+        "name": "citation_accuracy",
+        "score": 1.0,
+        "weight": 1.5,
+        "details": {
+          "expected": "Madde 393",
+          "expected_numbers": [
+            "393"
+          ],
+          "retrieved": [
+            "Madde 393",
+            "Madde 115",
+            "Madde 461"
+          ],
+          "source": "6098 Sayılı Türk Borçlar Kanunu",
+          "exact_match": true,
+          "number_match": false,
+          "partial_match": false
+        }
+      },
+      {
+        "name": "response_quality",
+        "score": 1.0,
+        "weight": 0.5,
+        "details": {
+          "word_count": 71,
+          "question_type": "unknown",
+          "expected_range": "50-300",
+          "has_structure": true,
+          "is_uncertain": false,
+          "length_score": 1.0,
+          "structure_score": 1.0
+        }
+      },
+      {
+        "name": "answer_consistency",
+        "score": 1.0,
+        "weight": 0.8,
+        "details": {
+          "expected_numbers": {},
+          "generated_numbers": {
+            "articles": [
+              "1",
+              "2",
+              "6098",
+              "393"
+            ],
+            "plain_numbers": [
+              "1",
+              "2",
+              "6098",
+              "393"
+            ]
+          },
+          "matches": 0,
+          "total_checks": 0,
+          "inconsistencies": []
+        }
+      },
+      {
+        "name": "latency",
+        "score": 1.0,
+        "weight": 0.3,
+        "details": {
+          "latency_ms": 1717.1573638916016,
+          "threshold_ms": 5000
+        }
+      }
+    ],
+    "judge_scores": {
+      "relevance": 0.8,
+      "faithfulness": 0.9,
+      "correctness": 0.9,
+      "completeness": 0.9,
+      "overall": 0.875
+    },
+    "judge_reasoning": "Cevap genel olarak ilgili, sadık, doğru ve tam. Ancak, gereksiz detaylar ve karmaşık cümleler puanı düşürdü.",
+    "strengths": [
+      "Cevapta hizmet sözleşmesinin tanımı doğru ve detaylı bir şekilde verilmiş.",
+      "Cevap, referans cevapla uyumlu ve hukuki terminolojiye uygun."
+    ],
+    "weaknesses": [
+      "Cevapta gereksiz detaylar bulunmakta.",
+      "Bazı cümleler gereksiz uzun ve karmaşık."
+    ],
+    "passed": true,
+    "final_score": 0.8985000000000001,
+    "failure_reasons": []
+  },
+  {
+    "question_id": 95,
+    "question": "Borçlar Kanunu'na göre kira artış oranı nasıl belirlenir?",
+    "category": "unknown",
+    "difficulty": "orta",
+    "source": "6098 Sayılı Türk Borçlar Kanunu",
+    "generated_answer": "BÖLÜM 1 - AÇIKLAMA\nKira sözleşmelerinde yenilenen dönemlerde uygulanacak kira bedeli artış oranı, tarafların anlaşmasıyla belirlenebilir. Ancak bu artış, bir önceki kira yılında açıklanan tüketici fiyat endeksindeki on iki aylık ortalamalara göre değişim oranını geçemez. Eğer taraflar arasında bu konuda bir anlaşma yapılmamışsa, kira bedeli hakim tarafından, kiralananın durumu dikkate alınarak hakkaniyete uygun bir şekilde belirlenir. Beş yıldan uzun süreli veya beş yıldan sonra yenilenen kira sözleşmelerinde ise kira bedeli, tüketici fiyat endeksindeki değişim oranı, kiralananın durumu ve emsal kira bedelleri göz önünde tutularak hakim tarafından belirlenir.\n\nKonut kiraları için 2/7/2023 ile 1/7/2024 tarihleri arasında yenilenen kira dönemlerinde uygulanacak artış oranı, bir önceki kira yılına ait kira bedelinin yüzde yirmi beşini geçemez. Eğer tüketici fiyat endeksindeki on iki aylık ortalamalara göre değişim oranı yüzde yirmi beşin altında ise, o değişim oranı geçerli olacaktır.\n\nBÖLÜM 2 - HUKUKİ DAYANAKLAR\n* 6098 Sayılı Türk Borçlar Kanunu Madde 344\n* 6098 Sayılı Türk Borçlar Kanunu Geçici Madde 2",
+    "expected_answer": "Kira artış oranı, bir önceki kira yılındaki tüketici fiyat endeksinin (TÜFE) on iki aylık ortalamasını geçemez.",
+    "retrieved_articles": [
+      "Madde 344",
+      "Madde 345",
+      "Madde 344",
+      "Madde 1",
+      "Madde 343",
+      "Madde 2",
+      "Madde 302",
+      "Madde 321",
+      "Madde 341"
+    ],
+    "total_latency_ms": 2781.2931537628174,
+    "heuristic_metrics": [
+      {
+        "name": "keyword_coverage",
+        "score": 0.5333333333333333,
+        "weight": 1.0,
+        "details": {
+          "must_include_found": 1,
+          "must_include_total": 3,
+          "should_include_found": 0,
+          "should_include_total": 0,
+          "missing_must": [
+            "TÜFE",
+            "12 aylık ortalama"
+          ]
+        }
+      },
+      {
+        "name": "citation_accuracy",
+        "score": 1.0,
+        "weight": 1.5,
+        "details": {
+          "expected": "Madde 344",
+          "expected_numbers": [
+            "344"
+          ],
+          "retrieved": [
+            "Madde 344",
+            "Madde 345",
+            "Madde 344"
+          ],
+          "source": "6098 Sayılı Türk Borçlar Kanunu",
+          "exact_match": true,
+          "number_match": false,
+          "partial_match": false
+        }
+      },
+      {
+        "name": "response_quality",
+        "score": 1.0,
+        "weight": 0.5,
+        "details": {
+          "word_count": 155,
+          "question_type": "unknown",
+          "expected_range": "50-300",
+          "has_structure": true,
+          "is_uncertain": false,
+          "length_score": 1.0,
+          "structure_score": 1.0
+        }
+      },
+      {
+        "name": "answer_consistency",
+        "score": 1.0,
+        "weight": 0.8,
+        "details": {
+          "expected_numbers": {},
+          "generated_numbers": {
+            "articles": [
+              "1",
+              "2",
+              "7",
+              "2023",
+              "1",
+              "7",
+              "2024",
+              "2",
+              "6098",
+              "344",
+              "6098",
+              "2"
+            ],
+            "plain_numbers": [
+              "1",
+              "2",
+              "7",
+              "2023",
+              "1",
+              "7",
+              "2024",
+              "2",
+              "6098",
+              "344",
+              "6098",
+              "2"
+            ]
+          },
+          "matches": 0,
+          "total_checks": 0,
+          "inconsistencies": []
+        }
+      },
+      {
+        "name": "latency",
+        "score": 0.8,
+        "weight": 0.3,
+        "details": {
+          "latency_ms": 2781.2931537628174,
+          "threshold_ms": 5000
+        }
+      }
+    ],
+    "judge_scores": {
+      "relevance": 0.5,
+      "faithfulness": 0.7,
+      "correctness": 0.6,
+      "completeness": 0.7,
+      "overall": 0.6
+    },
+    "judge_reasoning": "Cevap ilgili konuyu açıklamış olsa da gereksiz detaylar içermesi ve referans cevaba tam olarak uymaması nedeniyle puan düşüktür.",
+    "strengths": [
+      "Kira artış oranının belirlenmesiyle ilgili detaylı açıklamalar",
+      "Kira sözleşmelerindeki kira bedeli artış oranının nasıl hesaplandığına dair bilgi verilmesi"
+    ],
+    "weaknesses": [
+      "Cevapta gereksiz detaylar bulunması",
+      "Referans cevaba tam olarak uymaması"
+    ],
+    "passed": true,
+    "final_score": 0.7095,
+    "failure_reasons": []
+  },
+  {
+    "question_id": 96,
+    "question": "Sendika nedir?",
+    "category": "unknown",
+    "difficulty": "kolay",
+    "source": "6356 Sayılı Sendikalar Kanunu",
+    "generated_answer": "BÖLÜM 1 - AÇIKLAMA\nSendika, işçilerin veya işverenlerin, çalışma hayatlarındaki ortak ekonomik ve sosyal hak ve çıkarlarını korumak ve geliştirmek amacıyla bir araya gelerek kurdukları, tüzel kişiliğe sahip kuruluşlardır. Bir sendikanın kurulabilmesi için en az yedi işçi veya işverenin bir araya gelmesi ve aynı iş kolunda faaliyet göstermesi gerekmektedir.\n\nBÖLÜM 2 - HUKUKİ DAYANAKLAR\n6356 Sayılı Sendikalar ve Toplu İş Sözleşmesi Kanunu, Madde 2",
+    "expected_answer": "Sendika, işçilerin veya işverenlerin çalışma ilişkilerinde ortak hak ve menfaatlerini korumak için kurdukları tüzel kişiliğe sahip kuruluştur. Önceden izin alınmaksızın kurulur.",
+    "retrieved_articles": [
+      "Madde 1",
+      "Madde 27",
+      "Madde 27",
+      "Madde 2",
+      "Madde 51",
+      "Madde 6",
+      "Madde 26",
+      "Madde 17",
+      "Madde 3"
+    ],
+    "total_latency_ms": 1400.0601768493652,
+    "heuristic_metrics": [
+      {
+        "name": "keyword_coverage",
+        "score": 0.5333333333333333,
+        "weight": 1.0,
+        "details": {
+          "must_include_found": 1,
+          "must_include_total": 3,
+          "should_include_found": 0,
+          "should_include_total": 0,
+          "missing_must": [
+            "tüzel kişilik",
+            "izin almaksızın"
+          ]
+        }
+      },
+      {
+        "name": "citation_accuracy",
+        "score": 1.0,
+        "weight": 1.5,
+        "details": {
+          "expected": "Madde 2",
+          "expected_numbers": [
+            "2"
+          ],
+          "retrieved": [
+            "Madde 1",
+            "Madde 27",
+            "Madde 27"
+          ],
+          "source": "6356 Sayılı Sendikalar Kanunu",
+          "exact_match": true,
+          "number_match": false,
+          "partial_match": false
+        }
+      },
+      {
+        "name": "response_quality",
+        "score": 1.0,
+        "weight": 0.5,
+        "details": {
+          "word_count": 64,
+          "question_type": "unknown",
+          "expected_range": "50-300",
+          "has_structure": true,
+          "is_uncertain": false,
+          "length_score": 1.0,
+          "structure_score": 1.0
+        }
+      },
+      {
+        "name": "answer_consistency",
+        "score": 1.0,
+        "weight": 0.8,
+        "details": {
+          "expected_numbers": {},
+          "generated_numbers": {
+            "articles": [
+              "1",
+              "2",
+              "6356",
+              "2"
+            ],
+            "plain_numbers": [
+              "1",
+              "2",
+              "6356",
+              "2"
+            ]
+          },
+          "matches": 0,
+          "total_checks": 0,
+          "inconsistencies": []
+        }
+      },
+      {
+        "name": "latency",
+        "score": 1.0,
+        "weight": 0.3,
+        "details": {
+          "latency_ms": 1400.0601768493652,
+          "threshold_ms": 5000
+        }
+      }
+    ],
+    "judge_scores": {
+      "relevance": 0.7,
+      "faithfulness": 0.8,
+      "correctness": 0.9,
+      "completeness": 0.8,
+      "overall": 0.8
+    },
+    "judge_reasoning": "Cevap genel olarak ilgili ve sadık kalmış ancak anahtar bilgilerin eksik olduğu ve gereksiz detayların bulunduğu gözlemlenmiştir.",
+    "strengths": [
+      "Cevapta sendika tanımı doğru verilmiş.",
+      "Hukuki referanslar doğru kullanılmış."
+    ],
+    "weaknesses": [
+      "Cevapta gereksiz detaylar bulunmakta.",
+      "Anahtar bilgiler eksik kalmış."
+    ],
+    "passed": true,
+    "final_score": 0.8319999999999999,
+    "failure_reasons": []
+  },
+  {
+    "question_id": 97,
+    "question": "Sendikaya üyelik nasıl kazanılır?",
+    "category": "unknown",
+    "difficulty": "orta",
+    "source": "6356 Sayılı Sendikalar Kanunu",
+    "generated_answer": "BÖLÜM 1 - AÇIKLAMA\nSendikaya üyelik, öncelikle Bakanlıkça sağlanan elektronik başvuru sistemine e-Devlet kapısı üzerinden başvuru yapılması ve sendika tüzüğünde belirlenen yetkili organın bu başvuruyu kabul etmesiyle kazanılır. Başvurunuzun sendika tarafından otuz gün içinde reddedilmemesi durumunda, üyelik talebiniz kabul edilmiş sayılır.\n\nBÖLÜM 2 - HUKUKİ DAYANAKLAR\n6356 Sayılı Sendikalar ve Toplu İş Sözleşmesi Kanunu, Madde 17",
+    "expected_answer": "15 yaşını dolduran işçiler e-Devlet kapısı üzerinden sendikaya üye olabilir. Üyelik sendika yetkili organının kabulü ile kazanılır.",
+    "retrieved_articles": [
+      "Madde 17",
+      "Madde 17",
+      "Madde 4",
+      "Madde 7",
+      "Madde 19",
+      "Madde 2",
+      "Madde 14",
+      "Madde 14",
+      "Madde 6"
+    ],
+    "total_latency_ms": 1485.7349395751953,
+    "heuristic_metrics": [
+      {
+        "name": "keyword_coverage",
+        "score": 0.7666666666666666,
+        "weight": 1.0,
+        "details": {
+          "must_include_found": 2,
+          "must_include_total": 3,
+          "should_include_found": 0,
+          "should_include_total": 0,
+          "missing_must": [
+            "15 yaş"
+          ]
+        }
+      },
+      {
+        "name": "citation_accuracy",
+        "score": 1.0,
+        "weight": 1.5,
+        "details": {
+          "expected": "Madde 17",
+          "expected_numbers": [
+            "17"
+          ],
+          "retrieved": [
+            "Madde 17",
+            "Madde 17",
+            "Madde 4"
+          ],
+          "source": "6356 Sayılı Sendikalar Kanunu",
+          "exact_match": true,
+          "number_match": false,
+          "partial_match": false
+        }
+      },
+      {
+        "name": "response_quality",
+        "score": 1.0,
+        "weight": 0.5,
+        "details": {
+          "word_count": 56,
+          "question_type": "unknown",
+          "expected_range": "50-300",
+          "has_structure": true,
+          "is_uncertain": false,
+          "length_score": 1.0,
+          "structure_score": 1.0
+        }
+      },
+      {
+        "name": "answer_consistency",
+        "score": 1.0,
+        "weight": 0.8,
+        "details": {
+          "expected_numbers": {
+            "articles": [
+              "15"
+            ],
+            "plain_numbers": [
+              "15"
+            ]
+          },
+          "generated_numbers": {
+            "articles": [
+              "1",
+              "2",
+              "6356",
+              "17"
+            ],
+            "plain_numbers": [
+              "1",
+              "2",
+              "6356",
+              "17"
+            ]
+          },
+          "matches": 0,
+          "total_checks": 0,
+          "inconsistencies": []
+        }
+      },
+      {
+        "name": "latency",
+        "score": 1.0,
+        "weight": 0.3,
+        "details": {
+          "latency_ms": 1485.7349395751953,
+          "threshold_ms": 5000
+        }
+      }
+    ],
+    "judge_scores": {
+      "relevance": 0.7,
+      "faithfulness": 0.8,
+      "correctness": 0.9,
+      "completeness": 0.8,
+      "overall": 0.8
+    },
+    "judge_reasoning": "Cevap, soruda belirtilen anahtar bilgileri doğru şekilde içermekte ancak belirli bir süre içinde üyelik kabul edilirse otomatik olarak üyelik kazanıldığı yanlış ifade edilmiştir. Bu nedenle doğruluk ve tamlık puanları düşük olmuştur.",
+    "strengths": [
+      "Cevapta sendikaya üyelik için e-Devlet kapısı üzerinden başvuru yapılması gerektiği doğru şekilde belirtilmiş.",
+      "Cevapta sendika yetkili organının kabulü ile üyelik kazanılacağı doğru ifade edilmiş."
+    ],
+    "weaknesses": [
+      "Cevapta belirli bir süre içinde üyelik kabul edilirse otomatik olarak üyelik kazanıldığı yanlış ifade edilmiş."
+    ],
+    "passed": true,
+    "final_score": 0.8459999999999999,
+    "failure_reasons": []
+  },
+  {
+    "question_id": 98,
+    "question": "Sendika güvencesi nedir?",
+    "category": "unknown",
+    "difficulty": "orta",
+    "source": "6356 Sayılı Sendikalar Kanunu",
+    "generated_answer": "BÖLÜM 1 - AÇIKLAMA\nSendika güvencesi kavramı, sağlanan metinlerde doğrudan tanımlanmamıştır. Ancak, işçi ve işveren sendikalarının hak ve yükümlülükleri, sendika temsilcilerinin atanması ve görevleri, toplu iş sözleşmesi yapma yetkisi gibi konulara değinilmektedir. Bu bağlamda, sendika hakkının ve örgütlenme özgürlüğünün korunması amaçlanmaktadır.\n\nBÖLÜM 2 - HUKUKİ DAYANAKLAR\n6356 Sayılı Sendikalar ve Toplu İş Sözleşmesi Kanunu, Madde 1, Madde 2, Madde 26, Madde 27, Madde 42, Madde 43, Madde 65, Madde 77",
+    "expected_answer": "İşçilerin işe alınması veya çalıştırılması sendika üyeliği şartına bağlanamaz. Sendikal nedenle işten çıkarılan işçiye en az bir yıllık ücreti tutarında sendikal tazminat ödenir.",
+    "retrieved_articles": [
+      "Madde 1",
+      "Madde 27",
+      "Madde 42",
+      "Madde 77",
+      "Madde 43",
+      "Madde 2",
+      "Madde 65",
+      "Madde 26",
+      "Madde 27"
+    ],
+    "total_latency_ms": 1939.3537044525146,
+    "heuristic_metrics": [
+      {
+        "name": "keyword_coverage",
+        "score": 0.5333333333333333,
+        "weight": 1.0,
+        "details": {
+          "must_include_found": 1,
+          "must_include_total": 3,
+          "should_include_found": 0,
+          "should_include_total": 0,
+          "missing_must": [
+            "sendikal tazminat",
+            "1 yıllık ücret"
+          ]
+        }
+      },
+      {
+        "name": "citation_accuracy",
+        "score": 0.0,
+        "weight": 1.5,
+        "details": {
+          "expected": "Madde 25",
+          "expected_numbers": [
+            "25"
+          ],
+          "retrieved": [
+            "Madde 1",
+            "Madde 27",
+            "Madde 42"
+          ],
+          "source": "6356 Sayılı Sendikalar Kanunu",
+          "exact_match": false,
+          "number_match": false,
+          "partial_match": false
+        }
+      },
+      {
+        "name": "response_quality",
+        "score": 1.0,
+        "weight": 0.5,
+        "details": {
+          "word_count": 70,
+          "question_type": "unknown",
+          "expected_range": "50-300",
+          "has_structure": true,
+          "is_uncertain": false,
+          "length_score": 1.0,
+          "structure_score": 1.0
+        }
+      },
+      {
+        "name": "answer_consistency",
+        "score": 1.0,
+        "weight": 0.8,
+        "details": {
+          "expected_numbers": {},
+          "generated_numbers": {
+            "articles": [
+              "1",
+              "2",
+              "6356",
+              "1",
+              "2",
+              "26",
+              "27",
+              "42",
+              "43",
+              "65",
+              "77"
+            ],
+            "plain_numbers": [
+              "1",
+              "2",
+              "6356",
+              "1",
+              "2",
+              "26",
+              "27",
+              "42",
+              "43",
+              "65",
+              "77"
+            ]
+          },
+          "matches": 0,
+          "total_checks": 0,
+          "inconsistencies": []
+        }
+      },
+      {
+        "name": "latency",
+        "score": 1.0,
+        "weight": 0.3,
+        "details": {
+          "latency_ms": 1939.3537044525146,
+          "threshold_ms": 5000
+        }
+      }
+    ],
+    "judge_scores": {
+      "relevance": 0.2,
+      "faithfulness": 0.4,
+      "correctness": 0.3,
+      "completeness": 0.2,
+      "overall": 0.3
+    },
+    "judge_reasoning": "Cevap, soruda belirtilen 'sendika güvencesi' konusuna doğrudan odaklanmamış ve belirtilen anahtar bilgileri eksik veya yanlış vermiştir. Hukuki terminoloji doğru kullanılmış olsa da cevap genel olarak context'e sadık kalmamış ve beklenen bilgileri yeterince kapsamamıştır.",
+    "strengths": [
+      "Hukuki terminoloji kullanımı",
+      "Kanun referanslarına atıfta bulunma"
+    ],
+    "weaknesses": [
+      "Sendika güvencesi konusunda doğrudan bilgi verilmemesi",
+      "Anahtar bilgilerin eksik olması"
+    ],
+    "passed": false,
+    "final_score": 0.3665,
+    "failure_reasons": [
+      "Düşük ilgililik (0.20)",
+      "Context'e sadakatsiz (0.40)",
+      "Yanlış/eksik atıf (0.00)"
+    ]
+  },
+  {
+    "question_id": 100,
+    "question": "Toplu iş sözleşmesi yapma yetkisi hangi koşullara bağlıdır?",
+    "category": "unknown",
+    "difficulty": "zor",
+    "source": "6356 Sayılı Sendikalar Kanunu",
+    "generated_answer": "BÖLÜM 1 - AÇIKLAMA\nBir işçi sendikasının toplu iş sözleşmesi yapma yetkisi için bazı şartlar bulunmaktadır. Öncelikle, sendikanın kurulu bulunduğu işkolunda çalışan işçilerin en az yüzde birinin üyesi olması gerekmektedir. Ayrıca, toplu iş sözleşmesinin kapsamına girecek işyerinde, başvuru tarihinde çalışan işçilerin yarıdan fazlasının sendika üyesi olması şartı aranır. İşletme düzeyinde yapılacak toplu iş sözleşmelerinde ise, işyerindeki işçilerin yüzde kırkının sendika üyesi olması gerekmektedir. İşletmede birden çok sendikanın yüzde kırk veya daha fazla üyesi varsa, başvuru tarihinde en çok üyeye sahip olan sendika yetkilidir. Bir işveren sendikası, üyesi olan işverenlere ait işyerleri için, sendika üyesi olmayan bir işveren ise kendi işyeri veya işyerleri için toplu iş sözleşmesi yapma yetkisine sahiptir. İşkolunda çalışan işçilerin yüzde birinin tespitinde ise, Çalışma ve Sosyal Güvenlik Bakanlığı tarafından her yıl ocak ve temmuz aylarında yayımlanan istatistikler dikkate alınır.\n\nBÖLÜM 2 - HUKUKİ DAYANAKLAR\n6356 Sayılı Sendikalar ve Toplu İş Sözleşmesi Kanunu Madde 41",
+    "expected_answer": "Sendikanın işkolunda en az %1 üye barajını aşması ve işyerinde çalışan işçilerin yarısından fazlasının (%50+1) sendika üyesi olması gerekir.",
+    "retrieved_articles": [
+      "Madde 45",
+      "Madde 42",
+      "Madde 34",
+      "Madde 41",
+      "Madde 44",
+      "Madde 48",
+      "Madde 2",
+      "Madde 38",
+      "Madde 53"
+    ],
+    "total_latency_ms": 2442.7051544189453,
+    "heuristic_metrics": [
+      {
+        "name": "keyword_coverage",
+        "score": 0.5333333333333333,
+        "weight": 1.0,
+        "details": {
+          "must_include_found": 1,
+          "must_include_total": 3,
+          "should_include_found": 0,
+          "should_include_total": 0,
+          "missing_must": [
+            "%1 işkolu barajı",
+            "%50+1 işyeri"
+          ]
+        }
+      },
+      {
+        "name": "citation_accuracy",
+        "score": 1.0,
+        "weight": 1.5,
+        "details": {
+          "expected": "Madde 41",
+          "expected_numbers": [
+            "41"
+          ],
+          "retrieved": [
+            "Madde 45",
+            "Madde 42",
+            "Madde 34"
+          ],
+          "source": "6356 Sayılı Sendikalar Kanunu",
+          "exact_match": true,
+          "number_match": false,
+          "partial_match": false
+        }
+      },
+      {
+        "name": "response_quality",
+        "score": 1.0,
+        "weight": 0.5,
+        "details": {
+          "word_count": 147,
+          "question_type": "unknown",
+          "expected_range": "50-300",
+          "has_structure": true,
+          "is_uncertain": false,
+          "length_score": 1.0,
+          "structure_score": 1.0
+        }
+      },
+      {
+        "name": "answer_consistency",
+        "score": 0.0,
+        "weight": 0.8,
+        "details": {
+          "expected_numbers": {
+            "percentage": [
+              "%1",
+              "%50"
+            ],
+            "articles": [
+              "1",
+              "50",
+              "1"
+            ],
+            "plain_numbers": [
+              "1",
+              "50",
+              "1"
+            ]
+          },
+          "generated_numbers": {
+            "articles": [
+              "1",
+              "2",
+              "6356",
+              "41"
+            ],
+            "plain_numbers": [
+              "1",
+              "2",
+              "6356",
+              "41"
+            ]
+          },
+          "matches": 0,
+          "total_checks": 2,
+          "inconsistencies": [
+            "percentage: expected '%1'",
+            "percentage: expected '%50'"
+          ]
+        }
+      },
+      {
+        "name": "latency",
+        "score": 1.0,
+        "weight": 0.3,
+        "details": {
+          "latency_ms": 2442.7051544189453,
+          "threshold_ms": 5000
+        }
+      }
+    ],
+    "judge_scores": {
+      "relevance": 0.8,
+      "faithfulness": 0.9,
+      "correctness": 0.9,
+      "completeness": 0.9,
+      "overall": 0.875
+    },
+    "judge_reasoning": "Cevap, soruya genel olarak uygun ve doğru bilgiler içermektedir. Ancak, gereksiz detaylar ve bazı cümlelerin karmaşık olması nedeniyle puanı düşürülmüştür.",
+    "strengths": [
+      "Cevapta toplu iş sözleşmesi yapma yetkisinin koşulları detaylı ve doğru bir şekilde açıklanmıştır.",
+      "Cevap, referans cevapla uyumludur ve hukuki terminolojiye uygun olarak yazılmıştır."
+    ],
+    "weaknesses": [
+      "Cevapta gereksiz detaylar bulunmaktadır.",
+      "Bazı cümlelerin daha açık ve anlaşılır olması gerekmektedir."
+    ],
+    "passed": false,
+    "final_score": 0.7945,
+    "failure_reasons": [
+      "Sayısal tutarsızlık (0.00)"
+    ]
+  },
+  {
+    "question_id": 102,
+    "question": "Grev hakkı nasıl kullanılır?",
+    "category": "unknown",
+    "difficulty": "zor",
+    "source": "6356 Sayılı Sendikalar Kanunu",
+    "generated_answer": "BÖLÜM 1 - AÇIKLAMA\n\nToplu iş sözleşmesi yapma sürecinde bir uyuşmazlık yaşanması durumunda, çalışanlar grev hakkına sahiptirler. Grev kararının alınabilmesi için, uyuşmazlık tutanağının tebliğ edilmesinden itibaren 60 gün içinde karar alınması ve karşı tarafa en az 6 iş günü önceden bildirilmesi gerekir. Aksi takdirde toplu iş sözleşmesi yapma yetkisi düşer. Grev ve lokavt kararları, kararı alan tarafça işyerinde ilan edilir.\n\nBÖLÜM 2 - HUKUKİ DAYANAKLAR\n\n*   T.C. Anayasası, Madde 54\n*   6356 Sayılı Sendikalar ve Toplu İş Sözleşmesi Kanunu, Madde 60",
+    "expected_answer": "Toplu iş sözleşmesi görüşmelerinde uyuşmazlık çıkması halinde grev kararı alınabilir. Grev kararı 60 gün içinde alınmalı ve 6 iş günü önceden işverene bildirilmelidir.",
+    "retrieved_articles": [
+      "Madde 54",
+      "Madde 53",
+      "Madde 60",
+      "Madde 66",
+      "Madde 61",
+      "Madde 71",
+      "Madde 75",
+      "Madde 69",
+      "Madde 60"
+    ],
+    "total_latency_ms": 1755.7682991027832,
+    "heuristic_metrics": [
+      {
+        "name": "keyword_coverage",
+        "score": 1.0,
+        "weight": 1.0,
+        "details": {
+          "must_include_found": 3,
+          "must_include_total": 3,
+          "should_include_found": 0,
+          "should_include_total": 0,
+          "missing_must": []
+        }
+      },
+      {
+        "name": "citation_accuracy",
+        "score": 0.0,
+        "weight": 1.5,
+        "details": {
+          "expected": "Madde 58, 60",
+          "expected_numbers": [
+            "58"
+          ],
+          "retrieved": [
+            "Madde 54",
+            "Madde 53",
+            "Madde 60"
+          ],
+          "source": "6356 Sayılı Sendikalar Kanunu",
+          "exact_match": false,
+          "number_match": false,
+          "partial_match": false
+        }
+      },
+      {
+        "name": "response_quality",
+        "score": 1.0,
+        "weight": 0.5,
+        "details": {
+          "word_count": 81,
+          "question_type": "unknown",
+          "expected_range": "50-300",
+          "has_structure": true,
+          "is_uncertain": false,
+          "length_score": 1.0,
+          "structure_score": 1.0
+        }
+      },
+      {
+        "name": "answer_consistency",
+        "score": 1.0,
+        "weight": 0.8,
+        "details": {
+          "expected_numbers": {
+            "days": [
+              "60"
+            ],
+            "articles": [
+              "60",
+              "6"
+            ],
+            "plain_numbers": [
+              "60",
+              "6"
+            ]
+          },
+          "generated_numbers": {
+            "days": [
+              "60"
+            ],
+            "articles": [
+              "1",
+              "60",
+              "6",
+              "2",
+              "54",
+              "6356",
+              "60"
+            ],
+            "plain_numbers": [
+              "1",
+              "60",
+              "6",
+              "2",
+              "54",
+              "6356",
+              "60"
+            ]
+          },
+          "matches": 1,
+          "total_checks": 1,
+          "inconsistencies": []
+        }
+      },
+      {
+        "name": "latency",
+        "score": 1.0,
+        "weight": 0.3,
+        "details": {
+          "latency_ms": 1755.7682991027832,
+          "threshold_ms": 5000
+        }
+      }
+    ],
+    "judge_scores": {
+      "relevance": 0.8,
+      "faithfulness": 0.9,
+      "correctness": 0.85,
+      "completeness": 0.9,
+      "overall": 0.85
+    },
+    "judge_reasoning": "Cevap, genel olarak soruya uygun ve doğru bilgiler içeriyor. Ancak bazı gereksiz detaylar bulunması ve daha öz olabilme potansiyeli nedeniyle puanı biraz düşük tuttum.",
+    "strengths": [
+      "Cevap grev hakkının kullanım sürecini detaylı bir şekilde açıklıyor.",
+      "Cevap, referans cevapla uyumlu bir şekilde grev kararının alınma süresini ve bildirim şartlarını doğru şekilde aktarıyor."
+    ],
+    "weaknesses": [
+      "Cevapta gereksiz detaylar bulunabilir, daha öz olabilirdi."
+    ],
+    "passed": false,
+    "final_score": 0.7987500000000001,
+    "failure_reasons": [
+      "Yanlış/eksik atıf (0.00)"
+    ]
+  },
+  {
+    "question_id": 103,
+    "question": "Hangi işlerde grev yapılamaz?",
+    "category": "unknown",
+    "difficulty": "orta",
+    "source": "6356 Sayılı Sendikalar Kanunu",
+    "generated_answer": "BÖLÜM 1 - AÇIKLAMA\n\nCan ve mal kurtarma işlerinde, cenaze işlerinde ve mezarlıklarda, şehir şebeke suyu, elektrik, doğal gaz, petrol üretimi, tasfiyesi ve dağıtımı ile nafta veya doğalgazdan başlayan petrokimya işlerinde, Milli Savunma Bakanlığı ile Jandarma Genel Komutanlığı ve Sahil Güvenlik Komutanlığınca doğrudan işletilen işyerlerinde, kamu kuruluşlarınca yürütülen itfaiye ve hastanelerde grev ve lokavt yapılamaz. Cumhurbaşkanı, genel hayatı önemli ölçüde etkileyen doğa olaylarının gerçekleştiği yerlerde bu durumun devamı süresince yürürlükte kalmak kaydıyla gerekli gördüğü işyerlerinde grev ve lokavtı yasaklayabilir. Başladığı yolculuğu yurt içindeki varış yerlerinde bitirmemiş deniz, hava, demir ve kara ulaştırma araçlarında da grev ve lokavt yapılamaz.\n\nBÖLÜM 2 - HUKUKİ DAYANAKLAR\n\n*   6356 Sayılı Sendikalar ve Toplu İş Sözleşmesi Kanunu, Madde 62",
+    "expected_answer": "Can ve mal kurtarma, cenaze, su, elektrik, doğal gaz, petrol üretimi, bankacılık, kamu itfaiye, şehir içi toplu taşıma ve hastane hizmetlerinde grev yapılamaz.",
+    "retrieved_articles": [
+      "Madde 62",
+      "Madde 54",
+      "Madde 66",
+      "Madde 7",
+      "Madde 61",
+      "Madde 34",
+      "Madde 65",
+      "Madde 60",
+      "Madde 53"
+    ],
+    "total_latency_ms": 1911.041498184204,
+    "heuristic_metrics": [
+      {
+        "name": "keyword_coverage",
+        "score": 0.475,
+        "weight": 1.0,
+        "details": {
+          "must_include_found": 1,
+          "must_include_total": 4,
+          "should_include_found": 0,
+          "should_include_total": 0,
+          "missing_must": [
+            "grev yasağı",
+            "enerji",
+            "bankacılık"
+          ]
+        }
+      },
+      {
+        "name": "citation_accuracy",
+        "score": 1.0,
+        "weight": 1.5,
+        "details": {
+          "expected": "Madde 62",
+          "expected_numbers": [
+            "62"
+          ],
+          "retrieved": [
+            "Madde 62",
+            "Madde 54",
+            "Madde 66"
+          ],
+          "source": "6356 Sayılı Sendikalar Kanunu",
+          "exact_match": true,
+          "number_match": false,
+          "partial_match": false
+        }
+      },
+      {
+        "name": "response_quality",
+        "score": 1.0,
+        "weight": 0.5,
+        "details": {
+          "word_count": 114,
+          "question_type": "unknown",
+          "expected_range": "50-300",
+          "has_structure": true,
+          "is_uncertain": false,
+          "length_score": 1.0,
+          "structure_score": 1.0
+        }
+      },
+      {
+        "name": "answer_consistency",
+        "score": 1.0,
+        "weight": 0.8,
+        "details": {
+          "expected_numbers": {},
+          "generated_numbers": {
+            "articles": [
+              "1",
+              "2",
+              "6356",
+              "62"
+            ],
+            "plain_numbers": [
+              "1",
+              "2",
+              "6356",
+              "62"
+            ]
+          },
+          "matches": 0,
+          "total_checks": 0,
+          "inconsistencies": []
+        }
+      },
+      {
+        "name": "latency",
+        "score": 1.0,
+        "weight": 0.3,
+        "details": {
+          "latency_ms": 1911.041498184204,
+          "threshold_ms": 5000
+        }
+      }
+    ],
+    "judge_scores": {
+      "relevance": 0.8,
+      "faithfulness": 0.9,
+      "correctness": 0.9,
+      "completeness": 0.9,
+      "overall": 0.875
+    },
+    "judge_reasoning": "Cevap genel olarak ilgili, sadık, doğru ve tam olmasına rağmen gereksiz detaylar ve karmaşık cümleler nedeniyle puan düşürülmüştür.",
+    "strengths": [
+      "Cevapta grev yapılamayan işler detaylı ve doğru bir şekilde açıklanmış.",
+      "Referans cevaba sadık kalınmış."
+    ],
+    "weaknesses": [
+      "Cevapta gereksiz detaylar bulunmakta.",
+      "Bazı cümleler gereksiz uzun ve karmaşık."
+    ],
+    "passed": true,
+    "final_score": 0.881,
+    "failure_reasons": []
+  },
+  {
+    "question_id": 105,
+    "question": "İş mahkemelerinin görev alanı nedir?",
+    "category": "unknown",
+    "difficulty": "kolay",
+    "source": "7036 Sayılı İş Mahkemeleri Kanunu",
+    "generated_answer": "BÖLÜM 1 - AÇIKLAMA\nİş mahkemeleri, işçi ve işveren arasındaki iş ilişkisinden kaynaklanan her türlü hukuki uyuşmazlıklara bakar. Bu uyuşmazlıklar, iş sözleşmesinden veya kanundan doğan davaları kapsar. Ayrıca, Sosyal Güvenlik Kurumu veya Türkiye İş Kurumu'nun taraf olduğu iş ve sosyal güvenlik mevzuatından kaynaklanan uyuşmazlıklar da iş mahkemelerinin görev alanına girer. Diğer kanunlarda iş mahkemelerinin görevli olduğu belirtilen uyuşmazlıklar da bu mahkemelerde çözülür.\n\nBÖLÜM 2 - HUKUKİ DAYANAKLAR\n7036 Sayılı İş Mahkemeleri Kanunu, Madde 5",
+    "expected_answer": "İş mahkemeleri; İş Kanunu, Basın İş Kanunu, Deniz İş Kanunu kapsamındaki uyuşmazlıklara, iş kazası tazminatlarına, işe iade davalarına ve SGK uyuşmazlıklarına bakar.",
+    "retrieved_articles": [
+      "Madde 1",
+      "Madde 5",
+      "Madde 6",
+      "Madde 2",
+      "Madde 7",
+      "Madde 1",
+      "Madde 79",
+      "Giriş",
+      "Madde 92"
+    ],
+    "total_latency_ms": 1613.9271259307861,
+    "heuristic_metrics": [
+      {
+        "name": "keyword_coverage",
+        "score": 0.3,
+        "weight": 1.0,
+        "details": {
+          "must_include_found": 0,
+          "must_include_total": 3,
+          "should_include_found": 0,
+          "should_include_total": 0,
+          "missing_must": [
+            "iş mahkemesi",
+            "işe iade",
+            "iş kazası"
+          ]
+        }
+      },
+      {
+        "name": "citation_accuracy",
+        "score": 1.0,
+        "weight": 1.5,
+        "details": {
+          "expected": "Madde 5",
+          "expected_numbers": [
+            "5"
+          ],
+          "retrieved": [
+            "Madde 1",
+            "Madde 5",
+            "Madde 6"
+          ],
+          "source": "7036 Sayılı İş Mahkemeleri Kanunu",
+          "exact_match": true,
+          "number_match": false,
+          "partial_match": false
+        }
+      },
+      {
+        "name": "response_quality",
+        "score": 1.0,
+        "weight": 0.5,
+        "details": {
+          "word_count": 74,
+          "question_type": "unknown",
+          "expected_range": "50-300",
+          "has_structure": true,
+          "is_uncertain": false,
+          "length_score": 1.0,
+          "structure_score": 1.0
+        }
+      },
+      {
+        "name": "answer_consistency",
+        "score": 1.0,
+        "weight": 0.8,
+        "details": {
+          "expected_numbers": {},
+          "generated_numbers": {
+            "articles": [
+              "1",
+              "2",
+              "7036",
+              "5"
+            ],
+            "plain_numbers": [
+              "1",
+              "2",
+              "7036",
+              "5"
+            ]
+          },
+          "matches": 0,
+          "total_checks": 0,
+          "inconsistencies": []
+        }
+      },
+      {
+        "name": "latency",
+        "score": 1.0,
+        "weight": 0.3,
+        "details": {
+          "latency_ms": 1613.9271259307861,
+          "threshold_ms": 5000
+        }
+      }
+    ],
+    "judge_scores": {
+      "relevance": 0.8,
+      "faithfulness": 0.9,
+      "correctness": 0.85,
+      "completeness": 0.9,
+      "overall": 0.85
+    },
+    "judge_reasoning": "Cevap genel olarak ilgili, sadık, doğru ve tam olmakla birlikte belirli anahtar kelimelerin eksikliği nedeniyle puan düşürülmüştür.",
+    "strengths": [
+      "Cevap iş mahkemelerinin görev alanını doğru şekilde açıklıyor.",
+      "Cevapta hukuki terminoloji doğru kullanılmış."
+    ],
+    "weaknesses": [
+      "Cevapta belirli anahtar kelimeler eksik."
+    ],
+    "passed": true,
+    "final_score": 0.86175,
+    "failure_reasons": []
+  },
+  {
+    "question_id": 106,
+    "question": "İş davalarında arabuluculuk zorunlu mudur?",
+    "category": "unknown",
+    "difficulty": "kolay",
+    "source": "7036 Sayılı İş Mahkemeleri Kanunu",
+    "generated_answer": "BÖLÜM 1 - AÇIKLAMA\nEvet, işçi veya işveren alacağı ve tazminatı ile işe iade talebiyle açılan davalarda arabulucuya başvurmak dava şartı olarak kabul edilir. Arabulucuya başvurmadan dava açılması durumunda, dava şartı yokluğu nedeniyle usulden reddedilir. Ancak, iş kazası veya meslek hastalığından kaynaklanan maddi ve manevi tazminat davaları bu zorunluluğun dışındadır. İşe iade talebiyle açılan davalarda da arabulucuya başvurmak zorunludur. Fesih bildiriminde sebep gösterilmediği veya gösterilen sebebin geçerli bir sebep olmadığı iddiasıyla işe iade talebinde bulunan işçinin, fesih bildiriminin tebliğ tarihinden itibaren bir ay içinde arabulucuya başvurması gerekmektedir.\n\nBÖLÜM 2 - HUKUKİ DAYANAKLAR\n* 7036 Sayılı İş Mahkemeleri Kanunu, Madde 3/1\n* 7036 Sayılı İş Mahkemeleri Kanunu, Madde 3/3\n* 4857 Sayılı İş Kanunu, Madde 20",
+    "expected_answer": "Evet, işçi veya işveren alacağı, tazminatı ve işe iade talepli davalarda dava açmadan önce arabulucuya başvurmak dava şartıdır.",
+    "retrieved_articles": [
+      "Madde 3",
+      "Madde 3",
+      "Madde 3",
+      "Madde 3",
+      "Madde 17",
+      "Madde 2",
+      "Madde 3",
+      "Madde 49",
+      "Madde 20"
+    ],
+    "total_latency_ms": 2262.6209259033203,
+    "heuristic_metrics": [
+      {
+        "name": "keyword_coverage",
+        "score": 1.0,
+        "weight": 1.0,
+        "details": {
+          "must_include_found": 3,
+          "must_include_total": 3,
+          "should_include_found": 0,
+          "should_include_total": 0,
+          "missing_must": []
+        }
+      },
+      {
+        "name": "citation_accuracy",
+        "score": 1.0,
+        "weight": 1.5,
+        "details": {
+          "expected": "Madde 3",
+          "expected_numbers": [
+            "3"
+          ],
+          "retrieved": [
+            "Madde 3",
+            "Madde 3",
+            "Madde 3"
+          ],
+          "source": "7036 Sayılı İş Mahkemeleri Kanunu",
+          "exact_match": true,
+          "number_match": false,
+          "partial_match": false
+        }
+      },
+      {
+        "name": "response_quality",
+        "score": 1.0,
+        "weight": 0.5,
+        "details": {
+          "word_count": 115,
+          "question_type": "unknown",
+          "expected_range": "50-300",
+          "has_structure": true,
+          "is_uncertain": false,
+          "length_score": 1.0,
+          "structure_score": 1.0
+        }
+      },
+      {
+        "name": "answer_consistency",
+        "score": 1.0,
+        "weight": 0.8,
+        "details": {
+          "expected_numbers": {},
+          "generated_numbers": {
+            "articles": [
+              "1",
+              "2",
+              "7036",
+              "3",
+              "1",
+              "7036",
+              "3",
+              "3",
+              "4857",
+              "20"
+            ],
+            "plain_numbers": [
+              "1",
+              "2",
+              "7036",
+              "3",
+              "1",
+              "7036",
+              "3",
+              "3",
+              "4857",
+              "20"
+            ]
+          },
+          "matches": 0,
+          "total_checks": 0,
+          "inconsistencies": []
+        }
+      },
+      {
+        "name": "latency",
+        "score": 1.0,
+        "weight": 0.3,
+        "details": {
+          "latency_ms": 2262.6209259033203,
+          "threshold_ms": 5000
+        }
+      }
+    ],
+    "judge_scores": {
+      "relevance": 0.8,
+      "faithfulness": 0.9,
+      "correctness": 0.85,
+      "completeness": 0.9,
+      "overall": 0.85
+    },
+    "judge_reasoning": "Cevap genel olarak ilgili, sadık, doğru ve tam. Ancak gereksiz detaylar ve belirli bir tazminat davası türünün arabuluculuk zorunluluğundan muaf olduğu bilgisinin eksikliği puanı düşürdü.",
+    "strengths": [
+      "Cevap iş mahkemelerinde arabuluculuğun zorunlu olduğunu doğru şekilde belirtiyor.",
+      "Anahtar bilgileri genel olarak kapsıyor."
+    ],
+    "weaknesses": [
+      "Cevapta bazı gereksiz detaylar bulunmakta.",
+      "İş kazası ve meslek hastalığından kaynaklanan tazminat davalarının arabuluculuk zorunluluğu dışında olduğu belirtilmemiş."
+    ],
+    "passed": true,
+    "final_score": 0.9037499999999999,
+    "failure_reasons": []
+  },
+  {
+    "question_id": 107,
+    "question": "İş davalarında zamanaşımı süreleri ne kadardır?",
+    "category": "unknown",
+    "difficulty": "orta",
+    "source": "7036 Sayılı İş Mahkemeleri Kanunu",
+    "generated_answer": "BÖLÜM 1 - AÇIKLAMA\nİş davalarındaki zamanaşımı süreleriyle ilgili olarak, elimdeki metinlerde genel bir düzenleme bulunmamaktadır. Ancak, eser sözleşmelerinden kaynaklanan davalarla ilgili olarak özel bir düzenleme mevcuttur. Buna göre, yüklenicinin ayıplı bir eser meydana getirmesi durumunda açılacak davalar, teslim tarihinden itibaren taşınmaz yapılar dışındaki eserlerde iki yıl, taşınmaz yapılarda ise beş yıl içinde zamanaşımına uğrar. Yüklenicinin ağır kusuru varsa, ayıplı eserin niteliğine bakılmaksızın zamanaşımı süresi yirmi yıldır.\n\nBÖLÜM 2 - HUKUKİ DAYANAKLAR\n* 6098 Sayılı Türk Borçlar Kanunu Madde 478",
+    "expected_answer": "Kıdem tazminatı, ihbar tazminatı, yıllık izin ücreti ve kötüniyet tazminatı için zamanaşımı süresi 5 yıldır.",
+    "retrieved_articles": [
+      "Madde 4",
+      "Madde 53",
+      "Madde 7",
+      "Madde 478",
+      "Madde 24",
+      "Madde 25",
+      "Madde 43",
+      "Madde 3",
+      "Madde 15"
+    ],
+    "total_latency_ms": 1920.9325313568115,
+    "heuristic_metrics": [
+      {
+        "name": "keyword_coverage",
+        "score": 0.5333333333333333,
+        "weight": 1.0,
+        "details": {
+          "must_include_found": 1,
+          "must_include_total": 3,
+          "should_include_found": 0,
+          "should_include_total": 0,
+          "missing_must": [
+            "5 yıl",
+            "kıdem tazminatı"
+          ]
+        }
+      },
+      {
+        "name": "citation_accuracy",
+        "score": 1.0,
+        "weight": 1.5,
+        "details": {
+          "expected": "Madde 7",
+          "expected_numbers": [
+            "7"
+          ],
+          "retrieved": [
+            "Madde 4",
+            "Madde 53",
+            "Madde 7"
+          ],
+          "source": "7036 Sayılı İş Mahkemeleri Kanunu",
+          "exact_match": true,
+          "number_match": false,
+          "partial_match": false
+        }
+      },
+      {
+        "name": "response_quality",
+        "score": 1.0,
+        "weight": 0.5,
+        "details": {
+          "word_count": 80,
+          "question_type": "unknown",
+          "expected_range": "50-300",
+          "has_structure": true,
+          "is_uncertain": false,
+          "length_score": 1.0,
+          "structure_score": 1.0
+        }
+      },
+      {
+        "name": "answer_consistency",
+        "score": 0.0,
+        "weight": 0.8,
+        "details": {
+          "expected_numbers": {
+            "years": [
+              "5"
+            ],
+            "articles": [
+              "5"
+            ],
+            "plain_numbers": [
+              "5"
+            ]
+          },
+          "generated_numbers": {
+            "articles": [
+              "1",
+              "2",
+              "6098",
+              "478"
+            ],
+            "plain_numbers": [
+              "1",
+              "2",
+              "6098",
+              "478"
+            ]
+          },
+          "matches": 0,
+          "total_checks": 1,
+          "inconsistencies": [
+            "years: expected '5'"
+          ]
+        }
+      },
+      {
+        "name": "latency",
+        "score": 1.0,
+        "weight": 0.3,
+        "details": {
+          "latency_ms": 1920.9325313568115,
+          "threshold_ms": 5000
+        }
+      }
+    ],
+    "judge_scores": {
+      "relevance": 0.2,
+      "faithfulness": 0.1,
+      "correctness": 0.1,
+      "completeness": 0.1,
+      "overall": 0.125
+    },
+    "judge_reasoning": "Cevap, soruda belirtilen iş davalarındaki zamanaşımı sürelerine odaklanmamış ve yanlış bilgiler içermiştir. Ayrıca, referans cevapla hukuki anlamda örtüşmemektedir. Bu nedenle düşük puan verilmiştir.",
+    "strengths": [
+      "Hukuki terminoloji kullanımı"
+    ],
+    "weaknesses": [
+      "Soruyla ilgili olmayan bilgiler",
+      "Referans cevapla uyumsuzluk"
+    ],
+    "passed": false,
+    "final_score": 0.26949999999999996,
+    "failure_reasons": [
+      "Düşük ilgililik (0.20)",
+      "Context'e sadakatsiz (0.10)",
+      "Sayısal tutarsızlık (0.00)"
+    ]
+  },
+  {
+    "question_id": 109,
+    "question": "İşe iade davasında arabuluculuk süreci nasıl işler?",
+    "category": "unknown",
+    "difficulty": "zor",
+    "source": "7036 Sayılı İş Mahkemeleri Kanunu",
+    "generated_answer": "BÖLÜM 1 - AÇIKLAMA\n\nİş sözleşmesi feshedilen bir işçi, feshin geçersiz olduğunu düşünüyorsa, fesih bildiriminin tebliğ tarihinden itibaren bir ay içinde öncelikle arabulucuya başvurmak zorundadır. Arabuluculuk süreci sonunda anlaşmaya varılamazsa, son tutanağın düzenlendiği tarihten itibaren iki hafta içinde iş mahkemesinde dava açılabilir. Eğer taraflar anlaşırlarsa, aynı süre içinde iş mahkemesi yerine özel hakeme de gidebilirler. Arabulucuya başvurmadan doğrudan dava açılması durumunda, dava usulden reddedilir ve bu ret kararı taraflara bildirilir. Ret kararının kesinleşmesinden sonra iki hafta içinde arabulucuya başvurulabilir. Feshin geçerli bir sebebe dayandığını kanıtlama sorumluluğu işverene aittir. Ancak, işçi feshin başka bir sebebe dayandığını iddia ediyorsa, bu iddiasını ispatlamakla yükümlüdür.\n\nKanuna veya bireysel/toplu iş sözleşmesine dayanan işçi veya işveren alacağı ve tazminatı ile işe iade talebiyle açılan davalarda arabulucuya başvurulmuş olması dava şartıdır. Davacı, arabuluculuk faaliyeti sonunda anlaşmaya varılamadığına dair son tutanağın aslını veya arabulucu tarafından onaylanmış bir örneğini dava dilekçesine eklemek zorundadır. Bu zorunluluğa uyulmaması halinde mahkemece davacıya, son tutanağın bir haftalık kesin süre içinde mahkemeye sunulması gerektiği, aksi takdirde davanın usulden reddedileceği ihtarını içeren davetiye gönderilir. İhtarın gereği yerine getirilmez ise dava dilekçesi karşı tarafa tebliğe çıkarılmaksızın davanın usulden reddine karar verilir. Arabulucuya başvurulmadan dava açıldığının anlaşılması halinde herhangi bir işlem yapılmaksızın davanın, dava şartı yokluğu sebebiyle usulden reddine karar verilir.\n\nBÖLÜM 2 - HUKUKİ DAYANAKLAR\n\n*   4857 Sayılı İş Kanunu, Madde 20\n*   7036 Sayılı İş Mahkemeleri Kanunu, Madde 3",
+    "expected_answer": "Fesih bildiriminden itibaren 1 ay içinde arabulucuya başvurulmalıdır. Anlaşma sağlanamazsa 2 hafta içinde mahkemede dava açılabilir.",
+    "retrieved_articles": [
+      "Madde 20",
+      "Madde 3",
+      "Madde 3",
+      "Madde 3",
+      "Madde 3",
+      "Madde 3",
+      "Madde 3",
+      "Madde 3",
+      "Madde 3"
+    ],
+    "total_latency_ms": 3451.422691345215,
+    "heuristic_metrics": [
+      {
+        "name": "keyword_coverage",
+        "score": 1.0,
+        "weight": 1.0,
+        "details": {
+          "must_include_found": 3,
+          "must_include_total": 3,
+          "should_include_found": 0,
+          "should_include_total": 0,
+          "missing_must": []
+        }
+      },
+      {
+        "name": "citation_accuracy",
+        "score": 1.0,
+        "weight": 1.5,
+        "details": {
+          "expected": "Madde 3",
+          "expected_numbers": [
+            "3"
+          ],
+          "retrieved": [
+            "Madde 20",
+            "Madde 3",
+            "Madde 3"
+          ],
+          "source": "7036 Sayılı İş Mahkemeleri Kanunu",
+          "exact_match": true,
+          "number_match": false,
+          "partial_match": false
+        }
+      },
+      {
+        "name": "response_quality",
+        "score": 1.0,
+        "weight": 0.5,
+        "details": {
+          "word_count": 224,
+          "question_type": "unknown",
+          "expected_range": "50-300",
+          "has_structure": true,
+          "is_uncertain": false,
+          "length_score": 1.0,
+          "structure_score": 1.0
+        }
+      },
+      {
+        "name": "answer_consistency",
+        "score": 0.0,
+        "weight": 0.8,
+        "details": {
+          "expected_numbers": {
+            "months": [
+              "1"
+            ],
+            "articles": [
+              "1",
+              "2"
+            ],
+            "plain_numbers": [
+              "1",
+              "2"
+            ]
+          },
+          "generated_numbers": {
+            "articles": [
+              "1",
+              "2",
+              "4857",
+              "20",
+              "7036",
+              "3"
+            ],
+            "plain_numbers": [
+              "1",
+              "2",
+              "4857",
+              "20",
+              "7036",
+              "3"
+            ]
+          },
+          "matches": 0,
+          "total_checks": 1,
+          "inconsistencies": [
+            "months: expected '1'"
+          ]
+        }
+      },
+      {
+        "name": "latency",
+        "score": 0.8,
+        "weight": 0.3,
+        "details": {
+          "latency_ms": 3451.422691345215,
+          "threshold_ms": 5000
+        }
+      }
+    ],
+    "judge_scores": {
+      "relevance": 0.8,
+      "faithfulness": 0.9,
+      "correctness": 0.85,
+      "completeness": 0.9,
+      "overall": 0.85
+    },
+    "judge_reasoning": "Cevap, genel olarak soruya uygun ve doğru bilgiler içermektedir. Ancak, hukuki terminoloji ve dilbilgisi hataları ile gereksiz detaylar puanı düşürmüştür.",
+    "strengths": [
+      "Cevap işe iade davasında arabuluculuk sürecini detaylı bir şekilde açıklamıştır.",
+      "Cevap, işe iade davasında arabulucuya başvurma sürelerini doğru şekilde belirtmiştir."
+    ],
+    "weaknesses": [
+      "Cevapta hukuki terminoloji ve dilbilgisi hataları bulunmaktadır.",
+      "Bazı detaylar gereksiz uzun ve karmaşıktır."
+    ],
+    "passed": false,
+    "final_score": 0.81375,
+    "failure_reasons": [
+      "Sayısal tutarsızlık (0.00)"
+    ]
+  },
+  {
+    "question_id": 131,
+    "question": "2024 yılında asgari ücret ne kadardır?",
+    "category": "hallucination_test",
+    "difficulty": "orta",
+    "source": "out_of_scope_temporal",
+    "generated_answer": "BÖLÜM 1 - AÇIKLAMA\nBu konuda elimdeki yasal metinlerde yeterli bilgi bulunmamaktadır. Çünkü, güncel asgari ücret bilgisi sürekli değişebilir ve bu bilgiye erişimim şu anda mümkün değil.\n\nBÖLÜM 2 - HUKUKİ DAYANAKLAR\nYok.",
+    "expected_answer": "Bu bilgi veri setindeki kaynaklarda (2024 yılına ait güncel rakamlar) yer almamaktadır.",
+    "retrieved_articles": [
+      "Madde 24",
+      "Madde 38",
+      "Madde 25",
+      "Madde 24",
+      "Madde 39",
+      "Geçici Madde 12",
+      "Geçici Madde 24",
+      "Madde 24",
+      "Madde 424"
+    ],
+    "total_latency_ms": 1313.4899139404297,
+    "heuristic_metrics": [
+      {
+        "name": "keyword_coverage",
+        "score": 0.6499999999999999,
+        "weight": 1.0,
+        "details": {
+          "must_include_found": 1,
+          "must_include_total": 2,
+          "should_include_found": 0,
+          "should_include_total": 0,
+          "missing_must": [
+            "kapsam dışı"
+          ]
+        }
+      },
+      {
+        "name": "citation_accuracy",
+        "score": 1.0,
+        "weight": 1.5,
+        "details": {}
+      },
+      {
+        "name": "response_quality",
+        "score": 0.6616666666666666,
+        "weight": 0.5,
+        "details": {
+          "word_count": 33,
+          "question_type": "hallucination_test",
+          "expected_range": "50-300",
+          "has_structure": true,
+          "is_uncertain": false,
+          "length_score": 0.52,
+          "structure_score": 1.0
+        }
+      },
+      {
+        "name": "answer_consistency",
+        "score": 0.0,
+        "weight": 0.8,
+        "details": {
+          "expected_numbers": {
+            "years": [
+              "2024"
+            ],
+            "articles": [
+              "2024"
+            ],
+            "plain_numbers": [
+              "2024"
+            ]
+          },
+          "generated_numbers": {
+            "articles": [
+              "1",
+              "2"
+            ],
+            "plain_numbers": [
+              "1",
+              "2"
+            ]
+          },
+          "matches": 0,
+          "total_checks": 1,
+          "inconsistencies": [
+            "years: expected '2024'"
+          ]
+        }
+      },
+      {
+        "name": "latency",
+        "score": 1.0,
+        "weight": 0.3,
+        "details": {
+          "latency_ms": 1313.4899139404297,
+          "threshold_ms": 5000
+        }
+      }
+    ],
+    "judge_scores": {
+      "relevance": 0.2,
+      "faithfulness": 0.8,
+      "correctness": 0.5,
+      "completeness": 0.2,
+      "overall": 0.4
+    },
+    "judge_reasoning": "Cevap, asgari ücretin 2024 yılındaki miktarını belirtmemekte ve beklenen anahtar bilgilerin çoğunu içermemektedir. Ayrıca, doğruluk ve ilgililik düşük seviyededir. Bu nedenlerle genel olarak düşük bir puan verilmiştir.",
+    "strengths": [
+      "Cevap verilen konuya odaklı."
+    ],
+    "weaknesses": [
+      "Beklenen anahtar bilgilerin çoğunu içermiyor.",
+      "Doğruluk ve ilgililik düşük."
+    ],
+    "passed": false,
+    "final_score": 0.4922749999999999,
+    "failure_reasons": [
+      "Düşük ilgililik (0.20)"
+    ]
+  },
+  {
+    "question_id": 133,
+    "question": "İş Kanunu'nun 250. maddesi neyi düzenler?",
+    "category": "hallucination_test",
+    "difficulty": "orta",
+    "source": "out_of_scope_nonexistent",
+    "generated_answer": "BÖLÜM 1 - AÇIKLAMA\n4857 sayılı İş Kanunu'nda 250. madde bulunmamaktadır. Bu nedenle sorunuz hakkında size yardımcı olamıyorum.\n\nBÖLÜM 2 - HUKUKİ DAYANAKLAR\n4857 Sayılı İş Kanunu.",
+    "expected_answer": "İş Kanunu'nda 250. madde bulunmamaktadır.",
+    "retrieved_articles": [
+      "Madde 25",
+      "Madde 24",
+      "Madde 25",
+      "Madde 24",
+      "Madde 23",
+      "Madde 25",
+      "Madde 25",
+      "Madde 24",
+      "Madde 75"
+    ],
+    "total_latency_ms": 1124.3383884429932,
+    "heuristic_metrics": [
+      {
+        "name": "keyword_coverage",
+        "score": 0.3,
+        "weight": 1.0,
+        "details": {
+          "must_include_found": 0,
+          "must_include_total": 2,
+          "should_include_found": 0,
+          "should_include_total": 0,
+          "missing_must": [
+            "madde yok",
+            "hatalı soru"
+          ]
+        }
+      },
+      {
+        "name": "citation_accuracy",
+        "score": 1.0,
+        "weight": 1.5,
+        "details": {}
+      },
+      {
+        "name": "response_quality",
+        "score": 0.5916666666666666,
+        "weight": 0.5,
+        "details": {
+          "word_count": 27,
+          "question_type": "hallucination_test",
+          "expected_range": "50-300",
+          "has_structure": true,
+          "is_uncertain": false,
+          "length_score": 0.42,
+          "structure_score": 1.0
+        }
+      },
+      {
+        "name": "answer_consistency",
+        "score": 1.0,
+        "weight": 0.8,
+        "details": {
+          "expected_numbers": {
+            "articles": [
+              "250"
+            ],
+            "plain_numbers": [
+              "250"
+            ]
+          },
+          "generated_numbers": {
+            "articles": [
+              "1",
+              "4857",
+              "250",
+              "2",
+              "4857"
+            ],
+            "plain_numbers": [
+              "1",
+              "4857",
+              "250",
+              "2",
+              "4857"
+            ]
+          },
+          "matches": 0,
+          "total_checks": 0,
+          "inconsistencies": []
+        }
+      },
+      {
+        "name": "latency",
+        "score": 1.0,
+        "weight": 0.3,
+        "details": {
+          "latency_ms": 1124.3383884429932,
+          "threshold_ms": 5000
+        }
+      }
+    ],
+    "judge_scores": {
+      "relevance": 0.2,
+      "faithfulness": 0.5,
+      "correctness": 0.2,
+      "completeness": 0.1,
+      "overall": 0.3
+    },
+    "judge_reasoning": "Cevap, soruda belirtilen iş kanunu 250. maddesinin olmadığını doğru şekilde belirtiyor ancak gereksiz bilgiler içeriyor ve iş kanununun hangi maddelerini düzenlediği hakkında bilgi vermiyor. Bu nedenle puanlar düşük.",
+    "strengths": [
+      "Cevapta iş kanununun 250. maddesinin olmadığı doğru şekilde belirtilmiş."
+    ],
+    "weaknesses": [
+      "Cevapta gereksiz bilgiler bulunmakta.",
+      "Cevapta iş kanununun hangi maddelerini düzenlediği hakkında bilgi verilmemiş."
+    ],
+    "passed": false,
+    "final_score": 0.428625,
+    "failure_reasons": [
+      "Düşük ilgililik (0.20)"
+    ]
+  },
+  {
+    "question_id": 141,
+    "question": "Tazminat ne zaman ödenir?",
+    "category": "edge_case",
+    "difficulty": "orta",
+    "source": "edge_case_ambiguous",
+    "generated_answer": "BÖLÜM 1 - AÇIKLAMA\n\nTazminat ödemesi, farklı hukuki durumlara göre değişiklik gösterir. Örneğin, bir davada zarar gören tarafın iddiasını haklı çıkaracak kanıtlar sunması ve ekonomik durumunun gerektirmesi halinde, mahkeme davalının geçici bir ödeme yapmasına karar verebilir. Bu ödeme, daha sonra hükmedilecek tazminattan düşülür.\n\nİş hukukunda, işçinin haklı bir sebebi olmadan işe başlamaması veya aniden işi bırakması durumunda işveren, işçiden tazminat talep edebilir. İş sözleşmesinin kıdem tazminatını gerektirecek şekilde sona ermesi durumunda ise, işçiye kıdem tazminatı ödenir.\n\nTaşınmaz satışlarında, eğer satılan taşınmaz sözleşmede belirtilen yüzölçümünü kapsamıyorsa, satıcı eksik kısım için alıcıya tazminat ödemekle yükümlü olabilir.\n\nAnayasa'ya göre, hukuka aykırı bir şekilde özgürlüğü kısıtlanan kişilerin uğradığı zararlar da devlet tarafından tazmin edilir.\n\nBÖLÜM 2 - HUKUKİ DAYANAKLAR\n\n*   6098 Sayılı Türk Borçlar Kanunu, Madde 76\n*   6098 Sayılı Türk Borçlar Kanunu, Madde 439\n*   6098 Sayılı Türk Borçlar Kanunu, Madde 244\n*   4857 Sayılı İş Kanunu, Madde 112\n*   T.C. Anayasası, Madde 19",
+    "expected_answer": "Soru çok geneldir. Kıdem tazminatı fesih tarihinde, ihbar tazminatı peşin, işe iade tazminatı ise işe başlatmama durumunda ödenir. Lütfen tazminat türünü belirtiniz.",
+    "retrieved_articles": [
+      "Madde 76",
+      "Geçici Madde 1",
+      "Madde 19",
+      "Madde 439",
+      "Madde 50",
+      "Madde 112",
+      "Madde 244",
+      "Geçici Madde 12",
+      "Madde 112"
+    ],
+    "total_latency_ms": 2856.7116260528564,
+    "heuristic_metrics": [
+      {
+        "name": "keyword_coverage",
+        "score": 0.3,
+        "weight": 1.0,
+        "details": {
+          "must_include_found": 0,
+          "must_include_total": 2,
+          "should_include_found": 0,
+          "should_include_total": 0,
+          "missing_must": [
+            "belirsiz soru",
+            "tür belirtilmeli"
+          ]
+        }
+      },
+      {
+        "name": "citation_accuracy",
+        "score": 1.0,
+        "weight": 1.5,
+        "details": {}
+      },
+      {
+        "name": "response_quality",
+        "score": 1.0,
+        "weight": 0.5,
+        "details": {
+          "word_count": 151,
+          "question_type": "edge_case",
+          "expected_range": "50-300",
+          "has_structure": true,
+          "is_uncertain": false,
+          "length_score": 1.0,
+          "structure_score": 1.0
+        }
+      },
+      {
+        "name": "answer_consistency",
+        "score": 1.0,
+        "weight": 0.8,
+        "details": {
+          "expected_numbers": {},
+          "generated_numbers": {
+            "articles": [
+              "1",
+              "2",
+              "6098",
+              "76",
+              "6098",
+              "439",
+              "6098",
+              "244",
+              "4857",
+              "112",
+              "19"
+            ],
+            "plain_numbers": [
+              "1",
+              "2",
+              "6098",
+              "76",
+              "6098",
+              "439",
+              "6098",
+              "244",
+              "4857",
+              "112",
+              "19"
+            ]
+          },
+          "matches": 0,
+          "total_checks": 0,
+          "inconsistencies": []
+        }
+      },
+      {
+        "name": "latency",
+        "score": 0.8,
+        "weight": 0.3,
+        "details": {
+          "latency_ms": 2856.7116260528564,
+          "threshold_ms": 5000
+        }
+      }
+    ],
+    "judge_scores": {
+      "relevance": 0.2,
+      "faithfulness": 0.6,
+      "correctness": 0.7,
+      "completeness": 0.5,
+      "overall": 0.5
+    },
+    "judge_reasoning": "Cevap genel olarak doğru bilgiler içeriyor ancak soruyla doğrudan ilgili olmayan detaylar ve anahtar bilgilerin eksikliği puanı düşürdü. Hukuki terminoloji ve madde numaralarına dikkat edilmeli.",
+    "strengths": [
+      "Genel bilgi verilmiş",
+      "Farklı hukuki durumlar örneklenmiş"
+    ],
+    "weaknesses": [
+      "Soruyla doğrudan ilgili olmayan bilgiler verilmiş",
+      "Anahtar bilgiler eksik"
+    ],
+    "passed": false,
+    "final_score": 0.6114999999999999,
+    "failure_reasons": [
+      "Düşük ilgililik (0.20)"
+    ]
+  },
+  {
+    "question_id": 146,
+    "question": "Yapay zeka işçinin yerini alırsa tazminat ödenir mi?",
+    "category": "edge_case",
+    "difficulty": "zor",
+    "source": "4857 Sayılı İş Kanunu",
+    "generated_answer": "BÖLÜM 1 - AÇIKLAMA\nBu konuda elimdeki yasal metinlerde yeterli bilgi bulunmamaktadır.\n\nBÖLÜM 2 - HUKUKİ DAYANAKLAR\nYok.",
+    "expected_answer": "Kanunlarda 'yapay zeka' geçmez ancak bu durum 'işletmenin gerekleri' veya 'teknolojik nedenler' kapsamında geçerli fesih sayılabilir. Bu durumda işçi kıdem ve ihbar tazminatına hak kazanır.",
+    "retrieved_articles": [
+      "Madde 441",
+      "Madde 439",
+      "Geçici Madde 1",
+      "Madde 8",
+      "Madde 24",
+      "Madde 21",
+      "Madde 8",
+      "Madde 130",
+      "Geçici Madde 12"
+    ],
+    "total_latency_ms": 1063.7519359588623,
+    "heuristic_metrics": [
+      {
+        "name": "keyword_coverage",
+        "score": 0.3,
+        "weight": 1.0,
+        "details": {
+          "must_include_found": 0,
+          "must_include_total": 3,
+          "should_include_found": 0,
+          "should_include_total": 0,
+          "missing_must": [
+            "teknolojik neden",
+            "geçerli fesih",
+            "kıdem tazminatı"
+          ]
+        }
+      },
+      {
+        "name": "citation_accuracy",
+        "score": 0.0,
+        "weight": 1.5,
+        "details": {
+          "expected": "Madde 18",
+          "expected_numbers": [
+            "18"
+          ],
+          "retrieved": [
+            "Madde 441",
+            "Madde 439",
+            "Geçici Madde 1"
+          ],
+          "source": "4857 Sayılı İş Kanunu",
+          "exact_match": false,
+          "number_match": false,
+          "partial_match": false
+        }
+      },
+      {
+        "name": "response_quality",
+        "score": 0.51,
+        "weight": 0.5,
+        "details": {
+          "word_count": 18,
+          "question_type": "edge_case",
+          "expected_range": "50-300",
+          "has_structure": true,
+          "is_uncertain": false,
+          "length_score": 0.3,
+          "structure_score": 1.0
+        }
+      },
+      {
+        "name": "answer_consistency",
+        "score": 1.0,
+        "weight": 0.8,
+        "details": {
+          "expected_numbers": {},
+          "generated_numbers": {
+            "articles": [
+              "1",
+              "2"
+            ],
+            "plain_numbers": [
+              "1",
+              "2"
+            ]
+          },
+          "matches": 0,
+          "total_checks": 0,
+          "inconsistencies": []
+        }
+      },
+      {
+        "name": "latency",
+        "score": 1.0,
+        "weight": 0.3,
+        "details": {
+          "latency_ms": 1063.7519359588623,
+          "threshold_ms": 5000
+        }
+      }
+    ],
+    "judge_scores": {
+      "relevance": 0.2,
+      "faithfulness": 0.1,
+      "correctness": 0.1,
+      "completeness": 0.1,
+      "overall": 0.125
+    },
+    "judge_reasoning": "Cevap soruyla ilgili bilgi içermemekte, hukuki doğruluk ve tamlık sağlanamamıştır. Referans cevapla uyumsuzluk ve eksiklikler nedeniyle düşük puan verilmiştir.",
+    "strengths": [
+      "Yasal metinlerde bilgi olmadığı doğru şekilde belirtilmiş"
+    ],
+    "weaknesses": [
+      "Soruyla ilgili bilgi eksikliği",
+      "Hukuki doğruluk ve tamlık sağlanamamış"
+    ],
+    "passed": false,
+    "final_score": 0.21844999999999998,
+    "failure_reasons": [
+      "Düşük ilgililik (0.20)",
+      "Context'e sadakatsiz (0.10)",
+      "Yanlış/eksik atıf (0.00)"
+    ]
+  },
+  {
+    "question_id": 150,
+    "question": "İş Kanunu ile Borçlar Kanunu'ndaki iş sözleşmesi tanımları arasındaki farklar nelerdir?",
+    "category": "cross_reference",
+    "difficulty": "zor",
+    "source": "Cross Reference",
+    "generated_answer": "BÖLÜM 1 - AÇIKLAMA\n\nİş Kanunu ve Borçlar Kanunu'nda iş sözleşmesi tanımları bulunmaktadır. Her iki kanunda da iş sözleşmesi, bir tarafın (işçi) bağımlı olarak iş görmeyi, diğer tarafın (işveren) da ücret ödemeyi üstlenmesinden oluşan bir sözleşme olarak tanımlanır. Ancak Borçlar Kanunu, hizmet sözleşmesinin işçinin işverene bağımlı olarak belirli veya belirli olmayan süreyle iş görmeyi ve işverenin de ona zamana veya yapılan işe göre ücret ödemeyi üstlendiği sözleşme olduğunu belirtir. Ayrıca, işçinin işverene bir hizmeti kısmi süreli olarak düzenli biçimde yerine getirmeyi üstlendiği sözleşmelerin de hizmet sözleşmesi olduğunu ekler.\n\nBÖLÜM 2 - HUKUKİ DAYANAKLAR\n\n*   4857 Sayılı İş Kanunu Madde 8\n*   6098 Sayılı Türk Borçlar Kanunu Madde 393",
+    "expected_answer": "Her ikisi de bağımlılık ve ücret unsurlarını içerir. Ancak İş Kanunu (Md. 8) işçiyi koruyucu özel hükümler içerirken, Borçlar Kanunu (Md. 393) daha genel ve tamamlayıcı niteliktedir.",
+    "retrieved_articles": [
+      "Madde 8",
+      "Madde 393",
+      "Madde 463",
+      "Madde 400",
+      "Madde 2",
+      "Madde 394",
+      "Madde 17",
+      "Madde 395",
+      "Madde 427"
+    ],
+    "total_latency_ms": 1951.066493988037,
+    "heuristic_metrics": [
+      {
+        "name": "keyword_coverage",
+        "score": 0.6499999999999999,
+        "weight": 1.0,
+        "details": {
+          "must_include_found": 2,
+          "must_include_total": 4,
+          "should_include_found": 0,
+          "should_include_total": 0,
+          "missing_must": [
+            "özel kanun",
+            "genel kanun"
+          ]
+        }
+      },
+      {
+        "name": "citation_accuracy",
+        "score": 1.0,
+        "weight": 1.5,
+        "details": {}
+      },
+      {
+        "name": "response_quality",
+        "score": 1.0,
+        "weight": 0.5,
+        "details": {
+          "word_count": 108,
+          "question_type": "cross_reference",
+          "expected_range": "50-300",
+          "has_structure": true,
+          "is_uncertain": false,
+          "length_score": 1.0,
+          "structure_score": 1.0
+        }
+      },
+      {
+        "name": "answer_consistency",
+        "score": 1.0,
+        "weight": 0.8,
+        "details": {
+          "expected_numbers": {
+            "articles": [
+              "8",
+              "393"
+            ],
+            "plain_numbers": [
+              "8",
+              "393"
+            ]
+          },
+          "generated_numbers": {
+            "articles": [
+              "1",
+              "2",
+              "4857",
+              "8",
+              "6098",
+              "393"
+            ],
+            "plain_numbers": [
+              "1",
+              "2",
+              "4857",
+              "8",
+              "6098",
+              "393"
+            ]
+          },
+          "matches": 0,
+          "total_checks": 0,
+          "inconsistencies": []
+        }
+      },
+      {
+        "name": "latency",
+        "score": 1.0,
+        "weight": 0.3,
+        "details": {
+          "latency_ms": 1951.066493988037,
+          "threshold_ms": 5000
+        }
+      }
+    ],
+    "judge_scores": {
+      "relevance": 0.7,
+      "faithfulness": 0.8,
+      "correctness": 0.6,
+      "completeness": 0.7,
+      "overall": 0.7
+    },
+    "judge_reasoning": "Cevap ilgili konuları karşılaştırmış olsa da detaylı farkları net bir şekilde açıklamamış ve referans cevapla tam olarak örtüşmeyen bilgiler içermiştir. Bu nedenle puanlama dengeli bir şekilde yapılmıştır.",
+    "strengths": [
+      "İş Kanunu ve Borçlar Kanunu'ndaki iş sözleşmesi tanımlarını karşılaştırmış olması",
+      "Anahtar bilgileri genel hatlarıyla doğru vermiş olması"
+    ],
+    "weaknesses": [
+      "İş Kanunu ve Borçlar Kanunu'ndaki detaylı farkları daha net açıklamak gerekebilir",
+      "Referans cevapla tam olarak örtüşmeyen bilgiler içermesi"
+    ],
+    "passed": true,
+    "final_score": 0.7725,
+    "failure_reasons": []
+  }
+]

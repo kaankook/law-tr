@@ -1,0 +1,445 @@
+{
+  "_README":  {
+    "format_version": "3.1",
+    "compatibility": "test_runner. py ile uyumlu",
+    "last_validated": "2025-12-29",
+    "notes": [
+      "Her soru test_runner.py tarafından otomatik değerlendirilir",
+      "out_of_scope ve edge_case sorularında özel kurallar uygulanır",
+      "Bu veri seti golden_dataset_final. json'dan seçilen 10 sorudan oluşmaktadır"
+    ]
+  },
+  "_FIELD_DESCRIPTIONS": {
+    "id": "Benzersiz soru numarası (1-10)",
+    "question": "RAG sistemine gönderilecek soru metni",
+    "answer": {
+      "main_answer": "Beklenen referans cevap - PROMPT_TEMPLATE formatında (BÖLÜM 1 + BÖLÜM 2)",
+      "key_entities": "Cevapta bulunması gereken anahtar kavramlar (fallback must_include)",
+      "source_quote":  "Kaynak metinden birebir alıntı - quote_presence metriği için kullanılır"
+    },
+    "alternative_correct_answers": "Alternatif doğru cevaplar - semantic_correctness MAX skoru için",
+    "source":  "Ana kaynak kanun/belge adı - out_of_scope kontrolü için kritik",
+    "source_details": {
+      "document":  "Kaynak dosya adı (config.py SOURCE_MAPPING ile eşleşmeli)",
+      "article": "İlgili madde numarası - citation_accuracy kontrolü için",
+      "section": "Kanundaki bölüm/kısım bilgisi"
+    },
+    "difficulty": "kolay|orta|zor - raporlamada kategori bazlı analiz için",
+    "question_type": "olgusal|kavramsal|karşılaştırma|multi_hop_reasoning|hallucination_test|cross_reference|edge_case",
+    "evaluation_criteria": {
+      "must_include": "Cevapta ZORUNLU olması gereken terimler - exact match kontrolü",
+      "should_include": "Cevapta olması ÖNERİLEN terimler - bonus puan",
+      "must_not_hallucinate": "true ise model bilgi uydurarsa FAIL (out_of_scope sorular)",
+      "should_explain_limitation": "true ise model kısıtlamayı açıklamalı",
+      "acceptable_responses": "Kabul edilebilir alternatif cevap kalıpları"
+    },
+    "test_purpose": "Bu sorunun test amacı açıklaması"
+  },
+  "_SPECIAL_SOURCES": {
+    "out_of_scope_temporal": "Zamansal kapsam dışı - güncel rakam/tarih soruları",
+    "out_of_scope_topic": "Konu kapsam dışı - farklı kanun/alan soruları",
+    "out_of_scope_nonexistent": "Var olmayan madde/kanun soruları",
+    "out_of_scope_opinion": "Subjektif/görüş soruları",
+    "out_of_scope_future": "Gelecek tahmini soruları",
+    "edge_case_ambiguous": "Belirsiz soru - açıklama istemeli",
+    "edge_case_incomplete": "Eksik bilgi - tamamlama istemeli",
+    "edge_case_insufficient_info": "Yetersiz bilgi - yargı yapmamalı",
+    "edge_case_subjective": "Subjektif karşılaştırma - sıralama yapmamalı"
+  },
+  "_USAGE_IN_TEST_RUNNER": {
+    "semantic_correctness": "main_answer + alternative_correct_answers ile MAX similarity hesaplanır",
+    "quote_presence": "source_quote context içinde aranır (exact + semantic match)",
+    "keyword_coverage": "must_include (exact) + should_include (bonus) ile hesaplanır",
+    "citation_accuracy": "source_details.article retrieved chunks ile karşılaştırılır",
+    "llm_judge":  "Tüm veriler ENHANCED_JUDGE_PROMPT'a gönderilir"
+  },
+  "dataset_info": {
+    "version": "1.0",
+    "total_questions": 10,
+    "description": "Türk Hukuk RAG Sistemi için bronze test veri seti - golden_dataset_final.json'dan dengeli seçim",
+    "last_updated": "29.12.2025",
+    "author": "Kaan Kök",
+    "sources": [
+      "T. C. Anayasası (1.5.2709. docx)",
+      "4857 Sayılı İş Kanunu (1.5.4857.docx)",
+      "6098 Sayılı Türk Borçlar Kanunu (1.5.6098.docx)",
+      "6356 Sayılı Sendikalar ve Toplu İş Sözleşmesi Kanunu (1.5.6356.docx)",
+      "7036 Sayılı İş Mahkemeleri Kanunu (1.5.7036.docx)"
+    ]
+  },
+  "source_mapping": {
+    "1.5.2709.docx":  "T.C.  Anayasası",
+    "1.5.4857.docx": "4857 Sayılı İş Kanunu",
+    "1.5.6098.docx": "6098 Sayılı Türk Borçlar Kanunu",
+    "1.5.6356.docx": "6356 Sayılı Sendikalar ve Toplu İş Sözleşmesi Kanunu",
+    "1.5.7036.docx":  "7036 Sayılı İş Mahkemeleri Kanunu"
+  },
+  "questions": [
+    {
+      "id":  1,
+      "question": "Türkiye Cumhuriyeti hangi niteliklere sahip bir devlettir?",
+      "answer": {
+        "main_answer": "BÖLÜM 1 - AÇIKLAMA\nTürkiye Cumhuriyeti, temelleri Anayasa'nın başlangıç kısmında belirtilen ilkelere dayanan bir devlettir. Cumhuriyetin temel nitelikleri; toplumun huzuru, milli dayanışma ve adalet anlayışı içinde insan haklarına saygılı olmasıdır.  Ayrıca devletimiz, Atatürk milliyetçiliğine bağlı, demokratik, laik ve sosyal bir hukuk devleti olarak tanımlanır.\n\nBÖLÜM 2 - HUKUKİ DAYANAKLAR\n- T.C. Anayasası Madde 2",
+        "key_entities": [
+          "Atatürk milliyetçiliği",
+          "demokratik",
+          "laik",
+          "sosyal",
+          "hukuk devleti"
+        ],
+        "source_quote":  "Türkiye Cumhuriyeti, toplumun huzuru, milli dayanışma ve adalet anlayışı içinde, insan haklarına saygılı, Atatürk milliyetçiliğine bağlı, başlangıçta belirtilen temel ilkelere dayanan, demokratik, laik ve sosyal bir hukuk Devletidir."
+      },
+      "alternative_correct_answers": [
+        "Demokratik, laik ve sosyal bir hukuk devletidir.",
+        "Atatürk milliyetçiliğine bağlı, insan haklarına saygılı, demokratik, laik ve sosyal bir hukuk devletidir."
+      ],
+      "source": "T.C. Anayasası",
+      "source_details": {
+        "document": "1.5.2709.docx",
+        "article": "Madde 2",
+        "section":  "Birinci Kısım - Genel Esaslar"
+      },
+      "difficulty": "kolay",
+      "question_type": "olgusal",
+      "evaluation_criteria":  {
+        "must_include": [
+          "demokratik",
+          "laik",
+          "sosyal",
+          "hukuk devleti"
+        ],
+        "should_include": [
+          "Atatürk milliyetçiliği"
+        ],
+        "exact_match_required": false
+      }
+    },
+    {
+      "id": 2,
+      "question": "Cumhurbaşkanının görev süresi ne kadardır?",
+      "answer": {
+        "main_answer":  "BÖLÜM 1 - AÇIKLAMA\nCumhurbaşkanının görev süresi beş yıldır. Anayasa'daki kural gereği bir kimse en fazla iki defa Cumhurbaşkanı seçilebilir.\n\nBÖLÜM 2 - HUKUKİ DAYANAKLAR\n- T.C. Anayasası Madde 101",
+        "key_entities": [
+          "5 yıl",
+          "iki dönem",
+          "görev süresi"
+        ],
+        "source_quote":  "Cumhurbaşkanının görev süresi beş yıldır. Bir kimse en fazla iki defa Cumhurbaşkanı seçilebilir."
+      },
+      "alternative_correct_answers": [
+        "5 yıl, en fazla 2 dönem",
+        "Beş yıllık süre için seçilir ve iki kez seçilebilir."
+      ],
+      "source": "T.C. Anayasası",
+      "source_details": {
+        "document": "1.5.2709.docx",
+        "article": "Madde 101",
+        "section":  "Üçüncü Kısım - Cumhuriyetin Temel Organları"
+      },
+      "difficulty": "kolay",
+      "question_type":  "olgusal",
+      "evaluation_criteria":  {
+        "must_include": [
+          "5 yıl",
+          "beş yıl",
+          "iki defa",
+          "2 dönem"
+        ],
+        "exact_number_required": true
+      }
+    },
+    {
+      "id": 3,
+      "question": "Temel hak ve hürriyetler hangi durumlarda sınırlandırılabilir?",
+      "answer": {
+        "main_answer": "BÖLÜM 1 - AÇIKLAMA\nTemel hak ve hürriyetler keyfi olarak kısıtlanamaz. Bir sınırlandırma yapılabilmesi için öncelikle bunun ilgili kanununda açıkça belirtilen sebeplere dayanması gerekir.  Ancak kanuni bir dayanak olsa bile, getirilen sınırlama hakkın özüne dokunmamalıdır.  Ayrıca yapılan müdahale Anayasa'nın ruhuna, demokratik toplum düzeninin gereklerine, laik Cumhuriyet ilkelerine ve ölçülülük ilkesine uygun olmak zorundadır.\n\nBÖLÜM 2 - HUKUKİ DAYANAKLAR\n- T.C. Anayasası Madde 13",
+        "key_entities": [
+          "sınırlandırma",
+          "kanun",
+          "öz",
+          "ölçülülük",
+          "demokratik toplum"
+        ],
+        "source_quote": "Temel hak ve hürriyetler, özlerine dokunulmaksızın yalnızca Anayasanın ilgili maddelerinde belirtilen sebeplere bağlı olarak ve ancak kanunla sınırlanabilir."
+      },
+      "alternative_correct_answers": [
+        "Yalnızca Anayasada belirtilen sebeplerle ve kanunla sınırlandırılabilir.",
+        "Özlerine dokunulmadan, ölçülülük ilkesine uygun şekilde kanunla sınırlandırılabilir."
+      ],
+      "source": "T.C. Anayasası",
+      "source_details": {
+        "document": "1.5.2709.docx",
+        "article": "Madde 13",
+        "section":  "İkinci Kısım - Temel Haklar ve Ödevler"
+      },
+      "difficulty":  "orta",
+      "question_type": "kavramsal",
+      "evaluation_criteria":  {
+        "must_include": [
+          "kanun",
+          "öz",
+          "sınırlandırma"
+        ],
+        "should_include": [
+          "ölçülülük",
+          "demokratik toplum"
+        ]
+      }
+    },
+    {
+      "id": 4,
+      "question": "Deneme süreli iş sözleşmesi ne kadardır?",
+      "answer": {
+        "main_answer": "BÖLÜM 1 - AÇIKLAMA\nİş sözleşmelerine taraflarca deneme kaydı konulabilir. Bireysel iş sözleşmelerinde bu süre en çok iki ay olabilir. Ancak, sendikalı işyerlerinde toplu iş sözleşmeleri ile bu sürenin dört aya kadar uzatılması mümkündür.\n\nBÖLÜM 2 - HUKUKİ DAYANAKLAR\n- 4857 Sayılı İş Kanunu Madde 15",
+        "key_entities": [
+          "deneme süresi",
+          "2 ay",
+          "4 ay",
+          "toplu iş sözleşmesi"
+        ],
+        "source_quote": "Taraflarca iş sözleşmesine bir deneme kaydı konulduğunda, bunun süresi en çok iki ay olabilir.  Ancak deneme süresi toplu iş sözleşmeleriyle dört aya kadar uzatılabilir."
+      },
+      "alternative_correct_answers": [
+        "En fazla 2 ay, toplu sözleşme ile 4 aya uzatılabilir.",
+        "İki ay deneme süresi, toplu iş sözleşmesiyle dört aya çıkabilir."
+      ],
+      "source": "4857 Sayılı İş Kanunu",
+      "source_details": {
+        "document": "1.5.4857.docx",
+        "article":  "Madde 15",
+        "section": "İkinci Bölüm - İş Sözleşmesi"
+      },
+      "difficulty": "kolay",
+      "question_type":  "olgusal",
+      "evaluation_criteria":  {
+        "must_include": [
+          "2 ay",
+          "iki ay"
+        ],
+        "should_include":  [
+          "4 ay",
+          "dört ay",
+          "toplu iş sözleşmesi"
+        ],
+        "exact_number_required": true
+      }
+    },
+    {
+      "id": 5,
+      "question": "Yıllık ücretli izin süresi nasıl hesaplanır?",
+      "answer":  {
+        "main_answer": "BÖLÜM 1 - AÇIKLAMA\nYıllık ücretli izne hak kazanmak için en az 1 yıl çalışmış olmak gerekir.  İzin süreleri kıdeme göre şöyle belirlenir:  1 yıldan 5 yıla kadar (5 dahil) olanlara en az 14 gün, 5 yıldan fazla 15 yıldan az olanlara en az 20 gün, 15 yıl (dahil) ve daha fazla olanlara en az 26 gün izin verilir.  Yer altı işlerinde çalışanların izin süreleri 4'er gün artırılır.  Ayrıca 18 yaş ve altı ile 50 yaş ve üstü işçilerin izni 20 günden az olamaz.\n\nBÖLÜM 2 - HUKUKİ DAYANAKLAR\n- 4857 Sayılı İş Kanunu Madde 53",
+        "key_entities": [
+          "yıllık izin",
+          "14 gün",
+          "20 gün",
+          "26 gün",
+          "1-5 yıl",
+          "5-15 yıl",
+          "15+ yıl"
+        ],
+        "source_quote":  "Yıllık ücretli izin süresi, hizmet süresi...  bir yıldan beş yıla kadar (beş yıl dahil) olanlara ondört günden...  az olamaz."
+      },
+      "alternative_correct_answers": [
+        "1-5 yıl:  14 gün, 5-15 yıl: 20 gün, 15 yıl üzeri:  26 gün.",
+        "Çalışma süresine göre 14, 20 veya 26 gün izin hakkı doğar."
+      ],
+      "source": "4857 Sayılı İş Kanunu",
+      "source_details": {
+        "document":  "1.5.4857.docx",
+        "article": "Madde 53",
+        "section": "Üçüncü Bölüm - Ücret"
+      },
+      "difficulty": "orta",
+      "question_type": "olgusal",
+      "evaluation_criteria":  {
+        "must_include": [
+          "14 gün",
+          "20 gün",
+          "26 gün"
+        ],
+        "should_include":  [
+          "1 yıl",
+          "5 yıl",
+          "15 yıl"
+        ],
+        "exact_numbers_required": true
+      }
+    },
+    {
+      "id": 6,
+      "question": "Fazla çalışma ve fazla sürelerle çalışma arasındaki fark nedir?",
+      "answer": {
+        "main_answer":  "BÖLÜM 1 - AÇIKLAMA\nBu iki kavram, haftalık 45 saat sınırına göre ayrılır. 'Fazla çalışma', haftalık 45 saati aşan çalışmalardır ve saat başına ücreti %50 zamlı ödenir. 'Fazla sürelerle çalışma' ise, haftalık çalışma süresinin sözleşmeyle 45 saatin altında belirlendiği durumlarda, bu süreyi aşan ancak 45 saate kadar olan çalışmalardır; bunun saat başına ücreti ise %25 zamlı ödenir.\n\nBÖLÜM 2 - HUKUKİ DAYANAKLAR\n- 4857 Sayılı İş Kanunu Madde 41",
+        "key_entities": [
+          "fazla çalışma",
+          "fazla sürelerle çalışma",
+          "%50",
+          "%25",
+          "45 saat"
+        ],
+        "source_quote": "Her bir saat fazla çalışma için verilecek ücret normal çalışma ücretinin saat başına düşen miktarının yüzde elli yükseltilmesi suretiyle ödenir."
+      },
+      "alternative_correct_answers": [
+        "Fazla çalışma 45 saati aşar ve %50 zamlı, fazla sürelerle çalışma 45 saate kadar olup %25 zamlıdır.",
+        "45 saat üstü fazla çalışma (%50 zam), 45 saate kadar fazla süre (%25 zam)."
+      ],
+      "source":  "4857 Sayılı İş Kanunu",
+      "source_details": {
+        "document": "1.5.4857.docx",
+        "article": "Madde 41",
+        "section":  "Dördüncü Bölüm - Çalışma Süreleri"
+      },
+      "difficulty": "orta",
+      "question_type": "karşılaştırma",
+      "evaluation_criteria": {
+        "comparison_required": true,
+        "must_include": [
+          "fazla çalışma",
+          "%50",
+          "yüzde elli"
+        ],
+        "should_include":  [
+          "%25",
+          "yüzde yirmi beş",
+          "45 saat"
+        ]
+      }
+    },
+    {
+      "id": 7,
+      "question": "İşverenin iş sözleşmesini haklı nedenle derhal fesih hakkı hangi durumlarda doğar?",
+      "answer": {
+        "main_answer":  "BÖLÜM 1 - AÇIKLAMA\nİşveren, bazı ciddi durumlarda bildirim süresini beklemeden sözleşmeyi derhal feshedebilir. Bu durumlar kanunda; sağlık sebepleri (işçinin hastalığı, engelliliği veya devamsızlığı), ahlak ve iyi niyet kurallarına uymayan haller (işvereni yanıltma, hırsızlık, hakaret, görevini yapmamakta ısrar vb.) ve zorlayıcı sebepler (işyerinde işin durması vb.) olarak üç ana başlıkta toplanmıştır.\n\nBÖLÜM 2 - HUKUKİ DAYANAKLAR\n- 4857 Sayılı İş Kanunu Madde 25",
+        "key_entities": [
+          "haklı fesih",
+          "sağlık",
+          "ahlak",
+          "devamsızlık",
+          "zorlayıcı sebep"
+        ],
+        "source_quote": "Süresi belirli olsun veya olmasın işveren, aşağıda yazılı hallerde iş sözleşmesini sürenin bitiminden önce veya bildirim süresini beklemeksizin feshedebilir..."
+      },
+      "alternative_correct_answers": [
+        "Sağlık nedenleri, ahlaka aykırı davranışlar veya zorlayıcı sebepler halinde.",
+        "Devamsızlık, işvereni yanıltma, hırsızlık, güvenliği tehlikeye atma gibi hallerde."
+      ],
+      "source":  "4857 Sayılı İş Kanunu",
+      "source_details": {
+        "document": "1.5.4857.docx",
+        "article": "Madde 25",
+        "section":  "İkinci Bölüm - İş Sözleşmesi"
+      },
+      "difficulty": "zor",
+      "question_type": "kavramsal",
+      "evaluation_criteria":  {
+        "must_include": [
+          "haklı fesih",
+          "sağlık",
+          "ahlak"
+        ],
+        "should_include":  [
+          "devamsızlık",
+          "zorlayıcı sebep"
+        ]
+      }
+    },
+    {
+      "id": 8,
+      "question": "Zamanaşımı süreleri Borçlar Kanunu'nda nasıl düzenlenmiştir?",
+      "answer":  {
+        "main_answer": "BÖLÜM 1 - AÇIKLAMA\nBorçlar Kanunu'nda genel zamanaşımı süresi on yıldır. Ancak kira, faiz, ücret gibi dönemsel alacaklarda bu süre beş yıldır. Haksız fiilden kaynaklanan tazminat davalarında ise süre, zararın ve failin öğrenilmesinden itibaren iki yıl, her halükarda fiilin üzerinden on yıl geçmesiyle dolar.\n\nBÖLÜM 2 - HUKUKİ DAYANAKLAR\n- 6098 Sayılı Türk Borçlar Kanunu Madde 146-147, 72",
+        "key_entities": [
+          "zamanaşımı",
+          "10 yıl",
+          "5 yıl",
+          "2 yıl",
+          "haksız fiil"
+        ],
+        "source_quote":  "Kanunda aksine bir hüküm bulunmadıkça, her alacak on yıllık zamanaşımına tabidir."
+      },
+      "alternative_correct_answers": [
+        "Genel zamanaşımı 10 yıl, dönemsel edimler 5 yıl, haksız fiil 2 yıldır.",
+        "Kira, faiz ve ücret alacakları 5 yıl zamanaşımına tabidir."
+      ],
+      "source": "6098 Sayılı Türk Borçlar Kanunu",
+      "source_details": {
+        "document": "1.5.6098.docx",
+        "article": "Madde 146-147, 72",
+        "section": "Birinci Kısım - Genel Hükümler"
+      },
+      "difficulty": "orta",
+      "question_type": "olgusal",
+      "evaluation_criteria": {
+        "must_include": [
+          "10 yıl",
+          "5 yıl",
+          "zamanaşımı"
+        ],
+        "should_include":  [
+          "2 yıl",
+          "haksız fiil"
+        ],
+        "exact_numbers_required": true
+      }
+    },
+    {
+      "id": 9,
+      "question": "İş Kanunu'nun 250.  maddesi neyi düzenler?",
+      "answer": {
+        "main_answer":  "BÖLÜM 1 - AÇIKLAMA\nBu konuda elimdeki yasal metinlerde yeterli bilgi bulunmamaktadır.\n\nBÖLÜM 2 - HUKUKİ DAYANAKLAR\n- (Böyle bir madde mevcut değildir)",
+        "key_entities": [],
+        "source_quote": null
+      },
+      "source":  "out_of_scope_nonexistent",
+      "difficulty": "orta",
+      "question_type": "hallucination_test",
+      "evaluation_criteria": {
+        "must_not_hallucinate": true,
+        "should_explain_limitation": true,
+        "acceptable_responses": [
+          "4857 sayılı İş Kanunu'nda 250. madde bulunmamaktadır.",
+          "Böyle bir madde mevcut değildir.",
+          "İş Kanunu'nun 122 maddesi ve geçici maddeleri vardır, 250. madde yoktur."
+        ]
+      },
+      "test_purpose": "Halüsinasyon testi - var olmayan madde"
+    },
+    {
+      "id": 10,
+      "question": "Yapay zeka işçinin yerini alırsa tazminat ödenir mi?",
+      "answer": {
+        "main_answer": "BÖLÜM 1 - AÇIKLAMA\nYasal metinlerde \"yapay zeka\" ifadesi geçmese de, bu durum \"teknolojik nedenlerle işin gereklerinden kaynaklanan fesih\" kapsamında değerlendirilir. İşveren teknolojiyi yenilediği için işçiyi çıkarıyorsa, bu \"geçerli nedenle fesih\" sayılabilir. Bu durumda 1 yıldan fazla kıdemi olan işçiye kıdem tazminatı ve ihbar tazminatı ödenmesi zorunludur.  İşveren önce işçiyi başka pozisyonda değerlendirmeyi denemelidir (feshin son çare olması ilkesi).\n\nBÖLÜM 2 - HUKUKİ DAYANAKLAR\n- 4857 Sayılı İş Kanunu Madde 18, 29, 120",
+        "key_entities": [
+          "teknolojik değişiklik",
+          "geçerli fesih",
+          "kıdem tazminatı",
+          "ihbar",
+          "kaynaklarda yok"
+        ],
+        "source_quote": "Otuz veya daha fazla işçi çalıştıran işyerlerinde en az altı aylık kıdemi olan işçinin belirsiz süreli iş sözleşmesini fesheden işveren, işçinin yeterliliğinden veya davranışlarından ya da işletmenin, işyerinin veya işin gereklerinden kaynaklanan geçerli bir sebebe dayanmak zorundadır."
+      },
+      "alternative_correct_answers": [
+        "Teknolojik nedenle fesihte kıdem ve ihbar tazminatı hakları geçerlidir.",
+        "Yapay zeka spesifik olarak düzenlenmemiş, genel fesih kuralları uygulanır."
+      ],
+      "source": "4857 Sayılı İş Kanunu",
+      "source_details":  {
+        "document": "1.5.4857.docx",
+        "article": "Madde 18, 29, 120",
+        "section":  "İkinci Bölüm"
+      },
+      "difficulty": "zor",
+      "question_type": "edge_case",
+      "evaluation_criteria":  {
+        "must_acknowledge_partial_coverage": true,
+        "must_include":  [
+          "kıdem tazminatı",
+          "geçerli fesih"
+        ],
+        "should_note_limitation": true
+      },
+      "test_purpose": "Güncel/yeni konsept - mevcut kurallarla yorumlama testi"
+    }
+  ]
+}

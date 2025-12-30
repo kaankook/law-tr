@@ -1,0 +1,93 @@
+{
+  "total_questions": 5,
+  "passed": 5,
+  "failed": 0,
+  "pass_rate": 1.0,
+  "avg_final_score": 0.91975,
+  "avg_relevance": 0.92,
+  "avg_faithfulness": 0.85,
+  "avg_correctness": 0.9400000000000001,
+  "avg_completeness": 0.92,
+  "avg_overall_judge": 0.905,
+  "avg_latency_ms": 1619.9008464813232,
+  "min_latency_ms": 1155.5988788604736,
+  "max_latency_ms": 2095.0355529785156,
+  "p95_latency_ms": 2095.0355529785156,
+  "by_difficulty": {
+    "kolay": {
+      "total": 4,
+      "passed": 4,
+      "avg_score": 0.9233374999999999,
+      "pass_rate": 1.0
+    },
+    "orta": {
+      "total": 1,
+      "passed": 1,
+      "avg_score": 0.9054,
+      "pass_rate": 1.0
+    }
+  },
+  "by_category": {
+    "olgusal": {
+      "total": 4,
+      "passed": 4,
+      "avg_score": 0.9233374999999999,
+      "pass_rate": 1.0
+    },
+    "kavramsal": {
+      "total": 1,
+      "passed": 1,
+      "avg_score": 0.9054,
+      "pass_rate": 1.0
+    }
+  },
+  "by_source": {
+    "T.C. Anayasası": {
+      "total": 3,
+      "passed": 3,
+      "avg_score": 0.9400416666666667,
+      "pass_rate": 1.0
+    },
+    "T.C.  Anayasası": {
+      "total": 2,
+      "passed": 2,
+      "avg_score": 0.8893125,
+      "pass_rate": 1.0
+    }
+  },
+  "model_name": "gemini-2.0-flash",
+  "evaluator_model": "gpt-3.5-turbo",
+  "dataset_path": "c:\\Users\\kaank\\Desktop\\turkish-law-rag-assistant\\data\\test_datasets\\smoke_test.json",
+  "retriever_k": 9,
+  "timestamp": "2025-12-28T00:17:26.301023",
+  "duration_seconds": 27.878734,
+  "best_questions": [
+    {
+      "id": 1,
+      "score": 0.9404999999999999,
+      "q": "Türkiye Cumhuriyeti hangi niteliklere sahip bir de"
+    },
+    {
+      "id": 2,
+      "score": 0.94,
+      "q": "Anayasa'ya göre egemenlik kayıtsız şartsız kime ai"
+    },
+    {
+      "id": 4,
+      "score": 0.9396249999999999,
+      "q": "Devletin resmi dili hangisidir?"
+    },
+    {
+      "id": 5,
+      "score": 0.9054,
+      "q": "Anayasa'da düzenlenen eşitlik ilkesi neyi ifade ed"
+    },
+    {
+      "id": 3,
+      "score": 0.873225,
+      "q": "Türk Bayrağı'nın şekli nasıl tanımlanmıştır?"
+    }
+  ],
+  "worst_questions": [],
+  "common_failure_reasons": {}
+}

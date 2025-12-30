@@ -1,0 +1,602 @@
+[
+  {
+    "question_id": 1,
+    "question": "Türkiye Cumhuriyeti hangi niteliklere sahip bir devlettir?",
+    "category": "olgusal",
+    "difficulty": "kolay",
+    "source": "T.C. Anayasası",
+    "generated_answer": "BÖLÜM 1 - AÇIKLAMA\n\nTürkiye Cumhuriyeti, toplumun huzurunu, milli dayanışmayı ve adalet anlayışını esas alır. İnsan haklarına saygılıdır ve Atatürk milliyetçiliğine bağlıdır. Aynı zamanda demokratik, laik ve sosyal bir hukuk devletidir. Bu nitelikler anayasamızda belirtilmiştir ve değiştirilemez hükümler arasındadır.\n\nBÖLÜM 2 - HUKUKİ DAYANAKLAR\n\n*   T.C. Anayasası, Madde 2\n*   T.C. Anayasası, Madde 4",
+    "expected_answer": "Türkiye Cumhuriyeti; Atatürk milliyetçiliğine bağlı, demokratik, laik ve sosyal bir hukuk devletidir.",
+    "retrieved_articles": [
+      "Madde 2",
+      "Madde 4",
+      "Giriş",
+      "Giriş",
+      "Madde 70",
+      "Madde 12",
+      "Giriş",
+      "Madde 6",
+      "Madde 3"
+    ],
+    "total_latency_ms": 1739.2313480377197,
+    "heuristic_metrics": [
+      {
+        "name": "keyword_coverage",
+        "score": 1.0,
+        "weight": 1.0,
+        "details": {
+          "must_include_found": 4,
+          "must_include_total": 4,
+          "should_include_found": 1,
+          "should_include_total": 1,
+          "missing_must": []
+        }
+      },
+      {
+        "name": "citation_accuracy",
+        "score": 1.0,
+        "weight": 1.5,
+        "details": {
+          "expected": "Madde 2",
+          "expected_numbers": [
+            "2"
+          ],
+          "retrieved": [
+            "Madde 2",
+            "Madde 4",
+            "Giriş"
+          ],
+          "source": "T.C. Anayasası",
+          "exact_match": true,
+          "number_match": false,
+          "partial_match": false
+        }
+      },
+      {
+        "name": "response_quality",
+        "score": 1.0,
+        "weight": 0.5,
+        "details": {
+          "word_count": 54,
+          "question_type": "olgusal",
+          "expected_range": "50-300",
+          "has_structure": true,
+          "is_uncertain": false,
+          "length_score": 1.0,
+          "structure_score": 1.0
+        }
+      },
+      {
+        "name": "answer_consistency",
+        "score": 1.0,
+        "weight": 0.8,
+        "details": {
+          "expected_numbers": {},
+          "generated_numbers": {
+            "articles": [
+              "1",
+              "2",
+              "2",
+              "4"
+            ],
+            "plain_numbers": [
+              "1",
+              "2",
+              "2",
+              "4"
+            ]
+          },
+          "matches": 0,
+          "total_checks": 0,
+          "inconsistencies": []
+        }
+      },
+      {
+        "name": "latency",
+        "score": 1.0,
+        "weight": 0.3,
+        "details": {
+          "latency_ms": 1739.2313480377197,
+          "threshold_ms": 5000
+        }
+      }
+    ],
+    "judge_scores": {
+      "relevance": 0.9,
+      "faithfulness": 0.95,
+      "correctness": 0.9,
+      "completeness": 0.9,
+      "overall": 0.9
+    },
+    "judge_reasoning": "Cevap genel olarak soruya uygun ve doğru bilgiler içeriyor. Ancak, belirli referanslarda eksiklikler ve bazı cümlelerin gereksiz detaylar içermesi puanı düşürmüştür.",
+    "strengths": [
+      "Cevapta Türkiye Cumhuriyeti'nin demokratik, laik ve sosyal bir hukuk devleti olduğu doğru bir şekilde vurgulanmış.",
+      "Atatürk milliyetçiliğine bağlılık ve insan haklarına saygı gibi önemli kavramlar yer almış."
+    ],
+    "weaknesses": [
+      "Cevapta belirli maddelerdeki referanslar eksik veya yanlış verilmiş.",
+      "Bazı cümlelerin anlaşılması zor veya gereksiz detaylar içermesi."
+    ],
+    "passed": true,
+    "final_score": 0.9404999999999999,
+    "failure_reasons": []
+  },
+  {
+    "question_id": 2,
+    "question": "Anayasa'ya göre egemenlik kayıtsız şartsız kime aittir?",
+    "category": "olgusal",
+    "difficulty": "kolay",
+    "source": "T.C. Anayasası",
+    "generated_answer": "BÖLÜM 1 - AÇIKLAMA\nEgemenlik, herhangi bir sınırlama veya koşul olmaksızın Türk Milletine aittir. Türk Milleti bu egemenliği, Anayasada belirtilen ilkelere uygun olarak, yetkili kurumları aracılığıyla kullanır. Egemenliğin kullanılması hiçbir şekilde herhangi bir kişiye, gruba veya sınıfa devredilemez. Hiç kimse veya hiçbir kurum, yetkisini Anayasadan almadığı sürece devlet yetkisini kullanamaz.\n\nBÖLÜM 2 - HUKUKİ DAYANAKLAR\nT.C. Anayasası, Madde 6",
+    "expected_answer": "Egemenlik kayıtsız şartsız Türk Milletinindir.",
+    "retrieved_articles": [
+      "Madde 6",
+      "Madde 12",
+      "Madde 148",
+      "Madde 165",
+      "Madde 104",
+      "Madde 15",
+      "Madde 148",
+      "Madde 136",
+      "Madde 11"
+    ],
+    "total_latency_ms": 1860.5470657348633,
+    "heuristic_metrics": [
+      {
+        "name": "keyword_coverage",
+        "score": 0.7,
+        "weight": 1.0,
+        "details": {
+          "must_include_found": 2,
+          "must_include_total": 2,
+          "should_include_found": 0,
+          "should_include_total": 1,
+          "missing_must": []
+        }
+      },
+      {
+        "name": "citation_accuracy",
+        "score": 1.0,
+        "weight": 1.5,
+        "details": {
+          "expected": "Madde 6",
+          "expected_numbers": [
+            "6"
+          ],
+          "retrieved": [
+            "Madde 6",
+            "Madde 12",
+            "Madde 148"
+          ],
+          "source": "T.C. Anayasası",
+          "exact_match": true,
+          "number_match": false,
+          "partial_match": false
+        }
+      },
+      {
+        "name": "response_quality",
+        "score": 1.0,
+        "weight": 0.5,
+        "details": {
+          "word_count": 59,
+          "question_type": "olgusal",
+          "expected_range": "50-300",
+          "has_structure": true,
+          "is_uncertain": false,
+          "length_score": 1.0,
+          "structure_score": 1.0
+        }
+      },
+      {
+        "name": "answer_consistency",
+        "score": 1.0,
+        "weight": 0.8,
+        "details": {
+          "expected_numbers": {},
+          "generated_numbers": {
+            "articles": [
+              "1",
+              "2",
+              "6"
+            ],
+            "plain_numbers": [
+              "1",
+              "2",
+              "6"
+            ]
+          },
+          "matches": 0,
+          "total_checks": 0,
+          "inconsistencies": []
+        }
+      },
+      {
+        "name": "latency",
+        "score": 1.0,
+        "weight": 0.3,
+        "details": {
+          "latency_ms": 1860.5470657348633,
+          "threshold_ms": 5000
+        }
+      }
+    ],
+    "judge_scores": {
+      "relevance": 1.0,
+      "faithfulness": 0.8,
+      "correctness": 1.0,
+      "completeness": 1.0,
+      "overall": 0.95
+    },
+    "judge_reasoning": "Cevap soruya doğrudan ve eksiksiz cevap veriyor. Referans cevapla hukuki olarak örtüşüyor ve beklenen anahtar bilgileri içeriyor. Ancak, bazı gereksiz detaylar eklenmiş olabilir, bu nedenle sadakat puanı biraz düşük.",
+    "strengths": [
+      "Anayasa maddesine doğru referans",
+      "Anahtar bilgileri tam olarak içeriyor"
+    ],
+    "weaknesses": [],
+    "passed": true,
+    "final_score": 0.94,
+    "failure_reasons": []
+  },
+  {
+    "question_id": 3,
+    "question": "Türk Bayrağı'nın şekli nasıl tanımlanmıştır?",
+    "category": "olgusal",
+    "difficulty": "kolay",
+    "source": "T.C.  Anayasası",
+    "generated_answer": "BÖLÜM 1 - AÇIKLAMA\nTürkiye Devleti'nin bayrağı, üzerinde beyaz ay ve yıldız bulunan al renkteki bayraktır. Bayrağın şekli, ilgili kanun ile belirlenmiştir.\n\nBÖLÜM 2 - HUKUKİ DAYANAKLAR\nT.C. Anayasası, Madde 3",
+    "expected_answer": "Türk Bayrağı, beyaz ay yıldızlı al bayraktır.  Şekli kanunla belirlenir.",
+    "retrieved_articles": [
+      "Madde 3",
+      "Giriş",
+      "Madde 17",
+      "Giriş",
+      "Giriş",
+      "Madde 2",
+      "Madde 174",
+      "Madde 66",
+      "Madde 174"
+    ],
+    "total_latency_ms": 1155.5988788604736,
+    "heuristic_metrics": [
+      {
+        "name": "keyword_coverage",
+        "score": 0.85,
+        "weight": 1.0,
+        "details": {
+          "must_include_found": 3,
+          "must_include_total": 3,
+          "should_include_found": 1,
+          "should_include_total": 2,
+          "missing_must": []
+        }
+      },
+      {
+        "name": "citation_accuracy",
+        "score": 1.0,
+        "weight": 1.5,
+        "details": {
+          "expected": "Madde 3",
+          "expected_numbers": [
+            "3"
+          ],
+          "retrieved": [
+            "Madde 3",
+            "Giriş",
+            "Madde 17"
+          ],
+          "source": "T.C.  Anayasası",
+          "exact_match": true,
+          "number_match": false,
+          "partial_match": false
+        }
+      },
+      {
+        "name": "response_quality",
+        "score": 0.6383333333333332,
+        "weight": 0.5,
+        "details": {
+          "word_count": 31,
+          "question_type": "olgusal",
+          "expected_range": "50-300",
+          "has_structure": true,
+          "is_uncertain": false,
+          "length_score": 0.48,
+          "structure_score": 1.0
+        }
+      },
+      {
+        "name": "answer_consistency",
+        "score": 1.0,
+        "weight": 0.8,
+        "details": {
+          "expected_numbers": {},
+          "generated_numbers": {
+            "articles": [
+              "1",
+              "2",
+              "3"
+            ],
+            "plain_numbers": [
+              "1",
+              "2",
+              "3"
+            ]
+          },
+          "matches": 0,
+          "total_checks": 0,
+          "inconsistencies": []
+        }
+      },
+      {
+        "name": "latency",
+        "score": 1.0,
+        "weight": 0.3,
+        "details": {
+          "latency_ms": 1155.5988788604736,
+          "threshold_ms": 5000
+        }
+      }
+    ],
+    "judge_scores": {
+      "relevance": 0.8,
+      "faithfulness": 0.9,
+      "correctness": 0.9,
+      "completeness": 0.8,
+      "overall": 0.85
+    },
+    "judge_reasoning": "Cevap, Türk Bayrağı'nın beyaz ay yıldızlı al bayrak olduğunu doğru şekilde belirtmiş ve hukuki doğruluğa vurgu yapmış. Ancak al bayrağın rengi kırmızı olarak belirtilmediği ve hangi kanunla belirlendiği açıkça belirtilmediği için puan kaybı yaşanmıştır.",
+    "strengths": [
+      "Cevapta Türk Bayrağı'nın beyaz ay yıldızlı al bayrak olduğu doğru şekilde belirtilmiş.",
+      "Cevap, ilgili kanunla belirlendiğini vurgulayarak hukuki doğruluğa dikkat çekmiş."
+    ],
+    "weaknesses": [
+      "Cevapta al bayrağın rengi kırmızı olarak belirtilmemiş.",
+      "Cevapta Türk Bayrağı'nın şeklinin kanunla belirlendiği ifadesi geçmiş ancak hangi kanun olduğu belirtilmemiş."
+    ],
+    "passed": true,
+    "final_score": 0.873225,
+    "failure_reasons": []
+  },
+  {
+    "question_id": 4,
+    "question": "Devletin resmi dili hangisidir?",
+    "category": "olgusal",
+    "difficulty": "kolay",
+    "source": "T.C. Anayasası",
+    "generated_answer": "BÖLÜM 1 - AÇIKLAMA\n\nTürkiye Devleti, ülkesi ve milletiyle bölünmez bir bütündür ve bu devletin resmi dili Türkçedir.\n\nBÖLÜM 2 - HUKUKİ DAYANAKLAR\n\nT.C. Anayasası, Madde 3",
+    "expected_answer": "Türkiye Devletinin dili Türkçedir.",
+    "retrieved_articles": [
+      "Madde 3",
+      "Madde 103",
+      "Madde 104",
+      "Madde 125",
+      "Madde 42",
+      "Madde 10",
+      "Madde 5",
+      "Madde 174",
+      "Madde 99"
+    ],
+    "total_latency_ms": 1249.091386795044,
+    "heuristic_metrics": [
+      {
+        "name": "keyword_coverage",
+        "score": 1.0,
+        "weight": 1.0,
+        "details": {
+          "must_include_found": 1,
+          "must_include_total": 1,
+          "should_include_found": 0,
+          "should_include_total": 0,
+          "missing_must": []
+        }
+      },
+      {
+        "name": "citation_accuracy",
+        "score": 1.0,
+        "weight": 1.5,
+        "details": {
+          "expected": "Madde 3",
+          "expected_numbers": [
+            "3"
+          ],
+          "retrieved": [
+            "Madde 3",
+            "Madde 103",
+            "Madde 104"
+          ],
+          "source": "T.C. Anayasası",
+          "exact_match": true,
+          "number_match": false,
+          "partial_match": false
+        }
+      },
+      {
+        "name": "response_quality",
+        "score": 0.5916666666666666,
+        "weight": 0.5,
+        "details": {
+          "word_count": 27,
+          "question_type": "olgusal",
+          "expected_range": "50-300",
+          "has_structure": true,
+          "is_uncertain": false,
+          "length_score": 0.42,
+          "structure_score": 1.0
+        }
+      },
+      {
+        "name": "answer_consistency",
+        "score": 1.0,
+        "weight": 0.8,
+        "details": {
+          "expected_numbers": {},
+          "generated_numbers": {
+            "articles": [
+              "1",
+              "2",
+              "3"
+            ],
+            "plain_numbers": [
+              "1",
+              "2",
+              "3"
+            ]
+          },
+          "matches": 0,
+          "total_checks": 0,
+          "inconsistencies": []
+        }
+      },
+      {
+        "name": "latency",
+        "score": 1.0,
+        "weight": 0.3,
+        "details": {
+          "latency_ms": 1249.091386795044,
+          "threshold_ms": 5000
+        }
+      }
+    ],
+    "judge_scores": {
+      "relevance": 1.0,
+      "faithfulness": 0.8,
+      "correctness": 1.0,
+      "completeness": 1.0,
+      "overall": 0.95
+    },
+    "judge_reasoning": "Cevap soruya doğrudan ve eksiksiz cevap vermiş, hukuki terminoloji doğru kullanılmış. Ancak, context dışı bilgi eklenmiş ve faithfulness puanı düşük kalmış. Genel olarak yüksek kaliteli bir cevap.",
+    "strengths": [
+      "Cevap doğrudan soruya odaklanmış.",
+      "Hukuki terminoloji doğru kullanılmış.",
+      "Anahtar bilgiler eksiksiz verilmiş."
+    ],
+    "weaknesses": [
+      "Context dışı bilgi eklenmiş.",
+      "Faithfulness puanı düşük."
+    ],
+    "passed": true,
+    "final_score": 0.9396249999999999,
+    "failure_reasons": []
+  },
+  {
+    "question_id": 5,
+    "question": "Anayasa'da düzenlenen eşitlik ilkesi neyi ifade eder?",
+    "category": "kavramsal",
+    "difficulty": "orta",
+    "source": "T.C.  Anayasası",
+    "generated_answer": "BÖLÜM 1 - AÇIKLAMA\nAnayasamızda yer alan eşitlik ilkesi, herkesin dil, ırk, renk, cinsiyet, siyasi düşünce, felsefi inanç, din, mezhep ve benzeri nedenlerle ayrım gözetilmeksizin kanun önünde eşit olduğunu belirtir. Kadınlar ve erkekler de bu ilke gereğince eşit haklara sahiptir ve devlet bu eşitliğin hayata geçirilmesi için gerekli önlemleri almakla yükümlüdür. Bu amaçla alınacak önlemler, eşitlik ilkesine aykırı olarak yorumlanamaz. Ayrıca, çocukların, yaşlıların, engellilerin, şehit yakınlarının ve gazilerin durumları dikkate alınarak alınacak tedbirler de eşitlik ilkesine aykırı sayılmaz. Hiçbir kişiye, aileye, zümreye veya sınıfa ayrıcalık tanınamaz. Devlet kurumları ve idare makamları da tüm işlemlerinde kanun önünde eşitlik ilkesine uygun hareket etmek zorundadır.\n\nBÖLÜM 2 - HUKUKİ DAYANAKLAR\n* T.C. Anayasası, Madde 10",
+    "expected_answer": "Herkes, dil, ırk, renk, cinsiyet, siyasi düşünce, felsefi inanç, din, mezhep ve benzeri sebeplerle ayırım gözetilmeksizin kanun önünde eşittir.",
+    "retrieved_articles": [
+      "Madde 10",
+      "Madde 41",
+      "Giriş",
+      "Madde 2",
+      "Madde 148",
+      "Madde 55",
+      "Geçici Madde 19",
+      "Madde 5",
+      "Madde 42"
+    ],
+    "total_latency_ms": 2095.0355529785156,
+    "heuristic_metrics": [
+      {
+        "name": "keyword_coverage",
+        "score": 0.94,
+        "weight": 1.0,
+        "details": {
+          "must_include_found": 2,
+          "must_include_total": 2,
+          "should_include_found": 4,
+          "should_include_total": 5,
+          "missing_must": []
+        }
+      },
+      {
+        "name": "citation_accuracy",
+        "score": 1.0,
+        "weight": 1.5,
+        "details": {
+          "expected": "Madde 10",
+          "expected_numbers": [
+            "10"
+          ],
+          "retrieved": [
+            "Madde 10",
+            "Madde 41",
+            "Giriş"
+          ],
+          "source": "T.C.  Anayasası",
+          "exact_match": true,
+          "number_match": false,
+          "partial_match": false
+        }
+      },
+      {
+        "name": "response_quality",
+        "score": 1.0,
+        "weight": 0.5,
+        "details": {
+          "word_count": 112,
+          "question_type": "kavramsal",
+          "expected_range": "50-300",
+          "has_structure": true,
+          "is_uncertain": false,
+          "length_score": 1.0,
+          "structure_score": 1.0
+        }
+      },
+      {
+        "name": "answer_consistency",
+        "score": 1.0,
+        "weight": 0.8,
+        "details": {
+          "expected_numbers": {},
+          "generated_numbers": {
+            "articles": [
+              "1",
+              "2",
+              "10"
+            ],
+            "plain_numbers": [
+              "1",
+              "2",
+              "10"
+            ]
+          },
+          "matches": 0,
+          "total_checks": 0,
+          "inconsistencies": []
+        }
+      },
+      {
+        "name": "latency",
+        "score": 1.0,
+        "weight": 0.3,
+        "details": {
+          "latency_ms": 2095.0355529785156,
+          "threshold_ms": 5000
+        }
+      }
+    ],
+    "judge_scores": {
+      "relevance": 0.9,
+      "faithfulness": 0.8,
+      "correctness": 0.9,
+      "completeness": 0.9,
+      "overall": 0.875
+    },
+    "judge_reasoning": "Cevap genel olarak ilgili, sadık, doğru ve tam. Ancak gereksiz detaylar ve karmaşıklık puanı düşürdü.",
+    "strengths": [
+      "Cevapta eşitlik ilkesinin detaylı ve doğru bir şekilde açıklandı.",
+      "Anayasa maddesi referans alındı ve doğru bilgiler verildi."
+    ],
+    "weaknesses": [
+      "Cevapta gereksiz detaylara yer verildi, daha öz olabilirdi.",
+      "Bazı cümlelerin anlaşılması zor veya gereksiz karmaşıklık var."
+    ],
+    "passed": true,
+    "final_score": 0.9054,
+    "failure_reasons": []
+  }
+]

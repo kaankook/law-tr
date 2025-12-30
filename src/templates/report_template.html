@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RAG Test Raporu - {{timestamp_date}}</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+{{css_styles}}
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <h1>🧪 RAG Test Raporu</h1>
+            <p class="subtitle">Kapsamlı Değerlendirme Sonuçları</p>
+            <div class="meta">
+                <div class="meta-item">📅 {{timestamp_date}}</div>
+                <div class="meta-item">🤖 {{model_name}}</div>
+                <div class="meta-item">⚖️ {{evaluator_model}}</div>
+                <div class="meta-item">🔍 K={{retriever_k}}</div>
+                <div class="meta-item">⏱️ {{duration_seconds}}s</div>
+            </div>
+        </div>
+        
+        <!-- Score Cards -->
+        <div class="score-grid">
+            <div class="score-card {{pass_rate_class}}">
+                <div class="icon">🎯</div>
+                <div class="label">Başarı Oranı</div>
+                <div class="value">{{pass_rate_percent}}%</div>
+                <div class="subvalue">{{passed}}/{{total_questions}} başarılı</div>
+            </div>
+            <div class="score-card info">
+                <div class="icon">📊</div>
+                <div class="label">Ortalama Skor</div>
+                <div class="value">{{avg_final_score}}</div>
+                <div class="subvalue">0-1 arası</div>
+            </div>
+            <div class="score-card {{relevance_class}}">
+                <div class="icon">🎯</div>
+                <div class="label">İlgililik</div>
+                <div class="value">{{avg_relevance}}</div>
+                <div class="subvalue">Relevance</div>
+            </div>
+            <div class="score-card {{faithfulness_class}}">
+                <div class="icon">📚</div>
+                <div class="label">Sadakat</div>
+                <div class="value">{{avg_faithfulness}}</div>
+                <div class="subvalue">Faithfulness</div>
+            </div>
+            <div class="score-card {{correctness_class}}">
+                <div class="icon">✅</div>
+                <div class="label">Doğruluk</div>
+                <div class="value">{{avg_correctness}}</div>
+                <div class="subvalue">Correctness</div>
+            </div>
+            <div class="score-card info">
+                <div class="icon">⚡</div>
+                <div class="label">Ort. Yanıt Süresi</div>
+                <div class="value">{{avg_latency_sec}}s</div>
+                <div class="subvalue">P95: {{p95_latency_sec}}s</div>
+            </div>
+        </div>
+        
+        <!-- Charts Section -->
+        <div class="charts-section">
+            <div class="chart-card">
+                <h3>📈 RAG Triad Metrikleri</h3>
+                <canvas id="triadChart"></canvas>
+            </div>
+            <div class="chart-card">
+                <h3>📊 Başarı Dağılımı</h3>
+                <canvas id="passFailChart"></canvas>
+            </div>
+        </div>
+        
+        <!-- Metrics Bars -->
+        <div class="metrics-section">
+            <h3 style="margin-bottom: 20px;">📏 Detaylı Metrikler</h3>
+            {{metric_bars}}
+        </div>
+        
+        <!-- Category Analysis -->
+        <div class="category-grid">
+            <div class="category-card">
+                <h3>📚 Zorluk Seviyesine Göre</h3>
+                {{difficulty_items}}
+            </div>
+            <div class="category-card">
+                <h3>🏷️ Soru Tipine Göre</h3>
+                {{category_items}}
+            </div>
+        </div>
+        
+        <!-- Failure Analysis -->
+        <div class="metrics-section">
+            <h3 style="margin-bottom: 20px;">⚠️ Hata Analizi</h3>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px;">
+                {{failure_cards}}
+            </div>
+        </div>
+        
+        <!-- Questions Section -->
+        <div class="questions-section">
+            <h3>📝 Tüm Sorular ({{total_questions}} adet)</h3>
+            <div class="filter-bar">
+                <button class="filter-btn active" onclick="filterQuestions('all')">Tümü</button>
+                <button class="filter-btn" onclick="filterQuestions('passed')">✅ Başarılı</button>
+                <button class="filter-btn" onclick="filterQuestions('failed')">❌ Başarısız</button>
+            </div>
+            <div id="questionsContainer">
+                {{question_cards}}
+            </div>
+        </div>
+        
+        <!-- Footer -->
+        <div class="footer">
+            <p>RAG Test Runner v2.0 | Oluşturulma: {{created_at}}</p>
+            <p>Model: {{model_name}} | Evaluator: {{evaluator_model}}</p>
+        </div>
+    </div>
+    
+    <script>
+        // Triad Chart
+        const triadCtx = document.getElementById('triadChart').getContext('2d');
+        new Chart(triadCtx, {
+            type: 'radar',
+            data: {
+                labels: ['İlgililik', 'Sadakat', 'Doğruluk', 'Tamlık', 'Genel'],
+                datasets: [{
+                    label: 'Ortalama Skorlar',
+                    data: [{{avg_relevance}}, {{avg_faithfulness}}, {{avg_correctness}}, {{avg_completeness}}, {{avg_overall_judge}}],
+                    backgroundColor: 'rgba(59, 130, 246, 0.2)',
+                    borderColor: 'rgba(59, 130, 246, 1)',
+                    borderWidth: 2,
+                    pointBackgroundColor: 'rgba(59, 130, 246, 1)'
+                }]
+            },
+            options: {
+                scales: {
+                    r: {
+                        beginAtZero: true,
+                        max: 1,
+                        ticks: { color: '#a0a0c0' },
+                        grid: { color: '#2a2a5a' },
+                        pointLabels: { color: '#ffffff', font: { size: 12 } }
+                    }
+                },
+                plugins: {
+                    legend: { labels: { color: '#ffffff' } }
+                }
+            }
+        });
+        
+        // Pass/Fail Chart
+        const pfCtx = document.getElementById('passFailChart').getContext('2d');
+        new Chart(pfCtx, {
+            type: 'doughnut',
+            data: {
+                labels: ['Başarılı', 'Başarısız'],
+                datasets: [{
+                    data: [{{passed}}, {{failed}}],
+                    backgroundColor: ['#10b981', '#ef4444'],
+                    borderWidth: 0
+                }]
+            },
+            options: {
+                cutout: '60%',
+                plugins: {
+                    legend: {
+                        position: 'bottom',
+                        labels: { color: '#ffffff', padding: 20 }
+                    }
+                }
+            }
+        });
+        
+        // Filter functionality
+        function filterQuestions(filter) {
+            const cards = document.querySelectorAll('.question-card');
+            const buttons = document.querySelectorAll('.filter-btn');
+            
+            buttons.forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+            
+            cards.forEach(card => {
+                if (filter === 'all') {
+                    card.style.display = 'block';
+                } else if (filter === 'passed') {
+                    card.style.display = card.classList.contains('failed') ? 'none' : 'block';
+                } else if (filter === 'failed') {
+                    card.style.display = card.classList.contains('failed') ? 'block' : 'none';
+                }
+            });
+        }
+        
+        // Collapsible
+        document.querySelectorAll('.collapsible').forEach(el => {
+            el.addEventListener('click', function() {
+                const content = this.nextElementSibling;
+                content.classList.toggle('show');
+            });
+        });
+    </script>
+</body>
+</html>

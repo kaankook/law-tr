@@ -1,0 +1,3839 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RAG Test Raporu - 2025-12-28</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+/* RAG Test Raporu - CSS Stilleri */
+
+:root {
+    --bg-primary: #0a0a1a;
+    --bg-secondary: #12122a;
+    --bg-card: #1a1a3e;
+    --bg-hover: #252550;
+    --text-primary: #ffffff;
+    --text-secondary: #a0a0c0;
+    --accent-blue: #3b82f6;
+    --accent-purple: #8b5cf6;
+    --accent-green: #10b981;
+    --accent-red: #ef4444;
+    --accent-yellow: #f59e0b;
+    --accent-cyan: #06b6d4;
+    --border-color: #2a2a5a;
+    --gradient-1: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    --gradient-2: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+    --gradient-3: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+    background: var(--bg-primary);
+    color: var(--text-primary);
+    line-height: 1.6;
+    min-height: 100vh;
+}
+
+.container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+/* Header */
+.header {
+    background: var(--gradient-1);
+    padding: 40px;
+    border-radius: 20px;
+    margin-bottom: 30px;
+    position: relative;
+    overflow: hidden;
+}
+
+.header::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    right: -50%;
+    width: 100%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+}
+
+.header h1 {
+    font-size: 2.5rem;
+    margin-bottom: 10px;
+    position: relative;
+}
+
+.header .subtitle {
+    opacity: 0.9;
+    font-size: 1.1rem;
+}
+
+.header .meta {
+    display: flex;
+    gap: 30px;
+    margin-top: 20px;
+    flex-wrap: wrap;
+}
+
+.header .meta-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(255,255,255,0.15);
+    padding: 8px 16px;
+    border-radius: 8px;
+    font-size: 0.9rem;
+}
+
+/* Score Cards */
+.score-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 20px;
+    margin-bottom: 30px;
+}
+
+.score-card {
+    background: var(--bg-card);
+    border-radius: 16px;
+    padding: 24px;
+    text-align: center;
+    border: 1px solid var(--border-color);
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.score-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 40px rgba(59, 130, 246, 0.2);
+}
+
+.score-card .icon {
+    font-size: 2rem;
+    margin-bottom: 10px;
+}
+
+.score-card .label {
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+    margin-bottom: 8px;
+}
+
+.score-card .value {
+    font-size: 2.5rem;
+    font-weight: 700;
+}
+
+.score-card .subvalue {
+    color: var(--text-secondary);
+    font-size: 0.85rem;
+    margin-top: 5px;
+}
+
+.score-card.success .value { color: var(--accent-green); }
+.score-card.warning .value { color: var(--accent-yellow); }
+.score-card.danger .value { color: var(--accent-red); }
+.score-card.info .value { color: var(--accent-blue); }
+
+/* Charts Section */
+.charts-section {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+    gap: 20px;
+    margin-bottom: 30px;
+}
+
+.chart-card {
+    background: var(--bg-card);
+    border-radius: 16px;
+    padding: 24px;
+    border: 1px solid var(--border-color);
+}
+
+.chart-card h3 {
+    margin-bottom: 20px;
+    color: var(--text-primary);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+/* Metrics Bars */
+.metrics-section {
+    background: var(--bg-card);
+    border-radius: 16px;
+    padding: 24px;
+    margin-bottom: 30px;
+    border: 1px solid var(--border-color);
+}
+
+.metric-bar {
+    margin-bottom: 20px;
+}
+
+.metric-bar .header {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 8px;
+}
+
+.metric-bar .name {
+    font-weight: 500;
+}
+
+.metric-bar .score {
+    font-weight: 700;
+}
+
+.metric-bar .bar-bg {
+    height: 12px;
+    background: var(--bg-secondary);
+    border-radius: 6px;
+    overflow: hidden;
+}
+
+.metric-bar .bar-fill {
+    height: 100%;
+    border-radius: 6px;
+    transition: width 1s ease-out;
+}
+
+.metric-bar .bar-fill.excellent { background: var(--gradient-3); }
+.metric-bar .bar-fill.good { background: var(--accent-green); }
+.metric-bar .bar-fill.medium { background: var(--accent-yellow); }
+.metric-bar .bar-fill.poor { background: var(--accent-red); }
+
+/* Category Analysis */
+.category-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 20px;
+    margin-bottom: 30px;
+}
+
+.category-card {
+    background: var(--bg-card);
+    border-radius: 16px;
+    padding: 24px;
+    border: 1px solid var(--border-color);
+}
+
+.category-card h3 {
+    margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.category-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px;
+    background: var(--bg-secondary);
+    border-radius: 8px;
+    margin-bottom: 8px;
+}
+
+.category-item .name {
+    font-weight: 500;
+}
+
+.category-item .stats {
+    display: flex;
+    gap: 15px;
+    font-size: 0.9rem;
+}
+
+.category-item .pass-rate {
+    padding: 4px 10px;
+    border-radius: 4px;
+    font-weight: 600;
+}
+
+.category-item .pass-rate.high { background: rgba(16, 185, 129, 0.2); color: var(--accent-green); }
+.category-item .pass-rate.medium { background: rgba(245, 158, 11, 0.2); color: var(--accent-yellow); }
+.category-item .pass-rate.low { background: rgba(239, 68, 68, 0.2); color: var(--accent-red); }
+
+/* Questions Table */
+.questions-section {
+    background: var(--bg-card);
+    border-radius: 16px;
+    padding: 24px;
+    margin-bottom: 30px;
+    border: 1px solid var(--border-color);
+}
+
+.questions-section h3 {
+    margin-bottom: 20px;
+}
+
+.filter-bar {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+}
+
+.filter-btn {
+    padding: 8px 16px;
+    border: none;
+    border-radius: 8px;
+    background: var(--bg-secondary);
+    color: var(--text-primary);
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.filter-btn:hover, .filter-btn.active {
+    background: var(--accent-blue);
+}
+
+.question-card {
+    background: var(--bg-secondary);
+    border-radius: 12px;
+    padding: 20px;
+    margin-bottom: 15px;
+    border-left: 4px solid var(--accent-green);
+    transition: all 0.3s;
+}
+
+.question-card.failed {
+    border-left-color: var(--accent-red);
+}
+
+.question-card:hover {
+    background: var(--bg-hover);
+}
+
+.question-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 12px;
+}
+
+.question-id {
+    background: var(--accent-purple);
+    padding: 4px 10px;
+    border-radius: 4px;
+    font-size: 0.8rem;
+    font-weight: 600;
+}
+
+.question-status {
+    padding: 4px 12px;
+    border-radius: 4px;
+    font-weight: 600;
+    font-size: 0.85rem;
+}
+
+.question-status.pass {
+    background: rgba(16, 185, 129, 0.2);
+    color: var(--accent-green);
+}
+
+.question-status.fail {
+    background: rgba(239, 68, 68, 0.2);
+    color: var(--accent-red);
+}
+
+.question-text {
+    font-size: 1.1rem;
+    margin-bottom: 15px;
+    color: var(--text-primary);
+}
+
+.answer-section {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+    margin-bottom: 15px;
+}
+
+.answer-box {
+    background: var(--bg-primary);
+    padding: 15px;
+    border-radius: 8px;
+    font-size: 0.9rem;
+}
+
+.answer-box .label {
+    color: var(--text-secondary);
+    font-size: 0.8rem;
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.answer-box.generated { border-left: 3px solid var(--accent-cyan); }
+.answer-box.expected { border-left: 3px solid var(--accent-purple); }
+
+.scores-row {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin-bottom: 10px;
+}
+
+.score-badge {
+    padding: 6px 12px;
+    border-radius: 6px;
+    font-size: 0.8rem;
+    font-weight: 600;
+}
+
+.score-badge.high { background: rgba(16, 185, 129, 0.2); color: var(--accent-green); }
+.score-badge.medium { background: rgba(245, 158, 11, 0.2); color: var(--accent-yellow); }
+.score-badge.low { background: rgba(239, 68, 68, 0.2); color: var(--accent-red); }
+
+.judge-reasoning {
+    background: var(--bg-primary);
+    padding: 12px;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    font-style: italic;
+    color: var(--text-secondary);
+    margin-top: 10px;
+}
+
+.failure-reasons {
+    margin-top: 10px;
+    padding: 10px;
+    background: rgba(239, 68, 68, 0.1);
+    border-radius: 8px;
+    border-left: 3px solid var(--accent-red);
+}
+
+.failure-reasons .title {
+    color: var(--accent-red);
+    font-weight: 600;
+    margin-bottom: 5px;
+}
+
+/* Strengths & Weaknesses */
+.sw-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.sw-box {
+    padding: 10px;
+    border-radius: 8px;
+    font-size: 0.85rem;
+}
+
+.sw-box.strengths {
+    background: rgba(16, 185, 129, 0.1);
+    border-left: 3px solid var(--accent-green);
+}
+
+.sw-box.weaknesses {
+    background: rgba(239, 68, 68, 0.1);
+    border-left: 3px solid var(--accent-red);
+}
+
+.sw-box .title {
+    font-weight: 600;
+    margin-bottom: 5px;
+}
+
+.sw-box ul {
+    margin-left: 15px;
+}
+
+/* Collapsible */
+.collapsible {
+    cursor: pointer;
+    user-select: none;
+}
+
+.collapsible-content {
+    display: none;
+    padding-top: 15px;
+}
+
+.collapsible-content.show {
+    display: block;
+}
+
+/* Footer */
+.footer {
+    text-align: center;
+    padding: 30px;
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+}
+
+/* Failure Card */
+.failure-card {
+    background: rgba(239, 68, 68, 0.1);
+    padding: 15px;
+    border-radius: 10px;
+    border-left: 4px solid var(--accent-red);
+}
+
+.failure-card .reason {
+    font-weight: 600;
+    color: var(--accent-red);
+}
+
+.failure-card .count {
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin-top: 5px;
+}
+
+.failure-card .label {
+    color: var(--text-secondary);
+    font-size: 0.85rem;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .header h1 { font-size: 1.8rem; }
+    .score-grid { grid-template-columns: repeat(2, 1fr); }
+    .charts-section { grid-template-columns: 1fr; }
+    .answer-section { grid-template-columns: 1fr; }
+    .sw-container { grid-template-columns: 1fr; }
+}
+
+/* Animations */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.score-card, .chart-card, .question-card {
+    animation: fadeIn 0.5s ease-out forwards;
+}
+
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <h1>🧪 RAG Test Raporu</h1>
+            <p class="subtitle">Kapsamlı Değerlendirme Sonuçları</p>
+            <div class="meta">
+                <div class="meta-item">📅 2025-12-28</div>
+                <div class="meta-item">🤖 gemini-2.0-flash</div>
+                <div class="meta-item">⚖️ gpt-3.5-turbo</div>
+                <div class="meta-item">🔍 K=9</div>
+                <div class="meta-item">⏱️ 253.7s</div>
+            </div>
+        </div>
+        
+        <!-- Score Cards -->
+        <div class="score-grid">
+            <div class="score-card danger">
+                <div class="icon">🎯</div>
+                <div class="label">Başarı Oranı</div>
+                <div class="value">59.1%</div>
+                <div class="subvalue">26/44 başarılı</div>
+            </div>
+            <div class="score-card info">
+                <div class="icon">📊</div>
+                <div class="label">Ortalama Skor</div>
+                <div class="value">0.75</div>
+                <div class="subvalue">0-1 arası</div>
+            </div>
+            <div class="score-card warning">
+                <div class="icon">🎯</div>
+                <div class="label">İlgililik</div>
+                <div class="value">0.67</div>
+                <div class="subvalue">Relevance</div>
+            </div>
+            <div class="score-card warning">
+                <div class="icon">📚</div>
+                <div class="label">Sadakat</div>
+                <div class="value">0.77</div>
+                <div class="subvalue">Faithfulness</div>
+            </div>
+            <div class="score-card warning">
+                <div class="icon">✅</div>
+                <div class="label">Doğruluk</div>
+                <div class="value">0.74</div>
+                <div class="subvalue">Correctness</div>
+            </div>
+            <div class="score-card info">
+                <div class="icon">⚡</div>
+                <div class="label">Ort. Yanıt Süresi</div>
+                <div class="value">2.0s</div>
+                <div class="subvalue">P95: 3.1s</div>
+            </div>
+        </div>
+        
+        <!-- Charts Section -->
+        <div class="charts-section">
+            <div class="chart-card">
+                <h3>📈 RAG Triad Metrikleri</h3>
+                <canvas id="triadChart"></canvas>
+            </div>
+            <div class="chart-card">
+                <h3>📊 Başarı Dağılımı</h3>
+                <canvas id="passFailChart"></canvas>
+            </div>
+        </div>
+        
+        <!-- Metrics Bars -->
+        <div class="metrics-section">
+            <h3 style="margin-bottom: 20px;">📏 Detaylı Metrikler</h3>
+            
+            <div class="metric-bar">
+                <div class="header">
+                    <span class="name">İlgililik (Relevance)</span>
+                    <span class="score">0.67</span>
+                </div>
+                <div class="bar-bg">
+                    <div class="bar-fill medium" style="width: 66.5909090909091%"></div>
+                </div>
+            </div>
+            
+            <div class="metric-bar">
+                <div class="header">
+                    <span class="name">Sadakat (Faithfulness)</span>
+                    <span class="score">0.77</span>
+                </div>
+                <div class="bar-bg">
+                    <div class="bar-fill good" style="width: 77.04545454545455%"></div>
+                </div>
+            </div>
+            
+            <div class="metric-bar">
+                <div class="header">
+                    <span class="name">Doğruluk (Correctness)</span>
+                    <span class="score">0.74</span>
+                </div>
+                <div class="bar-bg">
+                    <div class="bar-fill good" style="width: 74.31818181818181%"></div>
+                </div>
+            </div>
+            
+            <div class="metric-bar">
+                <div class="header">
+                    <span class="name">Tamlık (Completeness)</span>
+                    <span class="score">0.72</span>
+                </div>
+                <div class="bar-bg">
+                    <div class="bar-fill good" style="width: 72.04545454545455%"></div>
+                </div>
+            </div>
+            
+            <div class="metric-bar">
+                <div class="header">
+                    <span class="name">Genel Judge Skoru</span>
+                    <span class="score">0.72</span>
+                </div>
+                <div class="bar-bg">
+                    <div class="bar-fill good" style="width: 72.32954545454545%"></div>
+                </div>
+            </div>
+            
+        </div>
+        
+        <!-- Category Analysis -->
+        <div class="category-grid">
+            <div class="category-card">
+                <h3>📚 Zorluk Seviyesine Göre</h3>
+                
+            <div class="category-item">
+                <span class="name">kolay</span>
+                <div class="stats">
+                    <span>10/12</span>
+                    <span class="pass-rate high">83%</span>
+                </div>
+            </div>
+            
+            <div class="category-item">
+                <span class="name">orta</span>
+                <div class="stats">
+                    <span>13/24</span>
+                    <span class="pass-rate low">54%</span>
+                </div>
+            </div>
+            
+            <div class="category-item">
+                <span class="name">zor</span>
+                <div class="stats">
+                    <span>3/8</span>
+                    <span class="pass-rate low">38%</span>
+                </div>
+            </div>
+            
+            </div>
+            <div class="category-card">
+                <h3>🏷️ Soru Tipine Göre</h3>
+                
+            <div class="category-item">
+                <span class="name">cross_reference</span>
+                <div class="stats">
+                    <span>1/1</span>
+                    <span class="pass-rate high">100%</span>
+                </div>
+            </div>
+            
+            <div class="category-item">
+                <span class="name">unknown</span>
+                <div class="stats">
+                    <span>25/39</span>
+                    <span class="pass-rate medium">64%</span>
+                </div>
+            </div>
+            
+            <div class="category-item">
+                <span class="name">hallucination_test</span>
+                <div class="stats">
+                    <span>0/2</span>
+                    <span class="pass-rate low">0%</span>
+                </div>
+            </div>
+            
+            <div class="category-item">
+                <span class="name">edge_case</span>
+                <div class="stats">
+                    <span>0/2</span>
+                    <span class="pass-rate low">0%</span>
+                </div>
+            </div>
+            
+            </div>
+        </div>
+        
+        <!-- Failure Analysis -->
+        <div class="metrics-section">
+            <h3 style="margin-bottom: 20px;">⚠️ Hata Analizi</h3>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px;">
+                
+            <div class="failure-card">
+                <div class="reason">Düşük İlgililik</div>
+                <div class="count">9</div>
+                <div class="label">kez tekrarlandı</div>
+            </div>
+            
+            <div class="failure-card">
+                <div class="reason">Yanlış Atıf</div>
+                <div class="count">9</div>
+                <div class="label">kez tekrarlandı</div>
+            </div>
+            
+            <div class="failure-card">
+                <div class="reason">Sayısal tutarsızlık</div>
+                <div class="count">7</div>
+                <div class="label">kez tekrarlandı</div>
+            </div>
+            
+            <div class="failure-card">
+                <div class="reason">Context Sadakatsizliği</div>
+                <div class="count">5</div>
+                <div class="label">kez tekrarlandı</div>
+            </div>
+            
+            </div>
+        </div>
+        
+        <!-- Questions Section -->
+        <div class="questions-section">
+            <h3>📝 Tüm Sorular (44 adet)</h3>
+            <div class="filter-bar">
+                <button class="filter-btn active" onclick="filterQuestions('all')">Tümü</button>
+                <button class="filter-btn" onclick="filterQuestions('passed')">✅ Başarılı</button>
+                <button class="filter-btn" onclick="filterQuestions('failed')">❌ Başarısız</button>
+            </div>
+            <div id="questionsContainer">
+                
+            <div class="question-card ">
+                <div class="question-header">
+                    <div>
+                        <span class="question-id">#1</span>
+                        <span style="margin-left: 10px; color: var(--text-secondary); font-size: 0.85rem;">
+                            kolay | unknown | 1760ms
+                        </span>
+                    </div>
+                    <span class="question-status pass">BAŞARILI</span>
+                </div>
+                
+                <div class="question-text">Türkiye Cumhuriyeti hangi niteliklere sahip bir devlettir?</div>
+                
+                
+                <div class="scores-row">
+                    <span class="score-badge high">İlgililik: 0.80</span>
+                    <span class="score-badge high">Sadakat: 0.90</span>
+                    <span class="score-badge high">Doğruluk: 0.90</span>
+                    <span class="score-badge high">Tamlık: 0.80</span>
+                    <span class="score-badge high">Final: 0.89</span>
+                </div>
+                
+                
+                <div class="collapsible" style="color: var(--accent-blue); cursor: pointer; margin: 10px 0;">
+                    🔍 Detayları Göster/Gizle
+                </div>
+                <div class="collapsible-content">
+                    <div class="answer-section">
+                        <div class="answer-box generated">
+                            <div class="label">🤖 Model Cevabı</div>
+                            <div>BÖLÜM 1 - AÇIKLAMA
+Türkiye Cumhuriyeti, toplumun huzurunu, milli dayanışmayı ve adalet anlayışını esas alır. İnsan haklarına saygılıdır ve Atatürk milliyetçiliğine bağlıdır. Anayasada belirtilen temel ilkelere dayanarak demokratik, laik ve sosyal bir hukuk devleti olma niteliği taşır.
+
+BÖLÜM 2 - HUKUKİ DAYANAKLAR
+T.C. Anayasası, Madde 2</div>
+                        </div>
+                        <div class="answer-box expected">
+                            <div class="label">✅ Beklenen Cevap</div>
+                            <div>Türkiye Cumhuriyeti; Atatürk milliyetçiliğine bağlı, demokratik, laik ve sosyal bir hukuk devletidir.</div>
+                        </div>
+                    </div>
+                    
+                    
+                <div class="sw-container">
+                    <div class="sw-box strengths">
+                        <div class="title">💪 Güçlü Yönler</div>
+                        <ul><li>Cevapta Türkiye Cumhuriyeti'nin Atatürk milliyetçiliğine bağlı, demokratik, laik ve sosyal bir hukuk devleti olduğu vurgulanmış.</li><li>Cevap, T.C. Anayasası'ndan alınan doğru bilgilerle desteklenmiş.</li></ul>
+                    </div>
+                    <div class="sw-box weaknesses">
+                        <div class="title">⚠️ Zayıf Yönler</div>
+                        <ul><li>Cevapta belirli anahtar kelimeler eksik veya yetersiz kullanılmış.</li><li>Cevapta daha fazla detay ve açıklama olabilirdi.</li></ul>
+                    </div>
+                </div>
+                
+                    
+                <div class="judge-reasoning">
+                    ⚖️ <strong>Judge Değerlendirmesi:</strong> Cevap, genel olarak soruya uygun ve doğru bilgiler içermektedir. Ancak, belirli anahtar kelimelerin eksikliği ve daha fazla detayın olmaması nedeniyle tam puan verilememiştir.
+                </div>
+                
+                    
+                    
+                    <div style="margin-top: 10px; font-size: 0.85rem; color: var(--text-secondary);">
+                        📚 Kaynak: T.C. Anayasası
+                    </div>
+                </div>
+            </div>
+            
+            <div class="question-card ">
+                <div class="question-header">
+                    <div>
+                        <span class="question-id">#5</span>
+                        <span style="margin-left: 10px; color: var(--text-secondary); font-size: 0.85rem;">
+                            orta | unknown | 1995ms
+                        </span>
+                    </div>
+                    <span class="question-status pass">BAŞARILI</span>
+                </div>
+                
+                <div class="question-text">Anayasa&#x27;da düzenlenen eşitlik ilkesi neyi ifade eder?</div>
+                
+                
+                <div class="scores-row">
+                    <span class="score-badge high">İlgililik: 0.80</span>
+                    <span class="score-badge high">Sadakat: 0.90</span>
+                    <span class="score-badge high">Doğruluk: 0.90</span>
+                    <span class="score-badge high">Tamlık: 0.90</span>
+                    <span class="score-badge high">Final: 0.90</span>
+                </div>
+                
+                
+                <div class="collapsible" style="color: var(--accent-blue); cursor: pointer; margin: 10px 0;">
+                    🔍 Detayları Göster/Gizle
+                </div>
+                <div class="collapsible-content">
+                    <div class="answer-section">
+                        <div class="answer-box generated">
+                            <div class="label">🤖 Model Cevabı</div>
+                            <div>BÖLÜM 1 - AÇIKLAMA
+
+Anayasa&#x27;da yer alan eşitlik ilkesi, herkesin dil, ırk, renk, cinsiyet, siyasi düşünce, felsefi inanç, din, mezhep ve benzeri nedenlerle ayrım yapılmaksızın kanun önünde eşit olduğunu belirtir. Kadınlar ve erkekler eşit haklara sahiptir ve devlet bu eşitliğin sağlanması için gerekli önlemleri almakla yükümlüdür. Çocuklar, yaşlılar, engelliler, şehit yakınları ve gaziler gibi gruplar için alınacak özel tedbirler, eşitlik ilkesine aykırı olarak değerlendirilmez. Devlet organları...</div>
+                        </div>
+                        <div class="answer-box expected">
+                            <div class="label">✅ Beklenen Cevap</div>
+                            <div>Herkes, dil, ırk, renk, cinsiyet, siyasi düşünce, felsefi inanç, din, mezhep ve benzeri sebeplerle ayırım gözetilmeksizin kanun önünde eşittir.</div>
+                        </div>
+                    </div>
+                    
+                    
+                <div class="sw-container">
+                    <div class="sw-box strengths">
+                        <div class="title">💪 Güçlü Yönler</div>
+                        <ul><li>Cevapta eşitlik ilkesinin detaylı ve doğru bir şekilde açıklandı.</li><li>Anayasa maddesi referans alındı ve doğru bilgiler verildi.</li></ul>
+                    </div>
+                    <div class="sw-box weaknesses">
+                        <div class="title">⚠️ Zayıf Yönler</div>
+                        <ul><li>Cevapta gereksiz detaylar bulunabilir, daha öz olabilirdi.</li></ul>
+                    </div>
+                </div>
+                
+                    
+                <div class="judge-reasoning">
+                    ⚖️ <strong>Judge Değerlendirmesi:</strong> Cevap, soruda belirtilen eşitlik ilkesini doğru bir şekilde açıklıyor ve Anayasa maddesine uygun bilgiler içeriyor. Ancak bazı gereksiz detaylar bulunabilir ve daha öz olabilirdi. Genel olarak, cevap yeterli düzeyde ilgili, sadık, doğru ve tam.
+                </div>
+                
+                    
+                    
+                    <div style="margin-top: 10px; font-size: 0.85rem; color: var(--text-secondary);">
+                        📚 Kaynak: T.C. Anayasası
+                    </div>
+                </div>
+            </div>
+            
+            <div class="question-card ">
+                <div class="question-header">
+                    <div>
+                        <span class="question-id">#16</span>
+                        <span style="margin-left: 10px; color: var(--text-secondary); font-size: 0.85rem;">
+                            kolay | unknown | 1328ms
+                        </span>
+                    </div>
+                    <span class="question-status pass">BAŞARILI</span>
+                </div>
+                
+                <div class="question-text">Çalışma hakkı ve ödevi nasıl tanımlanmıştır?</div>
+                
+                
+                <div class="scores-row">
+                    <span class="score-badge high">İlgililik: 0.90</span>
+                    <span class="score-badge high">Sadakat: 0.80</span>
+                    <span class="score-badge high">Doğruluk: 0.90</span>
+                    <span class="score-badge high">Tamlık: 0.90</span>
+                    <span class="score-badge high">Final: 0.90</span>
+                </div>
+                
+                
+                <div class="collapsible" style="color: var(--accent-blue); cursor: pointer; margin: 10px 0;">
+                    🔍 Detayları Göster/Gizle
+                </div>
+                <div class="collapsible-content">
+                    <div class="answer-section">
+                        <div class="answer-box generated">
+                            <div class="label">🤖 Model Cevabı</div>
+                            <div>BÖLÜM 1 - AÇIKLAMA
+Çalışma, herkesin hem hakkı hem de ödevidir. Devlet, çalışanların yaşam düzeyini yükseltmek ve çalışma hayatını iyileştirmek için çeşitli önlemler alır. Bu kapsamda çalışanları ve işsizleri korur, çalışmayı destekler, işsizliği azaltmaya yönelik uygun bir ekonomik ortam oluşturur ve çalışma barışını sağlamaya çalışır.
+
+BÖLÜM 2 - HUKUKİ DAYANAKLAR
+T.C. Anayasası, Madde 49</div>
+                        </div>
+                        <div class="answer-box expected">
+                            <div class="label">✅ Beklenen Cevap</div>
+                            <div>Çalışma, herkesin hakkı ve ödevidir. Devlet, çalışanların hayat seviyesini yükseltmek ve işsizliği önlemek için gerekli tedbirleri alır.</div>
+                        </div>
+                    </div>
+                    
+                    
+                <div class="sw-container">
+                    <div class="sw-box strengths">
+                        <div class="title">💪 Güçlü Yönler</div>
+                        <ul><li>Cevapta çalışma hakkı ve ödevi tanımı doğru ve detaylı bir şekilde verilmiş.</li><li>Cevap, T.C. Anayasası'ndan alıntı yaparak referans göstermiş.</li></ul>
+                    </div>
+                    <div class="sw-box weaknesses">
+                        <div class="title">⚠️ Zayıf Yönler</div>
+                        <ul><li>Cevapta gereksiz detaylar bulunmakta, daha öz olabilirdi.</li><li>Cevapta belirli hukuki terimlerin açıklanması veya vurgulanması eksik.</li></ul>
+                    </div>
+                </div>
+                
+                    
+                <div class="judge-reasoning">
+                    ⚖️ <strong>Judge Değerlendirmesi:</strong> Cevap, soruya oldukça ilgili ve doğru bilgiler içermektedir. Ancak, bazı gereksiz detaylar bulunmakta ve hukuki terminoloji daha vurgulu olabilirdi. Bu nedenle sadakat ve tamlık puanları düşük kalmıştır.
+                </div>
+                
+                    
+                    
+                    <div style="margin-top: 10px; font-size: 0.85rem; color: var(--text-secondary);">
+                        📚 Kaynak: T.C. Anayasası
+                    </div>
+                </div>
+            </div>
+            
+            <div class="question-card ">
+                <div class="question-header">
+                    <div>
+                        <span class="question-id">#21</span>
+                        <span style="margin-left: 10px; color: var(--text-secondary); font-size: 0.85rem;">
+                            kolay | unknown | 1023ms
+                        </span>
+                    </div>
+                    <span class="question-status pass">BAŞARILI</span>
+                </div>
+                
+                <div class="question-text">Cumhurbaşkanının görev süresi ne kadardır?</div>
+                
+                
+                <div class="scores-row">
+                    <span class="score-badge high">İlgililik: 1.00</span>
+                    <span class="score-badge high">Sadakat: 1.00</span>
+                    <span class="score-badge high">Doğruluk: 1.00</span>
+                    <span class="score-badge high">Tamlık: 1.00</span>
+                    <span class="score-badge high">Final: 0.94</span>
+                </div>
+                
+                
+                <div class="collapsible" style="color: var(--accent-blue); cursor: pointer; margin: 10px 0;">
+                    🔍 Detayları Göster/Gizle
+                </div>
+                <div class="collapsible-content">
+                    <div class="answer-section">
+                        <div class="answer-box generated">
+                            <div class="label">🤖 Model Cevabı</div>
+                            <div>BÖLÜM 1 - AÇIKLAMA
+Cumhurbaşkanının görev süresi beş yıldır. Bir kişi en fazla iki defa Cumhurbaşkanı seçilebilir.
+
+BÖLÜM 2 - HUKUKİ DAYANAKLAR
+T.C. Anayasası, Madde 101</div>
+                        </div>
+                        <div class="answer-box expected">
+                            <div class="label">✅ Beklenen Cevap</div>
+                            <div>Cumhurbaşkanının görev süresi beş yıldır. Bir kimse en fazla iki defa Cumhurbaşkanı seçilebilir.</div>
+                        </div>
+                    </div>
+                    
+                    
+                <div class="sw-container">
+                    <div class="sw-box strengths">
+                        <div class="title">💪 Güçlü Yönler</div>
+                        <ul><li>Cevap doğru ve eksiksiz.</li><li>Hukuki terminoloji doğru kullanılmış.</li></ul>
+                    </div>
+                    <div class="sw-box weaknesses">
+                        <div class="title">⚠️ Zayıf Yönler</div>
+                        <ul><li>-</li></ul>
+                    </div>
+                </div>
+                
+                    
+                <div class="judge-reasoning">
+                    ⚖️ <strong>Judge Değerlendirmesi:</strong> Cevap, soruya doğrudan cevap veriyor, verilen referans cevapla hukuki olarak örtüşüyor, context&#x27;teki bilgilere sadık kalınmış ve beklenen anahtar bilgiler tamamen kapsanmış.
+                </div>
+                
+                    
+                    
+                    <div style="margin-top: 10px; font-size: 0.85rem; color: var(--text-secondary);">
+                        📚 Kaynak: T.C. Anayasası
+                    </div>
+                </div>
+            </div>
+            
+            <div class="question-card ">
+                <div class="question-header">
+                    <div>
+                        <span class="question-id">#24</span>
+                        <span style="margin-left: 10px; color: var(--text-secondary); font-size: 0.85rem;">
+                            orta | unknown | 2017ms
+                        </span>
+                    </div>
+                    <span class="question-status pass">BAŞARILI</span>
+                </div>
+                
+                <div class="question-text">Olağanüstü hal ilan etme yetkisi kime aittir?</div>
+                
+                
+                <div class="scores-row">
+                    <span class="score-badge high">İlgililik: 0.80</span>
+                    <span class="score-badge high">Sadakat: 0.90</span>
+                    <span class="score-badge high">Doğruluk: 0.70</span>
+                    <span class="score-badge high">Tamlık: 0.80</span>
+                    <span class="score-badge high">Final: 0.85</span>
+                </div>
+                
+                
+                <div class="collapsible" style="color: var(--accent-blue); cursor: pointer; margin: 10px 0;">
+                    🔍 Detayları Göster/Gizle
+                </div>
+                <div class="collapsible-content">
+                    <div class="answer-section">
+                        <div class="answer-box generated">
+                            <div class="label">🤖 Model Cevabı</div>
+                            <div>BÖLÜM 1 - AÇIKLAMA
+Olağanüstü hal ilan etme yetkisi Cumhurbaşkanı&#x27;na aittir. Cumhurbaşkanı, savaş, savaşı gerektirecek bir durumun ortaya çıkması, seferberlik, ayaklanma, vatana veya Cumhuriyete karşı güçlü bir kalkışma, ülkenin ve milletin bölünmezliğini içten veya dıştan tehlikeye düşüren şiddet hareketlerinin yaygınlaşması, anayasal düzeni veya temel hak ve hürriyetleri ortadan kaldırmaya yönelik yaygın şiddet hareketlerinin ortaya çıkması, şiddet olayları nedeniyle kamu düzeninin ciddi şekil...</div>
+                        </div>
+                        <div class="answer-box expected">
+                            <div class="label">✅ Beklenen Cevap</div>
+                            <div>Cumhurbaşkanı; savaş, afet, tehlikeli salgın hastalık veya ağır ekonomik bunalım gibi hallerde yurdun tamamında veya bir bölgesinde, süresi altı ayı geçmemek üzere olağanüstü hal ilan edebilir.</div>
+                        </div>
+                    </div>
+                    
+                    
+                <div class="sw-container">
+                    <div class="sw-box strengths">
+                        <div class="title">💪 Güçlü Yönler</div>
+                        <ul><li>Cevapta olağanüstü hal ilan etme yetkisinin Cumhurbaşkanı'na ait olduğu doğru şekilde belirtilmiş.</li><li>Cevapta referans alınan Anayasa maddesi (Madde 119) doğru bir şekilde verilmiş.</li></ul>
+                    </div>
+                    <div class="sw-box weaknesses">
+                        <div class="title">⚠️ Zayıf Yönler</div>
+                        <ul><li>Cevapta gereksiz detaylar bulunmakta, daha öz ve net olabilirdi.</li><li>Cevapta belirli durumlar için olağanüstü hal ilan edilme sebepleri geniş bir şekilde verilmiş, daha odaklı olabilirdi.</li></ul>
+                    </div>
+                </div>
+                
+                    
+                <div class="judge-reasoning">
+                    ⚖️ <strong>Judge Değerlendirmesi:</strong> Cevap genel olarak ilgili, sadık, doğru ve tam olmakla birlikte gereksiz detaylar ve geniş açıklamalar içermektedir. Daha odaklı ve öz bir şekilde verilmiş olsaydı puanı daha yüksek olabilirdi.
+                </div>
+                
+                    
+                    
+                    <div style="margin-top: 10px; font-size: 0.85rem; color: var(--text-secondary);">
+                        📚 Kaynak: T.C. Anayasası
+                    </div>
+                </div>
+            </div>
+            
+            <div class="question-card failed">
+                <div class="question-header">
+                    <div>
+                        <span class="question-id">#25</span>
+                        <span style="margin-left: 10px; color: var(--text-secondary); font-size: 0.85rem;">
+                            kolay | unknown | 1109ms
+                        </span>
+                    </div>
+                    <span class="question-status fail">BAŞARISIZ</span>
+                </div>
+                
+                <div class="question-text">Yargı yetkisi kime aittir?</div>
+                
+                
+                <div class="scores-row">
+                    <span class="score-badge low">İlgililik: 0.20</span>
+                    <span class="score-badge medium">Sadakat: 0.50</span>
+                    <span class="score-badge low">Doğruluk: 0.30</span>
+                    <span class="score-badge low">Tamlık: 0.40</span>
+                    <span class="score-badge low">Final: 0.39</span>
+                </div>
+                
+                
+                <div class="collapsible" style="color: var(--accent-blue); cursor: pointer; margin: 10px 0;">
+                    🔍 Detayları Göster/Gizle
+                </div>
+                <div class="collapsible-content">
+                    <div class="answer-section">
+                        <div class="answer-box generated">
+                            <div class="label">🤖 Model Cevabı</div>
+                            <div>BÖLÜM 1 - AÇIKLAMA
+
+Yasama yetkisi Türk Milleti adına Türkiye Büyük Millet Meclisi&#x27;ne aittir ve bu yetki devredilemez.
+
+BÖLÜM 2 - HUKUKİ DAYANAKLAR
+T.C. Anayasası, Madde 7</div>
+                        </div>
+                        <div class="answer-box expected">
+                            <div class="label">✅ Beklenen Cevap</div>
+                            <div>Yargı yetkisi, Türk Milleti adına bağımsız ve tarafsız mahkemelerce kullanılır.</div>
+                        </div>
+                    </div>
+                    
+                    
+                <div class="sw-container">
+                    <div class="sw-box strengths">
+                        <div class="title">💪 Güçlü Yönler</div>
+                        <ul><li>Cevapta yasama yetkisinin Türk Milleti adına olduğu doğru şekilde belirtilmiş.</li></ul>
+                    </div>
+                    <div class="sw-box weaknesses">
+                        <div class="title">⚠️ Zayıf Yönler</div>
+                        <ul><li>Cevapta yargı yetkisi ile ilgili yanlış bilgi verilmiş.</li><li>Cevap referans cevapla uyumsuz.</li></ul>
+                    </div>
+                </div>
+                
+                    
+                <div class="judge-reasoning">
+                    ⚖️ <strong>Judge Değerlendirmesi:</strong> Cevap, yargı yetkisi yerine yasama yetkisi hakkında bilgi vermiş ve referans cevapla uyumsuzluk göstermiştir. Ayrıca, cevap beklenen anahtar bilgileri eksik kapsamıştır.
+                </div>
+                
+                    
+                <div class="failure-reasons">
+                    <div class="title">❌ Başarısızlık Nedenleri</div>
+                    <div>Düşük ilgililik (0.20), Yanlış/eksik atıf (0.00)</div>
+                </div>
+                
+                    
+                    <div style="margin-top: 10px; font-size: 0.85rem; color: var(--text-secondary);">
+                        📚 Kaynak: T.C. Anayasası
+                    </div>
+                </div>
+            </div>
+            
+            <div class="question-card ">
+                <div class="question-header">
+                    <div>
+                        <span class="question-id">#31</span>
+                        <span style="margin-left: 10px; color: var(--text-secondary); font-size: 0.85rem;">
+                            kolay | unknown | 2029ms
+                        </span>
+                    </div>
+                    <span class="question-status pass">BAŞARILI</span>
+                </div>
+                
+                <div class="question-text">İş Kanunu hangi işyerleri ve çalışanlar için geçerlidir?</div>
+                
+                
+                <div class="scores-row">
+                    <span class="score-badge high">İlgililik: 0.70</span>
+                    <span class="score-badge high">Sadakat: 0.80</span>
+                    <span class="score-badge medium">Doğruluk: 0.60</span>
+                    <span class="score-badge high">Tamlık: 0.70</span>
+                    <span class="score-badge high">Final: 0.77</span>
+                </div>
+                
+                
+                <div class="collapsible" style="color: var(--accent-blue); cursor: pointer; margin: 10px 0;">
+                    🔍 Detayları Göster/Gizle
+                </div>
+                <div class="collapsible-content">
+                    <div class="answer-section">
+                        <div class="answer-box generated">
+                            <div class="label">🤖 Model Cevabı</div>
+                            <div>BÖLÜM 1 - AÇIKLAMA
+İş Kanunu, genel olarak işverenler ile bir iş sözleşmesine dayanarak çalıştırılan işçilerin çalışma şartları ve ortamına ilişkin hak ve sorumlulukları düzenlemektedir. Kanun, bazı istisnalar dışında tüm işyerleri, bu işyerlerinin işverenleri, işveren vekilleri ve işçilere uygulanır, faaliyet konusuna bakılmaksızın. Ancak, deniz ve hava taşıma işleri, belirli sayıda işçi çalıştırılan tarım ve orman işleri, aile ekonomisi sınırları içindeki tarım işleri, ev hizmetleri, çıraklar,...</div>
+                        </div>
+                        <div class="answer-box expected">
+                            <div class="label">✅ Beklenen Cevap</div>
+                            <div>İş Kanunu, istisnalar dışında kalan bütün işyerlerine, bu işyerlerinin işverenleri ile işveren vekillerine ve işçilerine faaliyet konularına bakılmaksızın uygulanır.</div>
+                        </div>
+                    </div>
+                    
+                    
+                <div class="sw-container">
+                    <div class="sw-box strengths">
+                        <div class="title">💪 Güçlü Yönler</div>
+                        <ul><li>Cevapta iş kanununun genel kapsamı ve istisnaları açıklanmış</li></ul>
+                    </div>
+                    <div class="sw-box weaknesses">
+                        <div class="title">⚠️ Zayıf Yönler</div>
+                        <ul><li>Cevapta gereksiz detaylar var</li><li>Cevapta belirli istisnaların detaylı açıklaması yer alıyor</li></ul>
+                    </div>
+                </div>
+                
+                    
+                <div class="judge-reasoning">
+                    ⚖️ <strong>Judge Değerlendirmesi:</strong> Cevap genel olarak ilgili ve sadık kalmış ancak gereksiz detaylar ve belirli istisnaların ayrıntılı açıklamaları doğruluk ve tamlık puanını düşürmüş.
+                </div>
+                
+                    
+                    
+                    <div style="margin-top: 10px; font-size: 0.85rem; color: var(--text-secondary);">
+                        📚 Kaynak: 4857 Sayılı İş Kanunu
+                    </div>
+                </div>
+            </div>
+            
+            <div class="question-card ">
+                <div class="question-header">
+                    <div>
+                        <span class="question-id">#34</span>
+                        <span style="margin-left: 10px; color: var(--text-secondary); font-size: 0.85rem;">
+                            orta | unknown | 3026ms
+                        </span>
+                    </div>
+                    <span class="question-status pass">BAŞARILI</span>
+                </div>
+                
+                <div class="question-text">İş sözleşmesi ne demektir ve hangi unsurları içermelidir?</div>
+                
+                
+                <div class="scores-row">
+                    <span class="score-badge high">İlgililik: 0.80</span>
+                    <span class="score-badge high">Sadakat: 0.90</span>
+                    <span class="score-badge high">Doğruluk: 0.90</span>
+                    <span class="score-badge high">Tamlık: 0.80</span>
+                    <span class="score-badge high">Final: 0.89</span>
+                </div>
+                
+                
+                <div class="collapsible" style="color: var(--accent-blue); cursor: pointer; margin: 10px 0;">
+                    🔍 Detayları Göster/Gizle
+                </div>
+                <div class="collapsible-content">
+                    <div class="answer-section">
+                        <div class="answer-box generated">
+                            <div class="label">🤖 Model Cevabı</div>
+                            <div>BÖLÜM 1 - AÇIKLAMA
+
+İş sözleşmesi, bir işçinin bağımlı olarak iş görmeyi ve bir işverenin de buna karşılık ücret ödemeyi üstlendiği sözleşmedir. Bu sözleşme, kanunda aksi belirtilmedikçe özel bir şekle tabi değildir. Ancak, süresi bir yıl veya daha fazla olan iş sözleşmelerinin yazılı olarak yapılması zorunludur. Yazılı sözleşme yapılmadığı durumlarda, işveren işçiye en geç iki ay içinde bazı temel bilgileri içeren yazılı bir belge vermekle yükümlüdür. Bu bilgiler arasında genel ve özel çalışma ...</div>
+                        </div>
+                        <div class="answer-box expected">
+                            <div class="label">✅ Beklenen Cevap</div>
+                            <div>İş sözleşmesi, bir tarafın (işçi) bağımlı olarak iş görmeyi, diğer tarafın (işveren) da ücret ödemeyi üstlenmesinden oluşan sözleşmedir.</div>
+                        </div>
+                    </div>
+                    
+                    
+                <div class="sw-container">
+                    <div class="sw-box strengths">
+                        <div class="title">💪 Güçlü Yönler</div>
+                        <ul><li>Cevap iş sözleşmesinin tanımını doğru veriyor.</li><li>Cevapta iş sözleşmesinin unsurlarına değiniliyor.</li></ul>
+                    </div>
+                    <div class="sw-box weaknesses">
+                        <div class="title">⚠️ Zayıf Yönler</div>
+                        <ul><li>Cevapta gereksiz detaylar bulunmakta.</li><li>Referans cevapla tam örtüşmeyen bilgiler var.</li></ul>
+                    </div>
+                </div>
+                
+                    
+                <div class="judge-reasoning">
+                    ⚖️ <strong>Judge Değerlendirmesi:</strong> Cevap genel olarak ilgili, sadık, doğru ve kısmen tam. Ancak gereksiz detaylar ve referans cevapla tam örtüşmeyen bilgiler puanı düşürdü.
+                </div>
+                
+                    
+                    
+                    <div style="margin-top: 10px; font-size: 0.85rem; color: var(--text-secondary);">
+                        📚 Kaynak: 4857 Sayılı İş Kanunu
+                    </div>
+                </div>
+            </div>
+            
+            <div class="question-card ">
+                <div class="question-header">
+                    <div>
+                        <span class="question-id">#35</span>
+                        <span style="margin-left: 10px; color: var(--text-secondary); font-size: 0.85rem;">
+                            orta | unknown | 1698ms
+                        </span>
+                    </div>
+                    <span class="question-status pass">BAŞARILI</span>
+                </div>
+                
+                <div class="question-text">Belirli süreli ve belirsiz süreli iş sözleşmeleri arasındaki farklar nelerdir?</div>
+                
+                
+                <div class="scores-row">
+                    <span class="score-badge high">İlgililik: 0.90</span>
+                    <span class="score-badge high">Sadakat: 0.90</span>
+                    <span class="score-badge high">Doğruluk: 0.90</span>
+                    <span class="score-badge high">Tamlık: 0.90</span>
+                    <span class="score-badge high">Final: 0.92</span>
+                </div>
+                
+                
+                <div class="collapsible" style="color: var(--accent-blue); cursor: pointer; margin: 10px 0;">
+                    🔍 Detayları Göster/Gizle
+                </div>
+                <div class="collapsible-content">
+                    <div class="answer-section">
+                        <div class="answer-box generated">
+                            <div class="label">🤖 Model Cevabı</div>
+                            <div>BÖLÜM 1 - AÇIKLAMA
+İş ilişkisinin bir süreye bağlı olarak yapılmadığı durumlarda, sözleşme belirsiz süreli olarak kabul edilir. Ancak, belirli süreli işlerde veya belli bir işin tamamlanması ya da belirli bir olgunun ortaya çıkması gibi objektif koşullara bağlı olarak işveren ve işçi arasında yazılı olarak yapılan sözleşme, belirli süreli iş sözleşmesidir. Belirli süreli iş sözleşmeleri, esaslı bir neden olmadıkça üst üste yapılamaz; aksi takdirde iş sözleşmesi başlangıçtan itibaren belirsiz sür...</div>
+                        </div>
+                        <div class="answer-box expected">
+                            <div class="label">✅ Beklenen Cevap</div>
+                            <div>Belirli süreli iş sözleşmesi, belirli bir işin tamamlanması veya belirli bir süre için yapılır ve objektif koşul gerektirir. Belirsiz süreli sözleşmede süre belirlenmemiştir. Esaslı neden olmadıkça belirli süreli sözleşme zincirleme yapılamaz.</div>
+                        </div>
+                    </div>
+                    
+                    
+                <div class="sw-container">
+                    <div class="sw-box strengths">
+                        <div class="title">💪 Güçlü Yönler</div>
+                        <ul><li>Cevap belirli süreli ve belirsiz süreli iş sözleşmeleri arasındaki farkları açıklayıcı ve detaylı.</li><li>Cevap, referans cevapla uyumlu ve hukuki terminolojiye uygun.</li></ul>
+                    </div>
+                    <div class="sw-box weaknesses">
+                        <div class="title">⚠️ Zayıf Yönler</div>
+                        <ul><li>Cevapta gereksiz detaylar bulunabilir.</li><li>Bazı cümlelerin daha açık ve anlaşılır olması gerekebilir.</li></ul>
+                    </div>
+                </div>
+                
+                    
+                <div class="judge-reasoning">
+                    ⚖️ <strong>Judge Değerlendirmesi:</strong> Cevap, soruya ve referans cevaba oldukça uygun. Hukuki terminoloji doğru kullanılmış ve önemli anahtar bilgiler kapsamlı bir şekilde açıklanmış. Ancak, bazı gereksiz detaylar bulunmakta ve cümlelerin daha açık olması gerekebilir.
+                </div>
+                
+                    
+                    
+                    <div style="margin-top: 10px; font-size: 0.85rem; color: var(--text-secondary);">
+                        📚 Kaynak: 4857 Sayılı İş Kanunu
+                    </div>
+                </div>
+            </div>
+            
+            <div class="question-card ">
+                <div class="question-header">
+                    <div>
+                        <span class="question-id">#38</span>
+                        <span style="margin-left: 10px; color: var(--text-secondary); font-size: 0.85rem;">
+                            kolay | unknown | 1811ms
+                        </span>
+                    </div>
+                    <span class="question-status pass">BAŞARILI</span>
+                </div>
+                
+                <div class="question-text">Deneme süreli iş sözleşmesi ne kadardır?</div>
+                
+                
+                <div class="scores-row">
+                    <span class="score-badge high">İlgililik: 0.80</span>
+                    <span class="score-badge high">Sadakat: 0.90</span>
+                    <span class="score-badge high">Doğruluk: 0.90</span>
+                    <span class="score-badge high">Tamlık: 0.80</span>
+                    <span class="score-badge high">Final: 0.90</span>
+                </div>
+                
+                
+                <div class="collapsible" style="color: var(--accent-blue); cursor: pointer; margin: 10px 0;">
+                    🔍 Detayları Göster/Gizle
+                </div>
+                <div class="collapsible-content">
+                    <div class="answer-section">
+                        <div class="answer-box generated">
+                            <div class="label">🤖 Model Cevabı</div>
+                            <div>BÖLÜM 1 - AÇIKLAMA
+İş sözleşmesine deneme kaydı konulduğunda, bu süre en fazla iki ay olabilir. Ancak, toplu iş sözleşmeleri ile bu süre dört aya kadar uzatılabilir. Pazarlamacıların deneme süresi de en fazla iki ay olabilir. Çıraklıkta ise deneme süresi, mesleğin özelliğine göre bir aydan az, üç aydan fazla olamaz ve bu süre ilgili bakanlıkça belirlenir.
+
+BÖLÜM 2 - HUKUKİ DAYANAKLAR
+* 4857 Sayılı İş Kanunu, Madde 15
+* 6098 Sayılı Türk Borçlar Kanunu, Madde 454
+* 3308 Sayılı Mesleki Eğitim Kanun...</div>
+                        </div>
+                        <div class="answer-box expected">
+                            <div class="label">✅ Beklenen Cevap</div>
+                            <div>Deneme süresi en çok iki ay olabilir. Ancak toplu iş sözleşmeleriyle dört aya kadar uzatılabilir.</div>
+                        </div>
+                    </div>
+                    
+                    
+                <div class="sw-container">
+                    <div class="sw-box strengths">
+                        <div class="title">💪 Güçlü Yönler</div>
+                        <ul><li>Cevapta deneme süresinin en fazla iki ay olabileceği ve toplu iş sözleşmeleriyle dört aya kadar uzatılabileceği doğru şekilde belirtilmiş.</li><li>Cevapta referans kanun maddesi doğru bir şekilde verilmiş.</li></ul>
+                    </div>
+                    <div class="sw-box weaknesses">
+                        <div class="title">⚠️ Zayıf Yönler</div>
+                        <ul><li>Cevapta gereksiz detaylar bulunmakta.</li><li>Cevapta çıraklık deneme süresi ile ilgili gereksiz bilgi bulunmakta.</li></ul>
+                    </div>
+                </div>
+                
+                    
+                <div class="judge-reasoning">
+                    ⚖️ <strong>Judge Değerlendirmesi:</strong> Cevap, deneme süreli iş sözleşmesinin süresi ve uzatılabilirliği konusunda doğru bilgiler içermektedir. Ancak, gereksiz detaylar ve çıraklık deneme süresi ile ilgili bilgiler cevabın odaklanmasını azaltmaktadır. Bu nedenle puanlama yapıldığında bu zayıf yönler dikkate alınmıştır.
+                </div>
+                
+                    
+                    
+                    <div style="margin-top: 10px; font-size: 0.85rem; color: var(--text-secondary);">
+                        📚 Kaynak: 4857 Sayılı İş Kanunu
+                    </div>
+                </div>
+            </div>
+            
+            <div class="question-card ">
+                <div class="question-header">
+                    <div>
+                        <span class="question-id">#40</span>
+                        <span style="margin-left: 10px; color: var(--text-secondary); font-size: 0.85rem;">
+                            kolay | unknown | 2311ms
+                        </span>
+                    </div>
+                    <span class="question-status pass">BAŞARILI</span>
+                </div>
+                
+                <div class="question-text">Haftalık azami çalışma süresi kaç saattir?</div>
+                
+                
+                <div class="scores-row">
+                    <span class="score-badge high">İlgililik: 0.70</span>
+                    <span class="score-badge high">Sadakat: 0.80</span>
+                    <span class="score-badge high">Doğruluk: 0.90</span>
+                    <span class="score-badge high">Tamlık: 0.80</span>
+                    <span class="score-badge high">Final: 0.86</span>
+                </div>
+                
+                
+                <div class="collapsible" style="color: var(--accent-blue); cursor: pointer; margin: 10px 0;">
+                    🔍 Detayları Göster/Gizle
+                </div>
+                <div class="collapsible-content">
+                    <div class="answer-section">
+                        <div class="answer-box generated">
+                            <div class="label">🤖 Model Cevabı</div>
+                            <div>BÖLÜM 1 - AÇIKLAMA
+Genel olarak, bir iş yerinde haftalık en fazla çalışma süresi 45 saattir. Eğer işveren ve işçi arasında farklı bir anlaşma yoksa, bu 45 saat haftanın çalışılan günlerine eşit olarak bölünür. Ancak, taraflar anlaşarak haftalık normal çalışma süresini farklı şekilde dağıtabilirler. Bu durumda, günlük çalışma 11 saati aşmamak koşuluyla, 2 ay içinde işçinin haftalık ortalama çalışma süresi yine de normal haftalık çalışma süresini aşmamalıdır. Toplu iş sözleşmeleri ile bu denkleşti...</div>
+                        </div>
+                        <div class="answer-box expected">
+                            <div class="label">✅ Beklenen Cevap</div>
+                            <div>Genel bakımdan çalışma süresi haftada en çok kırk beş saattir.</div>
+                        </div>
+                    </div>
+                    
+                    
+                <div class="sw-container">
+                    <div class="sw-box strengths">
+                        <div class="title">💪 Güçlü Yönler</div>
+                        <ul><li>Doğru madde numarası kullanımı</li><li>Anahtar bilgilerin çoğunun doğru aktarımı</li></ul>
+                    </div>
+                    <div class="sw-box weaknesses">
+                        <div class="title">⚠️ Zayıf Yönler</div>
+                        <ul><li>Gereksiz detaylara fazla yer verme</li><li>Bazı cümlelerin karmaşıklığı</li></ul>
+                    </div>
+                </div>
+                
+                    
+                <div class="judge-reasoning">
+                    ⚖️ <strong>Judge Değerlendirmesi:</strong> Cevap soruya doğrudan odaklanmış ve genel olarak referans cevapla uyumludur. Madde numarası ve anahtar bilgilerin doğru kullanımı takdir edilebilir. Ancak, gereksiz detaylara fazla yer verilmiş ve bazı cümleler karmaşık olabilir. Bu nedenle puanlama yapılmıştır.
+                </div>
+                
+                    
+                    
+                    <div style="margin-top: 10px; font-size: 0.85rem; color: var(--text-secondary);">
+                        📚 Kaynak: 4857 Sayılı İş Kanunu
+                    </div>
+                </div>
+            </div>
+            
+            <div class="question-card ">
+                <div class="question-header">
+                    <div>
+                        <span class="question-id">#43</span>
+                        <span style="margin-left: 10px; color: var(--text-secondary); font-size: 0.85rem;">
+                            orta | unknown | 2866ms
+                        </span>
+                    </div>
+                    <span class="question-status pass">BAŞARILI</span>
+                </div>
+                
+                <div class="question-text">Yıllık ücretli izin süresi nasıl hesaplanır?</div>
+                
+                
+                <div class="scores-row">
+                    <span class="score-badge high">İlgililik: 0.90</span>
+                    <span class="score-badge high">Sadakat: 0.80</span>
+                    <span class="score-badge high">Doğruluk: 0.85</span>
+                    <span class="score-badge high">Tamlık: 0.90</span>
+                    <span class="score-badge high">Final: 0.86</span>
+                </div>
+                
+                
+                <div class="collapsible" style="color: var(--accent-blue); cursor: pointer; margin: 10px 0;">
+                    🔍 Detayları Göster/Gizle
+                </div>
+                <div class="collapsible-content">
+                    <div class="answer-section">
+                        <div class="answer-box generated">
+                            <div class="label">🤖 Model Cevabı</div>
+                            <div>BÖLÜM 1 - AÇIKLAMA
+
+Yıllık ücretli izin süresi, işyerinde işe başlama tarihinden itibaren, deneme süresi de dahil olmak üzere en az bir yıl çalışmış olan işçiler için geçerlidir. Mevsimlik veya kampanya işlerinde çalışanlara bu hükümler uygulanmaz.
+
+İzin süreleri hizmet süresine göre belirlenir:
+
+*   Bir yıldan beş yıla kadar (beş yıl dahil) olanlar için 14 gün,
+*   Beş yıldan fazla on beş yıldan az olanlar için 20 gün,
+*   On beş yıl (dahil) ve daha fazla olanlar için 26 gün.
+
+Yer altı işlerind...</div>
+                        </div>
+                        <div class="answer-box expected">
+                            <div class="label">✅ Beklenen Cevap</div>
+                            <div>Hizmet süresi 1-5 yıl olanlara 14 gün, 5-15 yıl olanlara 20 gün, 15 yıldan fazla olanlara 26 günden az olmamak üzere izin verilir.</div>
+                        </div>
+                    </div>
+                    
+                    
+                <div class="sw-container">
+                    <div class="sw-box strengths">
+                        <div class="title">💪 Güçlü Yönler</div>
+                        <ul><li>Cevapta yıllık izin sürelerinin hizmet süresine göre nasıl belirlendiği açık ve doğru bir şekilde açıklanmış.</li><li>İş Kanunu'ndan alıntılar yapılarak cevap desteklenmiş.</li></ul>
+                    </div>
+                    <div class="sw-box weaknesses">
+                        <div class="title">⚠️ Zayıf Yönler</div>
+                        <ul><li>Cevapta gereksiz detaylar bulunmakta, daha öz ve net olabilirdi.</li><li>Cevapta belirli bir sıralama ve yapı eksikliği var, daha düzenli olabilirdi.</li></ul>
+                    </div>
+                </div>
+                
+                    
+                <div class="judge-reasoning">
+                    ⚖️ <strong>Judge Değerlendirmesi:</strong> Cevap genel olarak ilgili, sadık, doğru ve tam olmakla birlikte gereksiz detaylar ve düzensizlikler içeriyor. Daha öz ve düzenli bir şekilde sunulması durumunda daha yüksek bir puan alabilir.
+                </div>
+                
+                    
+                    
+                    <div style="margin-top: 10px; font-size: 0.85rem; color: var(--text-secondary);">
+                        📚 Kaynak: 4857 Sayılı İş Kanunu
+                    </div>
+                </div>
+            </div>
+            
+            <div class="question-card ">
+                <div class="question-header">
+                    <div>
+                        <span class="question-id">#46</span>
+                        <span style="margin-left: 10px; color: var(--text-secondary); font-size: 0.85rem;">
+                            kolay | unknown | 1850ms
+                        </span>
+                    </div>
+                    <span class="question-status pass">BAŞARILI</span>
+                </div>
+                
+                <div class="question-text">Asgari ücret nasıl belirlenir ve kim tarafından tespit edilir?</div>
+                
+                
+                <div class="scores-row">
+                    <span class="score-badge high">İlgililik: 1.00</span>
+                    <span class="score-badge high">Sadakat: 1.00</span>
+                    <span class="score-badge high">Doğruluk: 1.00</span>
+                    <span class="score-badge high">Tamlık: 1.00</span>
+                    <span class="score-badge high">Final: 1.00</span>
+                </div>
+                
+                
+                <div class="collapsible" style="color: var(--accent-blue); cursor: pointer; margin: 10px 0;">
+                    🔍 Detayları Göster/Gizle
+                </div>
+                <div class="collapsible-content">
+                    <div class="answer-section">
+                        <div class="answer-box generated">
+                            <div class="label">🤖 Model Cevabı</div>
+                            <div>BÖLÜM 1 - AÇIKLAMA
+Asgari ücret, iş sözleşmesi ile çalışan işçilerin ekonomik ve sosyal durumlarının düzenlenmesi amacıyla belirlenen en düşük ücrettir. Bu ücretin sınırları, Çalışma ve Sosyal Güvenlik Bakanlığı tarafından kurulan Asgari Ücret Tespit Komisyonu aracılığıyla belirlenir. Komisyon, ücretlerin asgari sınırlarını en geç iki yılda bir tespit eder. Komisyonun kararları kesindir ve Resmi Gazete&#x27;de yayımlanarak yürürlüğe girer. Asgari ücretin tespitinde, çalışanların geçim şartları ve ülk...</div>
+                        </div>
+                        <div class="answer-box expected">
+                            <div class="label">✅ Beklenen Cevap</div>
+                            <div>Asgari ücret, Asgari Ücret Tespit Komisyonu tarafından belirlenir.</div>
+                        </div>
+                    </div>
+                    
+                    
+                <div class="sw-container">
+                    <div class="sw-box strengths">
+                        <div class="title">💪 Güçlü Yönler</div>
+                        <ul><li>Cevap soruya doğrudan cevap veriyor.</li><li>Cevap referans cevapla uyumlu.</li><li>Cevap tüm anahtar bilgileri içeriyor.</li></ul>
+                    </div>
+                    <div class="sw-box weaknesses">
+                        <div class="title">⚠️ Zayıf Yönler</div>
+                        <ul><li>-</li></ul>
+                    </div>
+                </div>
+                
+                    
+                <div class="judge-reasoning">
+                    ⚖️ <strong>Judge Değerlendirmesi:</strong> Cevap, soruya doğrudan cevap veriyor ve referans cevapla uyumlu. Ayrıca tüm anahtar bilgileri eksiksiz bir şekilde içeriyor. Bu nedenle yüksek puan verilmiştir.
+                </div>
+                
+                    
+                    
+                    <div style="margin-top: 10px; font-size: 0.85rem; color: var(--text-secondary);">
+                        📚 Kaynak: 4857 Sayılı İş Kanunu
+                    </div>
+                </div>
+            </div>
+            
+            <div class="question-card failed">
+                <div class="question-header">
+                    <div>
+                        <span class="question-id">#49</span>
+                        <span style="margin-left: 10px; color: var(--text-secondary); font-size: 0.85rem;">
+                            orta | unknown | 2532ms
+                        </span>
+                    </div>
+                    <span class="question-status fail">BAŞARISIZ</span>
+                </div>
+                
+                <div class="question-text">İhbar süresi ne kadardır?</div>
+                
+                
+                <div class="scores-row">
+                    <span class="score-badge high">İlgililik: 0.80</span>
+                    <span class="score-badge high">Sadakat: 0.90</span>
+                    <span class="score-badge high">Doğruluk: 0.90</span>
+                    <span class="score-badge high">Tamlık: 0.90</span>
+                    <span class="score-badge high">Final: 0.81</span>
+                </div>
+                
+                
+                <div class="collapsible" style="color: var(--accent-blue); cursor: pointer; margin: 10px 0;">
+                    🔍 Detayları Göster/Gizle
+                </div>
+                <div class="collapsible-content">
+                    <div class="answer-section">
+                        <div class="answer-box generated">
+                            <div class="label">🤖 Model Cevabı</div>
+                            <div>BÖLÜM 1 - AÇIKLAMA
+Belirsiz süreli iş sözleşmelerinde, iş sözleşmesinin feshedilmesi durumunda karşı tarafa önceden bildirim yapılması gerekmektedir. Bu bildirim süreleri, işçinin o iş yerinde çalıştığı süreye göre değişir. Eğer işçi altı aydan az bir süredir çalışıyorsa, bildirimden itibaren iki hafta sonra fesih geçerli olur. Altı aydan bir buçuk yıla kadar çalışmışsa, bu süre dört hafta; bir buçuk yıldan üç yıla kadar çalışmışsa altı hafta ve üç yıldan fazla çalışmışsa sekiz hafta olarak uygu...</div>
+                        </div>
+                        <div class="answer-box expected">
+                            <div class="label">✅ Beklenen Cevap</div>
+                            <div>İş sözleşmeleri; 6 aydan az kıdem için 2 hafta, 6 ay-1.5 yıl arası için 4 hafta, 1.5-3 yıl arası için 6 hafta, 3 yıldan fazla kıdem için 8 hafta sonra feshedilmiş sayılır.</div>
+                        </div>
+                    </div>
+                    
+                    
+                <div class="sw-container">
+                    <div class="sw-box strengths">
+                        <div class="title">💪 Güçlü Yönler</div>
+                        <ul><li>Cevapta ihbar süresinin kıdem süresine göre nasıl belirlendiği açıkça açıklanmış.</li><li>İş Kanunu'ndaki ihbar süresi hükümlerine uygun detaylı açıklamalar yapılmış.</li></ul>
+                    </div>
+                    <div class="sw-box weaknesses">
+                        <div class="title">⚠️ Zayıf Yönler</div>
+                        <ul><li>Cevapta kıdem tazminatı yerine ihbar tazminatı üzerinde durulmuş.</li><li>Bazı cümlelerde anlaşılması zor ifadeler kullanılmış.</li></ul>
+                    </div>
+                </div>
+                
+                    
+                <div class="judge-reasoning">
+                    ⚖️ <strong>Judge Değerlendirmesi:</strong> Cevap, soruda belirtilen ihbar süresinin nasıl hesaplandığına dair detaylı bilgiler içeriyor. Ancak, kıdem tazminatı yerine ihbar tazminatı üzerinde durulması ve bazı cümlelerde anlaşılması zor ifadeler kullanılması puanı düşürdü.
+                </div>
+                
+                    
+                <div class="failure-reasons">
+                    <div class="title">❌ Başarısızlık Nedenleri</div>
+                    <div>Sayısal tutarsızlık (0.00)</div>
+                </div>
+                
+                    
+                    <div style="margin-top: 10px; font-size: 0.85rem; color: var(--text-secondary);">
+                        📚 Kaynak: 4857 Sayılı İş Kanunu
+                    </div>
+                </div>
+            </div>
+            
+            <div class="question-card ">
+                <div class="question-header">
+                    <div>
+                        <span class="question-id">#50</span>
+                        <span style="margin-left: 10px; color: var(--text-secondary); font-size: 0.85rem;">
+                            zor | unknown | 2460ms
+                        </span>
+                    </div>
+                    <span class="question-status pass">BAŞARILI</span>
+                </div>
+                
+                <div class="question-text">İşverenin iş sözleşmesini haklı nedenle derhal fesih hakkı hangi durumlarda doğar?</div>
+                
+                
+                <div class="scores-row">
+                    <span class="score-badge high">İlgililik: 0.80</span>
+                    <span class="score-badge high">Sadakat: 0.90</span>
+                    <span class="score-badge high">Doğruluk: 0.85</span>
+                    <span class="score-badge high">Tamlık: 0.90</span>
+                    <span class="score-badge high">Final: 0.89</span>
+                </div>
+                
+                
+                <div class="collapsible" style="color: var(--accent-blue); cursor: pointer; margin: 10px 0;">
+                    🔍 Detayları Göster/Gizle
+                </div>
+                <div class="collapsible-content">
+                    <div class="answer-section">
+                        <div class="answer-box generated">
+                            <div class="label">🤖 Model Cevabı</div>
+                            <div>BÖLÜM 1 - AÇIKLAMA
+
+İşveren, bazı durumlarda iş sözleşmesini derhal feshetme hakkına sahiptir. Bu durumlar genel olarak İş Kanunu&#x27;nda belirtilmiştir. Örneğin, işçinin kendi kusuru veya düzensiz yaşamı nedeniyle hastalanması ve bu durumun belirli bir süre devamsızlığa yol açması veya işçinin hastalığının tedavi edilemez nitelikte olması ve işyerinde çalışmasının sakıncalı bulunması gibi sağlık sebepleri işverene fesih hakkı verebilir. Ayrıca, işçinin ahlak ve iyi niyet kurallarına aykırı davranış...</div>
+                        </div>
+                        <div class="answer-box expected">
+                            <div class="label">✅ Beklenen Cevap</div>
+                            <div>İşveren; sağlık sebepleri, ahlak ve iyi niyet kurallarına uymayan haller (örn: devamsızlık, hırsızlık) ve zorlayıcı sebepler hallerinde sözleşmeyi derhal feshedebilir.</div>
+                        </div>
+                    </div>
+                    
+                    
+                <div class="sw-container">
+                    <div class="sw-box strengths">
+                        <div class="title">💪 Güçlü Yönler</div>
+                        <ul><li>Cevapta işverenin haklı nedenle derhal fesih hakkının hangi durumlarda doğduğu açık ve net bir şekilde açıklanmıştır.</li><li>Cevapta işverenin sağlık sebepleri, ahlak ve iyi niyet kurallarına uymayan haller ve zorlayıcı sebepler gibi durumlarda sözleşmeyi derhal feshetme hakkına sahip olduğu doğru bir şekilde belirtilmiştir.</li></ul>
+                    </div>
+                    <div class="sw-box weaknesses">
+                        <div class="title">⚠️ Zayıf Yönler</div>
+                        <ul><li>Cevapta gereksiz detaylara yer verilmiş, daha öz ve net bir şekilde ifade edilebilirdi.</li><li>Cevapta belirli maddelerin doğrudan referans verilmeden genel olarak açıklanması eksiklik olarak değerlendirilebilir.</li></ul>
+                    </div>
+                </div>
+                
+                    
+                <div class="judge-reasoning">
+                    ⚖️ <strong>Judge Değerlendirmesi:</strong> Cevap, soruda belirtilen işverenin iş sözleşmesini haklı nedenle derhal fesih hakkının hangi durumlarda doğduğunu açıklayarak ilgili ve doğru bilgiler vermiştir. Ancak gereksiz detaylar ve belirli maddelerin genel olarak açıklanması eksiklik olarak değerlendirilmiştir. Genel olarak, cevap yeterli düzeyde doğru, tamlık ve sadakat göstermektedir.
+                </div>
+                
+                    
+                    
+                    <div style="margin-top: 10px; font-size: 0.85rem; color: var(--text-secondary);">
+                        📚 Kaynak: 4857 Sayılı İş Kanunu
+                    </div>
+                </div>
+            </div>
+            
+            <div class="question-card failed">
+                <div class="question-header">
+                    <div>
+                        <span class="question-id">#52</span>
+                        <span style="margin-left: 10px; color: var(--text-secondary); font-size: 0.85rem;">
+                            orta | unknown | 1729ms
+                        </span>
+                    </div>
+                    <span class="question-status fail">BAŞARISIZ</span>
+                </div>
+                
+                <div class="question-text">Kıdem tazminatı alma şartları nelerdir?</div>
+                
+                
+                <div class="scores-row">
+                    <span class="score-badge high">İlgililik: 0.70</span>
+                    <span class="score-badge high">Sadakat: 0.80</span>
+                    <span class="score-badge high">Doğruluk: 0.90</span>
+                    <span class="score-badge high">Tamlık: 0.80</span>
+                    <span class="score-badge high">Final: 0.74</span>
+                </div>
+                
+                
+                <div class="collapsible" style="color: var(--accent-blue); cursor: pointer; margin: 10px 0;">
+                    🔍 Detayları Göster/Gizle
+                </div>
+                <div class="collapsible-content">
+                    <div class="answer-section">
+                        <div class="answer-box generated">
+                            <div class="label">🤖 Model Cevabı</div>
+                            <div>BÖLÜM 1 - AÇIKLAMA
+
+Kıdem tazminatı, iş sözleşmesinin belirli şartlarda sona ermesi halinde işçiye ödenen bir tazminattır. Bu şartlar, işçinin işten çıkarılması, emeklilik, askerlik gibi durumları içerebilir. Ayrıca, işçinin belirli bir süre aynı işyerinde çalışmış olması da gerekir.
+
+BÖLÜM 2 - HUKUKİ DAYANAKLAR
+1475 Sayılı İş Kanunu, Madde 14
+4857 Sayılı İş Kanunu, Madde 112
+6356 Sayılı Sendikalar ve Toplu İş Sözleşmesi Kanunu, Madde 23</div>
+                        </div>
+                        <div class="answer-box expected">
+                            <div class="label">✅ Beklenen Cevap</div>
+                            <div>En az bir yıl çalışmış olmak ve iş sözleşmesinin haklı fesih, emeklilik, askerlik, evlilik (kadın işçi için) veya işveren tarafından haksız fesih nedenleriyle sona ermesi gerekir.</div>
+                        </div>
+                    </div>
+                    
+                    
+                <div class="sw-container">
+                    <div class="sw-box strengths">
+                        <div class="title">💪 Güçlü Yönler</div>
+                        <ul><li>Cevap kıdem tazminatıyla ilgili genel bilgileri doğru şekilde açıklıyor.</li><li>Hukuki referanslar doğru bir şekilde verilmiş.</li></ul>
+                    </div>
+                    <div class="sw-box weaknesses">
+                        <div class="title">⚠️ Zayıf Yönler</div>
+                        <ul><li>Cevapta gereksiz detaylar bulunmakta.</li><li>Bazı cümlelerin anlaşılması zor.</li></ul>
+                    </div>
+                </div>
+                
+                    
+                <div class="judge-reasoning">
+                    ⚖️ <strong>Judge Değerlendirmesi:</strong> Cevap genel olarak ilgili, sadık, doğru ve kapsamlı olsa da gereksiz detaylar ve anlaşılması zor cümleler içermektedir. Bu nedenle puanlama dengeli bir şekilde yapılmıştır.
+                </div>
+                
+                    
+                <div class="failure-reasons">
+                    <div class="title">❌ Başarısızlık Nedenleri</div>
+                    <div>Yanlış/eksik atıf (0.00)</div>
+                </div>
+                
+                    
+                    <div style="margin-top: 10px; font-size: 0.85rem; color: var(--text-secondary);">
+                        📚 Kaynak: 4857 Sayılı İş Kanunu
+                    </div>
+                </div>
+            </div>
+            
+            <div class="question-card failed">
+                <div class="question-header">
+                    <div>
+                        <span class="question-id">#53</span>
+                        <span style="margin-left: 10px; color: var(--text-secondary); font-size: 0.85rem;">
+                            orta | unknown | 1720ms
+                        </span>
+                    </div>
+                    <span class="question-status fail">BAŞARISIZ</span>
+                </div>
+                
+                <div class="question-text">Kıdem tazminatı miktarı nasıl hesaplanır?</div>
+                
+                
+                <div class="scores-row">
+                    <span class="score-badge low">İlgililik: 0.20</span>
+                    <span class="score-badge low">Sadakat: 0.40</span>
+                    <span class="score-badge low">Doğruluk: 0.30</span>
+                    <span class="score-badge medium">Tamlık: 0.50</span>
+                    <span class="score-badge low">Final: 0.32</span>
+                </div>
+                
+                
+                <div class="collapsible" style="color: var(--accent-blue); cursor: pointer; margin: 10px 0;">
+                    🔍 Detayları Göster/Gizle
+                </div>
+                <div class="collapsible-content">
+                    <div class="answer-section">
+                        <div class="answer-box generated">
+                            <div class="label">🤖 Model Cevabı</div>
+                            <div>BÖLÜM 1 - AÇIKLAMA
+Kıdem tazminatının hesaplanması, işçinin son ücreti üzerinden yapılır. Eğer işçinin ücreti sabit değilse (örneğin, parça başı, akort, götürü veya yüzde usulü gibi), son bir yıl içinde aldığı ücretin o süre içinde çalıştığı günlere bölünmesiyle elde edilen ortalama ücret kıdem tazminatının hesabında dikkate alınır. Ancak, son bir yıl içinde işçi ücretine zam yapıldıysa, tazminata esas ücret, işçinin işten ayrılma tarihi ile zammın yapıldığı tarih arasındaki ücretin aynı süre iç...</div>
+                        </div>
+                        <div class="answer-box expected">
+                            <div class="label">✅ Beklenen Cevap</div>
+                            <div>Her geçen tam yıl için 30 günlük brüt ücret tutarında ödenir. Brüt ücrete süreklilik arz eden yan haklar (yol, yemek vb.) dahildir.</div>
+                        </div>
+                    </div>
+                    
+                    
+                <div class="sw-container">
+                    <div class="sw-box strengths">
+                        <div class="title">💪 Güçlü Yönler</div>
+                        <ul><li>Cevapta kıdem tazminatının hesaplanmasına dair detaylı açıklamalar var.</li></ul>
+                    </div>
+                    <div class="sw-box weaknesses">
+                        <div class="title">⚠️ Zayıf Yönler</div>
+                        <ul><li>Cevapta yanlış bilgiler ve hatalı hukuki referanslar bulunmaktadır.</li><li>Cevapta belirtilen bilgiler referans cevapla uyumlu değil.</li></ul>
+                    </div>
+                </div>
+                
+                    
+                <div class="judge-reasoning">
+                    ⚖️ <strong>Judge Değerlendirmesi:</strong> Cevap ilgili konuyu açıklamaya çalışmış ancak yanlış bilgiler ve hatalı referanslar içermektedir. Bu nedenle düşük puanlar verilmiştir.
+                </div>
+                
+                    
+                <div class="failure-reasons">
+                    <div class="title">❌ Başarısızlık Nedenleri</div>
+                    <div>Düşük ilgililik (0.20), Context'e sadakatsiz (0.40), Yanlış/eksik atıf (0.00), Sayısal tutarsızlık (0.00)</div>
+                </div>
+                
+                    
+                    <div style="margin-top: 10px; font-size: 0.85rem; color: var(--text-secondary);">
+                        📚 Kaynak: 4857 Sayılı İş Kanunu
+                    </div>
+                </div>
+            </div>
+            
+            <div class="question-card failed">
+                <div class="question-header">
+                    <div>
+                        <span class="question-id">#54</span>
+                        <span style="margin-left: 10px; color: var(--text-secondary); font-size: 0.85rem;">
+                            zor | unknown | 2170ms
+                        </span>
+                    </div>
+                    <span class="question-status fail">BAŞARISIZ</span>
+                </div>
+                
+                <div class="question-text">İş güvencesi kapsamında geçerli fesih nedenleri nelerdir?</div>
+                
+                
+                <div class="scores-row">
+                    <span class="score-badge high">İlgililik: 0.70</span>
+                    <span class="score-badge high">Sadakat: 0.80</span>
+                    <span class="score-badge high">Doğruluk: 0.90</span>
+                    <span class="score-badge high">Tamlık: 0.80</span>
+                    <span class="score-badge high">Final: 0.75</span>
+                </div>
+                
+                
+                <div class="collapsible" style="color: var(--accent-blue); cursor: pointer; margin: 10px 0;">
+                    🔍 Detayları Göster/Gizle
+                </div>
+                <div class="collapsible-content">
+                    <div class="answer-section">
+                        <div class="answer-box generated">
+                            <div class="label">🤖 Model Cevabı</div>
+                            <div>BÖLÜM 1 - AÇIKLAMA
+Otuz veya daha fazla işçi çalıştıran işyerlerinde en az altı aylık kıdemi olan işçinin belirsiz süreli iş sözleşmesini fesheden işveren, işçinin yeterliliğinden veya davranışlarından ya da işletmenin, işyerinin veya işin gereklerinden kaynaklanan geçerli bir sebebe dayanmak zorundadır. Sendika üyeliği veya çalışma saatleri dışında veya işverenin rızası ile çalışma saatleri içinde sendikal faaliyetlere katılmak, işyeri sendika temsilciliği yapmak, mevzuattan veya sözleşmeden do...</div>
+                        </div>
+                        <div class="answer-box expected">
+                            <div class="label">✅ Beklenen Cevap</div>
+                            <div>30 veya daha fazla işçi çalıştıran işyerlerinde, en az 6 aylık kıdemi olan işçinin sözleşmesi ancak yeterliliğinden, davranışlarından veya işletmenin gereklerinden kaynaklanan geçerli bir sebeple feshedilebilir.</div>
+                        </div>
+                    </div>
+                    
+                    
+                <div class="sw-container">
+                    <div class="sw-box strengths">
+                        <div class="title">💪 Güçlü Yönler</div>
+                        <ul><li>Cevap iş güvencesi kapsamında geçerli fesih nedenlerini detaylı bir şekilde açıklamıştır.</li><li>Cevap, işçinin kıdemi, işletmenin gerekleri ve davranışları gibi önemli unsurlara vurgu yapmıştır.</li></ul>
+                    </div>
+                    <div class="sw-box weaknesses">
+                        <div class="title">⚠️ Zayıf Yönler</div>
+                        <ul><li>Cevapta gereksiz detaylar bulunmaktadır.</li><li>Bazı cümlelerin anlaşılması zor olabilir.</li></ul>
+                    </div>
+                </div>
+                
+                    
+                <div class="judge-reasoning">
+                    ⚖️ <strong>Judge Değerlendirmesi:</strong> Cevap, soruda belirtilen iş güvencesi kapsamında geçerli fesih nedenlerini doğru bir şekilde açıklamıştır. Ancak, bazı gereksiz detaylar ve anlaşılması zor cümleler bulunduğundan dolayı puanı düşürülmüştür.
+                </div>
+                
+                    
+                <div class="failure-reasons">
+                    <div class="title">❌ Başarısızlık Nedenleri</div>
+                    <div>Sayısal tutarsızlık (0.00)</div>
+                </div>
+                
+                    
+                    <div style="margin-top: 10px; font-size: 0.85rem; color: var(--text-secondary);">
+                        📚 Kaynak: 4857 Sayılı İş Kanunu
+                    </div>
+                </div>
+            </div>
+            
+            <div class="question-card ">
+                <div class="question-header">
+                    <div>
+                        <span class="question-id">#62</span>
+                        <span style="margin-left: 10px; color: var(--text-secondary); font-size: 0.85rem;">
+                            orta | unknown | 2338ms
+                        </span>
+                    </div>
+                    <span class="question-status pass">BAŞARILI</span>
+                </div>
+                
+                <div class="question-text">Analık halinde çalışma ve süt izni nasıl düzenlenmiştir?</div>
+                
+                
+                <div class="scores-row">
+                    <span class="score-badge high">İlgililik: 0.80</span>
+                    <span class="score-badge high">Sadakat: 0.90</span>
+                    <span class="score-badge high">Doğruluk: 0.90</span>
+                    <span class="score-badge high">Tamlık: 0.80</span>
+                    <span class="score-badge high">Final: 0.87</span>
+                </div>
+                
+                
+                <div class="collapsible" style="color: var(--accent-blue); cursor: pointer; margin: 10px 0;">
+                    🔍 Detayları Göster/Gizle
+                </div>
+                <div class="collapsible-content">
+                    <div class="answer-section">
+                        <div class="answer-box generated">
+                            <div class="label">🤖 Model Cevabı</div>
+                            <div>BÖLÜM 1 - AÇIKLAMA
+Kadın işçilerin doğumdan önce sekiz ve doğumdan sonra sekiz hafta olmak üzere toplam on altı haftalık süre için çalıştırılmamaları esastır. Çoğul gebelik halinde doğumdan önce çalıştırılmayacak sekiz haftalık süreye iki hafta eklenir. Ancak, sağlık durumu uygunsa ve doktorun onayı olursa kadın işçi isterse doğumdan önceki üç haftaya kadar işyerinde çalışabilir. Bu durumda, kadın işçinin çalıştığı süreler doğum sonrası sürelere eklenir. Kadın işçinin erken doğum yapması halinde...</div>
+                        </div>
+                        <div class="answer-box expected">
+                            <div class="label">✅ Beklenen Cevap</div>
+                            <div>Doğumdan önce 8 ve sonra 8 hafta olmak üzere toplam 16 hafta analık izni vardır. 1 yaşından küçük çocuk için günde 1.5 saat süt izni verilir.</div>
+                        </div>
+                    </div>
+                    
+                    
+                <div class="sw-container">
+                    <div class="sw-box strengths">
+                        <div class="title">💪 Güçlü Yönler</div>
+                        <ul><li>Cevapta analık izni ve süt izni detaylı bir şekilde açıklanmıştır.</li><li>Cevap, referans cevapla uyumlu ve hukuki terminolojiye uygun olarak yazılmıştır.</li></ul>
+                    </div>
+                    <div class="sw-box weaknesses">
+                        <div class="title">⚠️ Zayıf Yönler</div>
+                        <ul><li>Cevapta belirli anahtar kelimeler eksik olabilir.</li><li>Bazı detaylar gereksiz detaylı anlatılmış olabilir.</li></ul>
+                    </div>
+                </div>
+                
+                    
+                <div class="judge-reasoning">
+                    ⚖️ <strong>Judge Değerlendirmesi:</strong> Cevap, genel olarak soruya uygun ve doğru bilgiler içermektedir. Ancak, belirli anahtar kelimelerin eksik olması ve gereksiz detaylara fazla yer verilmesi nedeniyle tam puan verilememiştir.
+                </div>
+                
+                    
+                    
+                    <div style="margin-top: 10px; font-size: 0.85rem; color: var(--text-secondary);">
+                        📚 Kaynak: 4857 Sayılı İş Kanunu
+                    </div>
+                </div>
+            </div>
+            
+            <div class="question-card ">
+                <div class="question-header">
+                    <div>
+                        <span class="question-id">#63</span>
+                        <span style="margin-left: 10px; color: var(--text-secondary); font-size: 0.85rem;">
+                            orta | unknown | 1801ms
+                        </span>
+                    </div>
+                    <span class="question-status pass">BAŞARILI</span>
+                </div>
+                
+                <div class="question-text">Bir işçi 7 yıl 4 ay çalışmışsa kaç gün yıllık izin hakkı vardır?</div>
+                
+                
+                <div class="scores-row">
+                    <span class="score-badge high">İlgililik: 0.80</span>
+                    <span class="score-badge high">Sadakat: 0.90</span>
+                    <span class="score-badge high">Doğruluk: 0.90</span>
+                    <span class="score-badge high">Tamlık: 0.80</span>
+                    <span class="score-badge high">Final: 0.81</span>
+                </div>
+                
+                
+                <div class="collapsible" style="color: var(--accent-blue); cursor: pointer; margin: 10px 0;">
+                    🔍 Detayları Göster/Gizle
+                </div>
+                <div class="collapsible-content">
+                    <div class="answer-section">
+                        <div class="answer-box generated">
+                            <div class="label">🤖 Model Cevabı</div>
+                            <div>BÖLÜM 1 - AÇIKLAMA
+İş Kanunu&#x27;na göre, bir işçinin yıllık ücretli izin süresi, hizmet süresine göre belirlenir. 7 yıl 4 ay hizmet süresi olan bir işçi, beş yıldan fazla on beş yıldan az hizmet süresi olanlar kategorisine girer. Bu durumda, işçinin yıllık ücretli izin süresi yirmi günden az olamaz. İş sözleşmesi veya toplu iş sözleşmesi ile bu süre artırılabilir.
+
+BÖLÜM 2 - HUKUKİ DAYANAKLAR
+4857 Sayılı İş Kanunu Madde 53</div>
+                        </div>
+                        <div class="answer-box expected">
+                            <div class="label">✅ Beklenen Cevap</div>
+                            <div>7 yıl 4 ay çalışmış işçi, 5-15 yıl aralığında olduğu için yıllık 20 gün ücretli izin hakkına sahiptir.</div>
+                        </div>
+                    </div>
+                    
+                    
+                <div class="sw-container">
+                    <div class="sw-box strengths">
+                        <div class="title">💪 Güçlü Yönler</div>
+                        <ul><li>Hukuki terminoloji doğru kullanılmış</li><li>Referans cevapla uyumlu bilgiler verilmiş</li></ul>
+                    </div>
+                    <div class="sw-box weaknesses">
+                        <div class="title">⚠️ Zayıf Yönler</div>
+                        <ul><li>Anahtar bilgilerin tamamı verilmemiş</li><li>Bazı gereksiz bilgiler eklenmiş</li></ul>
+                    </div>
+                </div>
+                
+                    
+                <div class="judge-reasoning">
+                    ⚖️ <strong>Judge Değerlendirmesi:</strong> Cevap soruya ve verilen context&#x27;e genel olarak uygun ve doğru bilgiler içeriyor. Ancak, beklenen anahtar bilgilerin tamamının verilmemesi ve gereksiz detaylara yer verilmesi puanı düşürmüştür.
+                </div>
+                
+                    
+                    
+                    <div style="margin-top: 10px; font-size: 0.85rem; color: var(--text-secondary);">
+                        📚 Kaynak: 4857 Sayılı İş Kanunu
+                    </div>
+                </div>
+            </div>
+            
+            <div class="question-card failed">
+                <div class="question-header">
+                    <div>
+                        <span class="question-id">#71</span>
+                        <span style="margin-left: 10px; color: var(--text-secondary); font-size: 0.85rem;">
+                            kolay | unknown | 819ms
+                        </span>
+                    </div>
+                    <span class="question-status fail">BAŞARISIZ</span>
+                </div>
+                
+                <div class="question-text">Borç ilişkisinin tanımı ve unsurları nelerdir?</div>
+                
+                
+                <div class="scores-row">
+                    <span class="score-badge low">İlgililik: 0.20</span>
+                    <span class="score-badge low">Sadakat: 0.10</span>
+                    <span class="score-badge low">Doğruluk: 0.00</span>
+                    <span class="score-badge low">Tamlık: 0.00</span>
+                    <span class="score-badge low">Final: 0.29</span>
+                </div>
+                
+                
+                <div class="collapsible" style="color: var(--accent-blue); cursor: pointer; margin: 10px 0;">
+                    🔍 Detayları Göster/Gizle
+                </div>
+                <div class="collapsible-content">
+                    <div class="answer-section">
+                        <div class="answer-box generated">
+                            <div class="label">🤖 Model Cevabı</div>
+                            <div>Bu konuda elimdeki yasal metinlerde yeterli bilgi bulunmamaktadır.</div>
+                        </div>
+                        <div class="answer-box expected">
+                            <div class="label">✅ Beklenen Cevap</div>
+                            <div>Borç ilişkisi, alacaklıya borçludan bir edimin ifasını isteme hakkı veren hukuki bağdır. Unsurları: alacaklı, borçlu ve edimdir.</div>
+                        </div>
+                    </div>
+                    
+                    
+                <div class="sw-container">
+                    <div class="sw-box strengths">
+                        <div class="title">💪 Güçlü Yönler</div>
+                        <ul><li>N/A</li></ul>
+                    </div>
+                    <div class="sw-box weaknesses">
+                        <div class="title">⚠️ Zayıf Yönler</div>
+                        <ul><li>Cevap soruya doğrudan yanıt vermemektedir.</li><li>Cevap verilen context'e dayanmamaktadır.</li><li>Cevapta hukuki doğruluk ve tamlık eksikliği bulunmaktadır.</li></ul>
+                    </div>
+                </div>
+                
+                    
+                <div class="judge-reasoning">
+                    ⚖️ <strong>Judge Değerlendirmesi:</strong> Cevap, soruya doğrudan yanıt vermemekte, verilen context&#x27;e dayanmamakta ve hukuki doğruluk ile tamlık açısından yetersiz kalmaktadır. Bu nedenle genel olarak düşük bir puan verilmiştir.
+                </div>
+                
+                    
+                <div class="failure-reasons">
+                    <div class="title">❌ Başarısızlık Nedenleri</div>
+                    <div>Düşük ilgililik (0.20), Context'e sadakatsiz (0.10)</div>
+                </div>
+                
+                    
+                    <div style="margin-top: 10px; font-size: 0.85rem; color: var(--text-secondary);">
+                        📚 Kaynak: 6098 Sayılı Türk Borçlar Kanunu
+                    </div>
+                </div>
+            </div>
+            
+            <div class="question-card ">
+                <div class="question-header">
+                    <div>
+                        <span class="question-id">#73</span>
+                        <span style="margin-left: 10px; color: var(--text-secondary); font-size: 0.85rem;">
+                            zor | unknown | 3053ms
+                        </span>
+                    </div>
+                    <span class="question-status pass">BAŞARILI</span>
+                </div>
+                
+                <div class="question-text">Hata (yanılma) sebebiyle sözleşme nasıl iptal edilir?</div>
+                
+                
+                <div class="scores-row">
+                    <span class="score-badge high">İlgililik: 0.70</span>
+                    <span class="score-badge high">Sadakat: 0.80</span>
+                    <span class="score-badge high">Doğruluk: 0.90</span>
+                    <span class="score-badge high">Tamlık: 0.80</span>
+                    <span class="score-badge high">Final: 0.84</span>
+                </div>
+                
+                
+                <div class="collapsible" style="color: var(--accent-blue); cursor: pointer; margin: 10px 0;">
+                    🔍 Detayları Göster/Gizle
+                </div>
+                <div class="collapsible-content">
+                    <div class="answer-section">
+                        <div class="answer-box generated">
+                            <div class="label">🤖 Model Cevabı</div>
+                            <div>BÖLÜM 1 - AÇIKLAMA
+Sözleşme yapılırken bir konuda esaslı bir hataya düşerseniz, bu durum sözleşmeyle bağlı olmamanızı sağlar. Ancak, hatanızı dürüstlük kurallarına aykırı bir şekilde ileri süremezsiniz. Eğer karşı taraf, sözleşmenin sizin kastettiğiniz şekilde kurulmasına razı olduğunu belirtirse, sözleşme o şekilde kurulmuş sayılır. Eğer hatanızda kusurluysanız, sözleşmenin geçersizliğinden doğan zararı gidermekle yükümlü olabilirsiniz. Ancak, karşı taraf hatanızı biliyor veya bilmesi gerekiyor...</div>
+                        </div>
+                        <div class="answer-box expected">
+                            <div class="label">✅ Beklenen Cevap</div>
+                            <div>Esaslı yanılmaya düşen taraf sözleşmeyle bağlı değildir. Yanılmanın öğrenilmesinden itibaren bir yıl içinde sözleşme iptal edilebilir.</div>
+                        </div>
+                    </div>
+                    
+                    
+                <div class="sw-container">
+                    <div class="sw-box strengths">
+                        <div class="title">💪 Güçlü Yönler</div>
+                        <ul><li>Cevapta hukuki terminoloji doğru kullanılmış.</li><li>Referans cevapla uyumlu bilgiler verilmiş.</li></ul>
+                    </div>
+                    <div class="sw-box weaknesses">
+                        <div class="title">⚠️ Zayıf Yönler</div>
+                        <ul><li>Cevapta gereksiz detaylar bulunmakta.</li><li>Bazı anahtar bilgiler eksik.</li></ul>
+                    </div>
+                </div>
+                
+                    
+                <div class="judge-reasoning">
+                    ⚖️ <strong>Judge Değerlendirmesi:</strong> Cevap soruya genel olarak uygun ve doğru bilgiler içeriyor. Ancak, gereksiz detaylar ve bazı anahtar bilgilerin eksik olması puanı düşürdü.
+                </div>
+                
+                    
+                    
+                    <div style="margin-top: 10px; font-size: 0.85rem; color: var(--text-secondary);">
+                        📚 Kaynak: 6098 Sayılı Türk Borçlar Kanunu
+                    </div>
+                </div>
+            </div>
+            
+            <div class="question-card ">
+                <div class="question-header">
+                    <div>
+                        <span class="question-id">#77</span>
+                        <span style="margin-left: 10px; color: var(--text-secondary); font-size: 0.85rem;">
+                            orta | unknown | 1514ms
+                        </span>
+                    </div>
+                    <span class="question-status pass">BAŞARILI</span>
+                </div>
+                
+                <div class="question-text">Borcun ifa edilmemesinin sonuçları nelerdir?</div>
+                
+                
+                <div class="scores-row">
+                    <span class="score-badge high">İlgililik: 0.80</span>
+                    <span class="score-badge high">Sadakat: 0.90</span>
+                    <span class="score-badge high">Doğruluk: 0.90</span>
+                    <span class="score-badge high">Tamlık: 0.80</span>
+                    <span class="score-badge high">Final: 0.87</span>
+                </div>
+                
+                
+                <div class="collapsible" style="color: var(--accent-blue); cursor: pointer; margin: 10px 0;">
+                    🔍 Detayları Göster/Gizle
+                </div>
+                <div class="collapsible-content">
+                    <div class="answer-section">
+                        <div class="answer-box generated">
+                            <div class="label">🤖 Model Cevabı</div>
+                            <div>BÖLÜM 1 - AÇIKLAMA
+Borcun hiç ya da sözleşmede belirtildiği gibi gereği gibi ifa edilmemesi durumunda, borçlu kusurlu olmadığını kanıtlayamadığı sürece, alacaklının bu durumdan kaynaklanan zararını tazmin etmekle yükümlüdür.
+
+BÖLÜM 2 - HUKUKİ DAYANAKLAR
+6098 Sayılı Türk Borçlar Kanunu, Madde 112</div>
+                        </div>
+                        <div class="answer-box expected">
+                            <div class="label">✅ Beklenen Cevap</div>
+                            <div>Borçlu kusursuzluğunu ispat etmedikçe, borcun hiç veya gereği gibi ifa edilmemesinden doğan zararı gidermekle yükümlüdür (tazminat).</div>
+                        </div>
+                    </div>
+                    
+                    
+                <div class="sw-container">
+                    <div class="sw-box strengths">
+                        <div class="title">💪 Güçlü Yönler</div>
+                        <ul><li>Cevap soruya doğrudan odaklanmış.</li><li>Hukuki terminoloji doğru kullanılmış.</li></ul>
+                    </div>
+                    <div class="sw-box weaknesses">
+                        <div class="title">⚠️ Zayıf Yönler</div>
+                        <ul><li>Cevapta bazı gereksiz detaylar bulunmakta.</li><li>Bazı anahtar bilgiler eksik.</li></ul>
+                    </div>
+                </div>
+                
+                    
+                <div class="judge-reasoning">
+                    ⚖️ <strong>Judge Değerlendirmesi:</strong> Cevap genel olarak ilgili, sadık, doğru ve kısmen tam. Ancak, bazı gereksiz detaylar ve eksik anahtar bilgiler bulunduğundan puan düşürüldü.
+                </div>
+                
+                    
+                    
+                    <div style="margin-top: 10px; font-size: 0.85rem; color: var(--text-secondary);">
+                        📚 Kaynak: 6098 Sayılı Türk Borçlar Kanunu
+                    </div>
+                </div>
+            </div>
+            
+            <div class="question-card failed">
+                <div class="question-header">
+                    <div>
+                        <span class="question-id">#78</span>
+                        <span style="margin-left: 10px; color: var(--text-secondary); font-size: 0.85rem;">
+                            orta | unknown | 2357ms
+                        </span>
+                    </div>
+                    <span class="question-status fail">BAŞARISIZ</span>
+                </div>
+                
+                <div class="question-text">Temerrüt (gecikme) faizi nedir?</div>
+                
+                
+                <div class="scores-row">
+                    <span class="score-badge high">İlgililik: 0.80</span>
+                    <span class="score-badge high">Sadakat: 0.90</span>
+                    <span class="score-badge high">Doğruluk: 0.85</span>
+                    <span class="score-badge high">Tamlık: 0.90</span>
+                    <span class="score-badge high">Final: 0.77</span>
+                </div>
+                
+                
+                <div class="collapsible" style="color: var(--accent-blue); cursor: pointer; margin: 10px 0;">
+                    🔍 Detayları Göster/Gizle
+                </div>
+                <div class="collapsible-content">
+                    <div class="answer-section">
+                        <div class="answer-box generated">
+                            <div class="label">🤖 Model Cevabı</div>
+                            <div>BÖLÜM 1 - AÇIKLAMA
+
+Parayı ödeme borcunda temerrüde düşülmesi durumunda, alacaklı icra takibi başlatmışsa veya dava açmışsa, borçlu bu tarihten itibaren temerrüt faizi ödemekle yükümlüdür. Temerrüt faizine ayrıca temerrüt faizi yürütülemez. Sözleşmede temerrüt faizi kararlaştırılmamışsa, uygulanacak yıllık temerrüt faizi oranı, faiz borcunun doğduğu tarihte yürürlükte olan mevzuat hükümlerine göre belirlenir. Sözleşmede kararlaştırılacak yıllık temerrüt faizi oranı, kanunda belirtilen yıllık fai...</div>
+                        </div>
+                        <div class="answer-box expected">
+                            <div class="label">✅ Beklenen Cevap</div>
+                            <div>Para borcunu ödemeyen borçlu, alacaklının ihtarıyla temerrüde düşer ve temerrüt faizi ödemekle yükümlü olur.</div>
+                        </div>
+                    </div>
+                    
+                    
+                <div class="sw-container">
+                    <div class="sw-box strengths">
+                        <div class="title">💪 Güçlü Yönler</div>
+                        <ul><li>Cevap temerrüt faizi kavramını doğru açıklamıştır.</li><li>Cevap, Türk Borçlar Kanunu'na dayanmaktadır.</li></ul>
+                    </div>
+                    <div class="sw-box weaknesses">
+                        <div class="title">⚠️ Zayıf Yönler</div>
+                        <ul><li>Cevapta gereksiz detaylar bulunmaktadır.</li><li>Bazı cümleler karmaşıktır.</li></ul>
+                    </div>
+                </div>
+                
+                    
+                <div class="judge-reasoning">
+                    ⚖️ <strong>Judge Değerlendirmesi:</strong> Cevap soruya genel olarak uygun ve doğru bilgiler içermektedir. Ancak, gereksiz detaylar ve karmaşık cümleler puanı düşürmüştür.
+                </div>
+                
+                    
+                <div class="failure-reasons">
+                    <div class="title">❌ Başarısızlık Nedenleri</div>
+                    <div>Yanlış/eksik atıf (0.00)</div>
+                </div>
+                
+                    
+                    <div style="margin-top: 10px; font-size: 0.85rem; color: var(--text-secondary);">
+                        📚 Kaynak: 6098 Sayılı Türk Borçlar Kanunu
+                    </div>
+                </div>
+            </div>
+            
+            <div class="question-card failed">
+                <div class="question-header">
+                    <div>
+                        <span class="question-id">#81</span>
+                        <span style="margin-left: 10px; color: var(--text-secondary); font-size: 0.85rem;">
+                            orta | unknown | 4594ms
+                        </span>
+                    </div>
+                    <span class="question-status fail">BAŞARISIZ</span>
+                </div>
+                
+                <div class="question-text">Zamanaşımı süreleri Borçlar Kanunu&#x27;nda nasıl düzenlenmiştir?</div>
+                
+                
+                <div class="scores-row">
+                    <span class="score-badge high">İlgililik: 0.70</span>
+                    <span class="score-badge high">Sadakat: 0.80</span>
+                    <span class="score-badge high">Doğruluk: 0.90</span>
+                    <span class="score-badge high">Tamlık: 0.80</span>
+                    <span class="score-badge medium">Final: 0.65</span>
+                </div>
+                
+                
+                <div class="collapsible" style="color: var(--accent-blue); cursor: pointer; margin: 10px 0;">
+                    🔍 Detayları Göster/Gizle
+                </div>
+                <div class="collapsible-content">
+                    <div class="answer-section">
+                        <div class="answer-box generated">
+                            <div class="label">🤖 Model Cevabı</div>
+                            <div>BÖLÜM 1 - AÇIKLAMA
+Türk Borçlar Kanunu&#x27;nda zamanaşımı sürelerinin hesaplanması, başlangıcı, durması, kesilmesi ve sonuçları detaylı bir şekilde düzenlenmiştir. Zamanaşımının başladığı gün hesaba katılmaz ve zamanaşımı süresi, son günün de hak kullanılmadan geçmesiyle tamamlanır. Asıl alacak zamanaşımına uğradığında, ona bağlı olan faiz ve diğer alacaklar da zamanaşımına uğrar.
+
+Zamanaşımının başlaması, alacağın muaccel olmasıyla gerçekleşir; eğer alacağın muaccel olması bir bildirime bağlıysa, z...</div>
+                        </div>
+                        <div class="answer-box expected">
+                            <div class="label">✅ Beklenen Cevap</div>
+                            <div>Genel zamanaşımı süresi 10 yıldır. Ancak kira, faiz, ücret gibi dönemsel edimlerde zamanaşımı 5 yıldır.</div>
+                        </div>
+                    </div>
+                    
+                    
+                <div class="sw-container">
+                    <div class="sw-box strengths">
+                        <div class="title">💪 Güçlü Yönler</div>
+                        <ul><li>Detaylı açıklamalar</li><li>Hukuki terminoloji kullanımı</li></ul>
+                    </div>
+                    <div class="sw-box weaknesses">
+                        <div class="title">⚠️ Zayıf Yönler</div>
+                        <ul><li>Anahtar bilgilerin eksikliği</li><li>Bazı gereksiz detaylar</li></ul>
+                    </div>
+                </div>
+                
+                    
+                <div class="judge-reasoning">
+                    ⚖️ <strong>Judge Değerlendirmesi:</strong> Cevap soruya genel anlamda uygun ve detaylı açıklamalar içeriyor. Hukuki terminoloji doğru kullanılmış. Ancak beklenen anahtar bilgilerin tamamının yer almaması ve bazı gereksiz detayların bulunması puanı düşürdü.
+                </div>
+                
+                    
+                <div class="failure-reasons">
+                    <div class="title">❌ Başarısızlık Nedenleri</div>
+                    <div>Yanlış/eksik atıf (0.00), Sayısal tutarsızlık (0.00)</div>
+                </div>
+                
+                    
+                    <div style="margin-top: 10px; font-size: 0.85rem; color: var(--text-secondary);">
+                        📚 Kaynak: 6098 Sayılı Türk Borçlar Kanunu
+                    </div>
+                </div>
+            </div>
+            
+            <div class="question-card ">
+                <div class="question-header">
+                    <div>
+                        <span class="question-id">#82</span>
+                        <span style="margin-left: 10px; color: var(--text-secondary); font-size: 0.85rem;">
+                            orta | unknown | 1701ms
+                        </span>
+                    </div>
+                    <span class="question-status pass">BAŞARILI</span>
+                </div>
+                
+                <div class="question-text">Haksız fiilden doğan borç nasıl tanımlanır?</div>
+                
+                
+                <div class="scores-row">
+                    <span class="score-badge high">İlgililik: 0.80</span>
+                    <span class="score-badge high">Sadakat: 0.90</span>
+                    <span class="score-badge high">Doğruluk: 0.85</span>
+                    <span class="score-badge high">Tamlık: 0.90</span>
+                    <span class="score-badge high">Final: 0.89</span>
+                </div>
+                
+                
+                <div class="collapsible" style="color: var(--accent-blue); cursor: pointer; margin: 10px 0;">
+                    🔍 Detayları Göster/Gizle
+                </div>
+                <div class="collapsible-content">
+                    <div class="answer-section">
+                        <div class="answer-box generated">
+                            <div class="label">🤖 Model Cevabı</div>
+                            <div>BÖLÜM 1 - AÇIKLAMA
+Haksız fiilden doğan borç, bir kişinin kusurlu ve hukuka aykırı bir davranışıyla başka birine zarar vermesi sonucu ortaya çıkar. Bu durumda, zararı veren kişi, verdiği zararı gidermekle yükümlü olur. Hatta zarar verici bir davranış, herhangi bir hukuk kuralını ihlal etmese bile, ahlaka aykırı bir şekilde kasten yapılmışsa ve başkasına zarar vermişse, bu durumda da zararı veren kişi bu zararı gidermekle yükümlüdür.
+
+BÖLÜM 2 - HUKUKİ DAYANAKLAR
+6098 Sayılı Türk Borçlar Kanunu, M...</div>
+                        </div>
+                        <div class="answer-box expected">
+                            <div class="label">✅ Beklenen Cevap</div>
+                            <div>Kusurlu ve hukuka aykırı bir fiille başkasına zarar veren, bu zararı gidermekle yükümlüdür. Unsurları: fiil, zarar, illiyet bağı, kusur ve hukuka aykırılık.</div>
+                        </div>
+                    </div>
+                    
+                    
+                <div class="sw-container">
+                    <div class="sw-box strengths">
+                        <div class="title">💪 Güçlü Yönler</div>
+                        <ul><li>Cevap haksız fiilden doğan borcun unsurlarını doğru şekilde açıklamış.</li><li>Cevap hukuki terminolojiyi doğru kullanmış.</li></ul>
+                    </div>
+                    <div class="sw-box weaknesses">
+                        <div class="title">⚠️ Zayıf Yönler</div>
+                        <ul><li>Cevapta gereksiz detaylar bulunmakta.</li><li>Bazı cümlelerin anlaşılması zor olabilir.</li></ul>
+                    </div>
+                </div>
+                
+                    
+                <div class="judge-reasoning">
+                    ⚖️ <strong>Judge Değerlendirmesi:</strong> Cevap soruya genel olarak uygun ve doğru bilgiler içermektedir. Hukuki terminoloji doğru kullanılmış ve referans cevapla uyumludur. Ancak, gereksiz detaylar ve bazı anlaşılması zor cümleler bulunduğundan puanı düşük tuttuk.
+                </div>
+                
+                    
+                    
+                    <div style="margin-top: 10px; font-size: 0.85rem; color: var(--text-secondary);">
+                        📚 Kaynak: 6098 Sayılı Türk Borçlar Kanunu
+                    </div>
+                </div>
+            </div>
+            
+            <div class="question-card failed">
+                <div class="question-header">
+                    <div>
+                        <span class="question-id">#88</span>
+                        <span style="margin-left: 10px; color: var(--text-secondary); font-size: 0.85rem;">
+                            orta | unknown | 2174ms
+                        </span>
+                    </div>
+                    <span class="question-status fail">BAŞARISIZ</span>
+                </div>
+                
+                <div class="question-text">Kira sözleşmesinde kiraya verenin yükümlülükleri nelerdir?</div>
+                
+                
+                <div class="scores-row">
+                    <span class="score-badge high">İlgililik: 0.80</span>
+                    <span class="score-badge high">Sadakat: 0.90</span>
+                    <span class="score-badge high">Doğruluk: 0.90</span>
+                    <span class="score-badge high">Tamlık: 0.80</span>
+                    <span class="score-badge high">Final: 0.78</span>
+                </div>
+                
+                
+                <div class="collapsible" style="color: var(--accent-blue); cursor: pointer; margin: 10px 0;">
+                    🔍 Detayları Göster/Gizle
+                </div>
+                <div class="collapsible-content">
+                    <div class="answer-section">
+                        <div class="answer-box generated">
+                            <div class="label">🤖 Model Cevabı</div>
+                            <div>BÖLÜM 1 - AÇIKLAMA
+Kiraya verenin temel yükümlülükleri şunlardır: Öncelikle, kiralananı sözleşmede belirtilen amaca uygun bir şekilde kullanılmaya ve işletilmeye elverişli bir durumda kiracıya teslim etmek ve sözleşme süresince bu durumu korumakla yükümlüdür. Eğer kiralananla birlikte kiralanmış taşınır şeyler de varsa, bunları da teslim etmelidir.
+
+Kira süresi içinde yapılması gereken zorunlu ve esaslı onarımları, kiracı tarafından kendisine bildirilir bildirilmez, kendisi yapmakla yükümlüdür v...</div>
+                        </div>
+                        <div class="answer-box expected">
+                            <div class="label">✅ Beklenen Cevap</div>
+                            <div>Kiraya veren, kiralananı kullanıma elverişli durumda teslim etmek ve sözleşme süresince bu durumda bulundurmakla yükümlüdür.</div>
+                        </div>
+                    </div>
+                    
+                    
+                <div class="sw-container">
+                    <div class="sw-box strengths">
+                        <div class="title">💪 Güçlü Yönler</div>
+                        <ul><li>Cevap kira sözleşmesinde kiraya verenin yükümlülüklerini detaylı bir şekilde açıklamış.</li><li>Hukuki terminoloji doğru ve uygun bir şekilde kullanılmış.</li></ul>
+                    </div>
+                    <div class="sw-box weaknesses">
+                        <div class="title">⚠️ Zayıf Yönler</div>
+                        <ul><li>Cevapta gereksiz detaylar bulunmakta.</li><li>Bazı kısımlarda fazla genel ifadeler kullanılmış.</li></ul>
+                    </div>
+                </div>
+                
+                    
+                <div class="judge-reasoning">
+                    ⚖️ <strong>Judge Değerlendirmesi:</strong> Cevap genel olarak ilgili, sadık, doğru ve kısmen tam. Ancak, gereksiz detaylar ve bazı genel ifadeler puanı düşürdü.
+                </div>
+                
+                    
+                <div class="failure-reasons">
+                    <div class="title">❌ Başarısızlık Nedenleri</div>
+                    <div>Yanlış/eksik atıf (0.00)</div>
+                </div>
+                
+                    
+                    <div style="margin-top: 10px; font-size: 0.85rem; color: var(--text-secondary);">
+                        📚 Kaynak: 6098 Sayılı Türk Borçlar Kanunu
+                    </div>
+                </div>
+            </div>
+            
+            <div class="question-card ">
+                <div class="question-header">
+                    <div>
+                        <span class="question-id">#94</span>
+                        <span style="margin-left: 10px; color: var(--text-secondary); font-size: 0.85rem;">
+                            orta | unknown | 1717ms
+                        </span>
+                    </div>
+                    <span class="question-status pass">BAŞARILI</span>
+                </div>
+                
+                <div class="question-text">Hizmet sözleşmesi Borçlar Kanunu&#x27;nda nasıl tanımlanmıştır?</div>
+                
+                
+                <div class="scores-row">
+                    <span class="score-badge high">İlgililik: 0.80</span>
+                    <span class="score-badge high">Sadakat: 0.90</span>
+                    <span class="score-badge high">Doğruluk: 0.90</span>
+                    <span class="score-badge high">Tamlık: 0.90</span>
+                    <span class="score-badge high">Final: 0.90</span>
+                </div>
+                
+                
+                <div class="collapsible" style="color: var(--accent-blue); cursor: pointer; margin: 10px 0;">
+                    🔍 Detayları Göster/Gizle
+                </div>
+                <div class="collapsible-content">
+                    <div class="answer-section">
+                        <div class="answer-box generated">
+                            <div class="label">🤖 Model Cevabı</div>
+                            <div>BÖLÜM 1 - AÇIKLAMA
+
+Hizmet sözleşmesi, bir işçinin işverene bağımlı olarak belirli veya belirsiz bir süre boyunca iş görmeyi ve işverenin de buna karşılık olarak zamana veya yapılan işe göre bir ücret ödemeyi kabul ettiği sözleşmedir. Eğer bir işçi, işverene ait bir hizmeti kısmi süreli olarak düzenli bir şekilde yerine getirmeyi üstlenirse, bu da hizmet sözleşmesi olarak kabul edilir.
+
+BÖLÜM 2 - HUKUKİ DAYANAKLAR
+
+6098 Sayılı Türk Borçlar Kanunu, Madde 393</div>
+                        </div>
+                        <div class="answer-box expected">
+                            <div class="label">✅ Beklenen Cevap</div>
+                            <div>Hizmet sözleşmesi, işçinin işverene bağımlı olarak belirli veya belirli olmayan süreyle iş görmeyi, işverenin de ücret ödemeyi üstlendiği sözleşmedir.</div>
+                        </div>
+                    </div>
+                    
+                    
+                <div class="sw-container">
+                    <div class="sw-box strengths">
+                        <div class="title">💪 Güçlü Yönler</div>
+                        <ul><li>Cevapta hizmet sözleşmesinin tanımı doğru ve detaylı bir şekilde verilmiş.</li><li>Cevap, referans cevapla uyumlu ve hukuki terminolojiye uygun.</li></ul>
+                    </div>
+                    <div class="sw-box weaknesses">
+                        <div class="title">⚠️ Zayıf Yönler</div>
+                        <ul><li>Cevapta gereksiz detaylar bulunmakta.</li><li>Bazı cümleler gereksiz uzun ve karmaşık.</li></ul>
+                    </div>
+                </div>
+                
+                    
+                <div class="judge-reasoning">
+                    ⚖️ <strong>Judge Değerlendirmesi:</strong> Cevap genel olarak ilgili, sadık, doğru ve tam. Ancak, gereksiz detaylar ve karmaşık cümleler puanı düşürdü.
+                </div>
+                
+                    
+                    
+                    <div style="margin-top: 10px; font-size: 0.85rem; color: var(--text-secondary);">
+                        📚 Kaynak: 6098 Sayılı Türk Borçlar Kanunu
+                    </div>
+                </div>
+            </div>
+            
+            <div class="question-card ">
+                <div class="question-header">
+                    <div>
+                        <span class="question-id">#95</span>
+                        <span style="margin-left: 10px; color: var(--text-secondary); font-size: 0.85rem;">
+                            orta | unknown | 2781ms
+                        </span>
+                    </div>
+                    <span class="question-status pass">BAŞARILI</span>
+                </div>
+                
+                <div class="question-text">Borçlar Kanunu&#x27;na göre kira artış oranı nasıl belirlenir?</div>
+                
+                
+                <div class="scores-row">
+                    <span class="score-badge medium">İlgililik: 0.50</span>
+                    <span class="score-badge high">Sadakat: 0.70</span>
+                    <span class="score-badge medium">Doğruluk: 0.60</span>
+                    <span class="score-badge high">Tamlık: 0.70</span>
+                    <span class="score-badge high">Final: 0.71</span>
+                </div>
+                
+                
+                <div class="collapsible" style="color: var(--accent-blue); cursor: pointer; margin: 10px 0;">
+                    🔍 Detayları Göster/Gizle
+                </div>
+                <div class="collapsible-content">
+                    <div class="answer-section">
+                        <div class="answer-box generated">
+                            <div class="label">🤖 Model Cevabı</div>
+                            <div>BÖLÜM 1 - AÇIKLAMA
+Kira sözleşmelerinde yenilenen dönemlerde uygulanacak kira bedeli artış oranı, tarafların anlaşmasıyla belirlenebilir. Ancak bu artış, bir önceki kira yılında açıklanan tüketici fiyat endeksindeki on iki aylık ortalamalara göre değişim oranını geçemez. Eğer taraflar arasında bu konuda bir anlaşma yapılmamışsa, kira bedeli hakim tarafından, kiralananın durumu dikkate alınarak hakkaniyete uygun bir şekilde belirlenir. Beş yıldan uzun süreli veya beş yıldan sonra yenilenen kira s...</div>
+                        </div>
+                        <div class="answer-box expected">
+                            <div class="label">✅ Beklenen Cevap</div>
+                            <div>Kira artış oranı, bir önceki kira yılındaki tüketici fiyat endeksinin (TÜFE) on iki aylık ortalamasını geçemez.</div>
+                        </div>
+                    </div>
+                    
+                    
+                <div class="sw-container">
+                    <div class="sw-box strengths">
+                        <div class="title">💪 Güçlü Yönler</div>
+                        <ul><li>Kira artış oranının belirlenmesiyle ilgili detaylı açıklamalar</li><li>Kira sözleşmelerindeki kira bedeli artış oranının nasıl hesaplandığına dair bilgi verilmesi</li></ul>
+                    </div>
+                    <div class="sw-box weaknesses">
+                        <div class="title">⚠️ Zayıf Yönler</div>
+                        <ul><li>Cevapta gereksiz detaylar bulunması</li><li>Referans cevaba tam olarak uymaması</li></ul>
+                    </div>
+                </div>
+                
+                    
+                <div class="judge-reasoning">
+                    ⚖️ <strong>Judge Değerlendirmesi:</strong> Cevap ilgili konuyu açıklamış olsa da gereksiz detaylar içermesi ve referans cevaba tam olarak uymaması nedeniyle puan düşüktür.
+                </div>
+                
+                    
+                    
+                    <div style="margin-top: 10px; font-size: 0.85rem; color: var(--text-secondary);">
+                        📚 Kaynak: 6098 Sayılı Türk Borçlar Kanunu
+                    </div>
+                </div>
+            </div>
+            
+            <div class="question-card ">
+                <div class="question-header">
+                    <div>
+                        <span class="question-id">#96</span>
+                        <span style="margin-left: 10px; color: var(--text-secondary); font-size: 0.85rem;">
+                            kolay | unknown | 1400ms
+                        </span>
+                    </div>
+                    <span class="question-status pass">BAŞARILI</span>
+                </div>
+                
+                <div class="question-text">Sendika nedir?</div>
+                
+                
+                <div class="scores-row">
+                    <span class="score-badge high">İlgililik: 0.70</span>
+                    <span class="score-badge high">Sadakat: 0.80</span>
+                    <span class="score-badge high">Doğruluk: 0.90</span>
+                    <span class="score-badge high">Tamlık: 0.80</span>
+                    <span class="score-badge high">Final: 0.83</span>
+                </div>
+                
+                
+                <div class="collapsible" style="color: var(--accent-blue); cursor: pointer; margin: 10px 0;">
+                    🔍 Detayları Göster/Gizle
+                </div>
+                <div class="collapsible-content">
+                    <div class="answer-section">
+                        <div class="answer-box generated">
+                            <div class="label">🤖 Model Cevabı</div>
+                            <div>BÖLÜM 1 - AÇIKLAMA
+Sendika, işçilerin veya işverenlerin, çalışma hayatlarındaki ortak ekonomik ve sosyal hak ve çıkarlarını korumak ve geliştirmek amacıyla bir araya gelerek kurdukları, tüzel kişiliğe sahip kuruluşlardır. Bir sendikanın kurulabilmesi için en az yedi işçi veya işverenin bir araya gelmesi ve aynı iş kolunda faaliyet göstermesi gerekmektedir.
+
+BÖLÜM 2 - HUKUKİ DAYANAKLAR
+6356 Sayılı Sendikalar ve Toplu İş Sözleşmesi Kanunu, Madde 2</div>
+                        </div>
+                        <div class="answer-box expected">
+                            <div class="label">✅ Beklenen Cevap</div>
+                            <div>Sendika, işçilerin veya işverenlerin çalışma ilişkilerinde ortak hak ve menfaatlerini korumak için kurdukları tüzel kişiliğe sahip kuruluştur. Önceden izin alınmaksızın kurulur.</div>
+                        </div>
+                    </div>
+                    
+                    
+                <div class="sw-container">
+                    <div class="sw-box strengths">
+                        <div class="title">💪 Güçlü Yönler</div>
+                        <ul><li>Cevapta sendika tanımı doğru verilmiş.</li><li>Hukuki referanslar doğru kullanılmış.</li></ul>
+                    </div>
+                    <div class="sw-box weaknesses">
+                        <div class="title">⚠️ Zayıf Yönler</div>
+                        <ul><li>Cevapta gereksiz detaylar bulunmakta.</li><li>Anahtar bilgiler eksik kalmış.</li></ul>
+                    </div>
+                </div>
+                
+                    
+                <div class="judge-reasoning">
+                    ⚖️ <strong>Judge Değerlendirmesi:</strong> Cevap genel olarak ilgili ve sadık kalmış ancak anahtar bilgilerin eksik olduğu ve gereksiz detayların bulunduğu gözlemlenmiştir.
+                </div>
+                
+                    
+                    
+                    <div style="margin-top: 10px; font-size: 0.85rem; color: var(--text-secondary);">
+                        📚 Kaynak: 6356 Sayılı Sendikalar Kanunu
+                    </div>
+                </div>
+            </div>
+            
+            <div class="question-card ">
+                <div class="question-header">
+                    <div>
+                        <span class="question-id">#97</span>
+                        <span style="margin-left: 10px; color: var(--text-secondary); font-size: 0.85rem;">
+                            orta | unknown | 1486ms
+                        </span>
+                    </div>
+                    <span class="question-status pass">BAŞARILI</span>
+                </div>
+                
+                <div class="question-text">Sendikaya üyelik nasıl kazanılır?</div>
+                
+                
+                <div class="scores-row">
+                    <span class="score-badge high">İlgililik: 0.70</span>
+                    <span class="score-badge high">Sadakat: 0.80</span>
+                    <span class="score-badge high">Doğruluk: 0.90</span>
+                    <span class="score-badge high">Tamlık: 0.80</span>
+                    <span class="score-badge high">Final: 0.85</span>
+                </div>
+                
+                
+                <div class="collapsible" style="color: var(--accent-blue); cursor: pointer; margin: 10px 0;">
+                    🔍 Detayları Göster/Gizle
+                </div>
+                <div class="collapsible-content">
+                    <div class="answer-section">
+                        <div class="answer-box generated">
+                            <div class="label">🤖 Model Cevabı</div>
+                            <div>BÖLÜM 1 - AÇIKLAMA
+Sendikaya üyelik, öncelikle Bakanlıkça sağlanan elektronik başvuru sistemine e-Devlet kapısı üzerinden başvuru yapılması ve sendika tüzüğünde belirlenen yetkili organın bu başvuruyu kabul etmesiyle kazanılır. Başvurunuzun sendika tarafından otuz gün içinde reddedilmemesi durumunda, üyelik talebiniz kabul edilmiş sayılır.
+
+BÖLÜM 2 - HUKUKİ DAYANAKLAR
+6356 Sayılı Sendikalar ve Toplu İş Sözleşmesi Kanunu, Madde 17</div>
+                        </div>
+                        <div class="answer-box expected">
+                            <div class="label">✅ Beklenen Cevap</div>
+                            <div>15 yaşını dolduran işçiler e-Devlet kapısı üzerinden sendikaya üye olabilir. Üyelik sendika yetkili organının kabulü ile kazanılır.</div>
+                        </div>
+                    </div>
+                    
+                    
+                <div class="sw-container">
+                    <div class="sw-box strengths">
+                        <div class="title">💪 Güçlü Yönler</div>
+                        <ul><li>Cevapta sendikaya üyelik için e-Devlet kapısı üzerinden başvuru yapılması gerektiği doğru şekilde belirtilmiş.</li><li>Cevapta sendika yetkili organının kabulü ile üyelik kazanılacağı doğru ifade edilmiş.</li></ul>
+                    </div>
+                    <div class="sw-box weaknesses">
+                        <div class="title">⚠️ Zayıf Yönler</div>
+                        <ul><li>Cevapta belirli bir süre içinde üyelik kabul edilirse otomatik olarak üyelik kazanıldığı yanlış ifade edilmiş.</li></ul>
+                    </div>
+                </div>
+                
+                    
+                <div class="judge-reasoning">
+                    ⚖️ <strong>Judge Değerlendirmesi:</strong> Cevap, soruda belirtilen anahtar bilgileri doğru şekilde içermekte ancak belirli bir süre içinde üyelik kabul edilirse otomatik olarak üyelik kazanıldığı yanlış ifade edilmiştir. Bu nedenle doğruluk ve tamlık puanları düşük olmuştur.
+                </div>
+                
+                    
+                    
+                    <div style="margin-top: 10px; font-size: 0.85rem; color: var(--text-secondary);">
+                        📚 Kaynak: 6356 Sayılı Sendikalar Kanunu
+                    </div>
+                </div>
+            </div>
+            
+            <div class="question-card failed">
+                <div class="question-header">
+                    <div>
+                        <span class="question-id">#98</span>
+                        <span style="margin-left: 10px; color: var(--text-secondary); font-size: 0.85rem;">
+                            orta | unknown | 1939ms
+                        </span>
+                    </div>
+                    <span class="question-status fail">BAŞARISIZ</span>
+                </div>
+                
+                <div class="question-text">Sendika güvencesi nedir?</div>
+                
+                
+                <div class="scores-row">
+                    <span class="score-badge low">İlgililik: 0.20</span>
+                    <span class="score-badge low">Sadakat: 0.40</span>
+                    <span class="score-badge low">Doğruluk: 0.30</span>
+                    <span class="score-badge low">Tamlık: 0.20</span>
+                    <span class="score-badge low">Final: 0.37</span>
+                </div>
+                
+                
+                <div class="collapsible" style="color: var(--accent-blue); cursor: pointer; margin: 10px 0;">
+                    🔍 Detayları Göster/Gizle
+                </div>
+                <div class="collapsible-content">
+                    <div class="answer-section">
+                        <div class="answer-box generated">
+                            <div class="label">🤖 Model Cevabı</div>
+                            <div>BÖLÜM 1 - AÇIKLAMA
+Sendika güvencesi kavramı, sağlanan metinlerde doğrudan tanımlanmamıştır. Ancak, işçi ve işveren sendikalarının hak ve yükümlülükleri, sendika temsilcilerinin atanması ve görevleri, toplu iş sözleşmesi yapma yetkisi gibi konulara değinilmektedir. Bu bağlamda, sendika hakkının ve örgütlenme özgürlüğünün korunması amaçlanmaktadır.
+
+BÖLÜM 2 - HUKUKİ DAYANAKLAR
+6356 Sayılı Sendikalar ve Toplu İş Sözleşmesi Kanunu, Madde 1, Madde 2, Madde 26, Madde 27, Madde 42, Madde 43, Madde 65,...</div>
+                        </div>
+                        <div class="answer-box expected">
+                            <div class="label">✅ Beklenen Cevap</div>
+                            <div>İşçilerin işe alınması veya çalıştırılması sendika üyeliği şartına bağlanamaz. Sendikal nedenle işten çıkarılan işçiye en az bir yıllık ücreti tutarında sendikal tazminat ödenir.</div>
+                        </div>
+                    </div>
+                    
+                    
+                <div class="sw-container">
+                    <div class="sw-box strengths">
+                        <div class="title">💪 Güçlü Yönler</div>
+                        <ul><li>Hukuki terminoloji kullanımı</li><li>Kanun referanslarına atıfta bulunma</li></ul>
+                    </div>
+                    <div class="sw-box weaknesses">
+                        <div class="title">⚠️ Zayıf Yönler</div>
+                        <ul><li>Sendika güvencesi konusunda doğrudan bilgi verilmemesi</li><li>Anahtar bilgilerin eksik olması</li></ul>
+                    </div>
+                </div>
+                
+                    
+                <div class="judge-reasoning">
+                    ⚖️ <strong>Judge Değerlendirmesi:</strong> Cevap, soruda belirtilen &#x27;sendika güvencesi&#x27; konusuna doğrudan odaklanmamış ve belirtilen anahtar bilgileri eksik veya yanlış vermiştir. Hukuki terminoloji doğru kullanılmış olsa da cevap genel olarak context&#x27;e sadık kalmamış ve beklenen bilgileri yeterince kapsamamıştır.
+                </div>
+                
+                    
+                <div class="failure-reasons">
+                    <div class="title">❌ Başarısızlık Nedenleri</div>
+                    <div>Düşük ilgililik (0.20), Context'e sadakatsiz (0.40), Yanlış/eksik atıf (0.00)</div>
+                </div>
+                
+                    
+                    <div style="margin-top: 10px; font-size: 0.85rem; color: var(--text-secondary);">
+                        📚 Kaynak: 6356 Sayılı Sendikalar Kanunu
+                    </div>
+                </div>
+            </div>
+            
+            <div class="question-card failed">
+                <div class="question-header">
+                    <div>
+                        <span class="question-id">#100</span>
+                        <span style="margin-left: 10px; color: var(--text-secondary); font-size: 0.85rem;">
+                            zor | unknown | 2443ms
+                        </span>
+                    </div>
+                    <span class="question-status fail">BAŞARISIZ</span>
+                </div>
+                
+                <div class="question-text">Toplu iş sözleşmesi yapma yetkisi hangi koşullara bağlıdır?</div>
+                
+                
+                <div class="scores-row">
+                    <span class="score-badge high">İlgililik: 0.80</span>
+                    <span class="score-badge high">Sadakat: 0.90</span>
+                    <span class="score-badge high">Doğruluk: 0.90</span>
+                    <span class="score-badge high">Tamlık: 0.90</span>
+                    <span class="score-badge high">Final: 0.79</span>
+                </div>
+                
+                
+                <div class="collapsible" style="color: var(--accent-blue); cursor: pointer; margin: 10px 0;">
+                    🔍 Detayları Göster/Gizle
+                </div>
+                <div class="collapsible-content">
+                    <div class="answer-section">
+                        <div class="answer-box generated">
+                            <div class="label">🤖 Model Cevabı</div>
+                            <div>BÖLÜM 1 - AÇIKLAMA
+Bir işçi sendikasının toplu iş sözleşmesi yapma yetkisi için bazı şartlar bulunmaktadır. Öncelikle, sendikanın kurulu bulunduğu işkolunda çalışan işçilerin en az yüzde birinin üyesi olması gerekmektedir. Ayrıca, toplu iş sözleşmesinin kapsamına girecek işyerinde, başvuru tarihinde çalışan işçilerin yarıdan fazlasının sendika üyesi olması şartı aranır. İşletme düzeyinde yapılacak toplu iş sözleşmelerinde ise, işyerindeki işçilerin yüzde kırkının sendika üyesi olması gerekmekted...</div>
+                        </div>
+                        <div class="answer-box expected">
+                            <div class="label">✅ Beklenen Cevap</div>
+                            <div>Sendikanın işkolunda en az %1 üye barajını aşması ve işyerinde çalışan işçilerin yarısından fazlasının (%50+1) sendika üyesi olması gerekir.</div>
+                        </div>
+                    </div>
+                    
+                    
+                <div class="sw-container">
+                    <div class="sw-box strengths">
+                        <div class="title">💪 Güçlü Yönler</div>
+                        <ul><li>Cevapta toplu iş sözleşmesi yapma yetkisinin koşulları detaylı ve doğru bir şekilde açıklanmıştır.</li><li>Cevap, referans cevapla uyumludur ve hukuki terminolojiye uygun olarak yazılmıştır.</li></ul>
+                    </div>
+                    <div class="sw-box weaknesses">
+                        <div class="title">⚠️ Zayıf Yönler</div>
+                        <ul><li>Cevapta gereksiz detaylar bulunmaktadır.</li><li>Bazı cümlelerin daha açık ve anlaşılır olması gerekmektedir.</li></ul>
+                    </div>
+                </div>
+                
+                    
+                <div class="judge-reasoning">
+                    ⚖️ <strong>Judge Değerlendirmesi:</strong> Cevap, soruya genel olarak uygun ve doğru bilgiler içermektedir. Ancak, gereksiz detaylar ve bazı cümlelerin karmaşık olması nedeniyle puanı düşürülmüştür.
+                </div>
+                
+                    
+                <div class="failure-reasons">
+                    <div class="title">❌ Başarısızlık Nedenleri</div>
+                    <div>Sayısal tutarsızlık (0.00)</div>
+                </div>
+                
+                    
+                    <div style="margin-top: 10px; font-size: 0.85rem; color: var(--text-secondary);">
+                        📚 Kaynak: 6356 Sayılı Sendikalar Kanunu
+                    </div>
+                </div>
+            </div>
+            
+            <div class="question-card failed">
+                <div class="question-header">
+                    <div>
+                        <span class="question-id">#102</span>
+                        <span style="margin-left: 10px; color: var(--text-secondary); font-size: 0.85rem;">
+                            zor | unknown | 1756ms
+                        </span>
+                    </div>
+                    <span class="question-status fail">BAŞARISIZ</span>
+                </div>
+                
+                <div class="question-text">Grev hakkı nasıl kullanılır?</div>
+                
+                
+                <div class="scores-row">
+                    <span class="score-badge high">İlgililik: 0.80</span>
+                    <span class="score-badge high">Sadakat: 0.90</span>
+                    <span class="score-badge high">Doğruluk: 0.85</span>
+                    <span class="score-badge high">Tamlık: 0.90</span>
+                    <span class="score-badge high">Final: 0.80</span>
+                </div>
+                
+                
+                <div class="collapsible" style="color: var(--accent-blue); cursor: pointer; margin: 10px 0;">
+                    🔍 Detayları Göster/Gizle
+                </div>
+                <div class="collapsible-content">
+                    <div class="answer-section">
+                        <div class="answer-box generated">
+                            <div class="label">🤖 Model Cevabı</div>
+                            <div>BÖLÜM 1 - AÇIKLAMA
+
+Toplu iş sözleşmesi yapma sürecinde bir uyuşmazlık yaşanması durumunda, çalışanlar grev hakkına sahiptirler. Grev kararının alınabilmesi için, uyuşmazlık tutanağının tebliğ edilmesinden itibaren 60 gün içinde karar alınması ve karşı tarafa en az 6 iş günü önceden bildirilmesi gerekir. Aksi takdirde toplu iş sözleşmesi yapma yetkisi düşer. Grev ve lokavt kararları, kararı alan tarafça işyerinde ilan edilir.
+
+BÖLÜM 2 - HUKUKİ DAYANAKLAR
+
+*   T.C. Anayasası, Madde 54
+*   6356 Sa...</div>
+                        </div>
+                        <div class="answer-box expected">
+                            <div class="label">✅ Beklenen Cevap</div>
+                            <div>Toplu iş sözleşmesi görüşmelerinde uyuşmazlık çıkması halinde grev kararı alınabilir. Grev kararı 60 gün içinde alınmalı ve 6 iş günü önceden işverene bildirilmelidir.</div>
+                        </div>
+                    </div>
+                    
+                    
+                <div class="sw-container">
+                    <div class="sw-box strengths">
+                        <div class="title">💪 Güçlü Yönler</div>
+                        <ul><li>Cevap grev hakkının kullanım sürecini detaylı bir şekilde açıklıyor.</li><li>Cevap, referans cevapla uyumlu bir şekilde grev kararının alınma süresini ve bildirim şartlarını doğru şekilde aktarıyor.</li></ul>
+                    </div>
+                    <div class="sw-box weaknesses">
+                        <div class="title">⚠️ Zayıf Yönler</div>
+                        <ul><li>Cevapta gereksiz detaylar bulunabilir, daha öz olabilirdi.</li></ul>
+                    </div>
+                </div>
+                
+                    
+                <div class="judge-reasoning">
+                    ⚖️ <strong>Judge Değerlendirmesi:</strong> Cevap, genel olarak soruya uygun ve doğru bilgiler içeriyor. Ancak bazı gereksiz detaylar bulunması ve daha öz olabilme potansiyeli nedeniyle puanı biraz düşük tuttum.
+                </div>
+                
+                    
+                <div class="failure-reasons">
+                    <div class="title">❌ Başarısızlık Nedenleri</div>
+                    <div>Yanlış/eksik atıf (0.00)</div>
+                </div>
+                
+                    
+                    <div style="margin-top: 10px; font-size: 0.85rem; color: var(--text-secondary);">
+                        📚 Kaynak: 6356 Sayılı Sendikalar Kanunu
+                    </div>
+                </div>
+            </div>
+            
+            <div class="question-card ">
+                <div class="question-header">
+                    <div>
+                        <span class="question-id">#103</span>
+                        <span style="margin-left: 10px; color: var(--text-secondary); font-size: 0.85rem;">
+                            orta | unknown | 1911ms
+                        </span>
+                    </div>
+                    <span class="question-status pass">BAŞARILI</span>
+                </div>
+                
+                <div class="question-text">Hangi işlerde grev yapılamaz?</div>
+                
+                
+                <div class="scores-row">
+                    <span class="score-badge high">İlgililik: 0.80</span>
+                    <span class="score-badge high">Sadakat: 0.90</span>
+                    <span class="score-badge high">Doğruluk: 0.90</span>
+                    <span class="score-badge high">Tamlık: 0.90</span>
+                    <span class="score-badge high">Final: 0.88</span>
+                </div>
+                
+                
+                <div class="collapsible" style="color: var(--accent-blue); cursor: pointer; margin: 10px 0;">
+                    🔍 Detayları Göster/Gizle
+                </div>
+                <div class="collapsible-content">
+                    <div class="answer-section">
+                        <div class="answer-box generated">
+                            <div class="label">🤖 Model Cevabı</div>
+                            <div>BÖLÜM 1 - AÇIKLAMA
+
+Can ve mal kurtarma işlerinde, cenaze işlerinde ve mezarlıklarda, şehir şebeke suyu, elektrik, doğal gaz, petrol üretimi, tasfiyesi ve dağıtımı ile nafta veya doğalgazdan başlayan petrokimya işlerinde, Milli Savunma Bakanlığı ile Jandarma Genel Komutanlığı ve Sahil Güvenlik Komutanlığınca doğrudan işletilen işyerlerinde, kamu kuruluşlarınca yürütülen itfaiye ve hastanelerde grev ve lokavt yapılamaz. Cumhurbaşkanı, genel hayatı önemli ölçüde etkileyen doğa olaylarının gerçekle...</div>
+                        </div>
+                        <div class="answer-box expected">
+                            <div class="label">✅ Beklenen Cevap</div>
+                            <div>Can ve mal kurtarma, cenaze, su, elektrik, doğal gaz, petrol üretimi, bankacılık, kamu itfaiye, şehir içi toplu taşıma ve hastane hizmetlerinde grev yapılamaz.</div>
+                        </div>
+                    </div>
+                    
+                    
+                <div class="sw-container">
+                    <div class="sw-box strengths">
+                        <div class="title">💪 Güçlü Yönler</div>
+                        <ul><li>Cevapta grev yapılamayan işler detaylı ve doğru bir şekilde açıklanmış.</li><li>Referans cevaba sadık kalınmış.</li></ul>
+                    </div>
+                    <div class="sw-box weaknesses">
+                        <div class="title">⚠️ Zayıf Yönler</div>
+                        <ul><li>Cevapta gereksiz detaylar bulunmakta.</li><li>Bazı cümleler gereksiz uzun ve karmaşık.</li></ul>
+                    </div>
+                </div>
+                
+                    
+                <div class="judge-reasoning">
+                    ⚖️ <strong>Judge Değerlendirmesi:</strong> Cevap genel olarak ilgili, sadık, doğru ve tam olmasına rağmen gereksiz detaylar ve karmaşık cümleler nedeniyle puan düşürülmüştür.
+                </div>
+                
+                    
+                    
+                    <div style="margin-top: 10px; font-size: 0.85rem; color: var(--text-secondary);">
+                        📚 Kaynak: 6356 Sayılı Sendikalar Kanunu
+                    </div>
+                </div>
+            </div>
+            
+            <div class="question-card ">
+                <div class="question-header">
+                    <div>
+                        <span class="question-id">#105</span>
+                        <span style="margin-left: 10px; color: var(--text-secondary); font-size: 0.85rem;">
+                            kolay | unknown | 1614ms
+                        </span>
+                    </div>
+                    <span class="question-status pass">BAŞARILI</span>
+                </div>
+                
+                <div class="question-text">İş mahkemelerinin görev alanı nedir?</div>
+                
+                
+                <div class="scores-row">
+                    <span class="score-badge high">İlgililik: 0.80</span>
+                    <span class="score-badge high">Sadakat: 0.90</span>
+                    <span class="score-badge high">Doğruluk: 0.85</span>
+                    <span class="score-badge high">Tamlık: 0.90</span>
+                    <span class="score-badge high">Final: 0.86</span>
+                </div>
+                
+                
+                <div class="collapsible" style="color: var(--accent-blue); cursor: pointer; margin: 10px 0;">
+                    🔍 Detayları Göster/Gizle
+                </div>
+                <div class="collapsible-content">
+                    <div class="answer-section">
+                        <div class="answer-box generated">
+                            <div class="label">🤖 Model Cevabı</div>
+                            <div>BÖLÜM 1 - AÇIKLAMA
+İş mahkemeleri, işçi ve işveren arasındaki iş ilişkisinden kaynaklanan her türlü hukuki uyuşmazlıklara bakar. Bu uyuşmazlıklar, iş sözleşmesinden veya kanundan doğan davaları kapsar. Ayrıca, Sosyal Güvenlik Kurumu veya Türkiye İş Kurumu&#x27;nun taraf olduğu iş ve sosyal güvenlik mevzuatından kaynaklanan uyuşmazlıklar da iş mahkemelerinin görev alanına girer. Diğer kanunlarda iş mahkemelerinin görevli olduğu belirtilen uyuşmazlıklar da bu mahkemelerde çözülür.
+
+BÖLÜM 2 - HUKUKİ DAY...</div>
+                        </div>
+                        <div class="answer-box expected">
+                            <div class="label">✅ Beklenen Cevap</div>
+                            <div>İş mahkemeleri; İş Kanunu, Basın İş Kanunu, Deniz İş Kanunu kapsamındaki uyuşmazlıklara, iş kazası tazminatlarına, işe iade davalarına ve SGK uyuşmazlıklarına bakar.</div>
+                        </div>
+                    </div>
+                    
+                    
+                <div class="sw-container">
+                    <div class="sw-box strengths">
+                        <div class="title">💪 Güçlü Yönler</div>
+                        <ul><li>Cevap iş mahkemelerinin görev alanını doğru şekilde açıklıyor.</li><li>Cevapta hukuki terminoloji doğru kullanılmış.</li></ul>
+                    </div>
+                    <div class="sw-box weaknesses">
+                        <div class="title">⚠️ Zayıf Yönler</div>
+                        <ul><li>Cevapta belirli anahtar kelimeler eksik.</li></ul>
+                    </div>
+                </div>
+                
+                    
+                <div class="judge-reasoning">
+                    ⚖️ <strong>Judge Değerlendirmesi:</strong> Cevap genel olarak ilgili, sadık, doğru ve tam olmakla birlikte belirli anahtar kelimelerin eksikliği nedeniyle puan düşürülmüştür.
+                </div>
+                
+                    
+                    
+                    <div style="margin-top: 10px; font-size: 0.85rem; color: var(--text-secondary);">
+                        📚 Kaynak: 7036 Sayılı İş Mahkemeleri Kanunu
+                    </div>
+                </div>
+            </div>
+            
+            <div class="question-card ">
+                <div class="question-header">
+                    <div>
+                        <span class="question-id">#106</span>
+                        <span style="margin-left: 10px; color: var(--text-secondary); font-size: 0.85rem;">
+                            kolay | unknown | 2263ms
+                        </span>
+                    </div>
+                    <span class="question-status pass">BAŞARILI</span>
+                </div>
+                
+                <div class="question-text">İş davalarında arabuluculuk zorunlu mudur?</div>
+                
+                
+                <div class="scores-row">
+                    <span class="score-badge high">İlgililik: 0.80</span>
+                    <span class="score-badge high">Sadakat: 0.90</span>
+                    <span class="score-badge high">Doğruluk: 0.85</span>
+                    <span class="score-badge high">Tamlık: 0.90</span>
+                    <span class="score-badge high">Final: 0.90</span>
+                </div>
+                
+                
+                <div class="collapsible" style="color: var(--accent-blue); cursor: pointer; margin: 10px 0;">
+                    🔍 Detayları Göster/Gizle
+                </div>
+                <div class="collapsible-content">
+                    <div class="answer-section">
+                        <div class="answer-box generated">
+                            <div class="label">🤖 Model Cevabı</div>
+                            <div>BÖLÜM 1 - AÇIKLAMA
+Evet, işçi veya işveren alacağı ve tazminatı ile işe iade talebiyle açılan davalarda arabulucuya başvurmak dava şartı olarak kabul edilir. Arabulucuya başvurmadan dava açılması durumunda, dava şartı yokluğu nedeniyle usulden reddedilir. Ancak, iş kazası veya meslek hastalığından kaynaklanan maddi ve manevi tazminat davaları bu zorunluluğun dışındadır. İşe iade talebiyle açılan davalarda da arabulucuya başvurmak zorunludur. Fesih bildiriminde sebep gösterilmediği veya gösterile...</div>
+                        </div>
+                        <div class="answer-box expected">
+                            <div class="label">✅ Beklenen Cevap</div>
+                            <div>Evet, işçi veya işveren alacağı, tazminatı ve işe iade talepli davalarda dava açmadan önce arabulucuya başvurmak dava şartıdır.</div>
+                        </div>
+                    </div>
+                    
+                    
+                <div class="sw-container">
+                    <div class="sw-box strengths">
+                        <div class="title">💪 Güçlü Yönler</div>
+                        <ul><li>Cevap iş mahkemelerinde arabuluculuğun zorunlu olduğunu doğru şekilde belirtiyor.</li><li>Anahtar bilgileri genel olarak kapsıyor.</li></ul>
+                    </div>
+                    <div class="sw-box weaknesses">
+                        <div class="title">⚠️ Zayıf Yönler</div>
+                        <ul><li>Cevapta bazı gereksiz detaylar bulunmakta.</li><li>İş kazası ve meslek hastalığından kaynaklanan tazminat davalarının arabuluculuk zorunluluğu dışında olduğu belirtilmemiş.</li></ul>
+                    </div>
+                </div>
+                
+                    
+                <div class="judge-reasoning">
+                    ⚖️ <strong>Judge Değerlendirmesi:</strong> Cevap genel olarak ilgili, sadık, doğru ve tam. Ancak gereksiz detaylar ve belirli bir tazminat davası türünün arabuluculuk zorunluluğundan muaf olduğu bilgisinin eksikliği puanı düşürdü.
+                </div>
+                
+                    
+                    
+                    <div style="margin-top: 10px; font-size: 0.85rem; color: var(--text-secondary);">
+                        📚 Kaynak: 7036 Sayılı İş Mahkemeleri Kanunu
+                    </div>
+                </div>
+            </div>
+            
+            <div class="question-card failed">
+                <div class="question-header">
+                    <div>
+                        <span class="question-id">#107</span>
+                        <span style="margin-left: 10px; color: var(--text-secondary); font-size: 0.85rem;">
+                            orta | unknown | 1921ms
+                        </span>
+                    </div>
+                    <span class="question-status fail">BAŞARISIZ</span>
+                </div>
+                
+                <div class="question-text">İş davalarında zamanaşımı süreleri ne kadardır?</div>
+                
+                
+                <div class="scores-row">
+                    <span class="score-badge low">İlgililik: 0.20</span>
+                    <span class="score-badge low">Sadakat: 0.10</span>
+                    <span class="score-badge low">Doğruluk: 0.10</span>
+                    <span class="score-badge low">Tamlık: 0.10</span>
+                    <span class="score-badge low">Final: 0.27</span>
+                </div>
+                
+                
+                <div class="collapsible" style="color: var(--accent-blue); cursor: pointer; margin: 10px 0;">
+                    🔍 Detayları Göster/Gizle
+                </div>
+                <div class="collapsible-content">
+                    <div class="answer-section">
+                        <div class="answer-box generated">
+                            <div class="label">🤖 Model Cevabı</div>
+                            <div>BÖLÜM 1 - AÇIKLAMA
+İş davalarındaki zamanaşımı süreleriyle ilgili olarak, elimdeki metinlerde genel bir düzenleme bulunmamaktadır. Ancak, eser sözleşmelerinden kaynaklanan davalarla ilgili olarak özel bir düzenleme mevcuttur. Buna göre, yüklenicinin ayıplı bir eser meydana getirmesi durumunda açılacak davalar, teslim tarihinden itibaren taşınmaz yapılar dışındaki eserlerde iki yıl, taşınmaz yapılarda ise beş yıl içinde zamanaşımına uğrar. Yüklenicinin ağır kusuru varsa, ayıplı eserin niteliğine ...</div>
+                        </div>
+                        <div class="answer-box expected">
+                            <div class="label">✅ Beklenen Cevap</div>
+                            <div>Kıdem tazminatı, ihbar tazminatı, yıllık izin ücreti ve kötüniyet tazminatı için zamanaşımı süresi 5 yıldır.</div>
+                        </div>
+                    </div>
+                    
+                    
+                <div class="sw-container">
+                    <div class="sw-box strengths">
+                        <div class="title">💪 Güçlü Yönler</div>
+                        <ul><li>Hukuki terminoloji kullanımı</li></ul>
+                    </div>
+                    <div class="sw-box weaknesses">
+                        <div class="title">⚠️ Zayıf Yönler</div>
+                        <ul><li>Soruyla ilgili olmayan bilgiler</li><li>Referans cevapla uyumsuzluk</li></ul>
+                    </div>
+                </div>
+                
+                    
+                <div class="judge-reasoning">
+                    ⚖️ <strong>Judge Değerlendirmesi:</strong> Cevap, soruda belirtilen iş davalarındaki zamanaşımı sürelerine odaklanmamış ve yanlış bilgiler içermiştir. Ayrıca, referans cevapla hukuki anlamda örtüşmemektedir. Bu nedenle düşük puan verilmiştir.
+                </div>
+                
+                    
+                <div class="failure-reasons">
+                    <div class="title">❌ Başarısızlık Nedenleri</div>
+                    <div>Düşük ilgililik (0.20), Context'e sadakatsiz (0.10), Sayısal tutarsızlık (0.00)</div>
+                </div>
+                
+                    
+                    <div style="margin-top: 10px; font-size: 0.85rem; color: var(--text-secondary);">
+                        📚 Kaynak: 7036 Sayılı İş Mahkemeleri Kanunu
+                    </div>
+                </div>
+            </div>
+            
+            <div class="question-card failed">
+                <div class="question-header">
+                    <div>
+                        <span class="question-id">#109</span>
+                        <span style="margin-left: 10px; color: var(--text-secondary); font-size: 0.85rem;">
+                            zor | unknown | 3451ms
+                        </span>
+                    </div>
+                    <span class="question-status fail">BAŞARISIZ</span>
+                </div>
+                
+                <div class="question-text">İşe iade davasında arabuluculuk süreci nasıl işler?</div>
+                
+                
+                <div class="scores-row">
+                    <span class="score-badge high">İlgililik: 0.80</span>
+                    <span class="score-badge high">Sadakat: 0.90</span>
+                    <span class="score-badge high">Doğruluk: 0.85</span>
+                    <span class="score-badge high">Tamlık: 0.90</span>
+                    <span class="score-badge high">Final: 0.81</span>
+                </div>
+                
+                
+                <div class="collapsible" style="color: var(--accent-blue); cursor: pointer; margin: 10px 0;">
+                    🔍 Detayları Göster/Gizle
+                </div>
+                <div class="collapsible-content">
+                    <div class="answer-section">
+                        <div class="answer-box generated">
+                            <div class="label">🤖 Model Cevabı</div>
+                            <div>BÖLÜM 1 - AÇIKLAMA
+
+İş sözleşmesi feshedilen bir işçi, feshin geçersiz olduğunu düşünüyorsa, fesih bildiriminin tebliğ tarihinden itibaren bir ay içinde öncelikle arabulucuya başvurmak zorundadır. Arabuluculuk süreci sonunda anlaşmaya varılamazsa, son tutanağın düzenlendiği tarihten itibaren iki hafta içinde iş mahkemesinde dava açılabilir. Eğer taraflar anlaşırlarsa, aynı süre içinde iş mahkemesi yerine özel hakeme de gidebilirler. Arabulucuya başvurmadan doğrudan dava açılması durumunda, dava ...</div>
+                        </div>
+                        <div class="answer-box expected">
+                            <div class="label">✅ Beklenen Cevap</div>
+                            <div>Fesih bildiriminden itibaren 1 ay içinde arabulucuya başvurulmalıdır. Anlaşma sağlanamazsa 2 hafta içinde mahkemede dava açılabilir.</div>
+                        </div>
+                    </div>
+                    
+                    
+                <div class="sw-container">
+                    <div class="sw-box strengths">
+                        <div class="title">💪 Güçlü Yönler</div>
+                        <ul><li>Cevap işe iade davasında arabuluculuk sürecini detaylı bir şekilde açıklamıştır.</li><li>Cevap, işe iade davasında arabulucuya başvurma sürelerini doğru şekilde belirtmiştir.</li></ul>
+                    </div>
+                    <div class="sw-box weaknesses">
+                        <div class="title">⚠️ Zayıf Yönler</div>
+                        <ul><li>Cevapta hukuki terminoloji ve dilbilgisi hataları bulunmaktadır.</li><li>Bazı detaylar gereksiz uzun ve karmaşıktır.</li></ul>
+                    </div>
+                </div>
+                
+                    
+                <div class="judge-reasoning">
+                    ⚖️ <strong>Judge Değerlendirmesi:</strong> Cevap, genel olarak soruya uygun ve doğru bilgiler içermektedir. Ancak, hukuki terminoloji ve dilbilgisi hataları ile gereksiz detaylar puanı düşürmüştür.
+                </div>
+                
+                    
+                <div class="failure-reasons">
+                    <div class="title">❌ Başarısızlık Nedenleri</div>
+                    <div>Sayısal tutarsızlık (0.00)</div>
+                </div>
+                
+                    
+                    <div style="margin-top: 10px; font-size: 0.85rem; color: var(--text-secondary);">
+                        📚 Kaynak: 7036 Sayılı İş Mahkemeleri Kanunu
+                    </div>
+                </div>
+            </div>
+            
+            <div class="question-card failed">
+                <div class="question-header">
+                    <div>
+                        <span class="question-id">#131</span>
+                        <span style="margin-left: 10px; color: var(--text-secondary); font-size: 0.85rem;">
+                            orta | hallucination_test | 1313ms
+                        </span>
+                    </div>
+                    <span class="question-status fail">BAŞARISIZ</span>
+                </div>
+                
+                <div class="question-text">2024 yılında asgari ücret ne kadardır?</div>
+                
+                
+                <div class="scores-row">
+                    <span class="score-badge low">İlgililik: 0.20</span>
+                    <span class="score-badge high">Sadakat: 0.80</span>
+                    <span class="score-badge medium">Doğruluk: 0.50</span>
+                    <span class="score-badge low">Tamlık: 0.20</span>
+                    <span class="score-badge low">Final: 0.49</span>
+                </div>
+                
+                
+                <div class="collapsible" style="color: var(--accent-blue); cursor: pointer; margin: 10px 0;">
+                    🔍 Detayları Göster/Gizle
+                </div>
+                <div class="collapsible-content">
+                    <div class="answer-section">
+                        <div class="answer-box generated">
+                            <div class="label">🤖 Model Cevabı</div>
+                            <div>BÖLÜM 1 - AÇIKLAMA
+Bu konuda elimdeki yasal metinlerde yeterli bilgi bulunmamaktadır. Çünkü, güncel asgari ücret bilgisi sürekli değişebilir ve bu bilgiye erişimim şu anda mümkün değil.
+
+BÖLÜM 2 - HUKUKİ DAYANAKLAR
+Yok.</div>
+                        </div>
+                        <div class="answer-box expected">
+                            <div class="label">✅ Beklenen Cevap</div>
+                            <div>Bu bilgi veri setindeki kaynaklarda (2024 yılına ait güncel rakamlar) yer almamaktadır.</div>
+                        </div>
+                    </div>
+                    
+                    
+                <div class="sw-container">
+                    <div class="sw-box strengths">
+                        <div class="title">💪 Güçlü Yönler</div>
+                        <ul><li>Cevap verilen konuya odaklı.</li></ul>
+                    </div>
+                    <div class="sw-box weaknesses">
+                        <div class="title">⚠️ Zayıf Yönler</div>
+                        <ul><li>Beklenen anahtar bilgilerin çoğunu içermiyor.</li><li>Doğruluk ve ilgililik düşük.</li></ul>
+                    </div>
+                </div>
+                
+                    
+                <div class="judge-reasoning">
+                    ⚖️ <strong>Judge Değerlendirmesi:</strong> Cevap, asgari ücretin 2024 yılındaki miktarını belirtmemekte ve beklenen anahtar bilgilerin çoğunu içermemektedir. Ayrıca, doğruluk ve ilgililik düşük seviyededir. Bu nedenlerle genel olarak düşük bir puan verilmiştir.
+                </div>
+                
+                    
+                <div class="failure-reasons">
+                    <div class="title">❌ Başarısızlık Nedenleri</div>
+                    <div>Düşük ilgililik (0.20)</div>
+                </div>
+                
+                    
+                    <div style="margin-top: 10px; font-size: 0.85rem; color: var(--text-secondary);">
+                        📚 Kaynak: out_of_scope_temporal
+                    </div>
+                </div>
+            </div>
+            
+            <div class="question-card failed">
+                <div class="question-header">
+                    <div>
+                        <span class="question-id">#133</span>
+                        <span style="margin-left: 10px; color: var(--text-secondary); font-size: 0.85rem;">
+                            orta | hallucination_test | 1124ms
+                        </span>
+                    </div>
+                    <span class="question-status fail">BAŞARISIZ</span>
+                </div>
+                
+                <div class="question-text">İş Kanunu&#x27;nun 250. maddesi neyi düzenler?</div>
+                
+                
+                <div class="scores-row">
+                    <span class="score-badge low">İlgililik: 0.20</span>
+                    <span class="score-badge medium">Sadakat: 0.50</span>
+                    <span class="score-badge low">Doğruluk: 0.20</span>
+                    <span class="score-badge low">Tamlık: 0.10</span>
+                    <span class="score-badge low">Final: 0.43</span>
+                </div>
+                
+                
+                <div class="collapsible" style="color: var(--accent-blue); cursor: pointer; margin: 10px 0;">
+                    🔍 Detayları Göster/Gizle
+                </div>
+                <div class="collapsible-content">
+                    <div class="answer-section">
+                        <div class="answer-box generated">
+                            <div class="label">🤖 Model Cevabı</div>
+                            <div>BÖLÜM 1 - AÇIKLAMA
+4857 sayılı İş Kanunu&#x27;nda 250. madde bulunmamaktadır. Bu nedenle sorunuz hakkında size yardımcı olamıyorum.
+
+BÖLÜM 2 - HUKUKİ DAYANAKLAR
+4857 Sayılı İş Kanunu.</div>
+                        </div>
+                        <div class="answer-box expected">
+                            <div class="label">✅ Beklenen Cevap</div>
+                            <div>İş Kanunu&#x27;nda 250. madde bulunmamaktadır.</div>
+                        </div>
+                    </div>
+                    
+                    
+                <div class="sw-container">
+                    <div class="sw-box strengths">
+                        <div class="title">💪 Güçlü Yönler</div>
+                        <ul><li>Cevapta iş kanununun 250. maddesinin olmadığı doğru şekilde belirtilmiş.</li></ul>
+                    </div>
+                    <div class="sw-box weaknesses">
+                        <div class="title">⚠️ Zayıf Yönler</div>
+                        <ul><li>Cevapta gereksiz bilgiler bulunmakta.</li><li>Cevapta iş kanununun hangi maddelerini düzenlediği hakkında bilgi verilmemiş.</li></ul>
+                    </div>
+                </div>
+                
+                    
+                <div class="judge-reasoning">
+                    ⚖️ <strong>Judge Değerlendirmesi:</strong> Cevap, soruda belirtilen iş kanunu 250. maddesinin olmadığını doğru şekilde belirtiyor ancak gereksiz bilgiler içeriyor ve iş kanununun hangi maddelerini düzenlediği hakkında bilgi vermiyor. Bu nedenle puanlar düşük.
+                </div>
+                
+                    
+                <div class="failure-reasons">
+                    <div class="title">❌ Başarısızlık Nedenleri</div>
+                    <div>Düşük ilgililik (0.20)</div>
+                </div>
+                
+                    
+                    <div style="margin-top: 10px; font-size: 0.85rem; color: var(--text-secondary);">
+                        📚 Kaynak: out_of_scope_nonexistent
+                    </div>
+                </div>
+            </div>
+            
+            <div class="question-card failed">
+                <div class="question-header">
+                    <div>
+                        <span class="question-id">#141</span>
+                        <span style="margin-left: 10px; color: var(--text-secondary); font-size: 0.85rem;">
+                            orta | edge_case | 2857ms
+                        </span>
+                    </div>
+                    <span class="question-status fail">BAŞARISIZ</span>
+                </div>
+                
+                <div class="question-text">Tazminat ne zaman ödenir?</div>
+                
+                
+                <div class="scores-row">
+                    <span class="score-badge low">İlgililik: 0.20</span>
+                    <span class="score-badge medium">Sadakat: 0.60</span>
+                    <span class="score-badge high">Doğruluk: 0.70</span>
+                    <span class="score-badge medium">Tamlık: 0.50</span>
+                    <span class="score-badge medium">Final: 0.61</span>
+                </div>
+                
+                
+                <div class="collapsible" style="color: var(--accent-blue); cursor: pointer; margin: 10px 0;">
+                    🔍 Detayları Göster/Gizle
+                </div>
+                <div class="collapsible-content">
+                    <div class="answer-section">
+                        <div class="answer-box generated">
+                            <div class="label">🤖 Model Cevabı</div>
+                            <div>BÖLÜM 1 - AÇIKLAMA
+
+Tazminat ödemesi, farklı hukuki durumlara göre değişiklik gösterir. Örneğin, bir davada zarar gören tarafın iddiasını haklı çıkaracak kanıtlar sunması ve ekonomik durumunun gerektirmesi halinde, mahkeme davalının geçici bir ödeme yapmasına karar verebilir. Bu ödeme, daha sonra hükmedilecek tazminattan düşülür.
+
+İş hukukunda, işçinin haklı bir sebebi olmadan işe başlamaması veya aniden işi bırakması durumunda işveren, işçiden tazminat talep edebilir. İş sözleşmesinin kıdem taz...</div>
+                        </div>
+                        <div class="answer-box expected">
+                            <div class="label">✅ Beklenen Cevap</div>
+                            <div>Soru çok geneldir. Kıdem tazminatı fesih tarihinde, ihbar tazminatı peşin, işe iade tazminatı ise işe başlatmama durumunda ödenir. Lütfen tazminat türünü belirtiniz.</div>
+                        </div>
+                    </div>
+                    
+                    
+                <div class="sw-container">
+                    <div class="sw-box strengths">
+                        <div class="title">💪 Güçlü Yönler</div>
+                        <ul><li>Genel bilgi verilmiş</li><li>Farklı hukuki durumlar örneklenmiş</li></ul>
+                    </div>
+                    <div class="sw-box weaknesses">
+                        <div class="title">⚠️ Zayıf Yönler</div>
+                        <ul><li>Soruyla doğrudan ilgili olmayan bilgiler verilmiş</li><li>Anahtar bilgiler eksik</li></ul>
+                    </div>
+                </div>
+                
+                    
+                <div class="judge-reasoning">
+                    ⚖️ <strong>Judge Değerlendirmesi:</strong> Cevap genel olarak doğru bilgiler içeriyor ancak soruyla doğrudan ilgili olmayan detaylar ve anahtar bilgilerin eksikliği puanı düşürdü. Hukuki terminoloji ve madde numaralarına dikkat edilmeli.
+                </div>
+                
+                    
+                <div class="failure-reasons">
+                    <div class="title">❌ Başarısızlık Nedenleri</div>
+                    <div>Düşük ilgililik (0.20)</div>
+                </div>
+                
+                    
+                    <div style="margin-top: 10px; font-size: 0.85rem; color: var(--text-secondary);">
+                        📚 Kaynak: edge_case_ambiguous
+                    </div>
+                </div>
+            </div>
+            
+            <div class="question-card failed">
+                <div class="question-header">
+                    <div>
+                        <span class="question-id">#146</span>
+                        <span style="margin-left: 10px; color: var(--text-secondary); font-size: 0.85rem;">
+                            zor | edge_case | 1064ms
+                        </span>
+                    </div>
+                    <span class="question-status fail">BAŞARISIZ</span>
+                </div>
+                
+                <div class="question-text">Yapay zeka işçinin yerini alırsa tazminat ödenir mi?</div>
+                
+                
+                <div class="scores-row">
+                    <span class="score-badge low">İlgililik: 0.20</span>
+                    <span class="score-badge low">Sadakat: 0.10</span>
+                    <span class="score-badge low">Doğruluk: 0.10</span>
+                    <span class="score-badge low">Tamlık: 0.10</span>
+                    <span class="score-badge low">Final: 0.22</span>
+                </div>
+                
+                
+                <div class="collapsible" style="color: var(--accent-blue); cursor: pointer; margin: 10px 0;">
+                    🔍 Detayları Göster/Gizle
+                </div>
+                <div class="collapsible-content">
+                    <div class="answer-section">
+                        <div class="answer-box generated">
+                            <div class="label">🤖 Model Cevabı</div>
+                            <div>BÖLÜM 1 - AÇIKLAMA
+Bu konuda elimdeki yasal metinlerde yeterli bilgi bulunmamaktadır.
+
+BÖLÜM 2 - HUKUKİ DAYANAKLAR
+Yok.</div>
+                        </div>
+                        <div class="answer-box expected">
+                            <div class="label">✅ Beklenen Cevap</div>
+                            <div>Kanunlarda &#x27;yapay zeka&#x27; geçmez ancak bu durum &#x27;işletmenin gerekleri&#x27; veya &#x27;teknolojik nedenler&#x27; kapsamında geçerli fesih sayılabilir. Bu durumda işçi kıdem ve ihbar tazminatına hak kazanır.</div>
+                        </div>
+                    </div>
+                    
+                    
+                <div class="sw-container">
+                    <div class="sw-box strengths">
+                        <div class="title">💪 Güçlü Yönler</div>
+                        <ul><li>Yasal metinlerde bilgi olmadığı doğru şekilde belirtilmiş</li></ul>
+                    </div>
+                    <div class="sw-box weaknesses">
+                        <div class="title">⚠️ Zayıf Yönler</div>
+                        <ul><li>Soruyla ilgili bilgi eksikliği</li><li>Hukuki doğruluk ve tamlık sağlanamamış</li></ul>
+                    </div>
+                </div>
+                
+                    
+                <div class="judge-reasoning">
+                    ⚖️ <strong>Judge Değerlendirmesi:</strong> Cevap soruyla ilgili bilgi içermemekte, hukuki doğruluk ve tamlık sağlanamamıştır. Referans cevapla uyumsuzluk ve eksiklikler nedeniyle düşük puan verilmiştir.
+                </div>
+                
+                    
+                <div class="failure-reasons">
+                    <div class="title">❌ Başarısızlık Nedenleri</div>
+                    <div>Düşük ilgililik (0.20), Context'e sadakatsiz (0.10), Yanlış/eksik atıf (0.00)</div>
+                </div>
+                
+                    
+                    <div style="margin-top: 10px; font-size: 0.85rem; color: var(--text-secondary);">
+                        📚 Kaynak: 4857 Sayılı İş Kanunu
+                    </div>
+                </div>
+            </div>
+            
+            <div class="question-card ">
+                <div class="question-header">
+                    <div>
+                        <span class="question-id">#150</span>
+                        <span style="margin-left: 10px; color: var(--text-secondary); font-size: 0.85rem;">
+                            zor | cross_reference | 1951ms
+                        </span>
+                    </div>
+                    <span class="question-status pass">BAŞARILI</span>
+                </div>
+                
+                <div class="question-text">İş Kanunu ile Borçlar Kanunu&#x27;ndaki iş sözleşmesi tanımları arasındaki farklar nelerdir?</div>
+                
+                
+                <div class="scores-row">
+                    <span class="score-badge high">İlgililik: 0.70</span>
+                    <span class="score-badge high">Sadakat: 0.80</span>
+                    <span class="score-badge medium">Doğruluk: 0.60</span>
+                    <span class="score-badge high">Tamlık: 0.70</span>
+                    <span class="score-badge high">Final: 0.77</span>
+                </div>
+                
+                
+                <div class="collapsible" style="color: var(--accent-blue); cursor: pointer; margin: 10px 0;">
+                    🔍 Detayları Göster/Gizle
+                </div>
+                <div class="collapsible-content">
+                    <div class="answer-section">
+                        <div class="answer-box generated">
+                            <div class="label">🤖 Model Cevabı</div>
+                            <div>BÖLÜM 1 - AÇIKLAMA
+
+İş Kanunu ve Borçlar Kanunu&#x27;nda iş sözleşmesi tanımları bulunmaktadır. Her iki kanunda da iş sözleşmesi, bir tarafın (işçi) bağımlı olarak iş görmeyi, diğer tarafın (işveren) da ücret ödemeyi üstlenmesinden oluşan bir sözleşme olarak tanımlanır. Ancak Borçlar Kanunu, hizmet sözleşmesinin işçinin işverene bağımlı olarak belirli veya belirli olmayan süreyle iş görmeyi ve işverenin de ona zamana veya yapılan işe göre ücret ödemeyi üstlendiği sözleşme olduğunu belirtir. Ayrıca, i...</div>
+                        </div>
+                        <div class="answer-box expected">
+                            <div class="label">✅ Beklenen Cevap</div>
+                            <div>Her ikisi de bağımlılık ve ücret unsurlarını içerir. Ancak İş Kanunu (Md. 8) işçiyi koruyucu özel hükümler içerirken, Borçlar Kanunu (Md. 393) daha genel ve tamamlayıcı niteliktedir.</div>
+                        </div>
+                    </div>
+                    
+                    
+                <div class="sw-container">
+                    <div class="sw-box strengths">
+                        <div class="title">💪 Güçlü Yönler</div>
+                        <ul><li>İş Kanunu ve Borçlar Kanunu'ndaki iş sözleşmesi tanımlarını karşılaştırmış olması</li><li>Anahtar bilgileri genel hatlarıyla doğru vermiş olması</li></ul>
+                    </div>
+                    <div class="sw-box weaknesses">
+                        <div class="title">⚠️ Zayıf Yönler</div>
+                        <ul><li>İş Kanunu ve Borçlar Kanunu'ndaki detaylı farkları daha net açıklamak gerekebilir</li><li>Referans cevapla tam olarak örtüşmeyen bilgiler içermesi</li></ul>
+                    </div>
+                </div>
+                
+                    
+                <div class="judge-reasoning">
+                    ⚖️ <strong>Judge Değerlendirmesi:</strong> Cevap ilgili konuları karşılaştırmış olsa da detaylı farkları net bir şekilde açıklamamış ve referans cevapla tam olarak örtüşmeyen bilgiler içermiştir. Bu nedenle puanlama dengeli bir şekilde yapılmıştır.
+                </div>
+                
+                    
+                    
+                    <div style="margin-top: 10px; font-size: 0.85rem; color: var(--text-secondary);">
+                        📚 Kaynak: Cross Reference
+                    </div>
+                </div>
+            </div>
+            
+            </div>
+        </div>
+        
+        <!-- Footer -->
+        <div class="footer">
+            <p>RAG Test Runner v2.0 | Oluşturulma: 2025-12-28 00:23:49</p>
+            <p>Model: gemini-2.0-flash | Evaluator: gpt-3.5-turbo</p>
+        </div>
+    </div>
+    
+    <script>
+        // Triad Chart
+        const triadCtx = document.getElementById('triadChart').getContext('2d');
+        new Chart(triadCtx, {
+            type: 'radar',
+            data: {
+                labels: ['İlgililik', 'Sadakat', 'Doğruluk', 'Tamlık', 'Genel'],
+                datasets: [{
+                    label: 'Ortalama Skorlar',
+                    data: [0.67, 0.77, 0.74, 0.72, 0.72],
+                    backgroundColor: 'rgba(59, 130, 246, 0.2)',
+                    borderColor: 'rgba(59, 130, 246, 1)',
+                    borderWidth: 2,
+                    pointBackgroundColor: 'rgba(59, 130, 246, 1)'
+                }]
+            },
+            options: {
+                scales: {
+                    r: {
+                        beginAtZero: true,
+                        max: 1,
+                        ticks: { color: '#a0a0c0' },
+                        grid: { color: '#2a2a5a' },
+                        pointLabels: { color: '#ffffff', font: { size: 12 } }
+                    }
+                },
+                plugins: {
+                    legend: { labels: { color: '#ffffff' } }
+                }
+            }
+        });
+        
+        // Pass/Fail Chart
+        const pfCtx = document.getElementById('passFailChart').getContext('2d');
+        new Chart(pfCtx, {
+            type: 'doughnut',
+            data: {
+                labels: ['Başarılı', 'Başarısız'],
+                datasets: [{
+                    data: [26, 18],
+                    backgroundColor: ['#10b981', '#ef4444'],
+                    borderWidth: 0
+                }]
+            },
+            options: {
+                cutout: '60%',
+                plugins: {
+                    legend: {
+                        position: 'bottom',
+                        labels: { color: '#ffffff', padding: 20 }
+                    }
+                }
+            }
+        });
+        
+        // Filter functionality
+        function filterQuestions(filter) {
+            const cards = document.querySelectorAll('.question-card');
+            const buttons = document.querySelectorAll('.filter-btn');
+            
+            buttons.forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+            
+            cards.forEach(card => {
+                if (filter === 'all') {
+                    card.style.display = 'block';
+                } else if (filter === 'passed') {
+                    card.style.display = card.classList.contains('failed') ? 'none' : 'block';
+                } else if (filter === 'failed') {
+                    card.style.display = card.classList.contains('failed') ? 'block' : 'none';
+                }
+            });
+        }
+        
+        // Collapsible
+        document.querySelectorAll('.collapsible').forEach(el => {
+            el.addEventListener('click', function() {
+                const content = this.nextElementSibling;
+                content.classList.toggle('show');
+            });
+        });
+    </script>
+</body>
+</html>

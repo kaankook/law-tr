@@ -1,0 +1,21 @@
+{
+  "total_questions": 150,
+  "passed": 102,
+  "failed": 48,
+  "pass_rate": 0.68,
+  "avg_score": 0.6108423544973542,
+  "avg_latency_ms": 1865.2860514322917,
+  "avg_retrieval_latency_ms": 181.62707328796387,
+  "avg_generation_latency_ms": 1683.6269823710124,
+  "model_name": "gemini-2.0-flash",
+  "dataset_path": "c:\\Users\\kaank\\Desktop\\turkish-law-rag-assistant\\data\\test_datasets\\golden_dataset_final.json",
+  "timestamp": "2025-12-27T22:14:20.327168",
+  "metrics_summary": {
+    "length_appropriateness": 0.9961150793650793,
+    "llm_judge": 0.7777777777777778,
+    "retrieval_precision": 0.6364701436130008,
+    "completeness": 0.3373204837490552,
+    "hallucination_check": 0.9646825396825397,
+    "citation_accuracy": 0.6507936507936508
+  }
+}

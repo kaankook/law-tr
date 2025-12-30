@@ -1,0 +1,944 @@
+{
+  "_README": {
+    "format_version":  "3.1",
+    "compatibility":  "test_runner. py ile uyumlu",
+    "last_validated": "2025-12-29",
+    "notes": [
+      "Her soru test_runner.py tarafından otomatik değerlendirilir",
+      "out_of_scope ve edge_case sorularında özel kurallar uygulanır",
+      "Bu veri seti golden_dataset_final.json'dan seçilen 23 sorudan oluşmaktadır"
+    ]
+  },
+  "_FIELD_DESCRIPTIONS": {
+    "id": "Benzersiz soru numarası (1-50)",
+    "question": "RAG sistemine gönderilecek soru metni",
+    "answer": {
+      "main_answer": "Beklenen referans cevap - PROMPT_TEMPLATE formatında (BÖLÜM 1 + BÖLÜM 2)",
+      "key_entities": "Cevapta bulunması gereken anahtar kavramlar (fallback must_include)",
+      "source_quote":  "Kaynak metinden birebir alıntı - quote_presence metriği için kullanılır"
+    },
+    "alternative_correct_answers": "Alternatif doğru cevaplar - semantic_correctness MAX skoru için",
+    "source": "Ana kaynak kanun/belge adı - out_of_scope kontrolü için kritik",
+    "source_details": {
+      "document":  "Kaynak dosya adı (config.py SOURCE_MAPPING ile eşleşmeli)",
+      "article": "İlgili madde numarası - citation_accuracy kontrolü için",
+      "section": "Kanundaki bölüm/kısım bilgisi"
+    },
+    "difficulty": "kolay|orta|zor - raporlamada kategori bazlı analiz için",
+    "question_type": "olgusal|kavramsal|karşılaştırma|multi_hop_reasoning|hallucination_test|cross_reference|edge_case",
+    "evaluation_criteria": {
+      "must_include": "Cevapta ZORUNLU olması gereken terimler - exact match kontrolü",
+      "should_include": "Cevapta olması ÖNERİLEN terimler - bonus puan",
+      "must_not_hallucinate": "true ise model bilgi uydurarsa FAIL (out_of_scope sorular)",
+      "should_explain_limitation": "true ise model kısıtlamayı açıklamalı",
+      "acceptable_responses": "Kabul edilebilir alternatif cevap kalıpları"
+    },
+    "test_purpose":  "Bu sorunun test amacı açıklaması"
+  },
+  "_SPECIAL_SOURCES": {
+    "out_of_scope_temporal": "Zamansal kapsam dışı - güncel rakam/tarih soruları",
+    "out_of_scope_topic": "Konu kapsam dışı - farklı kanun/alan soruları",
+    "out_of_scope_nonexistent": "Var olmayan madde/kanun soruları",
+    "out_of_scope_opinion": "Subjektif/görüş soruları",
+    "out_of_scope_future": "Gelecek tahmini soruları",
+    "edge_case_ambiguous": "Belirsiz soru - açıklama istemeli",
+    "edge_case_incomplete": "Eksik bilgi - tamamlama istemeli",
+    "edge_case_insufficient_info": "Yetersiz bilgi - yargı yapmamalı",
+    "edge_case_subjective": "Subjektif karşılaştırma - sıralama yapmamalı"
+  },
+  "_USAGE_IN_TEST_RUNNER": {
+    "semantic_correctness": "main_answer + alternative_correct_answers ile MAX similarity hesaplanır",
+    "quote_presence": "source_quote context içinde aranır (exact + semantic match)",
+    "keyword_coverage": "must_include (exact) + should_include (bonus) ile hesaplanır",
+    "citation_accuracy": "source_details.article retrieved chunks ile karşılaştırılır",
+    "llm_judge":  "Tüm veriler ENHANCED_JUDGE_PROMPT'a gönderilir"
+  },
+  "dataset_info": {
+    "version": "1.0",
+    "total_questions": 50,
+    "description": "Türk Hukuk RAG Sistemi için silver test veri seti - golden_dataset_final.json'dan dengeli seçim",
+    "last_updated": "29.12.2025",
+    "author": "Kaan Kök",
+    "sources": [
+      "T. C. Anayasası (1.5.2709.docx)",
+      "4857 Sayılı İş Kanunu (1.5.4857.docx)",
+      "6098 Sayılı Türk Borçlar Kanunu (1.5.6098.docx)",
+      "6356 Sayılı Sendikalar ve Toplu İş Sözleşmesi Kanunu (1.5.6356.docx)",
+      "7036 Sayılı İş Mahkemeleri Kanunu (1.5.7036.docx)"
+    ]
+  },
+  "source_mapping": {
+    "1.5.2709.docx": "T.C.  Anayasası",
+    "1.5.4857.docx": "4857 Sayılı İş Kanunu",
+    "1.5.6098.docx":  "6098 Sayılı Türk Borçlar Kanunu",
+    "1.5.6356.docx": "6356 Sayılı Sendikalar ve Toplu İş Sözleşmesi Kanunu",
+    "1.5.7036.docx": "7036 Sayılı İş Mahkemeleri Kanunu"
+  },
+  "questions": [
+    {
+      "id":  1,
+      "question": "Türkiye Cumhuriyeti hangi niteliklere sahip bir devlettir?",
+      "answer": {
+        "main_answer": "BÖLÜM 1 - AÇIKLAMA\nTürkiye Cumhuriyeti, temelleri Anayasa'nın başlangıç kısmında belirtilen ilkelere dayanan bir devlettir. Cumhuriyetin temel nitelikleri; toplumun huzuru, milli dayanışma ve adalet anlayışı içinde insan haklarına saygılı olmasıdır.  Ayrıca devletimiz, Atatürk milliyetçiliğine bağlı, demokratik, laik ve sosyal bir hukuk devleti olarak tanımlanır.\n\nBÖLÜM 2 - HUKUKİ DAYANAKLAR\n- T.C. Anayasası Madde 2",
+        "key_entities": [
+          "Atatürk milliyetçiliği",
+          "demokratik",
+          "laik",
+          "sosyal",
+          "hukuk devleti"
+        ],
+        "source_quote": "Türkiye Cumhuriyeti, toplumun huzuru, milli dayanışma ve adalet anlayışı içinde, insan haklarına saygılı, Atatürk milliyetçiliğine bağlı, başlangıçta belirtilen temel ilkelere dayanan, demokratik, laik ve sosyal bir hukuk Devletidir."
+      },
+      "alternative_correct_answers": [
+        "Demokratik, laik ve sosyal bir hukuk devletidir.",
+        "Atatürk milliyetçiliğine bağlı, insan haklarına saygılı, demokratik, laik ve sosyal bir hukuk devletidir."
+      ],
+      "source": "T.C. Anayasası",
+      "source_details": {
+        "document":  "1.5.2709.docx",
+        "article": "Madde 2",
+        "section": "Birinci Kısım - Genel Esaslar"
+      },
+      "difficulty":  "kolay",
+      "question_type": "olgusal",
+      "evaluation_criteria": {
+        "must_include": [
+          "demokratik",
+          "laik",
+          "sosyal",
+          "hukuk devleti"
+        ],
+        "should_include": [
+          "Atatürk milliyetçiliği"
+        ],
+        "exact_match_required": false
+      }
+    },
+    {
+      "id": 2,
+      "question": "Anayasa'ya göre egemenlik kayıtsız şartsız kime aittir?",
+      "answer": {
+        "main_answer": "BÖLÜM 1 - AÇIKLAMA\nAnayasal düzende egemenlik, herhangi bir kayıt veya şart olmaksızın doğrudan Türk Milletine aittir.  Millet, bu egemenlik yetkisini anayasal kurallar çerçevesinde yetkili organları eliyle kullanır.\n\nBÖLÜM 2 - HUKUKİ DAYANAKLAR\n- T.C. Anayasası Madde 6",
+        "key_entities": [
+          "egemenlik",
+          "Türk Milleti",
+          "kayıtsız şartsız"
+        ],
+        "source_quote":  "Egemenlik, kayıtsız şartsız Milletindir."
+      },
+      "alternative_correct_answers": [
+        "Türk Milletine aittir.",
+        "Millet egemenliğin tek sahibidir."
+      ],
+      "source":  "T.C.  Anayasası",
+      "source_details": {
+        "document": "1.5.2709.docx",
+        "article":  "Madde 6",
+        "section": "Birinci Kısım - Genel Esaslar"
+      },
+      "difficulty": "kolay",
+      "question_type": "olgusal",
+      "evaluation_criteria":  {
+        "must_include": [
+          "egemenlik",
+          "Türk Milleti"
+        ],
+        "should_include":  [
+          "kayıtsız şartsız"
+        ],
+        "exact_match_required":  false
+      }
+    },
+    {
+      "id":  3,
+      "question": "Temel hak ve hürriyetler hangi durumlarda sınırlandırılabilir?",
+      "answer": {
+        "main_answer": "BÖLÜM 1 - AÇIKLAMA\nTemel hak ve hürriyetler keyfi olarak kısıtlanamaz. Bir sınırlandırma yapılabilmesi için öncelikle bunun ilgili kanununda açıkça belirtilen sebeplere dayanması gerekir. Ancak kanuni bir dayanak olsa bile, getirilen sınırlama hakkın özüne dokunmamalıdır.  Ayrıca yapılan müdahale Anayasa'nın ruhuna, demokratik toplum düzeninin gereklerine, laik Cumhuriyet ilkelerine ve ölçülülük ilkesine uygun olmak zorundadır.\n\nBÖLÜM 2 - HUKUKİ DAYANAKLAR\n- T.C. Anayasası Madde 13",
+        "key_entities": [
+          "sınırlandırma",
+          "kanun",
+          "öz",
+          "ölçülülük",
+          "demokratik toplum"
+        ],
+        "source_quote": "Temel hak ve hürriyetler, özlerine dokunulmaksızın yalnızca Anayasanın ilgili maddelerinde belirtilen sebeplere bağlı olarak ve ancak kanunla sınırlanabilir."
+      },
+      "alternative_correct_answers": [
+        "Yalnızca Anayasada belirtilen sebeplerle ve kanunla sınırlandırılabilir.",
+        "Özlerine dokunulmadan, ölçülülük ilkesine uygun şekilde kanunla sınırlandırılabilir."
+      ],
+      "source": "T.C. Anayasası",
+      "source_details": {
+        "document": "1.5.2709.docx",
+        "article": "Madde 13",
+        "section":  "İkinci Kısım - Temel Haklar ve Ödevler"
+      },
+      "difficulty":  "orta",
+      "question_type": "kavramsal",
+      "evaluation_criteria":  {
+        "must_include": [
+          "kanun",
+          "öz",
+          "sınırlandırma"
+        ],
+        "should_include": [
+          "ölçülülük",
+          "demokratik toplum"
+        ]
+      }
+    },
+    {
+      "id": 4,
+      "question": "Sendika kurma hakkı Anayasa'da nasıl güvence altına alınmıştır?",
+      "answer": {
+        "main_answer": "BÖLÜM 1 - AÇIKLAMA\nÇalışanlar ve işverenler, üyelerinin menfaatlerini korumak amacıyla önceden izin almaksızın sendika kurma hakkına sahiptir.  Herkes sendikalara serbestçe üye olabilir veya üyelikten ayrılabilir; hiç kimse sendikaya üye olmaya veya üyelikten ayrılmaya zorlanamaz.\n\nBÖLÜM 2 - HUKUKİ DAYANAKLAR\n- T.C. Anayasası Madde 51",
+        "key_entities": [
+          "sendika kurma",
+          "üyelik",
+          "izin almaksızın",
+          "zorlanamaz"
+        ],
+        "source_quote": "Çalışanlar ve işverenler...  önceden izin almaksızın sendikalar ve üst kuruluşlar kurma...  haklarına sahiptir."
+      },
+      "alternative_correct_answers":  [
+        "Sendika kurma hakkı önceden izne tabi değildir.",
+        "İşçi ve işverenler serbestçe sendika kurabilir ve üye olabilir."
+      ],
+      "source": "T.C.  Anayasası",
+      "source_details": {
+        "document": "1.5.2709.docx",
+        "article": "Madde 51",
+        "section": "İkinci Kısım - Temel Haklar ve Ödevler"
+      },
+      "difficulty": "orta",
+      "question_type": "kavramsal",
+      "evaluation_criteria": {
+        "must_include": [
+          "sendika",
+          "kurma",
+          "hak"
+        ],
+        "should_include": [
+          "izin",
+          "üyelik"
+        ]
+      }
+    },
+    {
+      "id": 5,
+      "question": "TBMM kaç milletvekilinden oluşur? ",
+      "answer": {
+        "main_answer": "BÖLÜM 1 - AÇIKLAMA\nTürkiye Büyük Millet Meclisi, genel oyla seçilen altı yüz milletvekilinden oluşmaktadır.\n\nBÖLÜM 2 - HUKUKİ DAYANAKLAR\n- T.C. Anayasası Madde 75",
+        "key_entities": [
+          "TBMM",
+          "milletvekili",
+          "600"
+        ],
+        "source_quote":  "Türkiye Büyük Millet Meclisi...  altı yüz milletvekilinden oluşur."
+      },
+      "alternative_correct_answers": [
+        "600 milletvekili",
+        "Altı yüz milletvekili"
+      ],
+      "source": "T. C. Anayasası",
+      "source_details":  {
+        "document": "1.5.2709.docx",
+        "article": "Madde 75",
+        "section": "Üçüncü Kısım - Cumhuriyetin Temel Organları"
+      },
+      "difficulty":  "kolay",
+      "question_type": "olgusal",
+      "evaluation_criteria": {
+        "must_include": [
+          "600",
+          "altı yüz"
+        ],
+        "exact_number_required": true
+      }
+    },
+    {
+      "id": 6,
+      "question": "Cumhurbaşkanının görev süresi ne kadardır?",
+      "answer": {
+        "main_answer": "BÖLÜM 1 - AÇIKLAMA\nCumhurbaşkanının görev süresi beş yıldır. Anayasa'daki kural gereği bir kimse en fazla iki defa Cumhurbaşkanı seçilebilir.\n\nBÖLÜM 2 - HUKUKİ DAYANAKLAR\n- T.C. Anayasası Madde 101",
+        "key_entities": [
+          "5 yıl",
+          "iki dönem",
+          "görev süresi"
+        ],
+        "source_quote":  "Cumhurbaşkanının görev süresi beş yıldır. Bir kimse en fazla iki defa Cumhurbaşkanı seçilebilir."
+      },
+      "alternative_correct_answers": [
+        "5 yıl, en fazla 2 dönem",
+        "Beş yıllık süre için seçilir ve iki kez seçilebilir."
+      ],
+      "source": "T.C. Anayasası",
+      "source_details": {
+        "document": "1.5.2709.docx",
+        "article": "Madde 101",
+        "section":  "Üçüncü Kısım - Cumhuriyetin Temel Organları"
+      },
+      "difficulty": "kolay",
+      "question_type": "olgusal",
+      "evaluation_criteria": {
+        "must_include": [
+          "5 yıl",
+          "beş yıl",
+          "iki defa",
+          "2 dönem"
+        ],
+        "exact_number_required":  true
+      }
+    },
+    {
+      "id":  7,
+      "question": "Anayasanın değiştirilemez maddeleri nelerdir?",
+      "answer": {
+        "main_answer": "BÖLÜM 1 - AÇIKLAMA\nAnayasamızın ilk üç maddesi koruma altındadır. Bunlar; Devletin şeklinin Cumhuriyet olduğu (Madde 1), Cumhuriyetin demokratik, laik, sosyal bir hukuk devleti olduğu nitelikleri (Madde 2) ve devletin ülkesi ve milletiyle bölünmez bütünlüğü, dili, bayrağı, milli marşı ve başkenti (Madde 3) hakkındaki hükümlerdir.  Anayasa'nın 4. maddesi uyarınca bu hükümler değiştirilemez ve değiştirilmesi teklif dahi edilemez.\n\nBÖLÜM 2 - HUKUKİ DAYANAKLAR\n- T.C.  Anayasası Madde 4",
+        "key_entities": [
+          "1.  madde",
+          "2. madde",
+          "3. madde",
+          "Cumhuriyet",
+          "değiştirilemez"
+        ],
+        "source_quote":  "Anayasanın 1 inci maddesindeki Devletin şeklinin Cumhuriyet olduğu hakkındaki hüküm ile, 2 nci maddesindeki Cumhuriyetin nitelikleri ve 3 üncü maddesi hükümleri değiştirilemez ve değiştirilmesi teklif edilemez."
+      },
+      "alternative_correct_answers":  [
+        "İlk üç madde değiştirilemez:  Cumhuriyet, nitelikleri, bütünlük ve semboller.",
+        "Devletin Cumhuriyet olması, demokratik laik sosyal hukuk devleti olması ve ülke bütünlüğü değiştirilemez."
+      ],
+      "source": "T.C. Anayasası",
+      "source_details": {
+        "document":  "1.5.2709.docx",
+        "article": "Madde 4",
+        "section": "Birinci Kısım - Genel Esaslar"
+      },
+      "difficulty": "orta",
+      "question_type": "olgusal",
+      "evaluation_criteria": {
+        "must_include": [
+          "1. madde",
+          "2. madde",
+          "3. madde",
+          "değiştirilemez"
+        ],
+        "should_include": [
+          "Cumhuriyet",
+          "teklif edilemez"
+        ]
+      }
+    },
+    {
+      "id": 8,
+      "question": "Anayasa Mahkemesi'nin görevleri nelerdir?",
+      "answer": {
+        "main_answer":  "BÖLÜM 1 - AÇIKLAMA\nAnayasa Mahkemesi'nin temel görevi, kanunların, Cumhurbaşkanlığı kararnamelerinin ve TBMM İçtüzüğünün Anayasa'ya şekil ve esas bakımından uygunluğunu denetlemektir (norm denetimi). Ayrıca bireysel başvuruları karara bağlar.  Bir diğer önemli görevi ise, Cumhurbaşkanı, Bakanlar ve yüksek yargı mensupları gibi üst düzey devlet görevlilerini görevleriyle ilgili suçlardan dolayı \"Yüce Divan\" sıfatıyla yargılamaktır.\n\nBÖLÜM 2 - HUKUKİ DAYANAKLAR\n- T.C. Anayasası Madde 148",
+        "key_entities": [
+          "Anayasa Mahkemesi",
+          "anayasaya uygunluk",
+          "bireysel başvuru",
+          "Yüce Divan"
+        ],
+        "source_quote": "Anayasa Mahkemesi, kanunların, Cumhurbaşkanlığı kararnamelerinin ve Türkiye Büyük Millet Meclisi İçtüzüğünün Anayasaya şekil ve esas bakımlarından uygunluğunu denetler..."
+      },
+      "alternative_correct_answers": [
+        "Kanunların anayasaya uygunluğunu denetler ve Yüce Divan olarak görev yapar.",
+        "Norm denetimi ve bireysel başvuru incelemeleri yapar."
+      ],
+      "source":  "T.C.  Anayasası",
+      "source_details": {
+        "document": "1.5.2709.docx",
+        "article":  "Madde 148",
+        "section": "Üçüncü Kısım - Cumhuriyetin Temel Organları"
+      },
+      "difficulty": "zor",
+      "question_type": "kavramsal",
+      "evaluation_criteria":  {
+        "must_include": [
+          "Anayasa Mahkemesi",
+          "anayasaya uygunluk"
+        ],
+        "should_include":  [
+          "Yüce Divan",
+          "bireysel başvuru",
+          "denetim"
+        ]
+      }
+    },
+    {
+      "id":  9,
+      "question": "Seçme ve seçilme hakkı için yaş sınırı kaçtır?",
+      "answer": {
+        "main_answer": "BÖLÜM 1 - AÇIKLAMA\nTürk hukukunda siyasi hakların kullanımı için belirlenen yaş sınırı on sekizdir. 18 yaşını dolduran her Türk vatandaşı seçme, halkoylamasına katılma ve milletvekili seçilme hakkına sahiptir.\n\nBÖLÜM 2 - HUKUKİ DAYANAKLAR\n- T.C. Anayasası Madde 67, 76",
+        "key_entities": [
+          "18 yaş",
+          "seçme hakkı",
+          "seçilme hakkı",
+          "halkoylaması"
+        ],
+        "source_quote": "Onsekiz yaşını dolduran her Türk vatandaşı, seçme ve halkoylamasına katılma haklarına sahiptir."
+      },
+      "alternative_correct_answers": [
+        "18 yaş hem seçme hem seçilme için gereklidir.",
+        "Onsekiz yaşını dolduranlar oy kullanabilir ve milletvekili adayı olabilir."
+      ],
+      "source": "T.C. Anayasası",
+      "source_details": {
+        "document":  "1.5.2709.docx",
+        "article": "Madde 67, 76",
+        "section": "İkinci ve Üçüncü Kısım"
+      },
+      "difficulty": "kolay",
+      "question_type": "olgusal",
+      "evaluation_criteria": {
+        "must_include": [
+          "18 yaş",
+          "on sekiz yaş"
+        ],
+        "exact_number_required":  true
+      }
+    },
+    {
+      "id":  10,
+      "question": "Yargı yetkisi kime aittir?",
+      "answer": {
+        "main_answer": "BÖLÜM 1 - AÇIKLAMA\nYargı yetkisi Türk Milletine aittir. Millet adına bu yetkiyi, bağımsız ve tarafsız mahkemeler kullanır.\n\nBÖLÜM 2 - HUKUKİ DAYANAKLAR\n- T.C. Anayasası Madde 9",
+        "key_entities": [
+          "yargı yetkisi",
+          "Türk Milleti",
+          "bağımsız",
+          "tarafsız",
+          "mahkemeler"
+        ],
+        "source_quote": "Yargı yetkisi, Türk Milleti adına bağımsız ve tarafsız mahkemelerce kullanılır."
+      },
+      "alternative_correct_answers": [
+        "Bağımsız mahkemeler Türk Milleti adına yargı yetkisini kullanır.",
+        "Yargı bağımsızdır ve millet adına karar verir."
+      ],
+      "source": "T.C.  Anayasası",
+      "source_details": {
+        "document": "1.5.2709.docx",
+        "article": "Madde 9",
+        "section": "Birinci Kısım - Genel Esaslar"
+      },
+      "difficulty": "kolay",
+      "question_type": "olgusal",
+      "evaluation_criteria": {
+        "must_include": [
+          "yargı",
+          "Türk Milleti",
+          "mahkeme"
+        ],
+        "should_include": [
+          "bağımsız",
+          "tarafsız"
+        ]
+      }
+    },
+    {
+      "id": 11,
+      "question": "İş Kanunu'nun kapsamı dışında kalan işler ve işyerleri nelerdir? ",
+      "answer": {
+        "main_answer": "BÖLÜM 1 - AÇIKLAMA\nKanun koyucu bazı iş kollarını ve çalışma biçimlerini İş Kanunu kapsamı dışında tutmuştur. Bunlar şunlardır:  Deniz ve hava taşıma işleri, 50'den az işçi çalıştıran tarım ve orman işyerleri, aile ekonomisi sınırları içinde kalan tarımsal yapı işleri, ev hizmetleri, çıraklar, sporcular, rehabilite edilenler ve bir ailenin üyeleri ile 3.  dereceye kadar hısımları arasında dışarıdan işçi alınmadan yapılan ev sanatları işleri.\n\nBÖLÜM 2 - HUKUKİ DAYANAKLAR\n- 4857 Sayılı İş Kanunu Madde 4",
+        "key_entities": [
+          "deniz taşıma",
+          "hava taşıma",
+          "ev hizmetleri",
+          "çıraklar",
+          "sporcular",
+          "tarım işleri"
+        ],
+        "source_quote":  "Aşağıda belirtilen işlerde ve iş ilişkilerinde bu Kanun hükümleri uygulanmaz..."
+      },
+      "alternative_correct_answers": [
+        "Deniz-hava taşımacılığı, ev hizmetleri, çıraklık, sporculuk kapsam dışıdır.",
+        "Tarım işlerinin bir kısmı, ev hizmetleri ve deniz-hava taşımacılığı istisnadır."
+      ],
+      "source":  "4857 Sayılı İş Kanunu",
+      "source_details": {
+        "document": "1.5.4857.docx",
+        "article":  "Madde 4",
+        "section": "Birinci Bölüm - Genel Hükümler"
+      },
+      "difficulty": "orta",
+      "question_type": "kavramsal",
+      "evaluation_criteria":  {
+        "must_include": [
+          "deniz",
+          "hava",
+          "ev hizmetleri"
+        ],
+        "should_include":  [
+          "çırak",
+          "sporcu",
+          "tarım"
+        ]
+      }
+    },
+    {
+      "id": 12,
+      "question": "İş sözleşmesi ne demektir ve hangi unsurları içermelidir?",
+      "answer": {
+        "main_answer": "BÖLÜM 1 - AÇIKLAMA\nİş sözleşmesi, işçinin işverene bağımlı olarak iş görmeyi, işverenin de buna karşılık ücret ödemeyi taahhüt ettiği bir sözleşmedir. Tanımdan da anlaşılacağı üzere iş sözleşmesinin varlığı için dört temel unsur gereklidir:  Taraflar (işçi ve işveren), iş görme unsuru, ücret unsuru ve en belirleyici özellik olan bağımlılık (işverenin otoritesi altında çalışma) unsuru.\n\nBÖLÜM 2 - HUKUKİ DAYANAKLAR\n- 4857 Sayılı İş Kanunu Madde 8",
+        "key_entities": [
+          "iş sözleşmesi",
+          "işçi",
+          "işveren",
+          "ücret",
+          "bağımlılık",
+          "iş görme"
+        ],
+        "source_quote":  "İş sözleşmesi, bir tarafın (işçi) bağımlı olarak iş görmeyi, diğer tarafın (işveren) da ücret ödemeyi üstlenmesinden oluşan sözleşmedir."
+      },
+      "alternative_correct_answers": [
+        "İşçinin bağımlı çalışması, işverenin ücret ödemesi esasına dayanan sözleşmedir.",
+        "İş, ücret, bağımlılık ve taraflar olmak üzere dört unsuru vardır."
+      ],
+      "source":  "4857 Sayılı İş Kanunu",
+      "source_details": {
+        "document": "1.5.4857.docx",
+        "article": "Madde 8",
+        "section":  "İkinci Bölüm - İş Sözleşmesi"
+      },
+      "difficulty": "orta",
+      "question_type": "kavramsal",
+      "evaluation_criteria":  {
+        "must_include": [
+          "iş sözleşmesi",
+          "bağımlılık",
+          "ücret"
+        ],
+        "should_include": [
+          "iş görme",
+          "işçi",
+          "işveren"
+        ]
+      }
+    },
+    {
+      "id": 13,
+      "question":  "Belirli süreli ve belirsiz süreli iş sözleşmeleri arasındaki farklar nelerdir? ",
+      "answer": {
+        "main_answer": "BÖLÜM 1 - AÇIKLAMA\nİş hukukunda asıl olan belirsiz süreli iş sözleşmesidir; yani sözleşmenin ne zaman biteceği baştan belirlenmemiştir. Belirli süreli iş sözleşmesi ise ancak belirli bir işin tamamlanması veya belirli bir olgunun ortaya çıkması gibi objektif koşullara bağlı olarak yapılabilir. Önemli bir kural olarak, esaslı bir neden olmadıkça belirli süreli sözleşmeler üst üste (zincirleme) yapılamaz; yapılırsa baştan itibaren belirsiz süreli kabul edilir.\n\nBÖLÜM 2 - HUKUKİ DAYANAKLAR\n- 4857 Sayılı İş Kanunu Madde 11",
+        "key_entities": [
+          "belirli süreli",
+          "belirsiz süreli",
+          "objektif koşul",
+          "esaslı neden"
+        ],
+        "source_quote": "Belirli süreli iş sözleşmesi, esaslı bir neden olmadıkça, birden fazla üst üste (zincirleme) yapılamaz."
+      },
+      "alternative_correct_answers": [
+        "Belirli süreli sözleşme süre veya iş bitiminde sona erer, belirsiz sürelide süre yoktur.",
+        "Belirli süreli sözleşme objektif nedene dayanmalı, zincirleme yapılırsa belirsiz süreliye dönüşür."
+      ],
+      "source": "4857 Sayılı İş Kanunu",
+      "source_details": {
+        "document":  "1.5.4857.docx",
+        "article": "Madde 11",
+        "section": "İkinci Bölüm - İş Sözleşmesi"
+      },
+      "difficulty": "orta",
+      "question_type": "karşılaştırma",
+      "evaluation_criteria": {
+        "comparison_required": true,
+        "must_include":  [
+          "belirli süreli",
+          "belirsiz süreli",
+          "objektif"
+        ],
+        "should_include": [
+          "zincirleme",
+          "esaslı neden"
+        ]
+      }
+    },
+    {
+      "id": 14,
+      "question": "Deneme süreli iş sözleşmesi ne kadardır?",
+      "answer": {
+        "main_answer": "BÖLÜM 1 - AÇIKLAMA\nİş sözleşmelerine taraflarca deneme kaydı konulabilir. Bireysel iş sözleşmelerinde bu süre en çok iki ay olabilir. Ancak, sendikalı işyerlerinde toplu iş sözleşmeleri ile bu sürenin dört aya kadar uzatılması mümkündür.\n\nBÖLÜM 2 - HUKUKİ DAYANAKLAR\n- 4857 Sayılı İş Kanunu Madde 15",
+        "key_entities": [
+          "deneme süresi",
+          "2 ay",
+          "4 ay",
+          "toplu iş sözleşmesi"
+        ],
+        "source_quote":  "Taraflarca iş sözleşmesine bir deneme kaydı konulduğunda, bunun süresi en çok iki ay olabilir.  Ancak deneme süresi toplu iş sözleşmeleriyle dört aya kadar uzatılabilir."
+      },
+      "alternative_correct_answers": [
+        "En fazla 2 ay, toplu sözleşme ile 4 aya uzatılabilir.",
+        "İki ay deneme süresi, toplu iş sözleşmesiyle dört aya çıkabilir."
+      ],
+      "source": "4857 Sayılı İş Kanunu",
+      "source_details": {
+        "document": "1.5.4857.docx",
+        "article": "Madde 15",
+        "section": "İkinci Bölüm - İş Sözleşmesi"
+      },
+      "difficulty": "kolay",
+      "question_type": "olgusal",
+      "evaluation_criteria": {
+        "must_include": [
+          "2 ay",
+          "iki ay"
+        ],
+        "should_include": [
+          "4 ay",
+          "dört ay",
+          "toplu iş sözleşmesi"
+        ],
+        "exact_number_required":  true
+      }
+    },
+    {
+      "id":  15,
+      "question": "Çalışma süreleri nasıl belirlenir ve haftalık azami çalışma süresi kaç saattir?",
+      "answer": {
+        "main_answer": "BÖLÜM 1 - AÇIKLAMA\nİş Kanunu'na göre haftalık çalışma süresi en çok 45 saattir. Kural olarak bu süre, çalışılan günlere eşit olarak bölünür. Ancak taraflar anlaşırsa, günlük çalışma süresi 11 saati aşmamak kaydıyla, bu 45 saatlik süre haftanın günlerine farklı şekillerde dağıtılabilir (denkleştirme esası).\n\nBÖLÜM 2 - HUKUKİ DAYANAKLAR\n- 4857 Sayılı İş Kanunu Madde 63",
+        "key_entities": [
+          "45 saat",
+          "haftalık çalışma",
+          "11 saat",
+          "günlük limit"
+        ],
+        "source_quote": "Genel bakımdan çalışma süresi haftada en çok kırkbeş saattir."
+      },
+      "alternative_correct_answers": [
+        "Haftalık en fazla 45 saat, günlük en fazla 11 saat.",
+        "Kırk beş saat haftalık azami çalışma süresidir."
+      ],
+      "source":  "4857 Sayılı İş Kanunu",
+      "source_details": {
+        "document": "1.5.4857.docx",
+        "article": "Madde 63",
+        "section":  "Dördüncü Bölüm - Çalışma Süreleri"
+      },
+      "difficulty": "kolay",
+      "question_type": "olgusal",
+      "evaluation_criteria": {
+        "must_include": [
+          "45 saat",
+          "kırk beş saat"
+        ],
+        "should_include": [
+          "11 saat",
+          "haftalık"
+        ],
+        "exact_number_required": true
+      }
+    },
+    {
+      "id": 16,
+      "question": "Fazla çalışma ve fazla sürelerle çalışma arasındaki fark nedir?",
+      "answer": {
+        "main_answer":  "BÖLÜM 1 - AÇIKLAMA\nBu iki kavram, haftalık 45 saat sınırına göre ayrılır. 'Fazla çalışma', haftalık 45 saati aşan çalışmalardır ve saat başına ücreti %50 zamlı ödenir. 'Fazla sürelerle çalışma' ise, haftalık çalışma süresinin sözleşmeyle 45 saatin altında belirlendiği durumlarda, bu süreyi aşan ancak 45 saate kadar olan çalışmalardır; bunun saat başına ücreti ise %25 zamlı ödenir.\n\nBÖLÜM 2 - HUKUKİ DAYANAKLAR\n- 4857 Sayılı İş Kanunu Madde 41",
+        "key_entities": [
+          "fazla çalışma",
+          "fazla sürelerle çalışma",
+          "%50",
+          "%25",
+          "45 saat"
+        ],
+        "source_quote": "Her bir saat fazla çalışma için verilecek ücret normal çalışma ücretinin saat başına düşen miktarının yüzde elli yükseltilmesi suretiyle ödenir."
+      },
+      "alternative_correct_answers": [
+        "Fazla çalışma 45 saati aşar ve %50 zamlı, fazla sürelerle çalışma 45 saate kadar olup %25 zamlıdır.",
+        "45 saat üstü fazla çalışma (%50 zam), 45 saate kadar fazla süre (%25 zam)."
+      ],
+      "source": "4857 Sayılı İş Kanunu",
+      "source_details":  {
+        "document": "1.5.4857.docx",
+        "article": "Madde 41",
+        "section": "Dördüncü Bölüm - Çalışma Süreleri"
+      },
+      "difficulty":  "orta",
+      "question_type": "karşılaştırma",
+      "evaluation_criteria": {
+        "comparison_required": true,
+        "must_include": [
+          "fazla çalışma",
+          "%50",
+          "yüzde elli"
+        ],
+        "should_include": [
+          "%25",
+          "yüzde yirmi beş",
+          "45 saat"
+        ]
+      }
+    },
+    {
+      "id":  17,
+      "question": "Yıllık ücretli izin süresi nasıl hesaplanır?",
+      "answer":  {
+        "main_answer": "BÖLÜM 1 - AÇIKLAMA\nYıllık ücretli izne hak kazanmak için en az 1 yıl çalışmış olmak gerekir. İzin süreleri kıdeme göre şöyle belirlenir:  1 yıldan 5 yıla kadar (5 dahil) olanlara en az 14 gün, 5 yıldan fazla 15 yıldan az olanlara en az 20 gün, 15 yıl (dahil) ve daha fazla olanlara en az 26 gün izin verilir.  Yer altı işlerinde çalışanların izin süreleri 4'er gün artırılır.  Ayrıca 18 yaş ve altı ile 50 yaş ve üstü işçilerin izni 20 günden az olamaz.\n\nBÖLÜM 2 - HUKUKİ DAYANAKLAR\n- 4857 Sayılı İş Kanunu Madde 53",
+        "key_entities": [
+          "yıllık izin",
+          "14 gün",
+          "20 gün",
+          "26 gün",
+          "1-5 yıl",
+          "5-15 yıl",
+          "15+ yıl"
+        ],
+        "source_quote":  "Yıllık ücretli izin süresi, hizmet süresi...  bir yıldan beş yıla kadar (beş yıl dahil) olanlara ondört günden...  az olamaz."
+      },
+      "alternative_correct_answers":  [
+        "1-5 yıl:  14 gün, 5-15 yıl: 20 gün, 15 yıl üzeri:  26 gün.",
+        "Çalışma süresine göre 14, 20 veya 26 gün izin hakkı doğar."
+      ],
+      "source": "4857 Sayılı İş Kanunu",
+      "source_details":  {
+        "document": "1.5.4857.docx",
+        "article": "Madde 53",
+        "section": "Üçüncü Bölüm - Ücret"
+      },
+      "difficulty": "orta",
+      "question_type": "olgusal",
+      "evaluation_criteria":  {
+        "must_include": [
+          "14 gün",
+          "20 gün",
+          "26 gün"
+        ],
+        "should_include":  [
+          "1 yıl",
+          "5 yıl",
+          "15 yıl"
+        ],
+        "exact_numbers_required": true
+      }
+    },
+    {
+      "id": 18,
+      "question": "İhbar süresi ne kadardır?",
+      "answer": {
+        "main_answer": "BÖLÜM 1 - AÇIKLAMA\nBelirsiz süreli iş sözleşmelerinde fesih bildirimi, işçinin kıdemine göre belirlenen süreler kadar önce yapılmalıdır.  Buna göre ihbar süreleri; 6 aydan az çalışanlar için 2 hafta, 6 ay ile 1,5 yıl arası çalışanlar için 4 hafta, 1,5 yıl ile 3 yıl arası çalışanlar için 6 hafta ve 3 yıldan fazla çalışanlar için 8 haftadır.\n\nBÖLÜM 2 - HUKUKİ DAYANAKLAR\n- 4857 Sayılı İş Kanunu Madde 17",
+        "key_entities": [
+          "ihbar süresi",
+          "2 hafta",
+          "4 hafta",
+          "6 hafta",
+          "8 hafta"
+        ],
+        "source_quote": "İş sözleşmeleri; a) İşi altı aydan az sürmüş olan işçi için...  iki hafta sonra..."
+      },
+      "alternative_correct_answers": [
+        "0-6 ay: 2 hafta, 6 ay-1.5 yıl: 4 hafta, 1.5-3 yıl: 6 hafta, 3+ yıl: 8 hafta.",
+        "Kıdeme göre 2, 4, 6 veya 8 hafta ihbar süresi uygulanır."
+      ],
+      "source": "4857 Sayılı İş Kanunu",
+      "source_details": {
+        "document":  "1.5.4857.docx",
+        "article": "Madde 17",
+        "section": "İkinci Bölüm - İş Sözleşmesi"
+      },
+      "difficulty":  "orta",
+      "question_type": "olgusal",
+      "evaluation_criteria":  {
+        "must_include": [
+          "2 hafta",
+          "4 hafta",
+          "6 hafta",
+          "8 hafta"
+        ],
+        "exact_numbers_required":  true
+      }
+    },
+    {
+      "id":  19,
+      "question": "İşverenin iş sözleşmesini haklı nedenle derhal fesih hakkı hangi durumlarda doğar?",
+      "answer": {
+        "main_answer":  "BÖLÜM 1 - AÇIKLAMA\nİşveren, bazı ciddi durumlarda bildirim süresini beklemeden sözleşmeyi derhal feshedebilir. Bu durumlar kanunda; sağlık sebepleri (işçinin hastalığı, engelliliği veya devamsızlığı), ahlak ve iyi niyet kurallarına uymayan haller (işvereni yanıltma, hırsızlık, hakaret, görevini yapmamakta ısrar vb.) ve zorlayıcı sebepler (işyerinde işin durması vb.) olarak üç ana başlıkta toplanmıştır.\n\nBÖLÜM 2 - HUKUKİ DAYANAKLAR\n- 4857 Sayılı İş Kanunu Madde 25",
+        "key_entities": [
+          "haklı fesih",
+          "sağlık",
+          "ahlak",
+          "devamsızlık",
+          "zorlayıcı sebep"
+        ],
+        "source_quote":  "Süresi belirli olsun veya olmasın işveren, aşağıda yazılı hallerde iş sözleşmesini sürenin bitiminden önce veya bildirim süresini beklemeksizin feshedebilir..."
+      },
+      "alternative_correct_answers": [
+        "Sağlık nedenleri, ahlaka aykırı davranışlar veya zorlayıcı sebepler halinde.",
+        "Devamsızlık, işvereni yanıltma, hırsızlık, güvenliği tehlikeye atma gibi hallerde."
+      ],
+      "source": "4857 Sayılı İş Kanunu",
+      "source_details": {
+        "document":  "1.5.4857.docx",
+        "article": "Madde 25",
+        "section": "İkinci Bölüm - İş Sözleşmesi"
+      },
+      "difficulty": "zor",
+      "question_type": "kavramsal",
+      "evaluation_criteria":  {
+        "must_include": [
+          "haklı fesih",
+          "sağlık",
+          "ahlak"
+        ],
+        "should_include":  [
+          "devamsızlık",
+          "zorlayıcı sebep"
+        ]
+      }
+    },
+    {
+      "id": 20,
+      "question": "Kıdem tazminatı miktarı nasıl hesaplanır?",
+      "answer":  {
+        "main_answer": "BÖLÜM 1 - AÇIKLAMA\nKıdem tazminatı, çalıştığınız her tam yıl için 30 günlük brüt ücretiniz tutarında ödenir.  Bir yıldan artan süreler (ay ve gün) için de aynı oran üzerinden hesaplama yapılır.  Hesaplamada sadece çıplak maaşınız değil; yemek, yol, ikramiye gibi süreklilik arz eden ve parayla ölçülebilen tüm menfaatler de (giydirilmiş ücret) dikkate alınır.\n\nBÖLÜM 2 - HUKUKİ DAYANAKLAR\n- 1475 Sayılı İş Kanunu Madde 14",
+        "key_entities": [
+          "30 günlük ücret",
+          "brüt ücret",
+          "her yıl",
+          "menfaatler"
+        ],
+        "source_quote": "Her geçen tam yıl için işverence işçiye 30 günlük ücreti tutarında kıdem tazminatı ödenir."
+      },
+      "alternative_correct_answers": [
+        "Her yıl için 30 günlük brüt ücret ödenir.",
+        "Çalışılan her tam yıl için bir aylık brüt maaş tutarında hesaplanır."
+      ],
+      "source": "4857 Sayılı İş Kanunu",
+      "source_details": {
+        "document":  "1.5.4857.docx",
+        "article": "Madde 120 (1475 sayılı Kanun Madde 14)",
+        "section":  "Geçici Maddeler"
+      },
+      "difficulty": "orta",
+      "question_type": "kavramsal",
+      "evaluation_criteria":  {
+        "must_include": [
+          "30 gün",
+          "brüt ücret"
+        ],
+        "should_include": [
+          "her yıl",
+          "menfaat"
+        ]
+      }
+    },
+    {
+      "id": 21,
+      "question": "Fesih bildirimine itiraz süresi ne kadardır?",
+      "answer": {
+        "main_answer": "BÖLÜM 1 - AÇIKLAMA\nEğer iş sözleşmenizin sebep gösterilmeden veya geçersiz bir sebeple feshedildiğini düşünüyorsanız, fesih bildiriminin size tebliğ edildiği tarihten itibaren bir ay içinde harekete geçmelisiniz. Bu süre hak düşürücü süredir.  İşe iade talebiyle öncelikle arabulucuya başvurmak zorunludur.\n\nBÖLÜM 2 - HUKUKİ DAYANAKLAR\n- 4857 Sayılı İş Kanunu Madde 20",
+        "key_entities": [
+          "1 ay",
+          "fesih itiraz",
+          "arabulucu",
+          "işe iade"
+        ],
+        "source_quote": "İş sözleşmesi feshedilen işçi, fesih bildiriminde sebep gösterilmediği veya gösterilen sebebin geçerli bir sebep olmadığı iddiası ile fesih bildiriminin tebliği tarihinden itibaren bir ay içinde işe iade talebiyle...  arabulucuya başvurmak zorundadır."
+      },
+      "alternative_correct_answers":  [
+        "Fesih tebliğinden itibaren 1 ay içinde arabulucuya başvurulmalıdır.",
+        "Bir ay içinde işe iade için arabuluculuğa başvuru zorunludur."
+      ],
+      "source": "4857 Sayılı İş Kanunu",
+      "source_details": {
+        "document": "1.5.4857.docx",
+        "article":  "Madde 20",
+        "section": "İkinci Bölüm - İş Sözleşmesi"
+      },
+      "difficulty":  "orta",
+      "question_type": "olgusal",
+      "evaluation_criteria": {
+        "must_include": [
+          "1 ay",
+          "bir ay"
+        ],
+        "should_include":  [
+          "arabulucu",
+          "işe iade"
+        ],
+        "exact_number_required": true
+      }
+    },
+    {
+      "id": 22,
+      "question": "Engelli ve eski hükümlü çalıştırma zorunluluğu nedir?",
+      "answer": {
+        "main_answer": "BÖLÜM 1 - AÇIKLAMA\n50 veya daha fazla işçi çalıştıran işyerlerinde kota sistemine göre engelli çalıştırma zorunluluğu vardır.  Özel sektör işyerleri %3 oranında engelli işçi çalıştırmakla yükümlüdür. Kamu işyerlerinde ise bu oran %4 engelli ve %2 eski hükümlü şeklindedir.\n\nBÖLÜM 2 - HUKUKİ DAYANAKLAR\n- 4857 Sayılı İş Kanunu Madde 30",
+        "key_entities": [
+          "50 işçi",
+          "engelli",
+          "%3",
+          "%4",
+          "eski hükümlü",
+          "%2"
+        ],
+        "source_quote": "İşverenler, elli veya daha fazla işçi çalıştırdıkları özel sektör işyerlerinde yüzde üç engelli...  çalıştırmakla yükümlüdürler."
+      },
+      "alternative_correct_answers": [
+        "50+ işçili özel sektörde %3 engelli zorunludur.",
+        "Kamuda %4 engelli, %2 eski hükümlü çalıştırma zorunluluğu vardır."
+      ],
+      "source": "4857 Sayılı İş Kanunu",
+      "source_details": {
+        "document": "1.5.4857.docx",
+        "article":  "Madde 30",
+        "section": "İkinci Bölüm - İş Sözleşmesi"
+      },
+      "difficulty": "orta",
+      "question_type": "olgusal",
+      "evaluation_criteria": {
+        "must_include": [
+          "50 işçi",
+          "%3",
+          "engelli"
+        ],
+        "should_include": [
+          "%4",
+          "%2",
+          "eski hükümlü"
+        ],
+        "exact_numbers_required": true
+      }
+    },
+    {
+      "id": 23,
+      "question": "Analık halinde çalışma ve süt izni nasıl düzenlenmiştir?",
+      "answer": {
+        "main_answer": "BÖLÜM 1 - AÇIKLAMA\nKadın işçilere doğumdan önce 8 hafta ve doğumdan sonra 8 hafta olmak üzere toplam 16 hafta analık izni verilir. Çoğul gebeliklerde doğum öncesi süreye 2 hafta daha eklenir. Doğum sonrası işe başlayan kadın işçiye, çocuğu bir yaşına gelene kadar günde toplam 1,5 saat süt izni verilir ve bu sürenin hangi saatlerde kullanılacağını işçi belirler.\n\nBÖLÜM 2 - HUKUKİ DAYANAKLAR\n- 4857 Sayılı İş Kanunu Madde 74",
+        "key_entities": [
+          "analık izni",
+          "8 hafta",
+          "16 hafta",
+          "süt izni",
+          "1. 5 saat",
+          "çoğul gebelik"
+        ],
+        "source_quote": "Kadın işçilerin doğumdan önce sekiz ve doğumdan sonra sekiz hafta olmak üzere toplam onaltı haftalık süre için çalıştırılmamaları esastır."
+      },
+      "alternative_correct_answers": [
+        "Doğum öncesi 8, sonrası 8 hafta izin, günde 1.5 saat süt izni verilir.",
+        "Toplam 16 hafta analık izni ve günlük 1.5 saat süt izni hakkı vardır."
+      ],
+      "source": "4857 Sayılı İş Kanunu",
+      "source_details": {
+        "document": "1.5.4857.docx",
+        "article": "Madde 74",
+        "section": "Beşinci Bölüm - İş Sağlığı ve Güvenliği"
+      },
+      "difficulty": "orta",
+      "question_type": "olgusal",
+      "evaluation_criteria": {
+        "must_include": [
+          "8 hafta",
+          "16 hafta",
+          "süt izni"
+        ],
+        "should_include": [
+          "1.5 saat",
+          "doğum"
+        ],
+        "exact_numbers_required": true
+      }
+    }
+  ]
+}

@@ -36,10 +36,6 @@ env/
 # Jupyter Notebook
 .ipynb_checkpoints/
 
-# Data files (large files)
-data/raw/
-data/vector_store/
-
 # Keep processed data structure but ignore large files
 # data/processed/*.json
 

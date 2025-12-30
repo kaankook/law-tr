@@ -1,0 +1,1716 @@
+[
+  {
+    "question_id": 1,
+    "question": "Türkiye Cumhuriyeti hangi niteliklere sahip bir devlettir?",
+    "category": "olgusal",
+    "difficulty": "kolay",
+    "source": "T.C. Anayasası",
+    "generated_answer": "BÖLÜM 1 - AÇIKLAMA\nTürkiye Cumhuriyeti, toplumun huzuru, milli dayanışma ve adalet anlayışı içinde, insan haklarına saygılı, Atatürk milliyetçiliğine bağlı, başlangıçta belirtilen temel ilkelere dayanan, demokratik, laik ve sosyal bir hukuk devletidir. Bu nitelikler Anayasa'da belirtilmiştir ve değiştirilemez.\n\nBÖLÜM 2 - HUKUKİ DAYANAKLAR\n- T.C. Anayasası Madde 2\n- T.C. Anayasası Madde 4",
+    "expected_answer": "BÖLÜM 1 - AÇIKLAMA\nTürkiye Cumhuriyeti, temelleri Anayasa'nın başlangıç kısmında belirtilen ilkelere dayanan bir devlettir. Cumhuriyetin temel nitelikleri; toplumun huzuru, milli dayanışma ve adalet anlayışı içinde insan haklarına saygılı olmasıdır.  Ayrıca devletimiz, Atatürk milliyetçiliğine bağlı, demokratik, laik ve sosyal bir hukuk devleti olarak tanımlanır.\n\nBÖLÜM 2 - HUKUKİ DAYANAKLAR\n- T.C. Anayasası Madde 2",
+    "retrieved_articles": [
+      "Madde 2",
+      "Madde 4",
+      "Giriş",
+      "Giriş",
+      "Madde 70",
+      "Madde 12",
+      "Giriş"
+    ],
+    "total_latency_ms": 3963.8442993164062,
+    "heuristic_metrics": [
+      {
+        "name": "keyword_coverage",
+        "score": 0.9104113221168518,
+        "weight": 1.2,
+        "details": {
+          "must_include_found": 4,
+          "must_include_total": 4,
+          "should_include_found": 1,
+          "should_include_total": 1,
+          "exact_match_score": 1.0,
+          "semantic_similarity": 0.851,
+          "missing_must": []
+        }
+      },
+      {
+        "name": "semantic_correctness",
+        "score": 0.920795202255249,
+        "weight": 0.8,
+        "details": {
+          "main_answer_similarity": 0.921,
+          "best_similarity": 0.921,
+          "best_match_source": "main_answer",
+          "alternative_scores": {
+            "alt_1": 0.848,
+            "alt_2": 0.857
+          },
+          "interpretation": "Çok yüksek benzerlik - neredeyse aynı"
+        }
+      },
+      {
+        "name": "quote_presence",
+        "score": 1.0,
+        "weight": 0.5,
+        "details": {
+          "quote_found": true,
+          "match_type": "exact",
+          "quote_preview": "Türkiye Cumhuriyeti, toplumun huzuru, milli dayanışma ve adalet anlayışı içinde, insan haklarına say..."
+        }
+      },
+      {
+        "name": "citation_accuracy",
+        "score": 1.0,
+        "weight": 2.0,
+        "details": {
+          "expected": "Madde 2",
+          "expected_numbers": [
+            "2"
+          ],
+          "retrieved": [
+            "Madde 2",
+            "Madde 4",
+            "Giriş"
+          ],
+          "source": "T.C. Anayasası",
+          "exact_match": true,
+          "number_match": false,
+          "partial_match": false
+        }
+      },
+      {
+        "name": "response_quality",
+        "score": 1.0,
+        "weight": 0.5,
+        "details": {
+          "word_count": 53,
+          "question_type": "olgusal",
+          "expected_range": "50-300",
+          "has_structure": true,
+          "is_uncertain": false,
+          "length_score": 1.0,
+          "structure_score": 1.0
+        }
+      },
+      {
+        "name": "answer_consistency",
+        "score": 1.0,
+        "weight": 0.8,
+        "details": {
+          "expected_numbers": {
+            "articles": [
+              "1",
+              "2",
+              "2"
+            ],
+            "plain_numbers": [
+              "1",
+              "2",
+              "2"
+            ]
+          },
+          "generated_numbers": {
+            "articles": [
+              "1",
+              "2",
+              "2",
+              "4"
+            ],
+            "plain_numbers": [
+              "1",
+              "2",
+              "2",
+              "4"
+            ]
+          },
+          "matches": 0,
+          "total_checks": 0,
+          "inconsistencies": []
+        }
+      },
+      {
+        "name": "latency",
+        "score": 1.0,
+        "weight": 0.1,
+        "details": {
+          "latency_ms": 3963.8442993164062,
+          "threshold_ms": 8000
+        }
+      }
+    ],
+    "judge_scores": {
+      "relevance": 0.9,
+      "faithfulness": 0.8,
+      "correctness": 0.9,
+      "completeness": 0.8,
+      "overall": 0.86
+    },
+    "judge_reasoning": "Cevap soruya odaklı ve konuya uygun olduğu için yüksek bir relevance puanı aldı. Hukuki terimlerin doğru kullanımı ve anlamlı olması correctness puanını artırdı. Ancak bazı önerilen unsurların eksik olması ve faithfulness puanının biraz düşük olması completeness ve faithfulness puanlarını etkiledi. Genel olarak iyi bir performans sergiledi.",
+    "strengths": [
+      "Cevap soruya odaklı ve konuya uygun.",
+      "Hukuki terimler doğru ve anlamlı kullanılmış."
+    ],
+    "weaknesses": [
+      "Cevapta bazı önerilen unsurlar eksik.",
+      "Faithfulness puanı biraz düşük."
+    ],
+    "passed": true,
+    "final_score": 0.8858344477653504,
+    "failure_reasons": []
+  },
+  {
+    "question_id": 2,
+    "question": "Cumhurbaşkanının görev süresi ne kadardır?",
+    "category": "olgusal",
+    "difficulty": "kolay",
+    "source": "T.C. Anayasası",
+    "generated_answer": "BÖLÜM 1 - AÇIKLAMA\nCumhurbaşkanının görev süresi, doğrudan halk tarafından seçildikten sonra beş yıldır. Bir kişi en fazla iki defa Cumhurbaşkanı seçilebilir.\n\nBÖLÜM 2 - HUKUKİ DAYANAKLAR\n- [T.C. Anayasası Madde 101]",
+    "expected_answer": "BÖLÜM 1 - AÇIKLAMA\nCumhurbaşkanının görev süresi beş yıldır. Anayasa'daki kural gereği bir kimse en fazla iki defa Cumhurbaşkanı seçilebilir.\n\nBÖLÜM 2 - HUKUKİ DAYANAKLAR\n- T.C. Anayasası Madde 101",
+    "retrieved_articles": [
+      "Madde 101",
+      "Madde 106",
+      "Madde 105",
+      "Madde 77",
+      "Geçici Madde 1",
+      "Geçici Madde 1",
+      "Madde 104"
+    ],
+    "total_latency_ms": 1461.369276046753,
+    "heuristic_metrics": [
+      {
+        "name": "keyword_coverage",
+        "score": 0.7464865350723267,
+        "weight": 1.2,
+        "details": {
+          "must_include_found": 2,
+          "must_include_total": 4,
+          "should_include_found": 0,
+          "should_include_total": 0,
+          "exact_match_score": 0.6,
+          "semantic_similarity": 0.844,
+          "missing_must": [
+            "5 yıl",
+            "2 dönem"
+          ]
+        }
+      },
+      {
+        "name": "semantic_correctness",
+        "score": 0.9284384846687317,
+        "weight": 0.8,
+        "details": {
+          "main_answer_similarity": 0.928,
+          "best_similarity": 0.928,
+          "best_match_source": "main_answer",
+          "alternative_scores": {
+            "alt_1": 0.838,
+            "alt_2": 0.863
+          },
+          "interpretation": "Çok yüksek benzerlik - neredeyse aynı"
+        }
+      },
+      {
+        "name": "quote_presence",
+        "score": 1.0,
+        "weight": 0.5,
+        "details": {
+          "quote_found": true,
+          "match_type": "exact",
+          "quote_preview": "Cumhurbaşkanının görev süresi beş yıldır. Bir kimse en fazla iki defa Cumhurbaşkanı seçilebilir."
+        }
+      },
+      {
+        "name": "citation_accuracy",
+        "score": 1.0,
+        "weight": 2.0,
+        "details": {
+          "expected": "Madde 101",
+          "expected_numbers": [
+            "101"
+          ],
+          "retrieved": [
+            "Madde 101",
+            "Madde 106",
+            "Madde 105"
+          ],
+          "source": "T.C. Anayasası",
+          "exact_match": true,
+          "number_match": false,
+          "partial_match": false
+        }
+      },
+      {
+        "name": "response_quality",
+        "score": 0.6499999999999999,
+        "weight": 0.5,
+        "details": {
+          "word_count": 32,
+          "question_type": "olgusal",
+          "expected_range": "50-300",
+          "has_structure": true,
+          "is_uncertain": false,
+          "length_score": 0.5,
+          "structure_score": 1.0
+        }
+      },
+      {
+        "name": "answer_consistency",
+        "score": 1.0,
+        "weight": 0.8,
+        "details": {
+          "expected_numbers": {
+            "articles": [
+              "1",
+              "2",
+              "101"
+            ],
+            "plain_numbers": [
+              "1",
+              "2",
+              "101"
+            ]
+          },
+          "generated_numbers": {
+            "articles": [
+              "1",
+              "2",
+              "101"
+            ],
+            "plain_numbers": [
+              "1",
+              "2",
+              "101"
+            ]
+          },
+          "matches": 0,
+          "total_checks": 0,
+          "inconsistencies": []
+        }
+      },
+      {
+        "name": "latency",
+        "score": 1.0,
+        "weight": 0.1,
+        "details": {
+          "latency_ms": 1461.369276046753,
+          "threshold_ms": 8000
+        }
+      }
+    ],
+    "judge_scores": {
+      "relevance": 1.0,
+      "faithfulness": 1.0,
+      "correctness": 1.0,
+      "completeness": 1.0,
+      "overall": 1.0
+    },
+    "judge_reasoning": "Cevap, soruya odaklı, referans cevapla anlamsal olarak örtüşüyor, kritik bilgiler tam ve doğru bir şekilde verilmiştir.",
+    "strengths": [
+      "Doğru bilgiyi tam ve eksiksiz şekilde veriyor"
+    ],
+    "weaknesses": [],
+    "passed": true,
+    "final_score": 0.9750064016127586,
+    "failure_reasons": []
+  },
+  {
+    "question_id": 3,
+    "question": "Temel hak ve hürriyetler hangi durumlarda sınırlandırılabilir?",
+    "category": "kavramsal",
+    "difficulty": "orta",
+    "source": "T.C. Anayasası",
+    "generated_answer": "BÖLÜM 1 - AÇIKLAMA\nTemel hak ve hürriyetler ancak kanunla, Anayasanın ilgili maddelerinde belirtilen sebeplere bağlı olarak ve özlerine dokunulmaksızın sınırlandırılabilir. Savaş, seferberlik veya olağanüstü hallerde ise milletlerarası hukuktan doğan yükümlülükler ihlal edilmemek kaydıyla, durumun gerektirdiği ölçüde temel hak ve hürriyetlerin kullanılması kısmen veya tamamen durdurulabilir. Yabancıların temel hak ve hürriyetleri ise, milletlerarası hukuka uygun olarak kanunla sınırlandırılabilir.\n\nBÖLÜM 2 - HUKUKİ DAYANAKLAR\n- T.C. Anayasası Madde 13\n- T.C. Anayasası Madde 15\n- T.C. Anayasası Madde 16",
+    "expected_answer": "BÖLÜM 1 - AÇIKLAMA\nTemel hak ve hürriyetler keyfi olarak kısıtlanamaz. Bir sınırlandırma yapılabilmesi için öncelikle bunun ilgili kanununda açıkça belirtilen sebeplere dayanması gerekir.  Ancak kanuni bir dayanak olsa bile, getirilen sınırlama hakkın özüne dokunmamalıdır.  Ayrıca yapılan müdahale Anayasa'nın ruhuna, demokratik toplum düzeninin gereklerine, laik Cumhuriyet ilkelerine ve ölçülülük ilkesine uygun olmak zorundadır.\n\nBÖLÜM 2 - HUKUKİ DAYANAKLAR\n- T.C. Anayasası Madde 13",
+    "retrieved_articles": [
+      "Madde 13",
+      "Madde 15",
+      "Madde 16",
+      "Madde 17",
+      "Madde 14",
+      "Madde 12",
+      "Madde 33"
+    ],
+    "total_latency_ms": 2151.127815246582,
+    "heuristic_metrics": [
+      {
+        "name": "keyword_coverage",
+        "score": 0.7119599231084188,
+        "weight": 1.2,
+        "details": {
+          "must_include_found": 2,
+          "must_include_total": 3,
+          "should_include_found": 0,
+          "should_include_total": 2,
+          "exact_match_score": 0.533,
+          "semantic_similarity": 0.831,
+          "missing_must": [
+            "sınırlandırma"
+          ]
+        }
+      },
+      {
+        "name": "semantic_correctness",
+        "score": 0.9003040790557861,
+        "weight": 0.8,
+        "details": {
+          "main_answer_similarity": 0.9,
+          "best_similarity": 0.9,
+          "best_match_source": "main_answer",
+          "alternative_scores": {
+            "alt_1": 0.853,
+            "alt_2": 0.836
+          },
+          "interpretation": "Çok yüksek benzerlik - neredeyse aynı"
+        }
+      },
+      {
+        "name": "quote_presence",
+        "score": 1.0,
+        "weight": 0.5,
+        "details": {
+          "quote_found": true,
+          "match_type": "exact",
+          "quote_preview": "Temel hak ve hürriyetler, özlerine dokunulmaksızın yalnızca Anayasanın ilgili maddelerinde belirtile..."
+        }
+      },
+      {
+        "name": "citation_accuracy",
+        "score": 1.0,
+        "weight": 2.0,
+        "details": {
+          "expected": "Madde 13",
+          "expected_numbers": [
+            "13"
+          ],
+          "retrieved": [
+            "Madde 13",
+            "Madde 15",
+            "Madde 16"
+          ],
+          "source": "T.C. Anayasası",
+          "exact_match": true,
+          "number_match": false,
+          "partial_match": false
+        }
+      },
+      {
+        "name": "response_quality",
+        "score": 1.0,
+        "weight": 0.5,
+        "details": {
+          "word_count": 78,
+          "question_type": "kavramsal",
+          "expected_range": "50-300",
+          "has_structure": true,
+          "is_uncertain": false,
+          "length_score": 1.0,
+          "structure_score": 1.0
+        }
+      },
+      {
+        "name": "answer_consistency",
+        "score": 1.0,
+        "weight": 0.8,
+        "details": {
+          "expected_numbers": {
+            "articles": [
+              "1",
+              "2",
+              "13"
+            ],
+            "plain_numbers": [
+              "1",
+              "2",
+              "13"
+            ]
+          },
+          "generated_numbers": {
+            "articles": [
+              "1",
+              "2",
+              "13",
+              "15",
+              "16"
+            ],
+            "plain_numbers": [
+              "1",
+              "2",
+              "13",
+              "15",
+              "16"
+            ]
+          },
+          "matches": 0,
+          "total_checks": 0,
+          "inconsistencies": []
+        }
+      },
+      {
+        "name": "latency",
+        "score": 1.0,
+        "weight": 0.1,
+        "details": {
+          "latency_ms": 2151.127815246582,
+          "threshold_ms": 8000
+        }
+      }
+    ],
+    "judge_scores": {
+      "relevance": 0.9,
+      "faithfulness": 0.8,
+      "correctness": 0.9,
+      "completeness": 0.8,
+      "overall": 0.86
+    },
+    "judge_reasoning": "Cevap soruya odaklı ve hukuki doğruluk yüksek. Ancak context dışı bilgi ve önerilen unsurların tamamının cevapta yer almaması puanı düşürdü.",
+    "strengths": [
+      "Hukuki terimlerin doğru kullanımı",
+      "Anayasa maddelerine referans verme"
+    ],
+    "weaknesses": [
+      "Context dışı bilgi bulunması",
+      "Önerilen unsurların tamamının cevapta geçmemesi"
+    ],
+    "passed": true,
+    "final_score": 0.877153363161087,
+    "failure_reasons": []
+  },
+  {
+    "question_id": 4,
+    "question": "Deneme süreli iş sözleşmesi ne kadardır?",
+    "category": "olgusal",
+    "difficulty": "kolay",
+    "source": "4857 Sayılı İş Kanunu",
+    "generated_answer": "BÖLÜM 1 - AÇIKLAMA\nDeneme süreli iş sözleşmesi, tarafların iş ilişkisini tanımaları ve değerlendirmeleri için belirli bir süre öngören bir sözleşme türüdür. Bu süre içinde hem işçi hem de işveren sözleşmeyi tazminatsız feshedebilir.\n\nBÖLÜM 2 - HUKUKİ DAYANAKLAR\n- 4857 Sayılı İş Kanunu Madde 15\n- 6098 Sayılı Türk Borçlar Kanunu Madde 433",
+    "expected_answer": "BÖLÜM 1 - AÇIKLAMA\nİş sözleşmelerine taraflarca deneme kaydı konulabilir. Bireysel iş sözleşmelerinde bu süre en çok iki ay olabilir. Ancak, sendikalı işyerlerinde toplu iş sözleşmeleri ile bu sürenin dört aya kadar uzatılması mümkündür.\n\nBÖLÜM 2 - HUKUKİ DAYANAKLAR\n- 4857 Sayılı İş Kanunu Madde 15",
+    "retrieved_articles": [
+      "Madde 468",
+      "Madde 433",
+      "Madde 15",
+      "Madde 9",
+      "Madde 454",
+      "Madde 10",
+      "Madde 14"
+    ],
+    "total_latency_ms": 1565.1581287384033,
+    "heuristic_metrics": [
+      {
+        "name": "keyword_coverage",
+        "score": 0.506437611579895,
+        "weight": 1.2,
+        "details": {
+          "must_include_found": 0,
+          "must_include_total": 2,
+          "should_include_found": 0,
+          "should_include_total": 3,
+          "exact_match_score": 0.0,
+          "semantic_similarity": 0.844,
+          "missing_must": [
+            "2 ay",
+            "iki ay"
+          ]
+        }
+      },
+      {
+        "name": "semantic_correctness",
+        "score": 0.8822752237319946,
+        "weight": 0.8,
+        "details": {
+          "main_answer_similarity": 0.882,
+          "best_similarity": 0.882,
+          "best_match_source": "main_answer",
+          "alternative_scores": {
+            "alt_1": 0.832,
+            "alt_2": 0.857
+          },
+          "interpretation": "Yüksek benzerlik - anlam korunmuş"
+        }
+      },
+      {
+        "name": "quote_presence",
+        "score": 0.9373805522918701,
+        "weight": 0.5,
+        "details": {
+          "quote_found": true,
+          "match_type": "semantic",
+          "semantic_similarity": 0.937,
+          "best_matching_sentence": "Madde 15 Taraflarca iş sözleşmesine bir deneme kaydı konulduğunda, bunun süresi en çok iki ay olabil...",
+          "quote_preview": "Taraflarca iş sözleşmesine bir deneme kaydı konulduğunda, bunun süresi en çok iki ay olabilir.  Anca..."
+        }
+      },
+      {
+        "name": "citation_accuracy",
+        "score": 1.0,
+        "weight": 2.0,
+        "details": {
+          "expected": "Madde 15",
+          "expected_numbers": [
+            "15"
+          ],
+          "retrieved": [
+            "Madde 468",
+            "Madde 433",
+            "Madde 15"
+          ],
+          "source": "4857 Sayılı İş Kanunu",
+          "exact_match": true,
+          "number_match": false,
+          "partial_match": false
+        }
+      },
+      {
+        "name": "response_quality",
+        "score": 1.0,
+        "weight": 0.5,
+        "details": {
+          "word_count": 53,
+          "question_type": "olgusal",
+          "expected_range": "50-300",
+          "has_structure": true,
+          "is_uncertain": false,
+          "length_score": 1.0,
+          "structure_score": 1.0
+        }
+      },
+      {
+        "name": "answer_consistency",
+        "score": 1.0,
+        "weight": 0.8,
+        "details": {
+          "expected_numbers": {
+            "articles": [
+              "1",
+              "2",
+              "4857",
+              "15"
+            ],
+            "plain_numbers": [
+              "1",
+              "2",
+              "4857",
+              "15"
+            ]
+          },
+          "generated_numbers": {
+            "articles": [
+              "1",
+              "2",
+              "4857",
+              "15",
+              "6098",
+              "433"
+            ],
+            "plain_numbers": [
+              "1",
+              "2",
+              "4857",
+              "15",
+              "6098",
+              "433"
+            ]
+          },
+          "matches": 0,
+          "total_checks": 0,
+          "inconsistencies": []
+        }
+      },
+      {
+        "name": "latency",
+        "score": 1.0,
+        "weight": 0.1,
+        "details": {
+          "latency_ms": 1565.1581287384033,
+          "threshold_ms": 8000
+        }
+      }
+    ],
+    "judge_scores": {
+      "relevance": 1.0,
+      "faithfulness": 0.8,
+      "correctness": 0.9,
+      "completeness": 0.8,
+      "overall": 0.85
+    },
+    "judge_reasoning": "Cevap soruya odaklı ve hukuki doğruluk yüksek olsa da bazı önerilen unsurlar eksik kalmış ve faithfulness puanı yüksek olsa da bazı bilgiler context dışından gelmiştir.",
+    "strengths": [
+      "Cevap soruya odaklı ve konuya uygun.",
+      "Hukuki terimler doğru ve uygun şekilde kullanılmış."
+    ],
+    "weaknesses": [
+      "Cevapta bazı önerilen unsurlar eksik kalmış.",
+      "Faithfulness puanı yüksek olsa da bazı bilgiler context dışından gelmiş."
+    ],
+    "passed": true,
+    "final_score": 0.8830845206499098,
+    "failure_reasons": []
+  },
+  {
+    "question_id": 5,
+    "question": "Yıllık ücretli izin süresi nasıl hesaplanır?",
+    "category": "olgusal",
+    "difficulty": "orta",
+    "source": "4857 Sayılı İş Kanunu",
+    "generated_answer": "BÖLÜM 1 - AÇIKLAMA\nYıllık ücretli izin süresi, işçinin işyerindeki hizmet süresine göre belirlenir. Hizmet süresi arttıkça yıllık izin süresi de artar. İş sözleşmeleri ve toplu iş sözleşmeleri ile bu süreler artırılabilir.\n\nBÖLÜM 2 - HUKUKİ DAYANAKLAR\n- 4857 Sayılı İş Kanunu Madde 53",
+    "expected_answer": "BÖLÜM 1 - AÇIKLAMA\nYıllık ücretli izne hak kazanmak için en az 1 yıl çalışmış olmak gerekir.  İzin süreleri kıdeme göre şöyle belirlenir:  1 yıldan 5 yıla kadar (5 dahil) olanlara en az 14 gün, 5 yıldan fazla 15 yıldan az olanlara en az 20 gün, 15 yıl (dahil) ve daha fazla olanlara en az 26 gün izin verilir.  Yer altı işlerinde çalışanların izin süreleri 4'er gün artırılır.  Ayrıca 18 yaş ve altı ile 50 yaş ve üstü işçilerin izni 20 günden az olamaz.\n\nBÖLÜM 2 - HUKUKİ DAYANAKLAR\n- 4857 Sayılı İş Kanunu Madde 53",
+    "retrieved_articles": [
+      "Madde 424",
+      "Madde 425",
+      "Madde 57",
+      "Madde 54",
+      "Madde 60",
+      "Madde 53",
+      "Madde 56"
+    ],
+    "total_latency_ms": 1707.6382637023926,
+    "heuristic_metrics": [
+      {
+        "name": "keyword_coverage",
+        "score": 0.49887106418609617,
+        "weight": 1.2,
+        "details": {
+          "must_include_found": 0,
+          "must_include_total": 3,
+          "should_include_found": 0,
+          "should_include_total": 3,
+          "exact_match_score": 0.0,
+          "semantic_similarity": 0.831,
+          "missing_must": [
+            "14 gün",
+            "20 gün",
+            "26 gün"
+          ]
+        }
+      },
+      {
+        "name": "semantic_correctness",
+        "score": 0.908957839012146,
+        "weight": 0.8,
+        "details": {
+          "main_answer_similarity": 0.909,
+          "best_similarity": 0.909,
+          "best_match_source": "main_answer",
+          "alternative_scores": {
+            "alt_1": 0.828,
+            "alt_2": 0.852
+          },
+          "interpretation": "Çok yüksek benzerlik - neredeyse aynı"
+        }
+      },
+      {
+        "name": "quote_presence",
+        "score": 0.8793361186981201,
+        "weight": 0.5,
+        "details": {
+          "quote_found": true,
+          "match_type": "semantic",
+          "semantic_similarity": 0.879,
+          "best_matching_sentence": "Bir yıllık süre içinde 55 inci maddede sayılan haller dışındaki sebeplerle işçinin devamının kesilme...",
+          "quote_preview": "İşçilere verilecek yıllık ücretli izin süresi, hizmet süresi; a) Bir yıldan beş yıla kadar (beş yıl ..."
+        }
+      },
+      {
+        "name": "citation_accuracy",
+        "score": 1.0,
+        "weight": 2.0,
+        "details": {
+          "expected": "Madde 53",
+          "expected_numbers": [
+            "53"
+          ],
+          "retrieved": [
+            "Madde 424",
+            "Madde 425",
+            "Madde 57"
+          ],
+          "source": "4857 Sayılı İş Kanunu",
+          "exact_match": true,
+          "number_match": false,
+          "partial_match": false
+        }
+      },
+      {
+        "name": "response_quality",
+        "score": 0.7899999999999999,
+        "weight": 0.5,
+        "details": {
+          "word_count": 44,
+          "question_type": "olgusal",
+          "expected_range": "50-300",
+          "has_structure": true,
+          "is_uncertain": false,
+          "length_score": 0.7,
+          "structure_score": 1.0
+        }
+      },
+      {
+        "name": "answer_consistency",
+        "score": 0.0,
+        "weight": 0.8,
+        "details": {
+          "expected_numbers": {
+            "days": [
+              "14",
+              "20",
+              "26",
+              "20"
+            ],
+            "years": [
+              "1",
+              "1",
+              "5",
+              "5",
+              "15",
+              "15"
+            ],
+            "articles": [
+              "1",
+              "1",
+              "1",
+              "5",
+              "5",
+              "14",
+              "5",
+              "15",
+              "20",
+              "15",
+              "26",
+              "4",
+              "18",
+              "50",
+              "20",
+              "2",
+              "4857",
+              "53"
+            ],
+            "plain_numbers": [
+              "1",
+              "1",
+              "1",
+              "5",
+              "5",
+              "14",
+              "5",
+              "15",
+              "20",
+              "15",
+              "26",
+              "4",
+              "18",
+              "50",
+              "20",
+              "2",
+              "4857",
+              "53"
+            ]
+          },
+          "generated_numbers": {
+            "articles": [
+              "1",
+              "2",
+              "4857",
+              "53"
+            ],
+            "plain_numbers": [
+              "1",
+              "2",
+              "4857",
+              "53"
+            ]
+          },
+          "matches": 0,
+          "total_checks": 10,
+          "inconsistencies": [
+            "days: expected '14'",
+            "days: expected '20'",
+            "days: expected '26'",
+            "days: expected '20'",
+            "years: expected '1'"
+          ]
+        }
+      },
+      {
+        "name": "latency",
+        "score": 1.0,
+        "weight": 0.1,
+        "details": {
+          "latency_ms": 1707.6382637023926,
+          "threshold_ms": 8000
+        }
+      }
+    ],
+    "judge_scores": {
+      "relevance": 1.0,
+      "faithfulness": 0.8,
+      "correctness": 0.9,
+      "completeness": 0.8,
+      "overall": 0.85
+    },
+    "judge_reasoning": "Cevap soruya odaklı ve hukuki terimler doğru kullanılmış ancak kritik bilgilerin tam olmadığı yerler olduğu için eksiklikler bulunmaktadır.",
+    "strengths": [
+      "Cevap soruya odaklı ve konuya uygun.",
+      "Hukuki terimler doğru kullanılmış."
+    ],
+    "weaknesses": [
+      "Cevapta kritik bilgilerin tam olmadığı yerler var."
+    ],
+    "passed": false,
+    "final_score": 0.8219013215780258,
+    "failure_reasons": [
+      "Sayısal tutarsızlık (0.00)"
+    ]
+  },
+  {
+    "question_id": 6,
+    "question": "Fazla çalışma ve fazla sürelerle çalışma arasındaki fark nedir?",
+    "category": "karşılaştırma",
+    "difficulty": "orta",
+    "source": "4857 Sayılı İş Kanunu",
+    "generated_answer": "BÖLÜM 1 - AÇIKLAMA\nFazla çalışma, haftalık 45 saati aşan çalışmaları ifade ederken, fazla sürelerle çalışma ise haftalık çalışma süresinin sözleşmelerle 45 saatin altında belirlendiği durumlarda, bu süreyi aşan ve 45 saate kadar yapılan çalışmaları ifade eder. Her iki durumda da işçiye farklı oranlarda zamlı ücret ödenir veya serbest zaman kullandırılabilir.\n\nBÖLÜM 2 - HUKUKİ DAYANAKLAR\n- İş Kanunu Madde 41",
+    "expected_answer": "BÖLÜM 1 - AÇIKLAMA\nBu iki kavram, haftalık 45 saat sınırına göre ayrılır. 'Fazla çalışma', haftalık 45 saati aşan çalışmalardır ve saat başına ücreti %50 zamlı ödenir. 'Fazla sürelerle çalışma' ise, haftalık çalışma süresinin sözleşmeyle 45 saatin altında belirlendiği durumlarda, bu süreyi aşan ancak 45 saate kadar olan çalışmalardır; bunun saat başına ücreti ise %25 zamlı ödenir.\n\nBÖLÜM 2 - HUKUKİ DAYANAKLAR\n- 4857 Sayılı İş Kanunu Madde 41",
+    "retrieved_articles": [
+      "Madde 398",
+      "Madde 41",
+      "Madde 42",
+      "Madde 402",
+      "Madde 41",
+      "Madde 64",
+      "Madde 41"
+    ],
+    "total_latency_ms": 1650.8677005767822,
+    "heuristic_metrics": [
+      {
+        "name": "keyword_coverage",
+        "score": 0.6556427200635274,
+        "weight": 1.2,
+        "details": {
+          "must_include_found": 1,
+          "must_include_total": 3,
+          "should_include_found": 1,
+          "should_include_total": 3,
+          "exact_match_score": 0.333,
+          "semantic_similarity": 0.871,
+          "missing_must": [
+            "%50",
+            "yüzde elli"
+          ]
+        }
+      },
+      {
+        "name": "semantic_correctness",
+        "score": 0.9222500324249268,
+        "weight": 0.8,
+        "details": {
+          "main_answer_similarity": 0.922,
+          "best_similarity": 0.922,
+          "best_match_source": "main_answer",
+          "alternative_scores": {
+            "alt_1": 0.893,
+            "alt_2": 0.88
+          },
+          "interpretation": "Çok yüksek benzerlik - neredeyse aynı"
+        }
+      },
+      {
+        "name": "quote_presence",
+        "score": 0.9268940687179565,
+        "weight": 0.5,
+        "details": {
+          "quote_found": true,
+          "match_type": "semantic",
+          "semantic_similarity": 0.927,
+          "best_matching_sentence": "Fazla sürelerle çalışmalarda, her bir saat fazla çalışma için verilecek ücret normal çalışma ücretin...",
+          "quote_preview": "Her bir saat fazla çalışma için verilecek ücret normal çalışma ücretinin saat başına düşen miktarını..."
+        }
+      },
+      {
+        "name": "citation_accuracy",
+        "score": 1.0,
+        "weight": 2.0,
+        "details": {
+          "expected": "Madde 41",
+          "expected_numbers": [
+            "41"
+          ],
+          "retrieved": [
+            "Madde 398",
+            "Madde 41",
+            "Madde 42"
+          ],
+          "source": "4857 Sayılı İş Kanunu",
+          "exact_match": true,
+          "number_match": false,
+          "partial_match": false
+        }
+      },
+      {
+        "name": "response_quality",
+        "score": 1.0,
+        "weight": 0.5,
+        "details": {
+          "word_count": 61,
+          "question_type": "karşılaştırma",
+          "expected_range": "50-300",
+          "has_structure": true,
+          "is_uncertain": false,
+          "length_score": 1.0,
+          "structure_score": 1.0
+        }
+      },
+      {
+        "name": "answer_consistency",
+        "score": 0.0,
+        "weight": 0.8,
+        "details": {
+          "expected_numbers": {
+            "percentage": [
+              "%50",
+              "%25"
+            ],
+            "articles": [
+              "1",
+              "45",
+              "45",
+              "50",
+              "45",
+              "45",
+              "25",
+              "2",
+              "4857",
+              "41"
+            ],
+            "plain_numbers": [
+              "1",
+              "45",
+              "45",
+              "50",
+              "45",
+              "45",
+              "25",
+              "2",
+              "4857",
+              "41"
+            ]
+          },
+          "generated_numbers": {
+            "articles": [
+              "1",
+              "45",
+              "45",
+              "45",
+              "2",
+              "41"
+            ],
+            "plain_numbers": [
+              "1",
+              "45",
+              "45",
+              "45",
+              "2",
+              "41"
+            ]
+          },
+          "matches": 0,
+          "total_checks": 2,
+          "inconsistencies": [
+            "percentage: expected '%50'",
+            "percentage: expected '%25'"
+          ]
+        }
+      },
+      {
+        "name": "latency",
+        "score": 1.0,
+        "weight": 0.1,
+        "details": {
+          "latency_ms": 1650.8677005767822,
+          "threshold_ms": 8000
+        }
+      }
+    ],
+    "judge_scores": {
+      "relevance": 1.0,
+      "faithfulness": 0.8,
+      "correctness": 0.9,
+      "completeness": 0.8,
+      "overall": 0.85
+    },
+    "judge_reasoning": "Cevap soruya odaklı ve konuya uygun olmasına rağmen bazı kritik bilgiler eksik kalmış ve referans cevapla tam anlamıyla örtüşmeyen detaylar bulunmaktadır. Bu nedenle overall puan 0.85 olarak belirlenmiştir.",
+    "strengths": [
+      "Cevap soruya odaklı ve konuya uygun.",
+      "Hukuki terimlerin doğru kullanımı."
+    ],
+    "weaknesses": [
+      "Bazı kritik bilgiler eksik.",
+      "Referans cevapla tam anlamıyla örtüşmeyen detaylar var."
+    ],
+    "passed": false,
+    "final_score": 0.8369821234464645,
+    "failure_reasons": [
+      "Sayısal tutarsızlık (0.00)"
+    ]
+  },
+  {
+    "question_id": 7,
+    "question": "İşverenin iş sözleşmesini haklı nedenle derhal fesih hakkı hangi durumlarda doğar?",
+    "category": "kavramsal",
+    "difficulty": "zor",
+    "source": "4857 Sayılı İş Kanunu",
+    "generated_answer": "BÖLÜM 1 - AÇIKLAMA\nİşverenin haklı nedenle derhal fesih hakkı, işçinin davranışları veya işyerindeki zorlayıcı sebepler gibi durumlarda ortaya çıkabilir. Bu hak, iş ilişkisinin dürüstlük kurallarına göre sürdürülmesinin beklenemeyeceği hallerde kullanılır. Ayrıca işverenin ödeme güçsüzlüğüne düşmesi durumunda da işçi sözleşmeyi feshedebilir.\n\nBÖLÜM 2 - HUKUKİ DAYANAKLAR\n- 4857 Sayılı İş Kanunu Madde 24\n- 6098 Sayılı Türk Borçlar Kanunu Madde 435\n- 6098 Sayılı Türk Borçlar Kanunu Madde 436",
+    "expected_answer": "BÖLÜM 1 - AÇIKLAMA\nİşveren, bazı ciddi durumlarda bildirim süresini beklemeden sözleşmeyi derhal feshedebilir. Bu durumlar kanunda; sağlık sebepleri (işçinin hastalığı, engelliliği veya devamsızlığı), ahlak ve iyi niyet kurallarına uymayan haller (işvereni yanıltma, hırsızlık, hakaret, görevini yapmamakta ısrar vb.) ve zorlayıcı sebepler (işyerinde işin durması vb.) olarak üç ana başlıkta toplanmıştır.\n\nBÖLÜM 2 - HUKUKİ DAYANAKLAR\n- 4857 Sayılı İş Kanunu Madde 25",
+    "retrieved_articles": [
+      "Madde 6",
+      "Madde 24",
+      "Madde 436",
+      "Madde 435",
+      "Madde 23",
+      "Madde 20",
+      "Geçici Madde 10"
+    ],
+    "total_latency_ms": 1862.6437187194824,
+    "heuristic_metrics": [
+      {
+        "name": "keyword_coverage",
+        "score": 0.5480603837966919,
+        "weight": 1.2,
+        "details": {
+          "must_include_found": 0,
+          "must_include_total": 3,
+          "should_include_found": 1,
+          "should_include_total": 2,
+          "exact_match_score": 0.1,
+          "semantic_similarity": 0.847,
+          "missing_must": [
+            "haklı fesih",
+            "sağlık",
+            "ahlak"
+          ]
+        }
+      },
+      {
+        "name": "semantic_correctness",
+        "score": 0.9064884185791016,
+        "weight": 0.8,
+        "details": {
+          "main_answer_similarity": 0.906,
+          "best_similarity": 0.906,
+          "best_match_source": "main_answer",
+          "alternative_scores": {
+            "alt_1": 0.814,
+            "alt_2": 0.837
+          },
+          "interpretation": "Çok yüksek benzerlik - neredeyse aynı"
+        }
+      },
+      {
+        "name": "quote_presence",
+        "score": 0.8892771005630493,
+        "weight": 0.5,
+        "details": {
+          "quote_found": true,
+          "match_type": "semantic",
+          "semantic_similarity": 0.889,
+          "best_matching_sentence": "Madde 23 Süresi belirli olan veya olmayan sürekli iş sözleşmesi ile bir işverenin işine girmiş olan ...",
+          "quote_preview": "Süresi belirli olsun veya olmasın işveren, aşağıda yazılı hallerde iş sözleşmesini sürenin bitiminde..."
+        }
+      },
+      {
+        "name": "citation_accuracy",
+        "score": 0.0,
+        "weight": 2.0,
+        "details": {
+          "expected": "Madde 25",
+          "expected_numbers": [
+            "25"
+          ],
+          "retrieved": [
+            "Madde 6",
+            "Madde 24",
+            "Madde 436"
+          ],
+          "source": "4857 Sayılı İş Kanunu",
+          "exact_match": false,
+          "number_match": false,
+          "partial_match": false
+        }
+      },
+      {
+        "name": "response_quality",
+        "score": 1.0,
+        "weight": 0.5,
+        "details": {
+          "word_count": 69,
+          "question_type": "kavramsal",
+          "expected_range": "50-300",
+          "has_structure": true,
+          "is_uncertain": false,
+          "length_score": 1.0,
+          "structure_score": 1.0
+        }
+      },
+      {
+        "name": "answer_consistency",
+        "score": 1.0,
+        "weight": 0.8,
+        "details": {
+          "expected_numbers": {
+            "articles": [
+              "1",
+              "2",
+              "4857",
+              "25"
+            ],
+            "plain_numbers": [
+              "1",
+              "2",
+              "4857",
+              "25"
+            ]
+          },
+          "generated_numbers": {
+            "articles": [
+              "1",
+              "2",
+              "4857",
+              "24",
+              "6098",
+              "435",
+              "6098",
+              "436"
+            ],
+            "plain_numbers": [
+              "1",
+              "2",
+              "4857",
+              "24",
+              "6098",
+              "435",
+              "6098",
+              "436"
+            ]
+          },
+          "matches": 0,
+          "total_checks": 0,
+          "inconsistencies": []
+        }
+      },
+      {
+        "name": "latency",
+        "score": 1.0,
+        "weight": 0.1,
+        "details": {
+          "latency_ms": 1862.6437187194824,
+          "threshold_ms": 8000
+        }
+      }
+    ],
+    "judge_scores": {
+      "relevance": 0.9,
+      "faithfulness": 0.8,
+      "correctness": 0.9,
+      "completeness": 0.8,
+      "overall": 0.86
+    },
+    "judge_reasoning": "Cevap soruya odaklı ve hukuki doğruluk yüksek. Ancak bazı kritik bilgiler eksik kalmış, bu nedenle completeness puanı düşük.",
+    "strengths": [
+      "Hukuki terimlerin doğru kullanımı",
+      "Referans cevapla anlamsal örtüşme"
+    ],
+    "weaknesses": [
+      "Bazı kritik bilgilerin eksikliği"
+    ],
+    "passed": false,
+    "final_score": 0.8067342747354507,
+    "failure_reasons": [
+      "Yanlış/eksik atıf (0.00)"
+    ]
+  },
+  {
+    "question_id": 8,
+    "question": "Zamanaşımı süreleri Borçlar Kanunu'nda nasıl düzenlenmiştir?",
+    "category": "olgusal",
+    "difficulty": "orta",
+    "source": "6098 Sayılı Türk Borçlar Kanunu",
+    "generated_answer": "BÖLÜM 1 - AÇIKLAMA\nTürk Borçlar Kanunu, zamanaşımı sürelerinin başlangıcını, hesaplanmasını, durmasını ve kesilmesini düzenler. Zamanaşımı, alacağın muaccel olmasıyla başlar. Bazı alacaklar için özel zamanaşımı süreleri öngörülmüştür.\n\nBÖLÜM 2 - HUKUKİ DAYANAKLAR\n- Türk Borçlar Kanunu Madde 147\n- Türk Borçlar Kanunu Madde 149\n- Türk Borçlar Kanunu Madde 151\n- Türk Borçlar Kanunu Madde 153\n- Türk Borçlar Kanunu Madde 156",
+    "expected_answer": "BÖLÜM 1 - AÇIKLAMA\nBorçlar Kanunu'nda genel zamanaşımı süresi on yıldır. Ancak kira, faiz, ücret gibi dönemsel alacaklarda bu süre beş yıldır. Haksız fiilden kaynaklanan tazminat davalarında ise süre, zararın ve failin öğrenilmesinden itibaren iki yıl, her halükarda fiilin üzerinden on yıl geçmesiyle dolar.\n\nBÖLÜM 2 - HUKUKİ DAYANAKLAR\n- 6098 Sayılı Türk Borçlar Kanunu Madde 146-147, 72",
+    "retrieved_articles": [
+      "Madde 151",
+      "Madde 389",
+      "Madde 152",
+      "Madde 156",
+      "Madde 153",
+      "Madde 147",
+      "Madde 149"
+    ],
+    "total_latency_ms": 2068.4616565704346,
+    "heuristic_metrics": [
+      {
+        "name": "keyword_coverage",
+        "score": 0.6016290370623271,
+        "weight": 1.2,
+        "details": {
+          "must_include_found": 1,
+          "must_include_total": 3,
+          "should_include_found": 0,
+          "should_include_total": 2,
+          "exact_match_score": 0.267,
+          "semantic_similarity": 0.825,
+          "missing_must": [
+            "10 yıl",
+            "5 yıl"
+          ]
+        }
+      },
+      {
+        "name": "semantic_correctness",
+        "score": 0.8869767785072327,
+        "weight": 0.8,
+        "details": {
+          "main_answer_similarity": 0.887,
+          "best_similarity": 0.887,
+          "best_match_source": "main_answer",
+          "alternative_scores": {
+            "alt_1": 0.82,
+            "alt_2": 0.834
+          },
+          "interpretation": "Yüksek benzerlik - anlam korunmuş"
+        }
+      },
+      {
+        "name": "quote_presence",
+        "score": 0.8946993350982666,
+        "weight": 0.5,
+        "details": {
+          "quote_found": true,
+          "match_type": "semantic",
+          "semantic_similarity": 0.895,
+          "best_matching_sentence": "MADDE 147Aşağıdaki alacaklar için beş yıllık zamanaşımı uygulanır: 1",
+          "quote_preview": "Kanunda aksine bir hüküm bulunmadıkça, her alacak on yıllık zamanaşımına tabidir. (Md. 146) Aşağıdak..."
+        }
+      },
+      {
+        "name": "citation_accuracy",
+        "score": 0.0,
+        "weight": 2.0,
+        "details": {
+          "expected": "Madde 146-147, 72",
+          "expected_numbers": [
+            "146"
+          ],
+          "retrieved": [
+            "Madde 151",
+            "Madde 389",
+            "Madde 152"
+          ],
+          "source": "6098 Sayılı Türk Borçlar Kanunu",
+          "exact_match": false,
+          "number_match": false,
+          "partial_match": false
+        }
+      },
+      {
+        "name": "response_quality",
+        "score": 1.0,
+        "weight": 0.5,
+        "details": {
+          "word_count": 62,
+          "question_type": "olgusal",
+          "expected_range": "50-300",
+          "has_structure": true,
+          "is_uncertain": false,
+          "length_score": 1.0,
+          "structure_score": 1.0
+        }
+      },
+      {
+        "name": "answer_consistency",
+        "score": 1.0,
+        "weight": 0.8,
+        "details": {
+          "expected_numbers": {
+            "articles": [
+              "1",
+              "2",
+              "6098",
+              "146",
+              "147",
+              "72"
+            ],
+            "plain_numbers": [
+              "1",
+              "2",
+              "6098",
+              "146",
+              "147",
+              "72"
+            ]
+          },
+          "generated_numbers": {
+            "articles": [
+              "1",
+              "2",
+              "147",
+              "149",
+              "151",
+              "153",
+              "156"
+            ],
+            "plain_numbers": [
+              "1",
+              "2",
+              "147",
+              "149",
+              "151",
+              "153",
+              "156"
+            ]
+          },
+          "matches": 0,
+          "total_checks": 0,
+          "inconsistencies": []
+        }
+      },
+      {
+        "name": "latency",
+        "score": 1.0,
+        "weight": 0.1,
+        "details": {
+          "latency_ms": 2068.4616565704346,
+          "threshold_ms": 8000
+        }
+      }
+    ],
+    "judge_scores": {
+      "relevance": 1.0,
+      "faithfulness": 0.8,
+      "correctness": 0.9,
+      "completeness": 0.8,
+      "overall": 0.85
+    },
+    "judge_reasoning": "Cevap soruya odaklı ve hukuki doğruluk yüksek. Ancak bazı önerilen unsurlar cevapta eksik kalmış ve referans cevapla tam örtüşmemiş.",
+    "strengths": [
+      "Hukuki terimlerin doğru kullanımı",
+      "Kanun maddesi numaralarının doğru referanslanması"
+    ],
+    "weaknesses": [
+      "Bazı önerilen unsurların eksikliği",
+      "Referans cevapla tam örtüşmeme"
+    ],
+    "passed": false,
+    "final_score": 0.8249433738017081,
+    "failure_reasons": [
+      "Yanlış/eksik atıf (0.00)"
+    ]
+  },
+  {
+    "question_id": 9,
+    "question": "İş Kanunu'nun 250.  maddesi neyi düzenler?",
+    "category": "hallucination_test",
+    "difficulty": "orta",
+    "source": "out_of_scope_nonexistent",
+    "generated_answer": "BÖLÜM 1 - AÇIKLAMA\n4857 Sayılı İş Kanunu'nda 250. madde bulunmamaktadır. Bu nedenle, bu madde hakkında bir açıklama yapmak mümkün değildir.\n\nBÖLÜM 2 - HUKUKİ DAYANAKLAR\n- Bu konuda elimdeki yasal metinlerde yeterli bilgi bulunmamaktadır.",
+    "expected_answer": "BÖLÜM 1 - AÇIKLAMA\nBu konuda elimdeki yasal metinlerde yeterli bilgi bulunmamaktadır.\n\nBÖLÜM 2 - HUKUKİ DAYANAKLAR\n- (Böyle bir madde mevcut değildir)",
+    "retrieved_articles": [
+      "Madde 25",
+      "Madde 24",
+      "Madde 25",
+      "Madde 24",
+      "Madde 23",
+      "Madde 25",
+      "Madde 25"
+    ],
+    "total_latency_ms": 1507.1918964385986,
+    "heuristic_metrics": [
+      {
+        "name": "keyword_coverage",
+        "score": 1.0,
+        "weight": 1.2,
+        "details": {
+          "must_include_found": 0,
+          "must_include_total": 0,
+          "should_include_found": 0,
+          "should_include_total": 0,
+          "exact_match_score": 1.0,
+          "semantic_similarity": 1.0,
+          "missing_must": []
+        }
+      },
+      {
+        "name": "semantic_correctness",
+        "score": 0.9011902809143066,
+        "weight": 0.8,
+        "details": {
+          "main_answer_similarity": 0.901,
+          "best_similarity": 0.901,
+          "best_match_source": "main_answer",
+          "alternative_scores": {},
+          "interpretation": "Çok yüksek benzerlik - neredeyse aynı"
+        }
+      },
+      {
+        "name": "quote_presence",
+        "score": 1.0,
+        "weight": 0.5,
+        "details": {
+          "note": "No source quote to check"
+        }
+      },
+      {
+        "name": "citation_accuracy",
+        "score": 1.0,
+        "weight": 2.0,
+        "details": {}
+      },
+      {
+        "name": "response_quality",
+        "score": 0.685,
+        "weight": 0.5,
+        "details": {
+          "word_count": 35,
+          "question_type": "hallucination_test",
+          "expected_range": "50-300",
+          "has_structure": true,
+          "is_uncertain": false,
+          "length_score": 0.55,
+          "structure_score": 1.0
+        }
+      },
+      {
+        "name": "answer_consistency",
+        "score": 1.0,
+        "weight": 0.8,
+        "details": {
+          "expected_numbers": {
+            "articles": [
+              "1",
+              "2"
+            ],
+            "plain_numbers": [
+              "1",
+              "2"
+            ]
+          },
+          "generated_numbers": {
+            "articles": [
+              "1",
+              "4857",
+              "250",
+              "2"
+            ],
+            "plain_numbers": [
+              "1",
+              "4857",
+              "250",
+              "2"
+            ]
+          },
+          "matches": 0,
+          "total_checks": 0,
+          "inconsistencies": []
+        }
+      },
+      {
+        "name": "latency",
+        "score": 1.0,
+        "weight": 0.1,
+        "details": {
+          "latency_ms": 1507.1918964385986,
+          "threshold_ms": 8000
+        }
+      }
+    ],
+    "judge_scores": {
+      "relevance": 0.8,
+      "faithfulness": 0.0,
+      "correctness": 0.0,
+      "completeness": 0.0,
+      "overall": 0.26
+    },
+    "judge_reasoning": "Cevap soruyla ilgili bilgi vermiş ancak referans cevap olmadığından hukuki doğruluk ve kapsam eksikliği var. Faithfulness skoru 0 olduğundan dolayı overall skor düşük.",
+    "strengths": [
+      "Soruyla ilgili bilgi verilmiş"
+    ],
+    "weaknesses": [
+      "Referans cevap olmaması",
+      "Hukuki doğruluk ve kapsam eksikliği"
+    ],
+    "passed": false,
+    "final_score": 0.42313927106857296,
+    "failure_reasons": [
+      "Context'e sadakatsiz (0.00)"
+    ]
+  },
+  {
+    "question_id": 10,
+    "question": "Yapay zeka işçinin yerini alırsa tazminat ödenir mi?",
+    "category": "edge_case",
+    "difficulty": "zor",
+    "source": "4857 Sayılı İş Kanunu",
+    "generated_answer": "BÖLÜM 1 - AÇIKLAMA\nVerilen bağlamda yapay zekanın işçinin yerini alması durumunda tazminat ödenip ödenmeyeceğine dair bir bilgi bulunmamaktadır. Bu nedenle bu konuda bir açıklama yapmak mümkün değildir.\n\nBÖLÜM 2 - HUKUKİ DAYANAKLAR\nBu konuda elimdeki yasal metinlerde yeterli bilgi bulunmamaktadır.",
+    "expected_answer": "BÖLÜM 1 - AÇIKLAMA\nYasal metinlerde \"yapay zeka\" ifadesi geçmese de, bu durum \"teknolojik nedenlerle işin gereklerinden kaynaklanan fesih\" kapsamında değerlendirilir. İşveren teknolojiyi yenilediği için işçiyi çıkarıyorsa, bu \"geçerli nedenle fesih\" sayılabilir. Bu durumda 1 yıldan fazla kıdemi olan işçiye kıdem tazminatı ve ihbar tazminatı ödenmesi zorunludur. İşveren önce işçiyi başka pozisyonda değerlendirmeyi denemelidir (feshin son çare olması ilkesi).\n\nBÖLÜM 2 - HUKUKİ DAYANAKLAR\n- 4857 Sayılı İş Kanunu Madde 18, 17, 120",
+    "retrieved_articles": [
+      "Madde 441",
+      "Madde 439",
+      "Geçici Madde 1",
+      "Madde 8",
+      "Madde 24",
+      "Madde 21",
+      "Madde 8"
+    ],
+    "total_latency_ms": 1497.9617595672607,
+    "heuristic_metrics": [
+      {
+        "name": "keyword_coverage",
+        "score": 0.49941694736480713,
+        "weight": 1.2,
+        "details": {
+          "must_include_found": 0,
+          "must_include_total": 2,
+          "should_include_found": 0,
+          "should_include_total": 2,
+          "exact_match_score": 0.0,
+          "semantic_similarity": 0.832,
+          "missing_must": [
+            "kıdem tazminatı",
+            "geçerli fesih"
+          ]
+        }
+      },
+      {
+        "name": "semantic_correctness",
+        "score": 0.89643394947052,
+        "weight": 0.8,
+        "details": {
+          "main_answer_similarity": 0.896,
+          "best_similarity": 0.896,
+          "best_match_source": "main_answer",
+          "alternative_scores": {
+            "alt_1": 0.843,
+            "alt_2": 0.893
+          },
+          "interpretation": "Yüksek benzerlik - anlam korunmuş"
+        }
+      },
+      {
+        "name": "quote_presence",
+        "score": 0.8585584163665771,
+        "weight": 0.5,
+        "details": {
+          "quote_found": true,
+          "match_type": "semantic",
+          "semantic_similarity": 0.859,
+          "best_matching_sentence": "ANAHTAR KELİMELER: ücret, tazminat, kıdem tazminatı, işveren, işe, işçi, bildirim süresi, özel, hake...",
+          "quote_preview": "Otuz veya daha fazla işçi çalıştıran işyerlerinde en az altı aylık kıdemi olan işçinin belirsiz süre..."
+        }
+      },
+      {
+        "name": "citation_accuracy",
+        "score": 0.0,
+        "weight": 2.0,
+        "details": {
+          "expected": "Madde 18, 17, 120",
+          "expected_numbers": [
+            "18"
+          ],
+          "retrieved": [
+            "Madde 441",
+            "Madde 439",
+            "Geçici Madde 1"
+          ],
+          "source": "4857 Sayılı İş Kanunu",
+          "exact_match": false,
+          "number_match": false,
+          "partial_match": false
+        }
+      },
+      {
+        "name": "response_quality",
+        "score": 0.7549999999999999,
+        "weight": 0.5,
+        "details": {
+          "word_count": 41,
+          "question_type": "edge_case",
+          "expected_range": "50-300",
+          "has_structure": true,
+          "is_uncertain": false,
+          "length_score": 0.65,
+          "structure_score": 1.0
+        }
+      },
+      {
+        "name": "answer_consistency",
+        "score": 0.0,
+        "weight": 0.8,
+        "details": {
+          "expected_numbers": {
+            "years": [
+              "1"
+            ],
+            "articles": [
+              "1",
+              "1",
+              "2",
+              "4857",
+              "18",
+              "17",
+              "120"
+            ],
+            "plain_numbers": [
+              "1",
+              "1",
+              "2",
+              "4857",
+              "18",
+              "17",
+              "120"
+            ]
+          },
+          "generated_numbers": {
+            "articles": [
+              "1",
+              "2"
+            ],
+            "plain_numbers": [
+              "1",
+              "2"
+            ]
+          },
+          "matches": 0,
+          "total_checks": 1,
+          "inconsistencies": [
+            "years: expected '1'"
+          ]
+        }
+      },
+      {
+        "name": "latency",
+        "score": 1.0,
+        "weight": 0.1,
+        "details": {
+          "latency_ms": 1497.9617595672607,
+          "threshold_ms": 8000
+        }
+      }
+    ],
+    "judge_scores": {
+      "relevance": 0.8,
+      "faithfulness": 1.0,
+      "correctness": 0.5,
+      "completeness": 0.7,
+      "overall": 0.76
+    },
+    "judge_reasoning": "Cevap soruya odaklı ve context'e sadık olmasına rağmen hukuki doğrulukta bazı eksiklikler ve kapsamda bilgi eksiklikleri bulunmaktadır. Bu nedenle puanlama sonucu 0.76 olarak belirlenmiştir.",
+    "strengths": [
+      "Cevap soruya odaklı ve context'e sadık.",
+      "Dış bilgi eklemesi yapılmamış."
+    ],
+    "weaknesses": [
+      "Hukuki doğrulukta eksiklik var.",
+      "Kapsamda bazı bilgiler eksik."
+    ],
+    "passed": false,
+    "final_score": 0.681996685051918,
+    "failure_reasons": [
+      "Yanlış/eksik atıf (0.00)",
+      "Sayısal tutarsızlık (0.00)"
+    ]
+  }
+]

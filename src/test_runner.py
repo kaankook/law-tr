@@ -1,13 +1,13 @@
 import json
 import csv
 import time
+import re
 from datetime import datetime
 from typing import List, Dict, Any, Optional, Tuple
 from dataclasses import dataclass, field, asdict
 from pathlib import Path
 from collections import defaultdict
 import statistics
-import html as html_escape
 import numpy as np
 from sentence_transformers import SentenceTransformer
 from langchain_core.prompts import ChatPromptTemplate
@@ -885,14 +885,14 @@ class TestConfig:
 # ============================================================================
 
 class HTMLReportGenerator:
-    """HTML rapor oluşturma işlemlerini yönetir"""
+    """HTML rapor oluşturma işlemlerini yönetir - Temiz Mimari"""
     
     def __init__(self, results: List[EvaluationResult], summary: TestSummary):
         self.results = results
         self.summary = summary
     
     def generate(self) -> str:
-        """HTML raporu oluştur"""
+        """HTML raporu oluştur - Template + JSON Data yaklaşımı"""
         s = self.summary
         
         # CSS ve HTML template'i yükle
@@ -907,7 +907,11 @@ class HTMLReportGenerator:
                 return "warning"
             return "danger"
         
-        # Template değişkenlerini hazırla
+        # JavaScript için JSON data hazırla
+        report_data = self._prepare_report_data()
+        report_data_json = json.dumps(report_data, ensure_ascii=False, indent=2)
+        
+        # Template değişkenlerini hazırla (sadece basit değerler)
         template_vars = {
             "css_styles": css_styles,
             "timestamp_date": s.timestamp[:10] if s.timestamp else "",
@@ -931,12 +935,8 @@ class HTMLReportGenerator:
             "avg_overall_judge": f"{s.avg_overall_judge:.2f}",
             "avg_latency_sec": f"{s.avg_latency_ms/1000:.1f}",
             "p95_latency_sec": f"{s.p95_latency_ms/1000:.1f}",
-            "metric_bars": self._generate_metric_bars(),
-            "difficulty_items": self._generate_category_items(s.by_difficulty),
-            "category_items": self._generate_category_items(s.by_category),
-            "failure_cards": self._generate_failure_cards(s.common_failure_reasons),
-            "question_cards": self._generate_question_cards(),
             "created_at": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
+            "report_data_json": report_data_json,
         }
         
         # Template'i doldur
@@ -946,177 +946,65 @@ class HTMLReportGenerator:
         
         return html
     
-    def _generate_metric_bars(self) -> str:
-        """Metrik çubuklarını oluştur"""
+    def _prepare_report_data(self) -> Dict[str, Any]:
+        """JavaScript için tüm rapor verisini hazırla"""
         s = self.summary
+        
+        # Metrikler
         metrics = [
-            ("İlgililik (Relevance)", s.avg_relevance),
-            ("Sadakat (Faithfulness)", s.avg_faithfulness),
-            ("Doğruluk (Correctness)", s.avg_correctness),
-            ("Tamlık (Completeness)", s.avg_completeness),
-            ("Genel Judge Skoru", s.avg_overall_judge),
+            {"name": "İlgililik (Relevance)", "score": s.avg_relevance},
+            {"name": "Sadakat (Faithfulness)", "score": s.avg_faithfulness},
+            {"name": "Doğruluk (Correctness)", "score": s.avg_correctness},
+            {"name": "Tamlık (Completeness)", "score": s.avg_completeness},
+            {"name": "Genel Judge Skoru", "score": s.avg_overall_judge},
         ]
         
-        html = ""
-        for name, score in metrics:
-            bar_class = "excellent" if score >= 0.85 else "good" if score >= 0.7 else "medium" if score >= 0.5 else "poor"
-            html += f"""
-            <div class="metric-bar">
-                <div class="header">
-                    <span class="name">{name}</span>
-                    <span class="score">{score:.2f}</span>
-                </div>
-                <div class="bar-bg">
-                    <div class="bar-fill {bar_class}" style="width: {score*100}%"></div>
-                </div>
-            </div>
-            """
-        return html
-    
-    def _generate_category_items(self, data: Dict[str, Dict]) -> str:
-        """Kategori öğelerini oluştur"""
-        if not data:
-            return "<p style='color: var(--text-secondary);'>Veri yok</p>"
-        
-        html = ""
-        for name, stats in sorted(data.items(), key=lambda x: x[1].get('pass_rate', 0), reverse=True):
-            pass_rate = stats.get('pass_rate', 0)
-            rate_class = "high" if pass_rate >= 0.8 else "medium" if pass_rate >= 0.6 else "low"
-            
-            html += f"""
-            <div class="category-item">
-                <span class="name">{name}</span>
-                <div class="stats">
-                    <span>{stats.get('passed', 0)}/{stats.get('total', 0)}</span>
-                    <span class="pass-rate {rate_class}">{pass_rate*100:.0f}%</span>
-                </div>
-            </div>
-            """
-        return html
-    
-    def _generate_failure_cards(self, failures: Dict[str, int]) -> str:
-        """Hata kartlarını oluştur"""
-        if not failures:
-            return "<p style='color: var(--accent-green);'>🎉 Yaygın hata bulunamadı!</p>"
-        
-        html = ""
-        for reason, count in sorted(failures.items(), key=lambda x: x[1], reverse=True):
-            html += f"""
-            <div class="failure-card">
-                <div class="reason">{reason}</div>
-                <div class="count">{count}</div>
-                <div class="label">kez tekrarlandı</div>
-            </div>
-            """
-        return html
-    
-    def _generate_question_cards(self) -> str:
-        """Soru kartlarını oluştur"""
-        cards = ""
+        # Sorular
+        questions = []
         for r in self.results:
-            status_class = "" if r.passed else "failed"
-            status_text = "BAŞARILI" if r.passed else "BAŞARISIZ"
-            status_badge = "pass" if r.passed else "fail"
+            q_data = {
+                "question_id": r.question_id,
+                "question": r.question,
+                "category": r.category,
+                "difficulty": r.difficulty,
+                "source": r.source,
+                "generated_answer": r.generated_answer,
+                "expected_answer": r.expected_answer,
+                "total_latency_ms": r.total_latency_ms,
+                "passed": r.passed,
+                "final_score": r.final_score,
+                "failure_reasons": r.failure_reasons,
+                "judge_scores": None,
+                "judge_reasoning": "",
+                "strengths": [],
+                "weaknesses": [],
+            }
             
-            j = r.judge_result
+            if r.judge_result:
+                q_data["judge_scores"] = {
+                    "relevance": r.judge_result.relevance_score,
+                    "faithfulness": r.judge_result.faithfulness_score,
+                    "correctness": r.judge_result.correctness_score,
+                    "completeness": r.judge_result.completeness_score,
+                    "overall": r.judge_result.overall_score,
+                }
+                q_data["judge_reasoning"] = r.judge_result.reasoning
+                q_data["strengths"] = r.judge_result.strengths
+                q_data["weaknesses"] = r.judge_result.weaknesses
             
-            # Score badges
-            def get_badge_class(score):
-                return "high" if score >= 0.7 else "medium" if score >= 0.5 else "low"
-            
-            scores_html = ""
-            if j:
-                scores_html = f"""
-                <div class="scores-row">
-                    <span class="score-badge {get_badge_class(j.relevance_score)}">İlgililik: {j.relevance_score:.2f}</span>
-                    <span class="score-badge {get_badge_class(j.faithfulness_score)}">Sadakat: {j.faithfulness_score:.2f}</span>
-                    <span class="score-badge {get_badge_class(j.correctness_score)}">Doğruluk: {j.correctness_score:.2f}</span>
-                    <span class="score-badge {get_badge_class(j.completeness_score)}">Tamlık: {j.completeness_score:.2f}</span>
-                    <span class="score-badge {get_badge_class(r.final_score)}">Final: {r.final_score:.2f}</span>
-                </div>
-                """
-            
-            # Strengths & Weaknesses
-            sw_html = ""
-            if j and (j.strengths or j.weaknesses):
-                strengths_list = "".join(f"<li>{s}</li>" for s in j.strengths) if j.strengths else "<li>-</li>"
-                weaknesses_list = "".join(f"<li>{w}</li>" for w in j.weaknesses) if j.weaknesses else "<li>-</li>"
-                sw_html = f"""
-                <div class="sw-container">
-                    <div class="sw-box strengths">
-                        <div class="title">💪 Güçlü Yönler</div>
-                        <ul>{strengths_list}</ul>
-                    </div>
-                    <div class="sw-box weaknesses">
-                        <div class="title">⚠️ Zayıf Yönler</div>
-                        <ul>{weaknesses_list}</ul>
-                    </div>
-                </div>
-                """
-            
-            # Failure reasons
-            failure_html = ""
-            if r.failure_reasons:
-                reasons = ", ".join(r.failure_reasons)
-                failure_html = f"""
-                <div class="failure-reasons">
-                    <div class="title">❌ Başarısızlık Nedenleri</div>
-                    <div>{reasons}</div>
-                </div>
-                """
-            
-            # Judge reasoning
-            reasoning_html = ""
-            if j and j.reasoning:
-                reasoning_html = f"""
-                <div class="judge-reasoning">
-                    ⚖️ <strong>Judge Değerlendirmesi:</strong> {html_escape.escape(j.reasoning)}
-                </div>
-                """
-            
-            cards += f"""
-            <div class="question-card {status_class}">
-                <div class="question-header">
-                    <div>
-                        <span class="question-id">#{r.question_id}</span>
-                        <span style="margin-left: 10px; color: var(--text-secondary); font-size: 0.85rem;">
-                            {r.difficulty} | {r.category} | {r.total_latency_ms:.0f}ms
-                        </span>
-                    </div>
-                    <span class="question-status {status_badge}">{status_text}</span>
-                </div>
-                
-                <div class="question-text">{html_escape.escape(r.question)}</div>
-                
-                {scores_html}
-                
-                <div class="collapsible" style="color: var(--accent-blue); cursor: pointer; margin: 10px 0;">
-                    🔍 Detayları Göster/Gizle
-                </div>
-                <div class="collapsible-content">
-                    <div class="answer-section">
-                        <div class="answer-box generated">
-                            <div class="label">🤖 Model Cevabı</div>
-                            <div>{html_escape.escape(r.generated_answer[:500])}{'...' if len(r.generated_answer) > 500 else ''}</div>
-                        </div>
-                        <div class="answer-box expected">
-                            <div class="label">✅ Beklenen Cevap</div>
-                            <div>{html_escape.escape(r.expected_answer[:500])}{'...' if len(r.expected_answer) > 500 else ''}</div>
-                        </div>
-                    </div>
-                    
-                    {sw_html}
-                    {reasoning_html}
-                    {failure_html}
-                    
-                    <div style="margin-top: 10px; font-size: 0.85rem; color: var(--text-secondary);">
-                        📚 Kaynak: {r.source}
-                    </div>
-                </div>
-            </div>
-            """
+            questions.append(q_data)
         
-        return cards
+        return {
+            "metrics": metrics,
+            "questions": questions,
+            "by_difficulty": s.by_difficulty,
+            "by_category": s.by_category,
+            "failure_reasons": s.common_failure_reasons,
+            "chart_data": {
+                "triad": [s.avg_relevance, s.avg_faithfulness, s.avg_correctness, s.avg_completeness, s.avg_overall_judge],
+                "pass_fail": [s.passed, s.failed],
+            }
+        }
 
 
 class RAGTestRunner:

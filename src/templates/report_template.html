@@ -79,27 +79,25 @@
         <!-- Metrics Bars -->
         <div class="metrics-section">
             <h3 style="margin-bottom: 20px;">📏 Detaylı Metrikler</h3>
-            {{metric_bars}}
+            <div id="metricBarsContainer"></div>
         </div>
         
         <!-- Category Analysis -->
         <div class="category-grid">
             <div class="category-card">
                 <h3>📚 Zorluk Seviyesine Göre</h3>
-                {{difficulty_items}}
+                <div id="difficultyContainer"></div>
             </div>
             <div class="category-card">
                 <h3>🏷️ Soru Tipine Göre</h3>
-                {{category_items}}
+                <div id="categoryContainer"></div>
             </div>
         </div>
         
         <!-- Failure Analysis -->
         <div class="metrics-section">
             <h3 style="margin-bottom: 20px;">⚠️ Hata Analizi</h3>
-            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px;">
-                {{failure_cards}}
-            </div>
+            <div id="failureCardsContainer" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px;"></div>
         </div>
         
         <!-- Questions Section -->
@@ -110,9 +108,7 @@
                 <button class="filter-btn" onclick="filterQuestions('passed')">✅ Başarılı</button>
                 <button class="filter-btn" onclick="filterQuestions('failed')">❌ Başarısız</button>
             </div>
-            <div id="questionsContainer">
-                {{question_cards}}
-            </div>
+            <div id="questionsContainer"></div>
         </div>
         
         <!-- Footer -->
@@ -122,62 +118,346 @@
         </div>
     </div>
     
+    <!-- Report Data -->
     <script>
-        // Triad Chart
-        const triadCtx = document.getElementById('triadChart').getContext('2d');
-        new Chart(triadCtx, {
-            type: 'radar',
-            data: {
-                labels: ['İlgililik', 'Sadakat', 'Doğruluk', 'Tamlık', 'Genel'],
-                datasets: [{
-                    label: 'Ortalama Skorlar',
-                    data: [{{avg_relevance}}, {{avg_faithfulness}}, {{avg_correctness}}, {{avg_completeness}}, {{avg_overall_judge}}],
-                    backgroundColor: 'rgba(59, 130, 246, 0.2)',
-                    borderColor: 'rgba(59, 130, 246, 1)',
-                    borderWidth: 2,
-                    pointBackgroundColor: 'rgba(59, 130, 246, 1)'
-                }]
-            },
-            options: {
-                scales: {
-                    r: {
-                        beginAtZero: true,
-                        max: 1,
-                        ticks: { color: '#a0a0c0' },
-                        grid: { color: '#2a2a5a' },
-                        pointLabels: { color: '#ffffff', font: { size: 12 } }
-                    }
+        const REPORT_DATA = {{report_data_json}};
+    </script>
+    
+    <script>
+        // ============================================================
+        // HELPER FUNCTIONS
+        // ============================================================
+        
+        function escapeHtml(text) {
+            if (!text) return '';
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
+        }
+        
+        function getScoreClass(score) {
+            if (score >= 0.8) return 'success';
+            if (score >= 0.6) return 'warning';
+            return 'danger';
+        }
+        
+        function getBarClass(score) {
+            if (score >= 0.85) return 'excellent';
+            if (score >= 0.7) return 'good';
+            if (score >= 0.5) return 'medium';
+            return 'poor';
+        }
+        
+        function getBadgeClass(score) {
+            if (score >= 0.7) return 'high';
+            if (score >= 0.5) return 'medium';
+            return 'low';
+        }
+        
+        function getRateClass(rate) {
+            if (rate >= 0.8) return 'high';
+            if (rate >= 0.6) return 'medium';
+            return 'low';
+        }
+        
+        // ============================================================
+        // RENDER FUNCTIONS
+        // ============================================================
+        
+        function renderMetricBars() {
+            const container = document.getElementById('metricBarsContainer');
+            const metrics = REPORT_DATA.metrics;
+            
+            let html = '';
+            metrics.forEach(m => {
+                const barClass = getBarClass(m.score);
+                html += `
+                    <div class="metric-bar">
+                        <div class="header">
+                            <span class="name">${m.name}</span>
+                            <span class="score">${m.score.toFixed(2)}</span>
+                        </div>
+                        <div class="bar-bg">
+                            <div class="bar-fill ${barClass}" style="width: ${m.score * 100}%"></div>
+                        </div>
+                    </div>
+                `;
+            });
+            container.innerHTML = html;
+        }
+        
+        function renderCategoryItems(containerId, data) {
+            const container = document.getElementById(containerId);
+            
+            if (!data || Object.keys(data).length === 0) {
+                container.innerHTML = '<p style="color: var(--text-secondary);">Veri yok</p>';
+                return;
+            }
+            
+            // Sort by pass_rate descending
+            const sorted = Object.entries(data).sort((a, b) => (b[1].pass_rate || 0) - (a[1].pass_rate || 0));
+            
+            let html = '';
+            sorted.forEach(([name, stats]) => {
+                const passRate = stats.pass_rate || 0;
+                const rateClass = getRateClass(passRate);
+                html += `
+                    <div class="category-item">
+                        <span class="name">${escapeHtml(name)}</span>
+                        <div class="stats">
+                            <span>${stats.passed || 0}/${stats.total || 0}</span>
+                            <span class="pass-rate ${rateClass}">${(passRate * 100).toFixed(0)}%</span>
+                        </div>
+                    </div>
+                `;
+            });
+            container.innerHTML = html;
+        }
+        
+        function renderFailureCards() {
+            const container = document.getElementById('failureCardsContainer');
+            const failures = REPORT_DATA.failure_reasons;
+            
+            if (!failures || Object.keys(failures).length === 0) {
+                container.innerHTML = '<p style="color: var(--accent-green);">🎉 Yaygın hata bulunamadı!</p>';
+                return;
+            }
+            
+            // Sort by count descending
+            const sorted = Object.entries(failures).sort((a, b) => b[1] - a[1]);
+            
+            let html = '';
+            sorted.forEach(([reason, count]) => {
+                html += `
+                    <div class="failure-card">
+                        <div class="reason">${escapeHtml(reason)}</div>
+                        <div class="count">${count}</div>
+                        <div class="label">kez tekrarlandı</div>
+                    </div>
+                `;
+            });
+            container.innerHTML = html;
+        }
+        
+        function renderQuestionCards() {
+            const container = document.getElementById('questionsContainer');
+            const questions = REPORT_DATA.questions;
+            
+            let html = '';
+            questions.forEach(r => {
+                const statusClass = r.passed ? '' : 'failed';
+                const statusText = r.passed ? 'BAŞARILI' : 'BAŞARISIZ';
+                const statusBadge = r.passed ? 'pass' : 'fail';
+                
+                // Score badges
+                let scoresHtml = '';
+                if (r.judge_scores) {
+                    const j = r.judge_scores;
+                    scoresHtml = `
+                        <div class="scores-row">
+                            <span class="score-badge ${getBadgeClass(j.relevance)}">İlgililik: ${j.relevance.toFixed(2)}</span>
+                            <span class="score-badge ${getBadgeClass(j.faithfulness)}">Sadakat: ${j.faithfulness.toFixed(2)}</span>
+                            <span class="score-badge ${getBadgeClass(j.correctness)}">Doğruluk: ${j.correctness.toFixed(2)}</span>
+                            <span class="score-badge ${getBadgeClass(j.completeness)}">Tamlık: ${j.completeness.toFixed(2)}</span>
+                            <span class="score-badge ${getBadgeClass(r.final_score)}">Final: ${r.final_score.toFixed(2)}</span>
+                        </div>
+                    `;
+                }
+                
+                // Strengths & Weaknesses
+                let swHtml = '';
+                if ((r.strengths && r.strengths.length > 0) || (r.weaknesses && r.weaknesses.length > 0)) {
+                    const strengthsList = r.strengths && r.strengths.length > 0 
+                        ? r.strengths.map(s => `<li>${escapeHtml(s)}</li>`).join('') 
+                        : '<li>-</li>';
+                    const weaknessesList = r.weaknesses && r.weaknesses.length > 0 
+                        ? r.weaknesses.map(w => `<li>${escapeHtml(w)}</li>`).join('') 
+                        : '<li>-</li>';
+                    swHtml = `
+                        <div class="sw-container">
+                            <div class="sw-box strengths">
+                                <div class="title">💪 Güçlü Yönler</div>
+                                <ul>${strengthsList}</ul>
+                            </div>
+                            <div class="sw-box weaknesses">
+                                <div class="title">⚠️ Zayıf Yönler</div>
+                                <ul>${weaknessesList}</ul>
+                            </div>
+                        </div>
+                    `;
+                }
+                
+                // Failure reasons
+                let failureHtml = '';
+                if (r.failure_reasons && r.failure_reasons.length > 0) {
+                    const reasons = r.failure_reasons.join(', ');
+                    failureHtml = `
+                        <div class="failure-reasons">
+                            <div class="title">❌ Başarısızlık Nedenleri</div>
+                            <div>${escapeHtml(reasons)}</div>
+                        </div>
+                    `;
+                }
+                
+                // Judge reasoning
+                let reasoningHtml = '';
+                if (r.judge_reasoning) {
+                    reasoningHtml = `
+                        <div class="judge-reasoning">
+                            ⚖️ <strong>Judge Değerlendirmesi:</strong> ${escapeHtml(r.judge_reasoning)}
+                        </div>
+                    `;
+                }
+                
+                // Truncate long answers
+                const genAnswer = r.generated_answer || '';
+                const expAnswer = r.expected_answer || '';
+                const genTruncated = genAnswer.length > 500 ? genAnswer.substring(0, 500) + '...' : genAnswer;
+                const expTruncated = expAnswer.length > 500 ? expAnswer.substring(0, 500) + '...' : expAnswer;
+                
+                html += `
+                    <div class="question-card ${statusClass}" data-passed="${r.passed}">
+                        <div class="question-header">
+                            <div>
+                                <span class="question-id">#${r.question_id}</span>
+                                <span style="margin-left: 10px; color: var(--text-secondary); font-size: 0.85rem;">
+                                    ${escapeHtml(r.difficulty)} | ${escapeHtml(r.category)} | ${r.total_latency_ms.toFixed(0)}ms
+                                </span>
+                            </div>
+                            <span class="question-status ${statusBadge}">${statusText}</span>
+                        </div>
+                        
+                        <div class="question-text">${escapeHtml(r.question)}</div>
+                        
+                        ${scoresHtml}
+                        
+                        <div class="collapsible" style="color: var(--accent-blue); cursor: pointer; margin: 10px 0;">
+                            🔍 Detayları Göster/Gizle
+                        </div>
+                        <div class="collapsible-content">
+                            <div class="answer-section">
+                                <div class="answer-box generated">
+                                    <div class="label">🤖 Model Cevabı</div>
+                                    <div>${escapeHtml(genTruncated)}</div>
+                                </div>
+                                <div class="answer-box expected">
+                                    <div class="label">✅ Beklenen Cevap</div>
+                                    <div>${escapeHtml(expTruncated)}</div>
+                                </div>
+                            </div>
+                            
+                            ${swHtml}
+                            ${reasoningHtml}
+                            ${failureHtml}
+                            
+                            <div style="margin-top: 10px; font-size: 0.85rem; color: var(--text-secondary);">
+                                📚 Kaynak: ${escapeHtml(r.source)}
+                            </div>
+                        </div>
+                    </div>
+                `;
+            });
+            
+            container.innerHTML = html;
+            
+            // Add collapsible event listeners
+            document.querySelectorAll('.collapsible').forEach(el => {
+                el.addEventListener('click', function() {
+                    const content = this.nextElementSibling;
+                    content.classList.toggle('show');
+                });
+            });
+        }
+        
+        // ============================================================
+        // CHARTS
+        // ============================================================
+        
+        function initCharts() {
+            // Triad Chart
+            const triadCtx = document.getElementById('triadChart').getContext('2d');
+            new Chart(triadCtx, {
+                type: 'radar',
+                data: {
+                    labels: ['İlgililik', 'Sadakat', 'Doğruluk', 'Tamlık', 'Genel'],
+                    datasets: [{
+                        label: 'Ortalama Skorlar',
+                        data: REPORT_DATA.chart_data.triad,
+                        backgroundColor: 'rgba(99, 102, 241, 0.15)',
+                        borderColor: 'rgba(99, 102, 241, 1)',
+                        borderWidth: 2,
+                        pointBackgroundColor: 'rgba(99, 102, 241, 1)',
+                        pointBorderColor: '#ffffff',
+                        pointBorderWidth: 2,
+                        pointRadius: 5
+                    }]
                 },
-                plugins: {
-                    legend: { labels: { color: '#ffffff' } }
-                }
-            }
-        });
-        
-        // Pass/Fail Chart
-        const pfCtx = document.getElementById('passFailChart').getContext('2d');
-        new Chart(pfCtx, {
-            type: 'doughnut',
-            data: {
-                labels: ['Başarılı', 'Başarısız'],
-                datasets: [{
-                    data: [{{passed}}, {{failed}}],
-                    backgroundColor: ['#10b981', '#ef4444'],
-                    borderWidth: 0
-                }]
-            },
-            options: {
-                cutout: '60%',
-                plugins: {
-                    legend: {
-                        position: 'bottom',
-                        labels: { color: '#ffffff', padding: 20 }
+                options: {
+                    scales: {
+                        r: {
+                            beginAtZero: true,
+                            max: 1,
+                            ticks: { 
+                                color: '#64748b',
+                                backdropColor: 'transparent',
+                                font: { size: 11 }
+                            },
+                            grid: { color: '#e2e8f0' },
+                            angleLines: { color: '#e2e8f0' },
+                            pointLabels: { 
+                                color: '#1e293b', 
+                                font: { size: 12, weight: '500' } 
+                            }
+                        }
+                    },
+                    plugins: {
+                        legend: { 
+                            labels: { 
+                                color: '#1e293b',
+                                font: { size: 12 },
+                                usePointStyle: true,
+                                padding: 20
+                            } 
+                        }
                     }
                 }
-            }
-        });
+            });
+            
+            // Pass/Fail Chart
+            const pfCtx = document.getElementById('passFailChart').getContext('2d');
+            new Chart(pfCtx, {
+                type: 'doughnut',
+                data: {
+                    labels: ['Başarılı', 'Başarısız'],
+                    datasets: [{
+                        data: REPORT_DATA.chart_data.pass_fail,
+                        backgroundColor: ['#22c55e', '#ef4444'],
+                        borderWidth: 0,
+                        hoverOffset: 8
+                    }]
+                },
+                options: {
+                    cutout: '65%',
+                    plugins: {
+                        legend: {
+                            position: 'bottom',
+                            labels: { 
+                                color: '#1e293b', 
+                                padding: 24,
+                                font: { size: 12, weight: '500' },
+                                usePointStyle: true,
+                                pointStyle: 'circle'
+                            }
+                        }
+                    }
+                }
+            });
+        }
         
-        // Filter functionality
+        // ============================================================
+        // FILTER
+        // ============================================================
+        
         function filterQuestions(filter) {
             const cards = document.querySelectorAll('.question-card');
             const buttons = document.querySelectorAll('.filter-btn');
@@ -186,22 +466,28 @@
             event.target.classList.add('active');
             
             cards.forEach(card => {
+                const passed = card.dataset.passed === 'true';
                 if (filter === 'all') {
                     card.style.display = 'block';
                 } else if (filter === 'passed') {
-                    card.style.display = card.classList.contains('failed') ? 'none' : 'block';
+                    card.style.display = passed ? 'block' : 'none';
                 } else if (filter === 'failed') {
-                    card.style.display = card.classList.contains('failed') ? 'block' : 'none';
+                    card.style.display = passed ? 'none' : 'block';
                 }
             });
         }
         
-        // Collapsible
-        document.querySelectorAll('.collapsible').forEach(el => {
-            el.addEventListener('click', function() {
-                const content = this.nextElementSibling;
-                content.classList.toggle('show');
-            });
+        // ============================================================
+        // INITIALIZE
+        // ============================================================
+        
+        document.addEventListener('DOMContentLoaded', function() {
+            renderMetricBars();
+            renderCategoryItems('difficultyContainer', REPORT_DATA.by_difficulty);
+            renderCategoryItems('categoryContainer', REPORT_DATA.by_category);
+            renderFailureCards();
+            renderQuestionCards();
+            initCharts();
         });
     </script>
 </body>

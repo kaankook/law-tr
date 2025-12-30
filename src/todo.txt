@@ -1,1 +1,3 @@
 * verisetini iyileştir soruları kontrol et
+* ui soru kısıtlaması dğzelt
+* raporu incele mantık hatalarını tespit et

@@ -1,0 +1,1550 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RAG Test Raporu - 2025-12-30</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+/* RAG Test Raporu - Modern Light Theme CSS */
+
+:root {
+    --bg-primary: #f8fafc;
+    --bg-secondary: #ffffff;
+    --bg-card: #ffffff;
+    --bg-hover: #f1f5f9;
+    --bg-subtle: #f1f5f9;
+    --text-primary: #1e293b;
+    --text-secondary: #64748b;
+    --text-muted: #94a3b8;
+    --accent-blue: #3b82f6;
+    --accent-purple: #8b5cf6;
+    --accent-green: #22c55e;
+    --accent-red: #ef4444;
+    --accent-yellow: #f59e0b;
+    --accent-cyan: #06b6d4;
+    --border-color: #e2e8f0;
+    --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+    --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.07), 0 2px 4px -2px rgb(0 0 0 / 0.07);
+    --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.08), 0 4px 6px -4px rgb(0 0 0 / 0.08);
+    --gradient-header: linear-gradient(135deg, #6366f1 0%, #8b5cf6 50%, #a855f7 100%);
+    --gradient-success: linear-gradient(135deg, #22c55e 0%, #16a34a 100%);
+    --gradient-blue: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+    font-family: 'Inter', 'Segoe UI', system-ui, -apple-system, sans-serif;
+    background: var(--bg-primary);
+    color: var(--text-primary);
+    line-height: 1.6;
+    min-height: 100vh;
+}
+
+.container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 24px;
+}
+
+/* Header */
+.header {
+    background: var(--gradient-header);
+    padding: 48px 40px;
+    border-radius: 24px;
+    margin-bottom: 32px;
+    position: relative;
+    overflow: hidden;
+    box-shadow: var(--shadow-lg);
+    color: #ffffff;
+}
+
+.header::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    right: -20%;
+    width: 60%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(255,255,255,0.15) 0%, transparent 60%);
+}
+
+.header::after {
+    content: '';
+    position: absolute;
+    bottom: -30%;
+    left: -10%;
+    width: 40%;
+    height: 150%;
+    background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 50%);
+}
+
+.header h1 {
+    font-size: 2.25rem;
+    font-weight: 700;
+    margin-bottom: 8px;
+    position: relative;
+    letter-spacing: -0.025em;
+}
+
+.header .subtitle {
+    opacity: 0.9;
+    font-size: 1rem;
+    font-weight: 400;
+}
+
+.header .meta {
+    display: flex;
+    gap: 12px;
+    margin-top: 24px;
+    flex-wrap: wrap;
+    position: relative;
+}
+
+.header .meta-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(255,255,255,0.2);
+    backdrop-filter: blur(10px);
+    padding: 10px 16px;
+    border-radius: 12px;
+    font-size: 0.875rem;
+    font-weight: 500;
+    border: 1px solid rgba(255,255,255,0.1);
+}
+
+/* Score Cards */
+.score-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 16px;
+    margin-bottom: 32px;
+}
+
+.score-card {
+    background: var(--bg-card);
+    border-radius: 16px;
+    padding: 24px 20px;
+    text-align: center;
+    border: 1px solid var(--border-color);
+    transition: all 0.2s ease;
+    box-shadow: var(--shadow-sm);
+}
+
+.score-card:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-lg);
+    border-color: transparent;
+}
+
+.score-card .icon {
+    font-size: 1.75rem;
+    margin-bottom: 12px;
+    opacity: 0.9;
+}
+
+.score-card .label {
+    color: var(--text-secondary);
+    font-size: 0.8rem;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: 8px;
+}
+
+.score-card .value {
+    font-size: 2rem;
+    font-weight: 700;
+    letter-spacing: -0.025em;
+}
+
+.score-card .subvalue {
+    color: var(--text-muted);
+    font-size: 0.8rem;
+    margin-top: 4px;
+}
+
+.score-card.success { background: linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%); border-color: #bbf7d0; }
+.score-card.success .value { color: #16a34a; }
+.score-card.success:hover { border-color: #22c55e; }
+
+.score-card.warning { background: linear-gradient(135deg, #fffbeb 0%, #fef3c7 100%); border-color: #fde68a; }
+.score-card.warning .value { color: #d97706; }
+.score-card.warning:hover { border-color: #f59e0b; }
+
+.score-card.danger { background: linear-gradient(135deg, #fef2f2 0%, #fee2e2 100%); border-color: #fecaca; }
+.score-card.danger .value { color: #dc2626; }
+.score-card.danger:hover { border-color: #ef4444; }
+
+.score-card.info { background: linear-gradient(135deg, #eff6ff 0%, #dbeafe 100%); border-color: #bfdbfe; }
+.score-card.info .value { color: #2563eb; }
+.score-card.info:hover { border-color: #3b82f6; }
+
+/* Charts Section */
+.charts-section {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
+    gap: 20px;
+    margin-bottom: 32px;
+}
+
+.chart-card {
+    background: var(--bg-card);
+    border-radius: 16px;
+    padding: 24px;
+    border: 1px solid var(--border-color);
+    box-shadow: var(--shadow-sm);
+}
+
+.chart-card h3 {
+    margin-bottom: 20px;
+    color: var(--text-primary);
+    font-size: 1rem;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+/* Metrics Bars */
+.metrics-section {
+    background: var(--bg-card);
+    border-radius: 16px;
+    padding: 28px;
+    margin-bottom: 24px;
+    border: 1px solid var(--border-color);
+    box-shadow: var(--shadow-sm);
+}
+
+.metric-bar {
+    margin-bottom: 20px;
+}
+
+.metric-bar:last-child {
+    margin-bottom: 0;
+}
+
+.metric-bar .header {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 8px;
+    background: transparent;
+    padding: 0;
+    border-radius: 0;
+}
+
+.metric-bar .name {
+    font-weight: 500;
+    font-size: 0.9rem;
+    color: var(--text-primary);
+}
+
+.metric-bar .score {
+    font-weight: 700;
+    font-size: 0.9rem;
+    color: var(--text-primary);
+}
+
+.metric-bar .bar-bg {
+    height: 10px;
+    background: var(--bg-subtle);
+    border-radius: 5px;
+    overflow: hidden;
+}
+
+.metric-bar .bar-fill {
+    height: 100%;
+    border-radius: 5px;
+    transition: width 1s ease-out;
+}
+
+.metric-bar .bar-fill.excellent { background: var(--gradient-blue); }
+.metric-bar .bar-fill.good { background: var(--gradient-success); }
+.metric-bar .bar-fill.medium { background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%); }
+.metric-bar .bar-fill.poor { background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%); }
+
+/* Category Analysis */
+.category-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 20px;
+    margin-bottom: 24px;
+}
+
+.category-card {
+    background: var(--bg-card);
+    border-radius: 16px;
+    padding: 24px;
+    border: 1px solid var(--border-color);
+    box-shadow: var(--shadow-sm);
+}
+
+.category-card h3 {
+    margin-bottom: 16px;
+    font-size: 1rem;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: var(--text-primary);
+}
+
+.category-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 14px 16px;
+    background: var(--bg-subtle);
+    border-radius: 10px;
+    margin-bottom: 10px;
+    transition: all 0.2s ease;
+}
+
+.category-item:last-child {
+    margin-bottom: 0;
+}
+
+.category-item:hover {
+    background: var(--bg-hover);
+}
+
+.category-item .name {
+    font-weight: 500;
+    font-size: 0.9rem;
+    color: var(--text-primary);
+}
+
+.category-item .stats {
+    display: flex;
+    gap: 12px;
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+}
+
+.category-item .pass-rate {
+    padding: 5px 12px;
+    border-radius: 6px;
+    font-weight: 600;
+    font-size: 0.8rem;
+}
+
+.category-item .pass-rate.high { background: #dcfce7; color: #16a34a; }
+.category-item .pass-rate.medium { background: #fef3c7; color: #d97706; }
+.category-item .pass-rate.low { background: #fee2e2; color: #dc2626; }
+
+/* Questions Table */
+.questions-section {
+    background: var(--bg-card);
+    border-radius: 16px;
+    padding: 28px;
+    margin-bottom: 24px;
+    border: 1px solid var(--border-color);
+    box-shadow: var(--shadow-sm);
+}
+
+.questions-section h3 {
+    margin-bottom: 20px;
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--text-primary);
+}
+
+.filter-bar {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+}
+
+.filter-btn {
+    padding: 10px 18px;
+    border: 1px solid var(--border-color);
+    border-radius: 10px;
+    background: var(--bg-secondary);
+    color: var(--text-secondary);
+    cursor: pointer;
+    transition: all 0.2s ease;
+    font-size: 0.875rem;
+    font-weight: 500;
+}
+
+.filter-btn:hover {
+    background: var(--bg-subtle);
+    color: var(--text-primary);
+    border-color: var(--text-muted);
+}
+
+.filter-btn.active {
+    background: var(--accent-blue);
+    color: white;
+    border-color: var(--accent-blue);
+}
+
+.question-card {
+    background: var(--bg-secondary);
+    border-radius: 14px;
+    padding: 20px 24px;
+    margin-bottom: 12px;
+    border: 1px solid var(--border-color);
+    border-left: 4px solid var(--accent-green);
+    transition: all 0.2s ease;
+    box-shadow: var(--shadow-sm);
+}
+
+.question-card.failed {
+    border-left-color: var(--accent-red);
+    background: linear-gradient(135deg, #ffffff 0%, #fef2f2 100%);
+}
+
+.question-card:not(.failed) {
+    background: linear-gradient(135deg, #ffffff 0%, #f0fdf4 100%);
+}
+
+.question-card:hover {
+    box-shadow: var(--shadow-md);
+    transform: translateY(-2px);
+}
+
+.question-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 14px;
+}
+
+.question-id {
+    background: linear-gradient(135deg, #8b5cf6 0%, #7c3aed 100%);
+    color: white;
+    padding: 5px 12px;
+    border-radius: 6px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+}
+
+.question-status {
+    padding: 5px 14px;
+    border-radius: 6px;
+    font-weight: 600;
+    font-size: 0.8rem;
+}
+
+.question-status.pass {
+    background: #dcfce7;
+    color: #16a34a;
+}
+
+.question-status.fail {
+    background: #fee2e2;
+    color: #dc2626;
+}
+
+.question-text {
+    font-size: 1rem;
+    margin-bottom: 16px;
+    color: var(--text-primary);
+    font-weight: 500;
+    line-height: 1.5;
+}
+
+.answer-section {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+    margin-bottom: 16px;
+}
+
+.answer-box {
+    background: var(--bg-subtle);
+    padding: 16px;
+    border-radius: 10px;
+    font-size: 0.875rem;
+    line-height: 1.6;
+}
+
+.answer-box .label {
+    color: var(--text-secondary);
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.answer-box.generated { 
+    border-left: 3px solid var(--accent-cyan); 
+    background: linear-gradient(135deg, #f8fafc 0%, #ecfeff 100%);
+}
+.answer-box.expected { 
+    border-left: 3px solid var(--accent-purple); 
+    background: linear-gradient(135deg, #f8fafc 0%, #f5f3ff 100%);
+}
+
+.scores-row {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin-bottom: 12px;
+}
+
+.score-badge {
+    padding: 6px 14px;
+    border-radius: 8px;
+    font-size: 0.8rem;
+    font-weight: 600;
+}
+
+.score-badge.high { background: #dcfce7; color: #16a34a; }
+.score-badge.medium { background: #fef3c7; color: #d97706; }
+.score-badge.low { background: #fee2e2; color: #dc2626; }
+
+.judge-reasoning {
+    background: var(--bg-subtle);
+    padding: 14px 16px;
+    border-radius: 10px;
+    font-size: 0.875rem;
+    font-style: italic;
+    color: var(--text-secondary);
+    margin-top: 12px;
+    border-left: 3px solid var(--border-color);
+    line-height: 1.6;
+}
+
+.failure-reasons {
+    margin-top: 12px;
+    padding: 14px 16px;
+    background: #fef2f2;
+    border-radius: 10px;
+    border-left: 3px solid var(--accent-red);
+}
+
+.failure-reasons .title {
+    color: #dc2626;
+    font-weight: 600;
+    margin-bottom: 6px;
+    font-size: 0.875rem;
+}
+
+/* Strengths & Weaknesses */
+.sw-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin-top: 12px;
+}
+
+.sw-box {
+    padding: 14px 16px;
+    border-radius: 10px;
+    font-size: 0.85rem;
+    line-height: 1.6;
+}
+
+.sw-box.strengths {
+    background: #f0fdf4;
+    border-left: 3px solid var(--accent-green);
+}
+
+.sw-box.weaknesses {
+    background: #fef2f2;
+    border-left: 3px solid var(--accent-red);
+}
+
+.sw-box .title {
+    font-weight: 600;
+    margin-bottom: 8px;
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+}
+
+.sw-box.strengths .title { color: #16a34a; }
+.sw-box.weaknesses .title { color: #dc2626; }
+
+.sw-box ul {
+    margin-left: 16px;
+    color: var(--text-secondary);
+}
+
+/* Collapsible */
+.collapsible {
+    cursor: pointer;
+    user-select: none;
+}
+
+.collapsible-content {
+    display: none;
+    padding-top: 16px;
+}
+
+.collapsible-content.show {
+    display: block;
+}
+
+/* Footer */
+.footer {
+    text-align: center;
+    padding: 40px 30px;
+    color: var(--text-muted);
+    font-size: 0.85rem;
+    border-top: 1px solid var(--border-color);
+    margin-top: 20px;
+}
+
+.footer p {
+    margin-bottom: 4px;
+}
+
+/* Failure Card */
+.failure-card {
+    background: #fef2f2;
+    padding: 18px;
+    border-radius: 12px;
+    border-left: 4px solid var(--accent-red);
+    transition: all 0.2s ease;
+}
+
+.failure-card:hover {
+    box-shadow: var(--shadow-md);
+}
+
+.failure-card .reason {
+    font-weight: 600;
+    color: #dc2626;
+    font-size: 0.9rem;
+}
+
+.failure-card .count {
+    font-size: 1.75rem;
+    font-weight: 700;
+    margin-top: 6px;
+    color: #dc2626;
+}
+
+.failure-card .label {
+    color: var(--text-secondary);
+    font-size: 0.8rem;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .header h1 { font-size: 1.5rem; }
+    .header { padding: 32px 24px; }
+    .score-grid { grid-template-columns: repeat(2, 1fr); }
+    .charts-section { grid-template-columns: 1fr; }
+    .answer-section { grid-template-columns: 1fr; }
+    .sw-container { grid-template-columns: 1fr; }
+    .container { padding: 16px; }
+}
+
+/* Animations */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(16px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.score-card, .chart-card, .question-card {
+    animation: fadeIn 0.4s ease-out forwards;
+}
+
+/* Scrollbar Styling */
+::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--bg-subtle);
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--text-muted);
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: var(--text-secondary);
+}
+
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <h1>🧪 RAG Test Raporu</h1>
+            <p class="subtitle">Kapsamlı Değerlendirme Sonuçları</p>
+            <div class="meta">
+                <div class="meta-item">📅 2025-12-30</div>
+                <div class="meta-item">🤖 gemini-2.0-flash</div>
+                <div class="meta-item">⚖️ gpt-3.5-turbo</div>
+                <div class="meta-item">🔍 K=7</div>
+                <div class="meta-item">⏱️ 271.1s</div>
+            </div>
+        </div>
+        
+        <!-- Score Cards -->
+        <div class="score-grid">
+            <div class="score-card danger">
+                <div class="icon">🎯</div>
+                <div class="label">Başarı Oranı</div>
+                <div class="value">40.0%</div>
+                <div class="subvalue">4/10 başarılı</div>
+            </div>
+            <div class="score-card info">
+                <div class="icon">📊</div>
+                <div class="label">Ortalama Skor</div>
+                <div class="value">0.80</div>
+                <div class="subvalue">0-1 arası</div>
+            </div>
+            <div class="score-card success">
+                <div class="icon">🎯</div>
+                <div class="label">İlgililik</div>
+                <div class="value">0.93</div>
+                <div class="subvalue">Relevance</div>
+            </div>
+            <div class="score-card warning">
+                <div class="icon">📚</div>
+                <div class="label">Sadakat</div>
+                <div class="value">0.76</div>
+                <div class="subvalue">Faithfulness</div>
+            </div>
+            <div class="score-card warning">
+                <div class="icon">✅</div>
+                <div class="label">Doğruluk</div>
+                <div class="value">0.78</div>
+                <div class="subvalue">Correctness</div>
+            </div>
+            <div class="score-card info">
+                <div class="icon">⚡</div>
+                <div class="label">Ort. Yanıt Süresi</div>
+                <div class="value">1.9s</div>
+                <div class="subvalue">P95: 4.0s</div>
+            </div>
+        </div>
+        
+        <!-- Charts Section -->
+        <div class="charts-section">
+            <div class="chart-card">
+                <h3>📈 RAG Triad Metrikleri</h3>
+                <canvas id="triadChart"></canvas>
+            </div>
+            <div class="chart-card">
+                <h3>📊 Başarı Dağılımı</h3>
+                <canvas id="passFailChart"></canvas>
+            </div>
+        </div>
+        
+        <!-- Metrics Bars -->
+        <div class="metrics-section">
+            <h3 style="margin-bottom: 20px;">📏 Detaylı Metrikler</h3>
+            <div id="metricBarsContainer"></div>
+        </div>
+        
+        <!-- Category Analysis -->
+        <div class="category-grid">
+            <div class="category-card">
+                <h3>📚 Zorluk Seviyesine Göre</h3>
+                <div id="difficultyContainer"></div>
+            </div>
+            <div class="category-card">
+                <h3>🏷️ Soru Tipine Göre</h3>
+                <div id="categoryContainer"></div>
+            </div>
+        </div>
+        
+        <!-- Failure Analysis -->
+        <div class="metrics-section">
+            <h3 style="margin-bottom: 20px;">⚠️ Hata Analizi</h3>
+            <div id="failureCardsContainer" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px;"></div>
+        </div>
+        
+        <!-- Questions Section -->
+        <div class="questions-section">
+            <h3>📝 Tüm Sorular (10 adet)</h3>
+            <div class="filter-bar">
+                <button class="filter-btn active" onclick="filterQuestions('all')">Tümü</button>
+                <button class="filter-btn" onclick="filterQuestions('passed')">✅ Başarılı</button>
+                <button class="filter-btn" onclick="filterQuestions('failed')">❌ Başarısız</button>
+            </div>
+            <div id="questionsContainer"></div>
+        </div>
+        
+        <!-- Footer -->
+        <div class="footer">
+            <p>RAG Test Runner v2.0 | Oluşturulma: 2025-12-30 11:25:43</p>
+            <p>Model: gemini-2.0-flash | Evaluator: gpt-3.5-turbo</p>
+        </div>
+    </div>
+    
+    <!-- Report Data -->
+    <script>
+        const REPORT_DATA = {
+  "metrics": [
+    {
+      "name": "İlgililik (Relevance)",
+      "score": 0.93
+    },
+    {
+      "name": "Sadakat (Faithfulness)",
+      "score": 0.76
+    },
+    {
+      "name": "Doğruluk (Correctness)",
+      "score": 0.78
+    },
+    {
+      "name": "Tamlık (Completeness)",
+      "score": 0.73
+    },
+    {
+      "name": "Genel Judge Skoru",
+      "score": 0.8
+    }
+  ],
+  "questions": [
+    {
+      "question_id": 1,
+      "question": "Türkiye Cumhuriyeti hangi niteliklere sahip bir devlettir?",
+      "category": "olgusal",
+      "difficulty": "kolay",
+      "source": "T.C. Anayasası",
+      "generated_answer": "BÖLÜM 1 - AÇIKLAMA\nTürkiye Cumhuriyeti, toplumun huzuru, milli dayanışma ve adalet anlayışı içinde, insan haklarına saygılı, Atatürk milliyetçiliğine bağlı, başlangıçta belirtilen temel ilkelere dayanan, demokratik, laik ve sosyal bir hukuk devletidir. Bu nitelikler Anayasa'da belirtilmiştir ve değiştirilemez.\n\nBÖLÜM 2 - HUKUKİ DAYANAKLAR\n- T.C. Anayasası Madde 2\n- T.C. Anayasası Madde 4",
+      "expected_answer": "BÖLÜM 1 - AÇIKLAMA\nTürkiye Cumhuriyeti, temelleri Anayasa'nın başlangıç kısmında belirtilen ilkelere dayanan bir devlettir. Cumhuriyetin temel nitelikleri; toplumun huzuru, milli dayanışma ve adalet anlayışı içinde insan haklarına saygılı olmasıdır.  Ayrıca devletimiz, Atatürk milliyetçiliğine bağlı, demokratik, laik ve sosyal bir hukuk devleti olarak tanımlanır.\n\nBÖLÜM 2 - HUKUKİ DAYANAKLAR\n- T.C. Anayasası Madde 2",
+      "total_latency_ms": 3963.8442993164062,
+      "passed": true,
+      "final_score": 0.8858344477653504,
+      "failure_reasons": [],
+      "judge_scores": {
+        "relevance": 0.9,
+        "faithfulness": 0.8,
+        "correctness": 0.9,
+        "completeness": 0.8,
+        "overall": 0.86
+      },
+      "judge_reasoning": "Cevap soruya odaklı ve konuya uygun olduğu için yüksek bir relevance puanı aldı. Hukuki terimlerin doğru kullanımı ve anlamlı olması correctness puanını artırdı. Ancak bazı önerilen unsurların eksik olması ve faithfulness puanının biraz düşük olması completeness ve faithfulness puanlarını etkiledi. Genel olarak iyi bir performans sergiledi.",
+      "strengths": [
+        "Cevap soruya odaklı ve konuya uygun.",
+        "Hukuki terimler doğru ve anlamlı kullanılmış."
+      ],
+      "weaknesses": [
+        "Cevapta bazı önerilen unsurlar eksik.",
+        "Faithfulness puanı biraz düşük."
+      ]
+    },
+    {
+      "question_id": 2,
+      "question": "Cumhurbaşkanının görev süresi ne kadardır?",
+      "category": "olgusal",
+      "difficulty": "kolay",
+      "source": "T.C. Anayasası",
+      "generated_answer": "BÖLÜM 1 - AÇIKLAMA\nCumhurbaşkanının görev süresi, doğrudan halk tarafından seçildikten sonra beş yıldır. Bir kişi en fazla iki defa Cumhurbaşkanı seçilebilir.\n\nBÖLÜM 2 - HUKUKİ DAYANAKLAR\n- [T.C. Anayasası Madde 101]",
+      "expected_answer": "BÖLÜM 1 - AÇIKLAMA\nCumhurbaşkanının görev süresi beş yıldır. Anayasa'daki kural gereği bir kimse en fazla iki defa Cumhurbaşkanı seçilebilir.\n\nBÖLÜM 2 - HUKUKİ DAYANAKLAR\n- T.C. Anayasası Madde 101",
+      "total_latency_ms": 1461.369276046753,
+      "passed": true,
+      "final_score": 0.9750064016127586,
+      "failure_reasons": [],
+      "judge_scores": {
+        "relevance": 1.0,
+        "faithfulness": 1.0,
+        "correctness": 1.0,
+        "completeness": 1.0,
+        "overall": 1.0
+      },
+      "judge_reasoning": "Cevap, soruya odaklı, referans cevapla anlamsal olarak örtüşüyor, kritik bilgiler tam ve doğru bir şekilde verilmiştir.",
+      "strengths": [
+        "Doğru bilgiyi tam ve eksiksiz şekilde veriyor"
+      ],
+      "weaknesses": []
+    },
+    {
+      "question_id": 3,
+      "question": "Temel hak ve hürriyetler hangi durumlarda sınırlandırılabilir?",
+      "category": "kavramsal",
+      "difficulty": "orta",
+      "source": "T.C. Anayasası",
+      "generated_answer": "BÖLÜM 1 - AÇIKLAMA\nTemel hak ve hürriyetler ancak kanunla, Anayasanın ilgili maddelerinde belirtilen sebeplere bağlı olarak ve özlerine dokunulmaksızın sınırlandırılabilir. Savaş, seferberlik veya olağanüstü hallerde ise milletlerarası hukuktan doğan yükümlülükler ihlal edilmemek kaydıyla, durumun gerektirdiği ölçüde temel hak ve hürriyetlerin kullanılması kısmen veya tamamen durdurulabilir. Yabancıların temel hak ve hürriyetleri ise, milletlerarası hukuka uygun olarak kanunla sınırlandırılabilir.\n\nBÖLÜM 2 - HUKUKİ DAYANAKLAR\n- T.C. Anayasası Madde 13\n- T.C. Anayasası Madde 15\n- T.C. Anayasası Madde 16",
+      "expected_answer": "BÖLÜM 1 - AÇIKLAMA\nTemel hak ve hürriyetler keyfi olarak kısıtlanamaz. Bir sınırlandırma yapılabilmesi için öncelikle bunun ilgili kanununda açıkça belirtilen sebeplere dayanması gerekir.  Ancak kanuni bir dayanak olsa bile, getirilen sınırlama hakkın özüne dokunmamalıdır.  Ayrıca yapılan müdahale Anayasa'nın ruhuna, demokratik toplum düzeninin gereklerine, laik Cumhuriyet ilkelerine ve ölçülülük ilkesine uygun olmak zorundadır.\n\nBÖLÜM 2 - HUKUKİ DAYANAKLAR\n- T.C. Anayasası Madde 13",
+      "total_latency_ms": 2151.127815246582,
+      "passed": true,
+      "final_score": 0.877153363161087,
+      "failure_reasons": [],
+      "judge_scores": {
+        "relevance": 0.9,
+        "faithfulness": 0.8,
+        "correctness": 0.9,
+        "completeness": 0.8,
+        "overall": 0.86
+      },
+      "judge_reasoning": "Cevap soruya odaklı ve hukuki doğruluk yüksek. Ancak context dışı bilgi ve önerilen unsurların tamamının cevapta yer almaması puanı düşürdü.",
+      "strengths": [
+        "Hukuki terimlerin doğru kullanımı",
+        "Anayasa maddelerine referans verme"
+      ],
+      "weaknesses": [
+        "Context dışı bilgi bulunması",
+        "Önerilen unsurların tamamının cevapta geçmemesi"
+      ]
+    },
+    {
+      "question_id": 4,
+      "question": "Deneme süreli iş sözleşmesi ne kadardır?",
+      "category": "olgusal",
+      "difficulty": "kolay",
+      "source": "4857 Sayılı İş Kanunu",
+      "generated_answer": "BÖLÜM 1 - AÇIKLAMA\nDeneme süreli iş sözleşmesi, tarafların iş ilişkisini tanımaları ve değerlendirmeleri için belirli bir süre öngören bir sözleşme türüdür. Bu süre içinde hem işçi hem de işveren sözleşmeyi tazminatsız feshedebilir.\n\nBÖLÜM 2 - HUKUKİ DAYANAKLAR\n- 4857 Sayılı İş Kanunu Madde 15\n- 6098 Sayılı Türk Borçlar Kanunu Madde 433",
+      "expected_answer": "BÖLÜM 1 - AÇIKLAMA\nİş sözleşmelerine taraflarca deneme kaydı konulabilir. Bireysel iş sözleşmelerinde bu süre en çok iki ay olabilir. Ancak, sendikalı işyerlerinde toplu iş sözleşmeleri ile bu sürenin dört aya kadar uzatılması mümkündür.\n\nBÖLÜM 2 - HUKUKİ DAYANAKLAR\n- 4857 Sayılı İş Kanunu Madde 15",
+      "total_latency_ms": 1565.1581287384033,
+      "passed": true,
+      "final_score": 0.8830845206499098,
+      "failure_reasons": [],
+      "judge_scores": {
+        "relevance": 1.0,
+        "faithfulness": 0.8,
+        "correctness": 0.9,
+        "completeness": 0.8,
+        "overall": 0.85
+      },
+      "judge_reasoning": "Cevap soruya odaklı ve hukuki doğruluk yüksek olsa da bazı önerilen unsurlar eksik kalmış ve faithfulness puanı yüksek olsa da bazı bilgiler context dışından gelmiştir.",
+      "strengths": [
+        "Cevap soruya odaklı ve konuya uygun.",
+        "Hukuki terimler doğru ve uygun şekilde kullanılmış."
+      ],
+      "weaknesses": [
+        "Cevapta bazı önerilen unsurlar eksik kalmış.",
+        "Faithfulness puanı yüksek olsa da bazı bilgiler context dışından gelmiş."
+      ]
+    },
+    {
+      "question_id": 5,
+      "question": "Yıllık ücretli izin süresi nasıl hesaplanır?",
+      "category": "olgusal",
+      "difficulty": "orta",
+      "source": "4857 Sayılı İş Kanunu",
+      "generated_answer": "BÖLÜM 1 - AÇIKLAMA\nYıllık ücretli izin süresi, işçinin işyerindeki hizmet süresine göre belirlenir. Hizmet süresi arttıkça yıllık izin süresi de artar. İş sözleşmeleri ve toplu iş sözleşmeleri ile bu süreler artırılabilir.\n\nBÖLÜM 2 - HUKUKİ DAYANAKLAR\n- 4857 Sayılı İş Kanunu Madde 53",
+      "expected_answer": "BÖLÜM 1 - AÇIKLAMA\nYıllık ücretli izne hak kazanmak için en az 1 yıl çalışmış olmak gerekir.  İzin süreleri kıdeme göre şöyle belirlenir:  1 yıldan 5 yıla kadar (5 dahil) olanlara en az 14 gün, 5 yıldan fazla 15 yıldan az olanlara en az 20 gün, 15 yıl (dahil) ve daha fazla olanlara en az 26 gün izin verilir.  Yer altı işlerinde çalışanların izin süreleri 4'er gün artırılır.  Ayrıca 18 yaş ve altı ile 50 yaş ve üstü işçilerin izni 20 günden az olamaz.\n\nBÖLÜM 2 - HUKUKİ DAYANAKLAR\n- 4857 Sayılı İş Kanunu Madde 53",
+      "total_latency_ms": 1707.6382637023926,
+      "passed": false,
+      "final_score": 0.8219013215780258,
+      "failure_reasons": [
+        "Sayısal tutarsızlık (0.00)"
+      ],
+      "judge_scores": {
+        "relevance": 1.0,
+        "faithfulness": 0.8,
+        "correctness": 0.9,
+        "completeness": 0.8,
+        "overall": 0.85
+      },
+      "judge_reasoning": "Cevap soruya odaklı ve hukuki terimler doğru kullanılmış ancak kritik bilgilerin tam olmadığı yerler olduğu için eksiklikler bulunmaktadır.",
+      "strengths": [
+        "Cevap soruya odaklı ve konuya uygun.",
+        "Hukuki terimler doğru kullanılmış."
+      ],
+      "weaknesses": [
+        "Cevapta kritik bilgilerin tam olmadığı yerler var."
+      ]
+    },
+    {
+      "question_id": 6,
+      "question": "Fazla çalışma ve fazla sürelerle çalışma arasındaki fark nedir?",
+      "category": "karşılaştırma",
+      "difficulty": "orta",
+      "source": "4857 Sayılı İş Kanunu",
+      "generated_answer": "BÖLÜM 1 - AÇIKLAMA\nFazla çalışma, haftalık 45 saati aşan çalışmaları ifade ederken, fazla sürelerle çalışma ise haftalık çalışma süresinin sözleşmelerle 45 saatin altında belirlendiği durumlarda, bu süreyi aşan ve 45 saate kadar yapılan çalışmaları ifade eder. Her iki durumda da işçiye farklı oranlarda zamlı ücret ödenir veya serbest zaman kullandırılabilir.\n\nBÖLÜM 2 - HUKUKİ DAYANAKLAR\n- İş Kanunu Madde 41",
+      "expected_answer": "BÖLÜM 1 - AÇIKLAMA\nBu iki kavram, haftalık 45 saat sınırına göre ayrılır. 'Fazla çalışma', haftalık 45 saati aşan çalışmalardır ve saat başına ücreti %50 zamlı ödenir. 'Fazla sürelerle çalışma' ise, haftalık çalışma süresinin sözleşmeyle 45 saatin altında belirlendiği durumlarda, bu süreyi aşan ancak 45 saate kadar olan çalışmalardır; bunun saat başına ücreti ise %25 zamlı ödenir.\n\nBÖLÜM 2 - HUKUKİ DAYANAKLAR\n- 4857 Sayılı İş Kanunu Madde 41",
+      "total_latency_ms": 1650.8677005767822,
+      "passed": false,
+      "final_score": 0.8369821234464645,
+      "failure_reasons": [
+        "Sayısal tutarsızlık (0.00)"
+      ],
+      "judge_scores": {
+        "relevance": 1.0,
+        "faithfulness": 0.8,
+        "correctness": 0.9,
+        "completeness": 0.8,
+        "overall": 0.85
+      },
+      "judge_reasoning": "Cevap soruya odaklı ve konuya uygun olmasına rağmen bazı kritik bilgiler eksik kalmış ve referans cevapla tam anlamıyla örtüşmeyen detaylar bulunmaktadır. Bu nedenle overall puan 0.85 olarak belirlenmiştir.",
+      "strengths": [
+        "Cevap soruya odaklı ve konuya uygun.",
+        "Hukuki terimlerin doğru kullanımı."
+      ],
+      "weaknesses": [
+        "Bazı kritik bilgiler eksik.",
+        "Referans cevapla tam anlamıyla örtüşmeyen detaylar var."
+      ]
+    },
+    {
+      "question_id": 7,
+      "question": "İşverenin iş sözleşmesini haklı nedenle derhal fesih hakkı hangi durumlarda doğar?",
+      "category": "kavramsal",
+      "difficulty": "zor",
+      "source": "4857 Sayılı İş Kanunu",
+      "generated_answer": "BÖLÜM 1 - AÇIKLAMA\nİşverenin haklı nedenle derhal fesih hakkı, işçinin davranışları veya işyerindeki zorlayıcı sebepler gibi durumlarda ortaya çıkabilir. Bu hak, iş ilişkisinin dürüstlük kurallarına göre sürdürülmesinin beklenemeyeceği hallerde kullanılır. Ayrıca işverenin ödeme güçsüzlüğüne düşmesi durumunda da işçi sözleşmeyi feshedebilir.\n\nBÖLÜM 2 - HUKUKİ DAYANAKLAR\n- 4857 Sayılı İş Kanunu Madde 24\n- 6098 Sayılı Türk Borçlar Kanunu Madde 435\n- 6098 Sayılı Türk Borçlar Kanunu Madde 436",
+      "expected_answer": "BÖLÜM 1 - AÇIKLAMA\nİşveren, bazı ciddi durumlarda bildirim süresini beklemeden sözleşmeyi derhal feshedebilir. Bu durumlar kanunda; sağlık sebepleri (işçinin hastalığı, engelliliği veya devamsızlığı), ahlak ve iyi niyet kurallarına uymayan haller (işvereni yanıltma, hırsızlık, hakaret, görevini yapmamakta ısrar vb.) ve zorlayıcı sebepler (işyerinde işin durması vb.) olarak üç ana başlıkta toplanmıştır.\n\nBÖLÜM 2 - HUKUKİ DAYANAKLAR\n- 4857 Sayılı İş Kanunu Madde 25",
+      "total_latency_ms": 1862.6437187194824,
+      "passed": false,
+      "final_score": 0.8067342747354507,
+      "failure_reasons": [
+        "Yanlış/eksik atıf (0.00)"
+      ],
+      "judge_scores": {
+        "relevance": 0.9,
+        "faithfulness": 0.8,
+        "correctness": 0.9,
+        "completeness": 0.8,
+        "overall": 0.86
+      },
+      "judge_reasoning": "Cevap soruya odaklı ve hukuki doğruluk yüksek. Ancak bazı kritik bilgiler eksik kalmış, bu nedenle completeness puanı düşük.",
+      "strengths": [
+        "Hukuki terimlerin doğru kullanımı",
+        "Referans cevapla anlamsal örtüşme"
+      ],
+      "weaknesses": [
+        "Bazı kritik bilgilerin eksikliği"
+      ]
+    },
+    {
+      "question_id": 8,
+      "question": "Zamanaşımı süreleri Borçlar Kanunu'nda nasıl düzenlenmiştir?",
+      "category": "olgusal",
+      "difficulty": "orta",
+      "source": "6098 Sayılı Türk Borçlar Kanunu",
+      "generated_answer": "BÖLÜM 1 - AÇIKLAMA\nTürk Borçlar Kanunu, zamanaşımı sürelerinin başlangıcını, hesaplanmasını, durmasını ve kesilmesini düzenler. Zamanaşımı, alacağın muaccel olmasıyla başlar. Bazı alacaklar için özel zamanaşımı süreleri öngörülmüştür.\n\nBÖLÜM 2 - HUKUKİ DAYANAKLAR\n- Türk Borçlar Kanunu Madde 147\n- Türk Borçlar Kanunu Madde 149\n- Türk Borçlar Kanunu Madde 151\n- Türk Borçlar Kanunu Madde 153\n- Türk Borçlar Kanunu Madde 156",
+      "expected_answer": "BÖLÜM 1 - AÇIKLAMA\nBorçlar Kanunu'nda genel zamanaşımı süresi on yıldır. Ancak kira, faiz, ücret gibi dönemsel alacaklarda bu süre beş yıldır. Haksız fiilden kaynaklanan tazminat davalarında ise süre, zararın ve failin öğrenilmesinden itibaren iki yıl, her halükarda fiilin üzerinden on yıl geçmesiyle dolar.\n\nBÖLÜM 2 - HUKUKİ DAYANAKLAR\n- 6098 Sayılı Türk Borçlar Kanunu Madde 146-147, 72",
+      "total_latency_ms": 2068.4616565704346,
+      "passed": false,
+      "final_score": 0.8249433738017081,
+      "failure_reasons": [
+        "Yanlış/eksik atıf (0.00)"
+      ],
+      "judge_scores": {
+        "relevance": 1.0,
+        "faithfulness": 0.8,
+        "correctness": 0.9,
+        "completeness": 0.8,
+        "overall": 0.85
+      },
+      "judge_reasoning": "Cevap soruya odaklı ve hukuki doğruluk yüksek. Ancak bazı önerilen unsurlar cevapta eksik kalmış ve referans cevapla tam örtüşmemiş.",
+      "strengths": [
+        "Hukuki terimlerin doğru kullanımı",
+        "Kanun maddesi numaralarının doğru referanslanması"
+      ],
+      "weaknesses": [
+        "Bazı önerilen unsurların eksikliği",
+        "Referans cevapla tam örtüşmeme"
+      ]
+    },
+    {
+      "question_id": 9,
+      "question": "İş Kanunu'nun 250.  maddesi neyi düzenler?",
+      "category": "hallucination_test",
+      "difficulty": "orta",
+      "source": "out_of_scope_nonexistent",
+      "generated_answer": "BÖLÜM 1 - AÇIKLAMA\n4857 Sayılı İş Kanunu'nda 250. madde bulunmamaktadır. Bu nedenle, bu madde hakkında bir açıklama yapmak mümkün değildir.\n\nBÖLÜM 2 - HUKUKİ DAYANAKLAR\n- Bu konuda elimdeki yasal metinlerde yeterli bilgi bulunmamaktadır.",
+      "expected_answer": "BÖLÜM 1 - AÇIKLAMA\nBu konuda elimdeki yasal metinlerde yeterli bilgi bulunmamaktadır.\n\nBÖLÜM 2 - HUKUKİ DAYANAKLAR\n- (Böyle bir madde mevcut değildir)",
+      "total_latency_ms": 1507.1918964385986,
+      "passed": false,
+      "final_score": 0.42313927106857296,
+      "failure_reasons": [
+        "Context'e sadakatsiz (0.00)"
+      ],
+      "judge_scores": {
+        "relevance": 0.8,
+        "faithfulness": 0.0,
+        "correctness": 0.0,
+        "completeness": 0.0,
+        "overall": 0.26
+      },
+      "judge_reasoning": "Cevap soruyla ilgili bilgi vermiş ancak referans cevap olmadığından hukuki doğruluk ve kapsam eksikliği var. Faithfulness skoru 0 olduğundan dolayı overall skor düşük.",
+      "strengths": [
+        "Soruyla ilgili bilgi verilmiş"
+      ],
+      "weaknesses": [
+        "Referans cevap olmaması",
+        "Hukuki doğruluk ve kapsam eksikliği"
+      ]
+    },
+    {
+      "question_id": 10,
+      "question": "Yapay zeka işçinin yerini alırsa tazminat ödenir mi?",
+      "category": "edge_case",
+      "difficulty": "zor",
+      "source": "4857 Sayılı İş Kanunu",
+      "generated_answer": "BÖLÜM 1 - AÇIKLAMA\nVerilen bağlamda yapay zekanın işçinin yerini alması durumunda tazminat ödenip ödenmeyeceğine dair bir bilgi bulunmamaktadır. Bu nedenle bu konuda bir açıklama yapmak mümkün değildir.\n\nBÖLÜM 2 - HUKUKİ DAYANAKLAR\nBu konuda elimdeki yasal metinlerde yeterli bilgi bulunmamaktadır.",
+      "expected_answer": "BÖLÜM 1 - AÇIKLAMA\nYasal metinlerde \"yapay zeka\" ifadesi geçmese de, bu durum \"teknolojik nedenlerle işin gereklerinden kaynaklanan fesih\" kapsamında değerlendirilir. İşveren teknolojiyi yenilediği için işçiyi çıkarıyorsa, bu \"geçerli nedenle fesih\" sayılabilir. Bu durumda 1 yıldan fazla kıdemi olan işçiye kıdem tazminatı ve ihbar tazminatı ödenmesi zorunludur. İşveren önce işçiyi başka pozisyonda değerlendirmeyi denemelidir (feshin son çare olması ilkesi).\n\nBÖLÜM 2 - HUKUKİ DAYANAKLAR\n- 4857 Sayılı İş Kanunu Madde 18, 17, 120",
+      "total_latency_ms": 1497.9617595672607,
+      "passed": false,
+      "final_score": 0.681996685051918,
+      "failure_reasons": [
+        "Yanlış/eksik atıf (0.00)",
+        "Sayısal tutarsızlık (0.00)"
+      ],
+      "judge_scores": {
+        "relevance": 0.8,
+        "faithfulness": 1.0,
+        "correctness": 0.5,
+        "completeness": 0.7,
+        "overall": 0.76
+      },
+      "judge_reasoning": "Cevap soruya odaklı ve context'e sadık olmasına rağmen hukuki doğrulukta bazı eksiklikler ve kapsamda bilgi eksiklikleri bulunmaktadır. Bu nedenle puanlama sonucu 0.76 olarak belirlenmiştir.",
+      "strengths": [
+        "Cevap soruya odaklı ve context'e sadık.",
+        "Dış bilgi eklemesi yapılmamış."
+      ],
+      "weaknesses": [
+        "Hukuki doğrulukta eksiklik var.",
+        "Kapsamda bazı bilgiler eksik."
+      ]
+    }
+  ],
+  "by_difficulty": {
+    "kolay": {
+      "total": 3,
+      "passed": 3,
+      "avg_score": 0.9146417900093397,
+      "pass_rate": 1.0
+    },
+    "orta": {
+      "total": 5,
+      "passed": 1,
+      "avg_score": 0.7568238906111716,
+      "pass_rate": 0.2
+    },
+    "zor": {
+      "total": 2,
+      "passed": 0,
+      "avg_score": 0.7443654798936843,
+      "pass_rate": 0.0
+    }
+  },
+  "by_category": {
+    "olgusal": {
+      "total": 5,
+      "passed": 3,
+      "avg_score": 0.8781540130815506,
+      "pass_rate": 0.6
+    },
+    "kavramsal": {
+      "total": 2,
+      "passed": 1,
+      "avg_score": 0.8419438189482689,
+      "pass_rate": 0.5
+    },
+    "karşılaştırma": {
+      "total": 1,
+      "passed": 0,
+      "avg_score": 0.8369821234464645,
+      "pass_rate": 0.0
+    },
+    "hallucination_test": {
+      "total": 1,
+      "passed": 0,
+      "avg_score": 0.42313927106857296,
+      "pass_rate": 0.0
+    },
+    "edge_case": {
+      "total": 1,
+      "passed": 0,
+      "avg_score": 0.681996685051918,
+      "pass_rate": 0.0
+    }
+  },
+  "failure_reasons": {
+    "Sayısal tutarsızlık": 3,
+    "Yanlış Atıf": 3,
+    "Context Sadakatsizliği": 1
+  },
+  "chart_data": {
+    "triad": [
+      0.93,
+      0.76,
+      0.78,
+      0.73,
+      0.8
+    ],
+    "pass_fail": [
+      4,
+      6
+    ]
+  }
+};
+    </script>
+    
+    <script>
+        // ============================================================
+        // HELPER FUNCTIONS
+        // ============================================================
+        
+        function escapeHtml(text) {
+            if (!text) return '';
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
+        }
+        
+        function getScoreClass(score) {
+            if (score >= 0.8) return 'success';
+            if (score >= 0.6) return 'warning';
+            return 'danger';
+        }
+        
+        function getBarClass(score) {
+            if (score >= 0.85) return 'excellent';
+            if (score >= 0.7) return 'good';
+            if (score >= 0.5) return 'medium';
+            return 'poor';
+        }
+        
+        function getBadgeClass(score) {
+            if (score >= 0.7) return 'high';
+            if (score >= 0.5) return 'medium';
+            return 'low';
+        }
+        
+        function getRateClass(rate) {
+            if (rate >= 0.8) return 'high';
+            if (rate >= 0.6) return 'medium';
+            return 'low';
+        }
+        
+        // ============================================================
+        // RENDER FUNCTIONS
+        // ============================================================
+        
+        function renderMetricBars() {
+            const container = document.getElementById('metricBarsContainer');
+            const metrics = REPORT_DATA.metrics;
+            
+            let html = '';
+            metrics.forEach(m => {
+                const barClass = getBarClass(m.score);
+                html += `
+                    <div class="metric-bar">
+                        <div class="header">
+                            <span class="name">${m.name}</span>
+                            <span class="score">${m.score.toFixed(2)}</span>
+                        </div>
+                        <div class="bar-bg">
+                            <div class="bar-fill ${barClass}" style="width: ${m.score * 100}%"></div>
+                        </div>
+                    </div>
+                `;
+            });
+            container.innerHTML = html;
+        }
+        
+        function renderCategoryItems(containerId, data) {
+            const container = document.getElementById(containerId);
+            
+            if (!data || Object.keys(data).length === 0) {
+                container.innerHTML = '<p style="color: var(--text-secondary);">Veri yok</p>';
+                return;
+            }
+            
+            // Sort by pass_rate descending
+            const sorted = Object.entries(data).sort((a, b) => (b[1].pass_rate || 0) - (a[1].pass_rate || 0));
+            
+            let html = '';
+            sorted.forEach(([name, stats]) => {
+                const passRate = stats.pass_rate || 0;
+                const rateClass = getRateClass(passRate);
+                html += `
+                    <div class="category-item">
+                        <span class="name">${escapeHtml(name)}</span>
+                        <div class="stats">
+                            <span>${stats.passed || 0}/${stats.total || 0}</span>
+                            <span class="pass-rate ${rateClass}">${(passRate * 100).toFixed(0)}%</span>
+                        </div>
+                    </div>
+                `;
+            });
+            container.innerHTML = html;
+        }
+        
+        function renderFailureCards() {
+            const container = document.getElementById('failureCardsContainer');
+            const failures = REPORT_DATA.failure_reasons;
+            
+            if (!failures || Object.keys(failures).length === 0) {
+                container.innerHTML = '<p style="color: var(--accent-green);">🎉 Yaygın hata bulunamadı!</p>';
+                return;
+            }
+            
+            // Sort by count descending
+            const sorted = Object.entries(failures).sort((a, b) => b[1] - a[1]);
+            
+            let html = '';
+            sorted.forEach(([reason, count]) => {
+                html += `
+                    <div class="failure-card">
+                        <div class="reason">${escapeHtml(reason)}</div>
+                        <div class="count">${count}</div>
+                        <div class="label">kez tekrarlandı</div>
+                    </div>
+                `;
+            });
+            container.innerHTML = html;
+        }
+        
+        function renderQuestionCards() {
+            const container = document.getElementById('questionsContainer');
+            const questions = REPORT_DATA.questions;
+            
+            let html = '';
+            questions.forEach(r => {
+                const statusClass = r.passed ? '' : 'failed';
+                const statusText = r.passed ? 'BAŞARILI' : 'BAŞARISIZ';
+                const statusBadge = r.passed ? 'pass' : 'fail';
+                
+                // Score badges
+                let scoresHtml = '';
+                if (r.judge_scores) {
+                    const j = r.judge_scores;
+                    scoresHtml = `
+                        <div class="scores-row">
+                            <span class="score-badge ${getBadgeClass(j.relevance)}">İlgililik: ${j.relevance.toFixed(2)}</span>
+                            <span class="score-badge ${getBadgeClass(j.faithfulness)}">Sadakat: ${j.faithfulness.toFixed(2)}</span>
+                            <span class="score-badge ${getBadgeClass(j.correctness)}">Doğruluk: ${j.correctness.toFixed(2)}</span>
+                            <span class="score-badge ${getBadgeClass(j.completeness)}">Tamlık: ${j.completeness.toFixed(2)}</span>
+                            <span class="score-badge ${getBadgeClass(r.final_score)}">Final: ${r.final_score.toFixed(2)}</span>
+                        </div>
+                    `;
+                }
+                
+                // Strengths & Weaknesses
+                let swHtml = '';
+                if ((r.strengths && r.strengths.length > 0) || (r.weaknesses && r.weaknesses.length > 0)) {
+                    const strengthsList = r.strengths && r.strengths.length > 0 
+                        ? r.strengths.map(s => `<li>${escapeHtml(s)}</li>`).join('') 
+                        : '<li>-</li>';
+                    const weaknessesList = r.weaknesses && r.weaknesses.length > 0 
+                        ? r.weaknesses.map(w => `<li>${escapeHtml(w)}</li>`).join('') 
+                        : '<li>-</li>';
+                    swHtml = `
+                        <div class="sw-container">
+                            <div class="sw-box strengths">
+                                <div class="title">💪 Güçlü Yönler</div>
+                                <ul>${strengthsList}</ul>
+                            </div>
+                            <div class="sw-box weaknesses">
+                                <div class="title">⚠️ Zayıf Yönler</div>
+                                <ul>${weaknessesList}</ul>
+                            </div>
+                        </div>
+                    `;
+                }
+                
+                // Failure reasons
+                let failureHtml = '';
+                if (r.failure_reasons && r.failure_reasons.length > 0) {
+                    const reasons = r.failure_reasons.join(', ');
+                    failureHtml = `
+                        <div class="failure-reasons">
+                            <div class="title">❌ Başarısızlık Nedenleri</div>
+                            <div>${escapeHtml(reasons)}</div>
+                        </div>
+                    `;
+                }
+                
+                // Judge reasoning
+                let reasoningHtml = '';
+                if (r.judge_reasoning) {
+                    reasoningHtml = `
+                        <div class="judge-reasoning">
+                            ⚖️ <strong>Judge Değerlendirmesi:</strong> ${escapeHtml(r.judge_reasoning)}
+                        </div>
+                    `;
+                }
+                
+                // Truncate long answers
+                const genAnswer = r.generated_answer || '';
+                const expAnswer = r.expected_answer || '';
+                const genTruncated = genAnswer.length > 500 ? genAnswer.substring(0, 500) + '...' : genAnswer;
+                const expTruncated = expAnswer.length > 500 ? expAnswer.substring(0, 500) + '...' : expAnswer;
+                
+                html += `
+                    <div class="question-card ${statusClass}" data-passed="${r.passed}">
+                        <div class="question-header">
+                            <div>
+                                <span class="question-id">#${r.question_id}</span>
+                                <span style="margin-left: 10px; color: var(--text-secondary); font-size: 0.85rem;">
+                                    ${escapeHtml(r.difficulty)} | ${escapeHtml(r.category)} | ${r.total_latency_ms.toFixed(0)}ms
+                                </span>
+                            </div>
+                            <span class="question-status ${statusBadge}">${statusText}</span>
+                        </div>
+                        
+                        <div class="question-text">${escapeHtml(r.question)}</div>
+                        
+                        ${scoresHtml}
+                        
+                        <div class="collapsible" style="color: var(--accent-blue); cursor: pointer; margin: 10px 0;">
+                            🔍 Detayları Göster/Gizle
+                        </div>
+                        <div class="collapsible-content">
+                            <div class="answer-section">
+                                <div class="answer-box generated">
+                                    <div class="label">🤖 Model Cevabı</div>
+                                    <div>${escapeHtml(genTruncated)}</div>
+                                </div>
+                                <div class="answer-box expected">
+                                    <div class="label">✅ Beklenen Cevap</div>
+                                    <div>${escapeHtml(expTruncated)}</div>
+                                </div>
+                            </div>
+                            
+                            ${swHtml}
+                            ${reasoningHtml}
+                            ${failureHtml}
+                            
+                            <div style="margin-top: 10px; font-size: 0.85rem; color: var(--text-secondary);">
+                                📚 Kaynak: ${escapeHtml(r.source)}
+                            </div>
+                        </div>
+                    </div>
+                `;
+            });
+            
+            container.innerHTML = html;
+            
+            // Add collapsible event listeners
+            document.querySelectorAll('.collapsible').forEach(el => {
+                el.addEventListener('click', function() {
+                    const content = this.nextElementSibling;
+                    content.classList.toggle('show');
+                });
+            });
+        }
+        
+        // ============================================================
+        // CHARTS
+        // ============================================================
+        
+        function initCharts() {
+            // Triad Chart
+            const triadCtx = document.getElementById('triadChart').getContext('2d');
+            new Chart(triadCtx, {
+                type: 'radar',
+                data: {
+                    labels: ['İlgililik', 'Sadakat', 'Doğruluk', 'Tamlık', 'Genel'],
+                    datasets: [{
+                        label: 'Ortalama Skorlar',
+                        data: REPORT_DATA.chart_data.triad,
+                        backgroundColor: 'rgba(99, 102, 241, 0.15)',
+                        borderColor: 'rgba(99, 102, 241, 1)',
+                        borderWidth: 2,
+                        pointBackgroundColor: 'rgba(99, 102, 241, 1)',
+                        pointBorderColor: '#ffffff',
+                        pointBorderWidth: 2,
+                        pointRadius: 5
+                    }]
+                },
+                options: {
+                    scales: {
+                        r: {
+                            beginAtZero: true,
+                            max: 1,
+                            ticks: { 
+                                color: '#64748b',
+                                backdropColor: 'transparent',
+                                font: { size: 11 }
+                            },
+                            grid: { color: '#e2e8f0' },
+                            angleLines: { color: '#e2e8f0' },
+                            pointLabels: { 
+                                color: '#1e293b', 
+                                font: { size: 12, weight: '500' } 
+                            }
+                        }
+                    },
+                    plugins: {
+                        legend: { 
+                            labels: { 
+                                color: '#1e293b',
+                                font: { size: 12 },
+                                usePointStyle: true,
+                                padding: 20
+                            } 
+                        }
+                    }
+                }
+            });
+            
+            // Pass/Fail Chart
+            const pfCtx = document.getElementById('passFailChart').getContext('2d');
+            new Chart(pfCtx, {
+                type: 'doughnut',
+                data: {
+                    labels: ['Başarılı', 'Başarısız'],
+                    datasets: [{
+                        data: REPORT_DATA.chart_data.pass_fail,
+                        backgroundColor: ['#22c55e', '#ef4444'],
+                        borderWidth: 0,
+                        hoverOffset: 8
+                    }]
+                },
+                options: {
+                    cutout: '65%',
+                    plugins: {
+                        legend: {
+                            position: 'bottom',
+                            labels: { 
+                                color: '#1e293b', 
+                                padding: 24,
+                                font: { size: 12, weight: '500' },
+                                usePointStyle: true,
+                                pointStyle: 'circle'
+                            }
+                        }
+                    }
+                }
+            });
+        }
+        
+        // ============================================================
+        // FILTER
+        // ============================================================
+        
+        function filterQuestions(filter) {
+            const cards = document.querySelectorAll('.question-card');
+            const buttons = document.querySelectorAll('.filter-btn');
+            
+            buttons.forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+            
+            cards.forEach(card => {
+                const passed = card.dataset.passed === 'true';
+                if (filter === 'all') {
+                    card.style.display = 'block';
+                } else if (filter === 'passed') {
+                    card.style.display = passed ? 'block' : 'none';
+                } else if (filter === 'failed') {
+                    card.style.display = passed ? 'none' : 'block';
+                }
+            });
+        }
+        
+        // ============================================================
+        // INITIALIZE
+        // ============================================================
+        
+        document.addEventListener('DOMContentLoaded', function() {
+            renderMetricBars();
+            renderCategoryItems('difficultyContainer', REPORT_DATA.by_difficulty);
+            renderCategoryItems('categoryContainer', REPORT_DATA.by_category);
+            renderFailureCards();
+            renderQuestionCards();
+            initCharts();
+        });
+    </script>
+</body>
+</html>

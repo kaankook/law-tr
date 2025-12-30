@@ -1,0 +1,11 @@
+ID,Question,Category,Difficulty,Source,Final Score,Passed,Relevance,Faithfulness,Correctness,Completeness,Semantic Sim,Keyword Cov,Latency (ms),Failure Reasons
+1,Türkiye Cumhuriyeti hangi niteliklere sahip bir devlettir?,olgusal,kolay,T.C. Anayasası,0.886,Yes,0.90,0.80,0.90,0.80,0.92,0.91,3964,
+2,Cumhurbaşkanının görev süresi ne kadardır?,olgusal,kolay,T.C. Anayasası,0.975,Yes,1.00,1.00,1.00,1.00,0.93,0.75,1461,
+3,Temel hak ve hürriyetler hangi durumlarda sınırlandırılabilir?,kavramsal,orta,T.C. Anayasası,0.877,Yes,0.90,0.80,0.90,0.80,0.90,0.71,2151,
+4,Deneme süreli iş sözleşmesi ne kadardır?,olgusal,kolay,4857 Sayılı İş Kanunu,0.883,Yes,1.00,0.80,0.90,0.80,0.88,0.51,1565,
+5,Yıllık ücretli izin süresi nasıl hesaplanır?,olgusal,orta,4857 Sayılı İş Kanunu,0.822,No,1.00,0.80,0.90,0.80,0.91,0.50,1708,Sayısal tutarsızlık (0.00)
+6,Fazla çalışma ve fazla sürelerle çalışma arasındaki fark nedir?,karşılaştırma,orta,4857 Sayılı İş Kanunu,0.837,No,1.00,0.80,0.90,0.80,0.92,0.66,1651,Sayısal tutarsızlık (0.00)
+7,İşverenin iş sözleşmesini haklı nedenle derhal fesih hakkı hangi durumlarda doğar?,kavramsal,zor,4857 Sayılı İş Kanunu,0.807,No,0.90,0.80,0.90,0.80,0.91,0.55,1863,Yanlış/eksik atıf (0.00)
+8,Zamanaşımı süreleri Borçlar Kanunu'nda nasıl düzenlenmiştir?,olgusal,orta,6098 Sayılı Türk Borçlar Kanun,0.825,No,1.00,0.80,0.90,0.80,0.89,0.60,2068,Yanlış/eksik atıf (0.00)
+9,İş Kanunu'nun 250.  maddesi neyi düzenler?,hallucination_test,orta,out_of_scope_nonexistent,0.423,No,0.80,0.00,0.00,0.00,0.90,1.00,1507,Context'e sadakatsiz (0.00)
+10,Yapay zeka işçinin yerini alırsa tazminat ödenir mi?,edge_case,zor,4857 Sayılı İş Kanunu,0.682,No,0.80,1.00,0.50,0.70,0.90,0.50,1498,Yanlış/eksik atıf (0.00); Sayısal tutarsızlık (0.00)

@@ -160,7 +160,7 @@
           "ölçülülük",
           "demokratik toplum"
         ],
-        "source_quote": "Temel hak ve hürriyetler, özlerine dokunulmaksızın yalnızca Anayasanın ilgili maddelerinde belirtilen sebeplere bağlı olarak ve ancak kanunla sınırlanabilir."
+        "source_quote": "Temel hak ve hürriyetler, özlerine dokunulmaksızın yalnızca Anayasanın ilgili maddelerinde belirtilen sebeplere bağlı olarak ve ancak kanunla sınırlanabilir. Bu sınırlamalar, Anayasanın sözüne ve ruhuna, demokratik toplum düzeninin ve lâik Cumhuriyetin gereklerine ve ölçülülük ilkesine aykırı olamaz."
       },
       "alternative_correct_answers": [
         "Yalnızca Anayasada belirtilen sebeplerle ve kanunla sınırlandırılabilir.",
@@ -238,7 +238,7 @@
           "5-15 yıl",
           "15+ yıl"
         ],
-        "source_quote":  "Yıllık ücretli izin süresi, hizmet süresi...  bir yıldan beş yıla kadar (beş yıl dahil) olanlara ondört günden...  az olamaz."
+        "source_quote":  "İşçilere verilecek yıllık ücretli izin süresi, hizmet süresi; a) Bir yıldan beş yıla kadar (beş yıl dahil) olanlara ondört günden, b) Beş yıldan fazla onbeş yıldan az olanlara yirmi günden, c) Onbeş yıl (dahil) ve daha fazla olanlara yirmialtı günden, Az olamaz. Yer altı işlerinde çalışan işçilerin yıllık ücretli izin süreleri dörder gün arttırılarak uygulanır. Ancak onsekiz ve daha küçük yaştaki işçilerle elli ve daha yukarı yaştaki işçilere verilecek yıllık ücretli izin süresi yirmi günden az olamaz."
       },
       "alternative_correct_answers": [
         "1-5 yıl:  14 gün, 5-15 yıl: 20 gün, 15 yıl üzeri:  26 gün.",
@@ -278,7 +278,7 @@
           "%25",
           "45 saat"
         ],
-        "source_quote": "Her bir saat fazla çalışma için verilecek ücret normal çalışma ücretinin saat başına düşen miktarının yüzde elli yükseltilmesi suretiyle ödenir."
+        "source_quote": "Her bir saat fazla çalışma için verilecek ücret normal çalışma ücretinin saat başına düşen miktarının yüzde elli yükseltilmesi suretiyle ödenir. Haftalık çalışma süresinin sözleşmelerle kırkbeş saatin altında belirlendiği durumlarda... bu süreyi aşan ve kırkbeş saate kadar yapılan çalışmalar fazla sürelerle çalışmadır. ... Her bir saat fazla sürelerle çalışma için verilecek ücret normal çalışma ücretinin saat başına düşen miktarının yüzde yirmibeş yükseltilmesi suretiyle ödenir."
       },
       "alternative_correct_answers": [
         "Fazla çalışma 45 saati aşar ve %50 zamlı, fazla sürelerle çalışma 45 saate kadar olup %25 zamlıdır.",
@@ -318,7 +318,7 @@
           "devamsızlık",
           "zorlayıcı sebep"
         ],
-        "source_quote": "Süresi belirli olsun veya olmasın işveren, aşağıda yazılı hallerde iş sözleşmesini sürenin bitiminden önce veya bildirim süresini beklemeksizin feshedebilir..."
+        "source_quote": "Süresi belirli olsun veya olmasın işveren, aşağıda yazılı hallerde iş sözleşmesini sürenin bitiminden önce veya bildirim süresini beklemesizin feshedebilir: I- Sağlık sebepleri II- Ahlak ve iyi niyet kurallarına uymayan haller ve benzerleri III- Zorlayıcı sebepler IV- İşçinin gözaltına alınması veya tutuklanması halinde devamsızlığın bildirim süresini aşması."
       },
       "alternative_correct_answers": [
         "Sağlık nedenleri, ahlaka aykırı davranışlar veya zorlayıcı sebepler halinde.",
@@ -356,7 +356,7 @@
           "2 yıl",
           "haksız fiil"
         ],
-        "source_quote":  "Kanunda aksine bir hüküm bulunmadıkça, her alacak on yıllık zamanaşımına tabidir."
+        "source_quote":  "Kanunda aksine bir hüküm bulunmadıkça, her alacak on yıllık zamanaşımına tabidir. (Md. 146) Aşağıdaki alacaklar için beş yıllık zamanaşımı uygulanır: 1. Kira bedelleri, anapara faizleri ve ücret gibi diğer dönemsel edimler... (Md. 147) Tazminat istemi, zarar görenin zararı ve tazminat yükümlüsünü öğrendiği tarihten başlayarak iki yılın ve her hâlde fiilin işlendiği tarihten başlayarak on yılın geçmesiyle zamanaşımına uğrar. (Md. 72)"
       },
       "alternative_correct_answers": [
         "Genel zamanaşımı 10 yıl, dönemsel edimler 5 yıl, haksız fiil 2 yıldır.",
@@ -409,33 +409,37 @@
       "id": 10,
       "question": "Yapay zeka işçinin yerini alırsa tazminat ödenir mi?",
       "answer": {
-        "main_answer": "BÖLÜM 1 - AÇIKLAMA\nYasal metinlerde \"yapay zeka\" ifadesi geçmese de, bu durum \"teknolojik nedenlerle işin gereklerinden kaynaklanan fesih\" kapsamında değerlendirilir. İşveren teknolojiyi yenilediği için işçiyi çıkarıyorsa, bu \"geçerli nedenle fesih\" sayılabilir. Bu durumda 1 yıldan fazla kıdemi olan işçiye kıdem tazminatı ve ihbar tazminatı ödenmesi zorunludur.  İşveren önce işçiyi başka pozisyonda değerlendirmeyi denemelidir (feshin son çare olması ilkesi).\n\nBÖLÜM 2 - HUKUKİ DAYANAKLAR\n- 4857 Sayılı İş Kanunu Madde 18, 29, 120",
+        "main_answer": "BÖLÜM 1 - AÇIKLAMA\nYasal metinlerde \"yapay zeka\" ifadesi geçmese de, bu durum \"teknolojik nedenlerle işin gereklerinden kaynaklanan fesih\" kapsamında değerlendirilir. İşveren teknolojiyi yenilediği için işçiyi çıkarıyorsa, bu \"geçerli nedenle fesih\" sayılabilir. Bu durumda 1 yıldan fazla kıdemi olan işçiye kıdem tazminatı ve ihbar tazminatı ödenmesi zorunludur. İşveren önce işçiyi başka pozisyonda değerlendirmeyi denemelidir (feshin son çare olması ilkesi).\n\nBÖLÜM 2 - HUKUKİ DAYANAKLAR\n- 4857 Sayılı İş Kanunu Madde 18, 17, 120",
         "key_entities": [
           "teknolojik değişiklik",
           "geçerli fesih",
           "kıdem tazminatı",
           "ihbar",
-          "kaynaklarda yok"
+          "feshin son çare olması"
         ],
-        "source_quote": "Otuz veya daha fazla işçi çalıştıran işyerlerinde en az altı aylık kıdemi olan işçinin belirsiz süreli iş sözleşmesini fesheden işveren, işçinin yeterliliğinden veya davranışlarından ya da işletmenin, işyerinin veya işin gereklerinden kaynaklanan geçerli bir sebebe dayanmak zorundadır."
+        "source_quote": "Otuz veya daha fazla işçi çalıştıran işyerlerinde en az altı aylık kıdemi olan işçinin belirsiz süreli iş sözleşmesini fesheden işveren, işçinin yeterliliğinden veya davranışlarından ya da işletmenin, işyerinin veya işin gereklerinden kaynaklanan geçerli bir sebebe dayanmak zorundadır. İş sözleşmesi geçerli nedenle feshedilen işçiye, bildirim sürelerine uyulmaksızın işten çıkarılması halinde ihbar tazminatı ve en az bir yıllık kıdemi bulunması halinde kıdem tazminatı ödenir."
       },
       "alternative_correct_answers": [
         "Teknolojik nedenle fesihte kıdem ve ihbar tazminatı hakları geçerlidir.",
-        "Yapay zeka spesifik olarak düzenlenmemiş, genel fesih kuralları uygulanır."
+        "Yapay zeka spesifik olarak düzenlenmemiş olsa da, işin gereği olarak yapılan fesihte tazminat ödenir."
       ],
       "source": "4857 Sayılı İş Kanunu",
-      "source_details":  {
+      "source_details": {
         "document": "1.5.4857.docx",
-        "article": "Madde 18, 29, 120",
-        "section":  "İkinci Bölüm"
+        "article": "Madde 18, 17, 120",
+        "section": "İkinci Bölüm - İş Sözleşmesi"
       },
       "difficulty": "zor",
       "question_type": "edge_case",
-      "evaluation_criteria":  {
+      "evaluation_criteria": {
         "must_acknowledge_partial_coverage": true,
-        "must_include":  [
+        "must_include": [
           "kıdem tazminatı",
           "geçerli fesih"
+        ],
+        "should_include": [
+          "feshin son çare olması",
+          "başka pozisyon"
         ],
         "should_note_limitation": true
       },

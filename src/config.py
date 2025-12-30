@@ -25,7 +25,7 @@ COLLECTION_NAME = "turkish_law_collection"
 
 # MODEL AYARLARI
 # SambaNova ücretsiz modeller: Qwen3-32B, DeepSeek-R1-Distill-Llama-70B, Meta-Llama-3.3-70B-Instruct
-MODEL_NAME = "Qwen3-32B"  # SambaNova ücretsiz API
+MODEL_NAME = "gemini-2.0-flash"
 EVALUATOR_MODEL_NAME = "gpt-3.5-turbo"
 EMBEDDING_MODEL_NAME = "intfloat/multilingual-e5-large"
 

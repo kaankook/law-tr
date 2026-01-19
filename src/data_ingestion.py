@@ -229,13 +229,10 @@ def load_and_chunk_legislation(file_path: str) -> List[LangchainDocument]:
         re.compile(r'^\s*(?P<type>Ek\s+Madde|EK\s+MADDE)\s*(?P<no>\d+[a-zA-Z]*)\s*[-–—:]?\s*', re.IGNORECASE),
         re.compile(r'^\s*(?P<type>Geçici\s+Madde|GEÇİCİ\s+MADDE)\s*(?P<no>\d+[a-zA-Z]*)\s*[-–—:]?\s*', re.IGNORECASE),
     ]
-    
-    # GÜNCELLEME: Regex artık satırın geri kalanını da (başlık) yakalıyor (Group 3: .*)
     section_pattern = re.compile(
         r'^\s*((?:BİRİNCİ|İKİNCİ|ÜÇÜNCÜ|DÖRDÜNCÜ|BEŞİNCİ|ALTINCI|YEDİNCİ|SEKİZİNCİ|DOKUZUNCU|ONUNCU|ONBİRİNCİ|ONİKİNCİ|ONÜÇÜNCÜ|ONDÖRDÜNCÜ|ONBEŞİNCİ))\s+(KISIM|BÖLÜM|AYIRIM)(.*)',
         re.IGNORECASE
     )
-    
     roman_pattern = re.compile(r'^\s*([IVXLCDM]+)\.\s+(.+)', re.IGNORECASE)
 
     def save_current_buffer():

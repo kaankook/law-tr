@@ -32,11 +32,9 @@ EMBEDDING_MODEL_NAME = "intfloat/multilingual-e5-large"
 # TEXT SPLITTING PARAMETRELERİ
 CHUNK_SIZE = 1000
 CHUNK_OVERLAP = 200
-MIN_CHUNK_SIZE = 100
 
 # RETRIEVER AYARLARI
 RETRIEVER_K = 7 #3 - 7 - 12 test edilcek
-TIMEOUT_SECONDS = 30
 TEMPERATURE = 0
 
 # DATA INGESTION AYARLARI
@@ -98,37 +96,6 @@ SOURCE_FORMAT_MAPPING = {
         "short_name": "İş Mahkemeleri Kanunu",
         "law_number": "7036"
     }
-}
-
-SECTION_STANDARDIZATION = {
-    "BİRİNCİ KISIM": "Birinci Kısım - Genel Esaslar",
-    "İKİNCİ KISIM": "İkinci Kısım - Temel Haklar ve Ödevler",
-    "ÜÇÜNCÜ KISIM": "Üçüncü Kısım - Cumhuriyetin Temel Organları",
-    "DÖRDÜNCÜ KISIM": "Dördüncü Kısım - Mali ve Ekonomik Hükümler",
-    "BEŞİNCİ KISIM": "Beşinci Kısım - Çeşitli Hükümler",
-    "ALTINCI KISIM": "Altıncı Kısım - Geçici Hükümler",
-    "YEDİNCİ KISIM": "Yedinci Kısım - Son Hükümler",
-    "BİRİNCİ BÖLÜM": "Birinci Bölüm - Genel Hükümler",
-    "İKİNCİ BÖLÜM": "İkinci Bölüm - İş Sözleşmesi, Türleri ve Feshi",
-    "ÜÇÜNCÜ BÖLÜM": "Üçüncü Bölüm - Ücret",
-    "DÖRDÜNCÜ BÖLÜM": "Dördüncü Bölüm - İşin Düzenlenmesi",
-    "BEŞİNCİ BÖLÜM": "Beşinci Bölüm - İş Sağlığı ve Güvenliği",
-    "ALTINCI BÖLÜM": "Altıncı Bölüm - İş ve İşçi Bulma",
-    "YEDİNCİ BÖLÜM": "Yedinci Bölüm - Çalışma Hayatının Denetimi",
-    "SEKİZİNCİ BÖLÜM": "Sekizinci Bölüm - İdari Ceza Hükümleri",
-    "BİRİNCİ AYIRIM": "Birinci Ayırım - Borç İlişkisinin Kaynakları",
-    "İKİNCİ AYIRIM": "İkinci Ayırım - Borçların İfası ve İfa Edilmemesi",
-    "ÜÇÜNCÜ AYIRIM": "Üçüncü Ayırım - Borç İlişkilerinin Üçüncü Kişilere Etkisi",
-    "DÖRDÜNCÜ AYIRIM": "Dördüncü Ayırım - Borçların ve Borç İlişkilerinin Sona Ermesi",
-    "BEŞİNCİ AYIRIM": "Beşinci Ayırım - Zamanaşımı",
-    "ALTINCI AYIRIM": "Altıncı Ayırım - Hizmet Sözleşmesi",
-    "BİRİNCİ BÖLÜM AMAÇ VE TANIMLAR": "Birinci Bölüm - Amaç ve Tanımlar",
-    "İKİNCİ BÖLÜM KURULUŞ": "İkinci Bölüm - Kuruluş ve Organlar",
-    "ÜÇÜNCÜ BÖLÜM ÜYELİK": "Üçüncü Bölüm - Üyelik",
-    "DÖRDÜNCÜ BÖLÜM TOPLU İŞ SÖZLEŞMESİ": "Dördüncü Bölüm - Toplu İş Sözleşmesi",
-    "BEŞİNCİ BÖLÜM GREV VE LOKAVT": "Beşinci Bölüm - Grev ve Lokavt",
-    "BİRİNCİ BÖLÜM AMAÇ KAPSAM": "Birinci Bölüm - Amaç ve Kapsam",
-    "İKİNCİ BÖLÜM GÖREV VE YETKİ": "İkinci Bölüm - Görev ve Yetki",
 }
 
 LEGAL_TERM_WEIGHTS = {
@@ -289,13 +256,6 @@ STRENGTHS/WEAKNESSES:
 Bu analize dayanarak JSON formatındaki skorları, güçlü/zayıf yönleri ve gerekçeni oluştur.
 """
 
-
-OUT_OF_SCOPE_SOURCES = [
-    'out_of_scope_temporal', 'out_of_scope_topic', 'out_of_scope_nonexistent',
-    'out_of_scope_opinion', 'out_of_scope_future', 'mixed_source_correction',
-    'edge_case_ambiguous', 'edge_case_incomplete', 'edge_case_insufficient_info',
-    'edge_case_subjective'
-]
 
 # ============================================================================
 # TEST RUNNER AYARLARI

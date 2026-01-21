@@ -10,10 +10,8 @@ from langchain_chroma import Chroma
 from typing import List, Dict, Tuple, Optional
 from dotenv import load_dotenv
 
-# .env dosyasını yükle
 load_dotenv()
 
-# CONFIG'DEN MUTLAK YOLLARI VE AYARLARI ALIYORUZ
 from config import (
     SOURCE_MAPPING,
     CHUNK_SIZE,
@@ -31,22 +29,15 @@ from config import (
 )
 
 def clean_text(text: str) -> str:
-    """Metni temizler ve normalize eder."""
     text = re.sub(r'\s+', ' ', text)
     text = re.sub(r'-\s+', '', text)
     text = re.sub(r'[\u200b\u200c\u200d\ufeff]', '', text)
     return text.strip()
 
 def normalize_section_name(section: str, source_file: str) -> str:
-    """
-    Bölüm isimlerini temizler ve formatlar.
-    GÜNCELLEME: Global dictionary eşleşmesi kaldırıldı (Dynamic Extraction).
-    Artık dokümandaki gerçek başlık kullanılıyor.
-    """
     return clean_text(section).title()
 
 def format_article_reference(article_type: str, article_no: str) -> str:
-    """Madde referansını veri setiyle uyumlu formata dönüştürür."""
     article_type = article_type.strip().title()
     
     if "geçici" in article_type.lower():
@@ -57,7 +48,6 @@ def format_article_reference(article_type: str, article_no: str) -> str:
         return f"Madde {article_no}"
 
 def extract_keywords_weighted(text: str) -> Tuple[List[str], Dict[str, int]]:
-    """Metinden anahtar kelimeleri çıkarır ve ağırlıklarını hesaplar."""
     text_lower = text.lower()
     word_freq = {}
     
@@ -89,14 +79,12 @@ def extract_keywords_weighted(text: str) -> Tuple[List[str], Dict[str, int]]:
     return keywords, dict(sorted_words[:15])
 
 def create_chunk_id(source: str, article: str, chunk_index: int) -> str:
-    """Benzersiz chunk ID oluşturur."""
     safe_source = re.sub(r'[^\w]', '_', source)[:20]
     safe_article = re.sub(r'[^\w]', '_', article)
     return f"{safe_source}_{safe_article}_{chunk_index}"
 
 def split_large_text_smart(text: str, chunk_size: int = CHUNK_SIZE, 
                            chunk_overlap: int = CHUNK_OVERLAP) -> List[str]:
-    """Büyük metinleri akıllıca parçalar."""
     splitter = RecursiveCharacterTextSplitter(
         chunk_size=chunk_size,
         chunk_overlap=chunk_overlap,
@@ -141,7 +129,6 @@ def create_enriched_chunk(
     prev_chunk_id: Optional[str] = None,
     next_chunk_id: Optional[str] = None
 ) -> LangchainDocument:
-    """Veri setiyle uyumlu, zenginleştirilmiş chunk oluşturur."""
     keywords, keyword_weights = extract_keywords_weighted(content)
     keywords_str = ", ".join(keywords)
     
@@ -189,7 +176,6 @@ ANAHTAR KELİMELER: {keywords_str}
     return LangchainDocument(page_content=final_content, metadata=enriched_metadata)
 
 def load_and_chunk_legislation(file_path: str) -> List[LangchainDocument]:
-    """Mevzuat dosyasını yükler ve veri setiyle uyumlu chunk'lara ayırır."""
     if not os.path.exists(file_path):
         print(f"UYARI: Dosya bulunamadı -> {file_path}")
         return []
@@ -236,7 +222,6 @@ def load_and_chunk_legislation(file_path: str) -> List[LangchainDocument]:
     roman_pattern = re.compile(r'^\s*([IVXLCDM]+)\.\s+(.+)', re.IGNORECASE)
 
     def save_current_buffer():
-        """Mevcut buffer'ı chunk olarak kaydet."""
         nonlocal current_content, current_metadata, chunks
         
         if not current_content:
@@ -244,7 +229,6 @@ def load_and_chunk_legislation(file_path: str) -> List[LangchainDocument]:
 
         full_text = clean_text(" ".join(current_content))
         
-        # Minimum karakter kontrolü
         MIN_CHUNK_CHARS = 100
         if len(full_text) < MIN_CHUNK_CHARS:
             if "mülga" in full_text.lower():
@@ -299,13 +283,9 @@ def load_and_chunk_legislation(file_path: str) -> List[LangchainDocument]:
         section_match = section_pattern.match(text)
         if section_match:
             save_current_buffer()
-            # GÜNCELLEME: Bölüm başlığını dinamik olarak regex'ten alıyoruz
-            # Group 1: İKİNCİ, Group 2: BÖLÜM, Group 3: - YÜRÜTME
             part_num = section_match.group(1)
             part_type = section_match.group(2)
             part_name = section_match.group(3).strip()
-            
-            # Başındaki tire veya noktalama işaretlerini temizle (Örn: "- Yürütme" -> "Yürütme")
             part_name = re.sub(r'^[-–—:\s]+', '', part_name)
             
             if part_name:
@@ -313,7 +293,6 @@ def load_and_chunk_legislation(file_path: str) -> List[LangchainDocument]:
             else:
                 full_section_title = f"{part_num} {part_type}"
             
-            # Metadata'ya kaydet (Standartlaştırma sözlüğü KULLANMADAN)
             current_metadata["section"] = clean_text(full_section_title).title()
             current_metadata["subsection"] = ""
             continue
@@ -358,7 +337,6 @@ def load_and_chunk_legislation(file_path: str) -> List[LangchainDocument]:
     return chunks
 
 def load_all_documents(directory_path: str) -> List[LangchainDocument]:
-    """Tüm belgeleri yükler."""
     all_docs = []
     
     if not os.path.exists(directory_path):
@@ -389,7 +367,6 @@ def load_all_documents(directory_path: str) -> List[LangchainDocument]:
     return all_docs
 
 def create_vector_db(documents: List[LangchainDocument]):
-    """ChromaDB vektör veritabanı oluşturur."""
     print(f"\n{'='*60}")
     print(f"VEKTÖR VERİTABANI OLUŞTURULUYOR")
     print(f"{'='*60}")
@@ -436,7 +413,6 @@ def create_vector_db(documents: List[LangchainDocument]):
     print(f"{'='*60}")
 
 def generate_chunk_statistics(documents: List[LangchainDocument]) -> Dict:
-    """Chunk istatistiklerini oluşturur."""
     stats = {
         "total_chunks": len(documents),
         "by_source": {},
@@ -477,7 +453,6 @@ def generate_chunk_statistics(documents: List[LangchainDocument]) -> Dict:
 
 def validate_chunks_against_dataset(documents: List[LangchainDocument], 
                                      dataset_path: str) -> Dict:
-    """Chunk'ları veri setiyle karşılaştırır ve uyumluluk raporu oluşturur."""
     try:
         with open(dataset_path, 'r', encoding='utf-8') as f:
             dataset = json.load(f)
@@ -540,10 +515,6 @@ def validate_chunks_against_dataset(documents: List[LangchainDocument],
         "missing_articles": missing_articles,
         "coverage_rate": (len(dataset_articles) - len(missing_articles)) / len(dataset_articles) * 100 if dataset_articles else 0
     }
-
-# =============================================================================
-# ANA PROGRAM
-# =============================================================================
 
 if __name__ == "__main__": 
     os.makedirs(os.path.dirname(JSON_FILE_PATH), exist_ok=True)

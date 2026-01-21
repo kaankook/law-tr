@@ -2,17 +2,19 @@ import json
 import csv
 import time
 import re
+import statistics
+import numpy as np
 from datetime import datetime
 from typing import List, Dict, Any, Optional, Tuple
 from dataclasses import dataclass, field, asdict
 from pathlib import Path
 from collections import defaultdict
-import statistics
-import numpy as np
+
 from sentence_transformers import SentenceTransformer
 from langchain_core.prompts import ChatPromptTemplate
 from langchain_openai import ChatOpenAI
 from pydantic import BaseModel, Field
+
 from rag_pipeline import RAGPipeline, RAGResult
 from config import (
     MODEL_NAME,
@@ -32,11 +34,6 @@ from config import (
     MUST_SHOULD_WEIGHTS,
 )
 
-
-# ============================================================================
-# TEMPLATE YÜKLEME
-# ============================================================================
-
 def load_template(template_name: str) -> str:
     template_path = Path(TEMPLATES_DIR) / template_name
     if template_path.exists():
@@ -44,23 +41,14 @@ def load_template(template_name: str) -> str:
             return f.read()
     raise FileNotFoundError(f"Template bulunamadı: {template_path}")
 
-
 def load_css_styles() -> str:
-    """CSS stillerini yükle"""
     return load_template("report_styles.css")
 
-
 def load_html_template() -> str:
-    """HTML template'i yükle"""
     return load_template("report_template.html")
 
 
-# ============================================================================
-# JUDGE ŞEMALARI
-# ============================================================================
-
 class TriadJudgeOutput(BaseModel):
-    """LLM Judge'dan dönecek RAG Triad metrikleri"""
     relevance_score: float = Field(
         description="Cevabın sorulan soruyla ne kadar ilgili olduğu (0.0-1.0). "
                     "Soru ile cevap konusu uyuşmuyorsa düşük puan."
@@ -90,13 +78,8 @@ class TriadJudgeOutput(BaseModel):
     )
 
 
-# ============================================================================
-# METRİK SONUÇLARI
-# ============================================================================
-
 @dataclass
 class MetricResult:
-    """Tek bir metrik sonucu"""
     name: str
     score: float
     weight: float = 1.0
@@ -106,30 +89,12 @@ class MetricResult:
         return self.score * self.weight
 
 
-# ============================================================================
-# HİBRİT DEĞERLENDİRİCİ (Semantic + Exact Match)
-# ============================================================================
-
 class HeuristicEvaluator:
-    """
-    Hibrit Katmanlı Değerlendirici
-    
-    Katman 1: Anlamsal Benzerlik (Semantic Similarity) - Genel kavrayış için
-    Katman 2: Tam Eşleşme (Exact Match) - Kritik hukuki terimler için
-    
-    Bu yaklaşım:
-    - Eşanlamlı kelimeleri (synonyms) otomatik yakalar
-    - Cümle yapısı değişikliklerini tolere eder
-    - Kritik terimleri (sayılar, kanun isimleri) kesin kontrol eder
-    """
-    
-    # Singleton pattern - model bir kez yüklensin
     _embedding_model = None
     _model_name = "intfloat/multilingual-e5-large"
     
     @classmethod
     def get_embedding_model(cls) -> SentenceTransformer:
-        """Embedding modelini lazy load et (singleton)"""
         if cls._embedding_model is None:
             print(f"   📦 Semantic model yükleniyor: {cls._model_name}")
             cls._embedding_model = SentenceTransformer(cls._model_name)
@@ -138,37 +103,22 @@ class HeuristicEvaluator:
     
     @classmethod
     def compute_semantic_similarity(cls, text1: str, text2: str) -> float:
-        """
-        İki metin arasındaki anlamsal benzerliği hesapla (0.0 - 1.0)
-        
-        intfloat/multilingual-e5-large modeli için:
-        - Query prefix: "query: " 
-        - Passage prefix: "passage: "
-        """
         if not text1 or not text2:
             return 0.0
         
         model = cls.get_embedding_model()
         
-        # E5 modeli için prefix ekleme
         formatted_text1 = f"query: {text1}"
         formatted_text2 = f"passage: {text2}"
         
-        # Embedding hesapla
         embeddings = model.encode([formatted_text1, formatted_text2], normalize_embeddings=True)
         
-        # Cosine similarity (normalize edilmiş vektörler için dot product yeterli)
         similarity = np.dot(embeddings[0], embeddings[1])
         
-        # 0-1 aralığına clamp et
         return float(max(0.0, min(1.0, similarity)))
     
     @classmethod
     def exact_match_check(cls, text: str, keyword: str) -> bool:
-        """
-        Basit tam eşleşme kontrolü (case-insensitive)
-        Stemming YOK - direkt string içinde arama
-        """
         return keyword.lower() in text.lower()
     
     @classmethod
@@ -178,17 +128,7 @@ class HeuristicEvaluator:
         must_include: List[str], 
         should_include: List[str],
         expected_answer: str = ""
-    ) -> MetricResult:
-        """
-        HİBRİT Anahtar Kelime Değerlendirmesi
-        
-        Katman 1: must_include -> Exact Match (kesin eşleşme)
-        Katman 2: Genel cevap -> Semantic Similarity (anlamsal benzerlik)
-        
-        Final Skor = (Exact Match * 0.4) + (Semantic Similarity * 0.6)
-        """
-        
-        # Boş liste kontrolü
+    ) -> MetricResult:   
         if not must_include and not should_include and not expected_answer:
             return MetricResult(
                 name="keyword_coverage",
@@ -204,23 +144,16 @@ class HeuristicEvaluator:
                 }
             )
         
-        # ═══════════════════════════════════════════════════════════════════
-        # KATMAN 1: Exact Match (Kritik Terimler İçin)
-        # ═══════════════════════════════════════════════════════════════════
         must_found = sum(1 for kw in must_include if cls.exact_match_check(generated, kw))
         should_found = sum(1 for kw in should_include if cls.exact_match_check(generated, kw))
         
         must_score = must_found / len(must_include) if must_include else 1.0
         should_score = should_found / len(should_include) if should_include else 1.0
         
-        # Exact match skoru (config'den ağırlıklar)
         must_weight = MUST_SHOULD_WEIGHTS["must_weight"]
         should_weight = MUST_SHOULD_WEIGHTS["should_weight"]
         exact_match_score = (must_score * must_weight) + (should_score * should_weight)
-        
-        # ═══════════════════════════════════════════════════════════════════
-        # KATMAN 2: Semantic Similarity (Genel Kavrayış İçin)
-        # ═══════════════════════════════════════════════════════════════════
+
         all_keywords = (must_include or []) + (should_include or [])
         combined_keywords_text = " ".join(all_keywords)
         
@@ -228,10 +161,7 @@ class HeuristicEvaluator:
             semantic_score = cls.compute_semantic_similarity(generated, combined_keywords_text)
         else:
             semantic_score = 1.0
-        
-        # ═══════════════════════════════════════════════════════════════════
-        # HİBRİT SKOR HESAPLAMA (Config'den ağırlıklar)
-        # ═══════════════════════════════════════════════════════════════════
+
         exact_weight = HYBRID_KEYWORD_WEIGHTS["exact_match"]
         semantic_weight = HYBRID_KEYWORD_WEIGHTS["semantic"]
         final_score = (exact_match_score * exact_weight) + (semantic_score * semantic_weight)
@@ -258,15 +188,6 @@ class HeuristicEvaluator:
         expected: str,
         alternative_answers: List[str] = None
     ) -> MetricResult:
-        """
-        YENİ METRİK: Anlamsal Doğruluk
-        
-        Model cevabının beklenen cevaba anlamsal olarak ne kadar yakın olduğunu ölçer.
-        Bu metrik, LLM Judge'a ek olarak hızlı ve tutarlı bir değerlendirme sağlar.
-        
-        YENİ: alternative_correct_answers ile de karşılaştırma yapar,
-        en yüksek benzerlik skorunu döndürür.
-        """
         if not expected:
             return MetricResult(
                 name="semantic_correctness",
@@ -275,12 +196,10 @@ class HeuristicEvaluator:
                 details={"note": "No expected answer provided"}
             )
         
-        # Ana cevapla benzerlik
         main_similarity = cls.compute_semantic_similarity(generated, expected)
         best_similarity = main_similarity
         best_match = "main_answer"
-        
-        # Alternatif cevaplarla karşılaştır, en yüksek skoru al
+
         alternative_scores = {}
         if alternative_answers:
             for i, alt_answer in enumerate(alternative_answers):
@@ -306,7 +225,6 @@ class HeuristicEvaluator:
     
     @staticmethod
     def _interpret_similarity(score: float) -> str:
-        """Benzerlik skorunu yorumla"""
         if score >= 0.9:
             return "Çok yüksek benzerlik - neredeyse aynı"
         elif score >= 0.75:
@@ -324,21 +242,6 @@ class HeuristicEvaluator:
         context: str,
         source_quote: str
     ) -> MetricResult:
-        """
-        YENİ METRİK: Kaynak Alıntı Kontrolü
-        
-        Beklenen source_quote'un retrieve edilen context içinde
-        bulunup bulunmadığını kontrol eder. Bu, retrieval kalitesinin
-        ve faithfulness'ın ek bir göstergesidir.
-        
-        Args:
-            context: RAG tarafından getirilen tüm context metni (string veya list)
-            source_quote: Dataset'teki beklenen alıntı
-            
-        Returns:
-            MetricResult: Alıntı bulunma skoru (0.0-1.0)
-        """
-        # Context liste ise string'e çevir
         if isinstance(context, list):
             context = "\n".join(str(c) for c in context if c)
         
@@ -358,11 +261,9 @@ class HeuristicEvaluator:
                 details={"note": "Empty context", "quote_found": False}
             )
         
-        # Normalize metinler
         context_lower = context.lower().strip()
         quote_lower = source_quote.lower().strip()
         
-        # 1. Exact match kontrolü
         if quote_lower in context_lower:
             return MetricResult(
                 name="quote_presence",
@@ -375,8 +276,6 @@ class HeuristicEvaluator:
                 }
             )
         
-        # 2. Semantic similarity ile kontrol (kısmi eşleşme için)
-        # Quote'u context cümleleriyle karşılaştır
         import re
         context_sentences = re.split(r'[.!?\n]+', context)
         context_sentences = [s.strip() for s in context_sentences if len(s.strip()) > 20]
@@ -440,14 +339,12 @@ class HeuristicEvaluator:
             return [n.lower() for n in numbers]
         
         expected_numbers = extract_article_numbers(expected_lower)
-        
-        # Tam metin eşleşmesi kontrolü
+
         exact_match = False
         partial_match = False
         number_match = False
         
         for art in retrieved_lower:
-            # 1. Tam eşleşme (expected_article tam olarak içinde mi?)
             if expected_lower in art:
                 exact_match = True
                 break
@@ -455,32 +352,29 @@ class HeuristicEvaluator:
             # 2. Madde numarası eşleşmesi (Madde 14 != Madde 114)
             if expected_numbers:
                 retrieved_numbers = extract_article_numbers(art)
-                # Tam sayı eşleşmesi (prefix/suffix olmadan)
                 for exp_num in expected_numbers:
                     for ret_num in retrieved_numbers:
-                        if exp_num == ret_num:  # Exact number match
+                        if exp_num == ret_num:
                             number_match = True
                             break
                     if number_match:
                         break
             
-            # 3. Kaynak ismi eşleşmesi (fuzzy)
+
             if expected_source:
                 source_lower = expected_source.lower()
-                # Kaynak ismi benzerliği (basit fuzzy)
                 source_words = set(source_lower.split())
                 art_words = set(art.split())
                 common_words = source_words & art_words
                 if len(common_words) >= len(source_words) * 0.5:
                     partial_match = True
         
-        # Skor belirleme
         if exact_match:
             score = 1.0
         elif number_match:
-            score = 0.9  # Madde numarası eşleşti
+            score = 0.9
         elif partial_match:
-            score = 0.5  # Sadece kaynak benzerliği
+            score = 0.5
         else:
             score = 0.0
         
@@ -501,10 +395,8 @@ class HeuristicEvaluator:
     
     @staticmethod
     def response_quality(generated: str, question_type: str = "unknown") -> MetricResult:
-        """Cevap kalitesi (uzunluk, yapı) - Soru tipine göre dinamik eşikler"""
         word_count = len(generated.split())
         
-        # Soru tipine göre ideal kelime aralıkları
         WORD_COUNT_RANGES = {
             "factual": {"min": 15, "ideal_min": 30, "ideal_max": 150, "max": 300},
             "procedural": {"min": 40, "ideal_min": 80, "ideal_max": 400, "max": 600},
@@ -516,7 +408,6 @@ class HeuristicEvaluator:
         
         ranges = WORD_COUNT_RANGES.get(question_type.lower(), WORD_COUNT_RANGES["unknown"])
         
-        # Dinamik uzunluk skoru
         if word_count < ranges["min"]:
             length_score = 0.3  # Çok kısa
         elif word_count < ranges["ideal_min"]:
@@ -536,7 +427,6 @@ class HeuristicEvaluator:
         structure_markers = ["1.", "2.", "-", "•", ": ", "\n-", "\n1.", "a)", "b)"]
         has_structure = any(marker in generated for marker in structure_markers)
         
-        # Procedural sorular için yapı daha önemli
         if question_type.lower() in ["procedural", "comparative"]:
             structure_weight = 0.5
         else:
@@ -585,7 +475,6 @@ class HeuristicEvaluator:
                 details={"note": "No expected answer provided"}
             )
         
-        # Sayısal değerleri çıkar (para, yüzde, gün, yıl vb.)
         def extract_numbers(text: str) -> Dict[str, List[str]]:
             patterns = {
                 "money": r'(\d{1,3}(?:\.\d{3})*(?:,\d{2})?\s*(?:TL|lira|kuruş))',
@@ -606,7 +495,6 @@ class HeuristicEvaluator:
         expected_numbers = extract_numbers(expected)
         generated_numbers = extract_numbers(generated)
         
-        # Kritik sayısal tutarlılık kontrolü
         inconsistencies = []
         matches = 0
         total_checks = 0
@@ -641,7 +529,6 @@ class HeuristicEvaluator:
                 if not found and exp_val:
                     inconsistencies.append(f"{category}: expected '{exp_val}'")
         
-        # Skor hesapla
         if total_checks == 0:
             score = 1.0  # Karşılaştırılacak sayısal değer yok
         else:
@@ -665,7 +552,6 @@ class HeuristicEvaluator:
     
     @staticmethod
     def latency_score(latency_ms: float, threshold_ms: float = LATENCY_THRESHOLD_MS) -> MetricResult:
-        """Yanıt süresi değerlendirmesi"""
         if latency_ms <= threshold_ms * 0.5:
             score = 1.0
         elif latency_ms <= threshold_ms:
@@ -683,13 +569,7 @@ class HeuristicEvaluator:
         )
 
 
-# ============================================================================
-# RAG JUDGE
-# ============================================================================
-
 class RAGJudge:
-    """LLM-as-a-Judge değerlendiricisi"""
-    
     def __init__(self, model_name: str = EVALUATOR_MODEL_NAME):
         self.llm = ChatOpenAI(
             model=model_name,
@@ -710,7 +590,6 @@ class RAGJudge:
         should_include: List[str] = None,
         source: str = ""
     ) -> TriadJudgeOutput:
-        """Cevabı değerlendir"""
         try:
             start = time.time()
             
@@ -746,16 +625,12 @@ class RAGJudge:
             )
 
 
-# ============================================================================
-# VERİ YAPILARI
-# ============================================================================
-
 @dataclass
 class EvaluationResult:
     """Tek bir soru için değerlendirme sonucu"""
     question_id: int
     question: str
-    category: str  # question_type
+    category: str
     difficulty: str
     source: str
     
@@ -853,24 +728,18 @@ class TestSummary:
 
 @dataclass
 class TestConfig:
-    """Test konfigürasyonu"""
+    """Test yapılandırma ayarları"""
     dataset_path: str = DATASET_PATH
     model_name: str = MODEL_NAME
     evaluator_model: str = EVALUATOR_MODEL_NAME
     retriever_k: int = RETRIEVER_K
-    
-    # Config'den yüklenen default değerler
     delay_between_questions: float = TEST_CONFIG_DEFAULTS["delay_between_questions"]
     output_dir: str = TEST_CONFIG_DEFAULTS["output_dir"]
     run_name: Optional[str] = None
-    
-    # Eşik değerleri - config'den yükleniyor
     pass_threshold: float = TEST_THRESHOLDS["pass_threshold"]
     relevance_threshold: float = TEST_THRESHOLDS["relevance_threshold"]
     faithfulness_threshold: float = TEST_THRESHOLDS["faithfulness_threshold"]
     citation_threshold: float = TEST_THRESHOLDS["citation_threshold"]
-    
-    # Özellikler
     save_contexts: bool = TEST_CONFIG_DEFAULTS["save_contexts"]
     verbose: bool = TEST_CONFIG_DEFAULTS["verbose"]
     
@@ -879,10 +748,6 @@ class TestConfig:
             timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
             self.run_name = f"test_results_{timestamp}"
 
-
-# ============================================================================
-# HTML RAPOR OLUŞTURUCU
-# ============================================================================
 
 class HTMLReportGenerator:
     """HTML rapor oluşturma işlemlerini yönetir - Temiz Mimari"""
@@ -1119,8 +984,6 @@ class RAGTestRunner:
         rag_result: RAGResult
     ) -> EvaluationResult:
         """Tek bir soruyu değerlendir"""
-        
-        # Veri çıkarımı
         q_id = question_data.get('id', 0)
         question = question_data.get('question', '')
         category = question_data.get('question_type', 'unknown')
@@ -1140,59 +1003,46 @@ class RAGTestRunner:
             should_include = question_data.get('evaluation_criteria', {}).get('should_include', [])
             source_quote = answer_data.get('source_quote', '')
         
-        # YENİ: Alternatif doğru cevaplar
         alternative_answers = question_data.get('alternative_correct_answers', [])
-        
         source_details = question_data.get('source_details', {})
         expected_article = source_details.get('article', '')
-        
-        # Retrieval bilgileri
         retrieved_articles = [m.get('article', '') for m in rag_result.retrieval.metadata_list]
         
-        # 1. Heuristic Metrikler
         heuristic_metrics = []
         
-        # Keyword coverage (HİBRİT: Semantic + Exact Match)
         kw_metric = self.heuristic.keyword_coverage(
             rag_result.answer, must_include, should_include, 
-            expected_answer=expected_answer  # Semantic similarity için
+            expected_answer=expected_answer
         )
         heuristic_metrics.append(kw_metric)
         
-        # YENİ: Semantic Correctness (Anlamsal Doğruluk) - Alternatif cevaplarla
         semantic_metric = self.heuristic.semantic_correctness(
             rag_result.answer, expected_answer,
-            alternative_answers=alternative_answers  # YENİ: Alternatif cevaplar
+            alternative_answers=alternative_answers
         )
         heuristic_metrics.append(semantic_metric)
         
-        # YENİ: Quote Presence (Kaynak Alıntı Kontrolü)
         quote_metric = self.heuristic.quote_presence(
             rag_result.retrieval.contexts, source_quote
         )
         heuristic_metrics.append(quote_metric)
         
-        # Citation accuracy (fuzzy matching ile)
         cit_metric = self.heuristic.citation_accuracy(
             retrieved_articles, expected_article, source
         )
         heuristic_metrics.append(cit_metric)
         
-        # Response quality (soru tipine göre dinamik eşikler)
         qual_metric = self.heuristic.response_quality(rag_result.answer, question_type=category)
         heuristic_metrics.append(qual_metric)
         
-        # Answer consistency (sayısal değer tutarlılığı)
         consistency_metric = self.heuristic.answer_consistency(
             rag_result.answer, expected_answer, must_include
         )
         heuristic_metrics.append(consistency_metric)
         
-        # Latency
         lat_metric = self.heuristic.latency_score(rag_result.total_latency_ms)
         heuristic_metrics.append(lat_metric)
         
-        # 2. LLM Judge Değerlendirmesi
         judge_result = self.judge.evaluate(
             question=question,
             expected=expected_answer,
@@ -1203,7 +1053,6 @@ class RAGTestRunner:
             source=source
         )
         
-        # 3. Final Skor ve Pass/Fail Kararı
         final_score, passed, failure_reasons = self._calculate_final_result(
             heuristic_metrics, judge_result, source
         )
@@ -1237,36 +1086,30 @@ class RAGTestRunner:
         """Final skor ve pass/fail kararı - Hibrit Mimari ile güncellenmiş"""
         
         failure_reasons = []
-        
-        # Out of scope kontrolü
         is_out_of_scope = any(s in source.lower() for s in ['out_of_scope', 'edge_case'])
         
-        # Judge skorları
         rel = judge_result.relevance_score
         faith = judge_result.faithfulness_score
         corr = judge_result.correctness_score
         comp = judge_result.completeness_score
         
-        # Heuristic skorları
         cit_metric = next((m for m in heuristic_metrics if m.name == "citation_accuracy"), None)
         kw_metric = next((m for m in heuristic_metrics if m.name == "keyword_coverage"), None)
         qual_metric = next((m for m in heuristic_metrics if m.name == "response_quality"), None)
         consistency_metric = next((m for m in heuristic_metrics if m.name == "answer_consistency"), None)
         semantic_metric = next((m for m in heuristic_metrics if m.name == "semantic_correctness"), None)
-        quote_metric = next((m for m in heuristic_metrics if m.name == "quote_presence"), None)  # YENİ
+        quote_metric = next((m for m in heuristic_metrics if m.name == "quote_presence"), None)
         
         cit_score = cit_metric.score if cit_metric else 1.0
         kw_score = kw_metric.score if kw_metric else 1.0
         qual_score = qual_metric.score if qual_metric else 1.0
         consistency_score = consistency_metric.score if consistency_metric else 1.0
         semantic_score = semantic_metric.score if semantic_metric else 1.0
-        quote_score = quote_metric.score if quote_metric else 1.0  # YENİ
+        quote_score = quote_metric.score if quote_metric else 1.0
         
-        # Ağırlıklı final skor (config'den ağırlıklar alınıyor)
         judge_weight = SCORING_WEIGHTS["judge_weight"]
         heuristic_weight = SCORING_WEIGHTS["heuristic_weight"]
         
-        # Judge ortalaması (config'den ağırlıklar)
         judge_avg = (
             faith * JUDGE_SUBWEIGHTS["faithfulness"] +
             rel * JUDGE_SUBWEIGHTS["relevance"] +
@@ -1274,10 +1117,9 @@ class RAGTestRunner:
             comp * JUDGE_SUBWEIGHTS["completeness"]
         )
         
-        # Heuristic ortalaması (config'den ağırlıklar) - YENİ: quote_presence eklendi
         heuristic_avg = (
             semantic_score * HEURISTIC_SUBWEIGHTS["semantic_correctness"] +
-            quote_score * HEURISTIC_SUBWEIGHTS["quote_presence"] +  # YENİ
+            quote_score * HEURISTIC_SUBWEIGHTS["quote_presence"] +
             cit_score * HEURISTIC_SUBWEIGHTS["citation_accuracy"] +
             consistency_score * HEURISTIC_SUBWEIGHTS["answer_consistency"] +
             kw_score * HEURISTIC_SUBWEIGHTS["keyword_coverage"] +
@@ -1286,36 +1128,29 @@ class RAGTestRunner:
         
         final_score = (judge_avg * judge_weight) + (heuristic_avg * heuristic_weight)
         
-        # Pass/Fail Kararı (Strict Rules)
         passed = True
         
-        # Rule 1: Relevance çok düşükse FAIL
         if rel < self.config.relevance_threshold:
             passed = False
             failure_reasons.append(f"Düşük ilgililik ({rel:.2f})")
         
-        # Rule 2: Faithfulness çok düşükse FAIL (hallucination)
         if faith < self.config.faithfulness_threshold:
             passed = False
             failure_reasons.append(f"Context'e sadakatsiz ({faith:.2f})")
         
-        # Rule 3: Citation başarısızsa FAIL (hukuk için kritik)
         if cit_score < self.config.citation_threshold and not is_out_of_scope:
             passed = False
             failure_reasons.append(f"Yanlış/eksik atıf ({cit_score:.2f})")
         
-        # Rule 4: Sayısal tutarsızlık varsa FAIL (yanlış para/tarih/süre)
         if consistency_score < TEST_THRESHOLDS["consistency_threshold"] and not is_out_of_scope:
             passed = False
             if consistency_metric and consistency_metric.details.get("inconsistencies"):
                 failure_reasons.append(f"Sayısal tutarsızlık ({consistency_score:.2f})")
         
-        # Rule 5: Semantic benzerlik çok düşükse FAIL
         if semantic_score < TEST_THRESHOLDS["semantic_threshold"] and not is_out_of_scope:
             passed = False
             failure_reasons.append(f"Düşük anlamsal benzerlik ({semantic_score:.2f})")
         
-        # Rule 6: Genel skor çok düşükse FAIL
         if final_score < self.config.pass_threshold:
             passed = False
             if not failure_reasons:
@@ -1340,7 +1175,6 @@ class RAGTestRunner:
             question = q_data.get('question', '')
             q_id = q_data.get('id', i + 1)
             
-            # Progress
             progress = self._get_progress_bar(i + 1, len(questions))
             eta = self._get_eta()
             
@@ -1349,14 +1183,9 @@ class RAGTestRunner:
                 print(f"   Q{q_id}: {question[:55]}...")
             
             try:
-                # RAG çalıştır
                 rag_result = self.pipeline.query(question)
-                
-                # Değerlendir
                 eval_result = self.evaluate_single(q_data, rag_result)
                 self.results.append(eval_result)
-                
-                # Sonuç göster
                 if self.config.verbose:
                     status = "✅ PASS" if eval_result.passed else "❌ FAIL"
                     j = eval_result.judge_result
@@ -1383,7 +1212,6 @@ class RAGTestRunner:
                     failure_reasons=[f"Exception: {str(e)}"]
                 ))
             
-            # Rate limiting
             if i < len(questions) - 1:
                 time.sleep(self.config.delay_between_questions)
         

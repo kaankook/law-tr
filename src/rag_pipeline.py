@@ -1,9 +1,3 @@
-"""
-RAG Pipeline - Türk Hukuku Asistanı
-===================================
-Bu modül retrieval ve generation işlemlerini yönetir. 
-"""
-
 import os
 import time
 from typing import List, Dict, Any, Optional, Tuple
@@ -31,7 +25,6 @@ from config import (
 
 @dataclass
 class RetrievalResult:
-    """Retrieval sonuçlarını tutan veri sınıfı"""
     documents:  List[Document]
     scores: List[float] = field(default_factory=list)
     latency_ms: float = 0.0
@@ -47,7 +40,6 @@ class RetrievalResult:
 
 @dataclass
 class GenerationResult: 
-    """Generation sonuçlarını tutan veri sınıfı"""
     answer: str
     latency_ms: float = 0.0
     token_usage: Dict[str, int] = field(default_factory=dict)
@@ -56,7 +48,6 @@ class GenerationResult:
 
 @dataclass
 class RAGResult:
-    """Tam RAG pipeline sonucu"""
     question: str
     answer: str
     retrieval:  RetrievalResult
@@ -79,14 +70,6 @@ class RAGResult:
 
 
 class RAGPipeline:
-    """
-    Türk Hukuku RAG Pipeline
-    
-    Kullanım:
-        pipeline = RAGPipeline()
-        result = pipeline.query("Kıdem tazminatı şartları nelerdir?")
-    """
-    
     def __init__(
         self,
         model_name: Optional[str] = None,
@@ -109,7 +92,6 @@ class RAGPipeline:
         
     @property
     def embeddings(self) -> HuggingFaceEmbeddings:
-        """Embedding modelini lazy load et"""
         if self._embeddings is None:
             print(f"📦 Embedding modeli yükleniyor: {self. embedding_model_name}")
             self._embeddings = HuggingFaceEmbeddings(
@@ -121,7 +103,6 @@ class RAGPipeline:
     
     @property
     def vectorstore(self) -> Chroma:
-        """Vektör veritabanını lazy load et"""
         if self._vectorstore is None:
             print(f"📚 Vektör veritabanı yükleniyor:  {self.db_path}")
             self._vectorstore = Chroma(
@@ -133,14 +114,12 @@ class RAGPipeline:
     
     @property
     def llm(self):
-        """LLM'i lazy load et"""
         if self._llm is None:
             print(f"🤖 LLM yükleniyor: {self. model_name}")
             self._llm = self._create_llm(self.model_name)
         return self._llm
     
     def _create_llm(self, model_name: str):
-        """Model adına göre uygun LLM oluştur"""
         import os
         model_lower = model_name.lower()
         
@@ -184,7 +163,6 @@ class RAGPipeline:
                     base_url=qwen_base_url
                 )
             else:
-                # Ollama ile yerel kullanım
                 ollama_base_url = os.getenv("OLLAMA_BASE_URL", "http://localhost:11434")
                 return ChatOllama(
                     model=model_name,
@@ -192,7 +170,6 @@ class RAGPipeline:
                     base_url=ollama_base_url
                 )
         else:
-            # Varsayılan olarak Gemini kullan
             return ChatGoogleGenerativeAI(
                 model=model_name,
                 temperature=self.temperature,
@@ -207,21 +184,11 @@ class RAGPipeline:
         return self._prompt
     
     def retrieve(self, question: str, k: Optional[int] = None) -> RetrievalResult:
-        """
-        Soruya en uygun chunk'ları getir
-        
-        Args:
-            question:  Kullanıcı sorusu
-            k: Getirilecek chunk sayısı
-            
-        Returns:
-            RetrievalResult nesnesi
-        """
-        k = k or self.retriever_k
+
+        k = self.retriever_k
         
         start_time = time.time()
         
-        # Similarity search with scores
         results_with_scores = self.vectorstore.similarity_search_with_score(
             question, 
             k=k
@@ -239,34 +206,20 @@ class RAGPipeline:
         )
     
     def generate(self, question: str, context: str) -> GenerationResult:
-        """
-        Verilen context ile cevap üret
-        
-        Args:
-            question: Kullanıcı sorusu
-            context: Retrieval'dan gelen bağlam
-            
-        Returns:
-            GenerationResult nesnesi
-        """
         import re
         start_time = time.time()
         
-        # Chain oluştur
         chain = self.prompt | self.llm | StrOutputParser()
         
-        # Cevap üret
         answer = chain.invoke({
             "context": context,
             "question":  question
         })
         
-        # Qwen3 reasoning modellerinde <think>...</think> bloğunu temizle
         answer = re.sub(r'<think>.*?</think>\s*', '', answer, flags=re.DOTALL)
         
         latency_ms = (time. time() - start_time) * 1000
         
-        # Token kullanımı (eğer varsa)
         token_usage = {}
         if hasattr(self.llm, 'last_token_usage'):
             token_usage = self.llm. last_token_usage
@@ -279,16 +232,6 @@ class RAGPipeline:
         )
     
     def query(self, question: str, k: Optional[int] = None) -> RAGResult:
-        """
-        Tam RAG pipeline'ı çalıştır
-        
-        Args: 
-            question: Kullanıcı sorusu
-            k: Retrieval için chunk sayısı
-            
-        Returns:
-            RAGResult nesnesi
-        """
         total_start = time.time()
         
         # 1. Retrieval
@@ -317,18 +260,6 @@ class RAGPipeline:
         delay_seconds: float = 1.0,
         show_progress: bool = True
     ) -> List[RAGResult]: 
-        """
-        Birden fazla soruyu sırayla çalıştır
-        
-        Args:
-            questions:  Soru listesi
-            k: Retrieval için chunk sayısı
-            delay_seconds: Sorular arası bekleme (rate limit için)
-            show_progress: İlerleme göster
-            
-        Returns: 
-            RAGResult listesi
-        """
         results = []
         total = len(questions)
         
@@ -355,12 +286,6 @@ class RAGPipeline:
                 time.sleep(delay_seconds)
         
         return results
-    
-    def switch_model(self, new_model_name: str):
-        """Modeli değiştir"""
-        self. model_name = new_model_name
-        self._llm = None  # Lazy reload için sıfırla
-        print(f"🔄 Model değiştirildi: {new_model_name}")
 
 
 # Test için

@@ -35,7 +35,7 @@ CHUNK_OVERLAP = 200
 
 # RETRIEVER AYARLARI
 RETRIEVER_K = 7 #3 - 7 - 12 test edilcek
-TEMPERATURE = 0
+TEMPERATURE = 0 # hukuk asistanı için 0 olmalı
 
 # DATA INGESTION AYARLARI
 SOURCE_MAPPING = {
@@ -257,44 +257,26 @@ Bu analize dayanarak JSON formatındaki skorları, güçlü/zayıf yönleri ve g
 """
 
 
-# ============================================================================
-# TEST RUNNER AYARLARI
-# ============================================================================
 
-# Test Konfigürasyonu
 TEST_CONFIG_DEFAULTS = {
     "delay_between_questions": 2.0,  
     "output_dir": "reports",
     "save_contexts": True,
     "verbose": True,
 }
-
-# Latency Threshold (ms) - Gerçekçi RAG pipeline süresi
 LATENCY_THRESHOLD_MS = 8000
 
-# Template Dizini
+
 TEMPLATES_DIR = os.path.join(SRC_DIR, "templates")
 
-# ============================================================================
-# SCORING CONFIGURATION - Hibrit Değerlendirme Sistemi
-# ============================================================================
-"""
-Değerlendirme Mimarisi:
-    Final Score = (Judge Avg × judge_weight) + (Heuristic Avg × heuristic_weight)
-    
-    Judge Avg = Σ(judge_subweights × scores)
-    Heuristic Avg = Σ(heuristic_subweights × scores)
-    
-    Keyword Coverage = (exact_match × exact_weight) + (semantic × semantic_weight)
-"""
 
-# Ana Ağırlıklar: LLM Judge vs Heuristic
+# LLM Judge vs Heuristic
 SCORING_WEIGHTS = {
     "judge_weight": 0.70,      # LLM Judge kararı (%70)
     "heuristic_weight": 0.30,  # Matematiksel/Semantic hesaplamalar (%30)
 }
 
-# LLM Judge Alt Metrikleri Ağırlıkları (Toplam = 1.0)
+
 JUDGE_SUBWEIGHTS = {
     "faithfulness": 0.30,  # En kritik: Hallucination kontrolü
     "relevance": 0.25,     # Soruyla ilgililik
@@ -302,7 +284,7 @@ JUDGE_SUBWEIGHTS = {
     "completeness": 0.20,  # Cevap tamlığı
 }
 
-# Heuristic Alt Metrikleri Ağırlıkları (Toplam = 1.0)
+
 HEURISTIC_SUBWEIGHTS = {
     "semantic_correctness": 0.25,  # Anlamsal benzerlik (E5 model) - alternatif cevaplar dahil
     "quote_presence": 0.15,        # YENİ: Kaynak alıntı bulunma (retrieval kalitesi)
@@ -312,24 +294,18 @@ HEURISTIC_SUBWEIGHTS = {
     "response_quality": 0.10,      # Cevap kalitesi (uzunluk/yapı)
 }
 
-# Hibrit Keyword Coverage Ağırlıkları
 HYBRID_KEYWORD_WEIGHTS = {
     "exact_match": 0.40,   # Kritik terimler için tam eşleşme
     "semantic": 0.60,      # Genel anlam için semantic similarity
 }
 
-# Must/Should Include Ağırlıkları (Exact Match içinde)
 MUST_SHOULD_WEIGHTS = {
     "must_weight": 0.80,   # Zorunlu terimler daha önemli
     "should_weight": 0.20, # Önerilen terimler
 }
 
-# ============================================================================
-# PASS/FAIL EŞİK DEĞERLERİ
-# ============================================================================
-
 TEST_THRESHOLDS = {
-    # Genel geçer notu - Hukukta %70 altı risklidir
+    # Genel geçer notu
     "pass_threshold": 0.70,
     
     # LLM Judge eşikleri
@@ -341,12 +317,6 @@ TEST_THRESHOLDS = {
     "consistency_threshold": 0.50,    # Sayısal tutarlılık
     "semantic_threshold": 0.40,       # Minimum anlamsal benzerlik
 }
-
-# ============================================================================
-# METRİK AĞIRLIKLARI (MetricResult için weight değerleri)
-# ============================================================================
-# Bu değerler MetricResult.weight alanında kullanılır
-# Weighted_score hesaplamasında etkilidir
 
 METRIC_WEIGHTS = {
     "citation_weight": 2.0,          # Yanlış atıf cezası ağır

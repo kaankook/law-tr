@@ -311,7 +311,6 @@ class HeuristicEvaluator:
         expected_article: str,
         expected_source: str
     ) -> MetricResult:
-        """Doğru madde/kaynak getirildi mi? - Fuzzy matching ile geliştirilmiş"""
         import re
         
         if not expected_article:
@@ -533,7 +532,7 @@ class HeuristicEvaluator:
             score = 1.0  # Karşılaştırılacak sayısal değer yok
         else:
             score = matches / total_checks
-            # Kritik değerler yanlışsa ağır penalize
+            # Kritik değerler yanlışsa ağır ceza
             if len(inconsistencies) > 0:
                 score = min(score, 0.6)  # En fazla 0.6 olabilir
         
@@ -593,7 +592,7 @@ class RAGJudge:
         try:
             start = time.time()
             
-            context_text = "\n\n---\n\n".join(context) if context else "❌ Context bulunamadı/boş."
+            context_text = "\n\n---\n\n".join(context) if context else "Context bulunamadı/boş."
             
             chain = self.prompt | self.llm
             result = chain.invoke({

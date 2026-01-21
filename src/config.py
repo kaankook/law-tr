@@ -38,13 +38,13 @@ TEMPERATURE = 0 # hukuk asistanı için 0 olmalı
 
 # DATA INGESTION AYARLARI
 SOURCE_MAPPING = {
-    "1.5.1475.docx": "1475 Sayılı İş Kanunu",
+    "1.5.1475.docx": "1475 Sayılı İş Kanunu", #*
     "1.5.2709.docx": "2709 Sayılı T.C. Anayasası",
-    "1.5.3308.docx": "3308 Sayılı Mesleki Eğitim Kanunu",
-    "1.5.4447.docx": "4447 Sayılı İşsizlik Sigortası Kanunu",
+    "1.5.3308.docx": "3308 Sayılı Mesleki Eğitim Kanunu", #*
+    "1.5.4447.docx": "4447 Sayılı İşsizlik Sigortası Kanunu", #*
     "1.5.4857.docx": "4857 Sayılı İş Kanunu",
     "1.5.6098.docx": "6098 Sayılı Türk Borçlar Kanunu",
-    "1.5.6331.docx": "6331 Sayılı İş Sağlığı ve Güvenliği Kanunu",
+    "1.5.6331.docx": "6331 Sayılı İş Sağlığı ve Güvenliği Kanunu", #*
     "1.5.6356.docx": "6356 Sayılı Sendikalar ve Toplu İş Sözleşmesi Kanunu",
     "1.5.7036.docx": "7036 Sayılı İş Mahkemeleri Kanunu"
 }

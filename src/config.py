@@ -256,8 +256,6 @@ STRENGTHS/WEAKNESSES:
 Bu analize dayanarak JSON formatındaki skorları, güçlü/zayıf yönleri ve gerekçeni oluştur.
 """
 
-
-
 TEST_CONFIG_DEFAULTS = {
     "delay_between_questions": 2.0,  
     "output_dir": "reports",

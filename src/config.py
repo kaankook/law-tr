@@ -24,7 +24,6 @@ DATASET_PATH = os.path.join(DATA_DIR, "test_datasets", "bronze_dataset_final.jso
 COLLECTION_NAME = "turkish_law_collection"
 
 # MODEL AYARLARI
-# SambaNova ücretsiz modeller: Qwen3-32B, DeepSeek-R1-Distill-Llama-70B, Meta-Llama-3.3-70B-Instruct
 MODEL_NAME = "gemini-2.0-flash"
 EVALUATOR_MODEL_NAME = "gpt-3.5-turbo"
 EMBEDDING_MODEL_NAME = "intfloat/multilingual-e5-large"
@@ -34,7 +33,7 @@ CHUNK_SIZE = 1000
 CHUNK_OVERLAP = 200
 
 # RETRIEVER AYARLARI
-RETRIEVER_K = 7 #3 - 7 - 12 test edilcek
+RETRIEVER_K = 7 #5 - 9 - 13 test edilcek
 TEMPERATURE = 0 # hukuk asistanı için 0 olmalı
 
 # DATA INGESTION AYARLARI

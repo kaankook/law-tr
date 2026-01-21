@@ -34,7 +34,7 @@ CHUNK_OVERLAP = 200
 
 # RETRIEVER AYARLARI
 RETRIEVER_K = 7 #5 - 9 - 13 test edilcek
-TEMPERATURE = 0 # hukuk asistanı için 0 olmalı
+TEMPERATURE = 0 # modelin yaratıcılığı - hukuk asistanı için 0 olmalı
 
 # DATA INGESTION AYARLARI
 SOURCE_MAPPING = {

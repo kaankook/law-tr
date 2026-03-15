@@ -1,0 +1,232 @@
+{
+  "total_chunks": 715,
+  "by_source": {
+    "5953 Sayılı Basın Mesleği Kanunu": 26,
+    "193 Sayılı Gelir Vergisi Kanunu": 14,
+    "1475 Sayılı İş Kanunu": 5,
+    "T.C. Anayasası": 7,
+    "3308 Sayılı Mesleki Eğitim Kanunu": 5,
+    "4447 Sayılı İşsizlik Sigortası Kanunu": 10,
+    "4688 Sayılı Kamu Görevlileri Sendikaları ve Toplu Sözleşme Kanunu": 7,
+    "4857 Sayılı İş Kanunu": 127,
+    "5510 Sayılı SSGSSK": 119,
+    "6098 Sayılı Türk Borçlar Kanunu": 78,
+    "6100 Sayılı Hukuk Muhakemeleri Kanunu": 152,
+    "6331 Sayılı İş Sağlığı ve Güvenliği Kanunu": 47,
+    "6356 Sayılı Sendikalar ve Toplu İş Sözleşmesi Kanunu": 36,
+    "6458 Sayılı Yabancılar ve Uluslararası Koruma Kanunu": 4,
+    "657 Sayılı Devlet Memurları Kanunu": 6,
+    "6735 Sayılı Uluslararası İşgücü Kanunu": 9,
+    "7036 Sayılı İş Mahkemeleri Kanunu": 9,
+    "854 Sayılı Deniz İş Kanunu": 54
+  },
+  "by_article_type": {
+    "giris": 8,
+    "madde": 697,
+    "ek_madde": 10
+  },
+  "mulga_chunks": 5,
+  "char_count": {
+    "min": 71,
+    "max": 4789,
+    "avg": 868.0
+  },
+  "multi_part_articles": [
+    {
+      "article": "Madde 16",
+      "parts": 2
+    },
+    {
+      "article": "Madde 25",
+      "parts": 2
+    },
+    {
+      "article": "Madde 94",
+      "parts": 9
+    },
+    {
+      "article": "Madde 14",
+      "parts": 4
+    },
+    {
+      "article": "Madde 47",
+      "parts": 2
+    },
+    {
+      "article": "Madde 50",
+      "parts": 4
+    },
+    {
+      "article": "Madde 51",
+      "parts": 2
+    },
+    {
+      "article": "Madde 18",
+      "parts": 2
+    },
+    {
+      "article": "Madde 2",
+      "parts": 3
+    },
+    {
+      "article": "Madde 3",
+      "parts": 2
+    },
+    {
+      "article": "Madde 7",
+      "parts": 5
+    },
+    {
+      "article": "Madde 13",
+      "parts": 2
+    },
+    {
+      "article": "Madde 21",
+      "parts": 2
+    },
+    {
+      "article": "Madde 24",
+      "parts": 2
+    },
+    {
+      "article": "Madde 29",
+      "parts": 2
+    },
+    {
+      "article": "Madde 30",
+      "parts": 4
+    },
+    {
+      "article": "Madde 32",
+      "parts": 2
+    },
+    {
+      "article": "Madde 41",
+      "parts": 2
+    },
+    {
+      "article": "Madde 71",
+      "parts": 2
+    },
+    {
+      "article": "Madde 74",
+      "parts": 2
+    },
+    {
+      "article": "Madde 111",
+      "parts": 4
+    },
+    {
+      "article": "Madde 112",
+      "parts": 3
+    },
+    {
+      "article": "Madde 4",
+      "parts": 4
+    },
+    {
+      "article": "Madde 5",
+      "parts": 2
+    },
+    {
+      "article": "Madde 6",
+      "parts": 2
+    },
+    {
+      "article": "Madde 8",
+      "parts": 3
+    },
+    {
+      "article": "Madde 9",
+      "parts": 3
+    },
+    {
+      "article": "Madde 11",
+      "parts": 2
+    },
+    {
+      "article": "Madde 12",
+      "parts": 2
+    },
+    {
+      "article": "Madde 17",
+      "parts": 2
+    },
+    {
+      "article": "Madde 19",
+      "parts": 2
+    },
+    {
+      "article": "Madde 80",
+      "parts": 8
+    },
+    {
+      "article": "Madde 81",
+      "parts": 7
+    },
+    {
+      "article": "Madde 85",
+      "parts": 4
+    },
+    {
+      "article": "Madde 86",
+      "parts": 3
+    },
+    {
+      "article": "Madde 88",
+      "parts": 8
+    },
+    {
+      "article": "Madde 89",
+      "parts": 2
+    },
+    {
+      "article": "Madde 90",
+      "parts": 2
+    },
+    {
+      "article": "Madde 93",
+      "parts": 2
+    },
+    {
+      "article": "Madde 97",
+      "parts": 2
+    },
+    {
+      "article": "Madde 100",
+      "parts": 3
+    },
+    {
+      "article": "Madde 102",
+      "parts": 12
+    },
+    {
+      "article": "Madde 103",
+      "parts": 3
+    },
+    {
+      "article": "Ek Madde 2",
+      "parts": 2
+    },
+    {
+      "article": "Ek Madde 6",
+      "parts": 3
+    },
+    {
+      "article": "Madde 26",
+      "parts": 3
+    },
+    {
+      "article": "Madde 23",
+      "parts": 2
+    },
+    {
+      "article": "Madde 20",
+      "parts": 3
+    },
+    {
+      "article": "Giriş",
+      "parts": 2
+    }
+  ]
+}

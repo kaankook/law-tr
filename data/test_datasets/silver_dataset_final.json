@@ -1,7 +1,7 @@
 {
   "_README": {
-    "format_version":  "3.1",
-    "compatibility":  "test_runner. py ile uyumlu",
+    "format_version": "3.1",
+    "compatibility": "test_runner. py ile uyumlu",
     "last_validated": "2025-12-29",
     "notes": [
       "Her soru test_runner.py tarafından otomatik değerlendirilir",
@@ -15,12 +15,12 @@
     "answer": {
       "main_answer": "Beklenen referans cevap - PROMPT_TEMPLATE formatında (BÖLÜM 1 + BÖLÜM 2)",
       "key_entities": "Cevapta bulunması gereken anahtar kavramlar (fallback must_include)",
-      "source_quote":  "Kaynak metinden birebir alıntı - quote_presence metriği için kullanılır"
+      "source_quote": "Kaynak metinden birebir alıntı - quote_presence metriği için kullanılır"
     },
     "alternative_correct_answers": "Alternatif doğru cevaplar - semantic_correctness MAX skoru için",
     "source": "Ana kaynak kanun/belge adı - out_of_scope kontrolü için kritik",
     "source_details": {
-      "document":  "Kaynak dosya adı (config.py SOURCE_MAPPING ile eşleşmeli)",
+      "document": "Kaynak dosya adı (config.py SOURCE_MAPPING ile eşleşmeli)",
       "article": "İlgili madde numarası - citation_accuracy kontrolü için",
       "section": "Kanundaki bölüm/kısım bilgisi"
     },
@@ -33,7 +33,7 @@
       "should_explain_limitation": "true ise model kısıtlamayı açıklamalı",
       "acceptable_responses": "Kabul edilebilir alternatif cevap kalıpları"
     },
-    "test_purpose":  "Bu sorunun test amacı açıklaması"
+    "test_purpose": "Bu sorunun test amacı açıklaması"
   },
   "_SPECIAL_SOURCES": {
     "out_of_scope_temporal": "Zamansal kapsam dışı - güncel rakam/tarih soruları",
@@ -51,13 +51,13 @@
     "quote_presence": "source_quote context içinde aranır (exact + semantic match)",
     "keyword_coverage": "must_include (exact) + should_include (bonus) ile hesaplanır",
     "citation_accuracy": "source_details.article retrieved chunks ile karşılaştırılır",
-    "llm_judge":  "Tüm veriler ENHANCED_JUDGE_PROMPT'a gönderilir"
+    "llm_judge": "Tüm veriler ENHANCED_JUDGE_PROMPT'a gönderilir"
   },
   "dataset_info": {
     "version": "1.0",
     "total_questions": 50,
-    "description": "Türk Hukuk RAG Sistemi için silver test veri seti - golden_dataset_final.json'dan dengeli seçim",
-    "last_updated": "29.12.2025",
+    "description": "Türk Hukuk RAG Sistemi - Silver Test Veri Seti\nDağılım: 18 olgusal (%36) + 12 kavramsal (%24) + 5 karşılaştırma (%10) + 10 hallucination_test (%20) + 5 edge_case (%10)\nKaynak: chunks_final.json — 18 kanun orantılı kapsam",
+    "last_updated": "15.03.2026",
     "author": "Kaan Kök",
     "sources": [
       "T. C. Anayasası (1.5.2709.docx)",
@@ -70,407 +70,82 @@
   "source_mapping": {
     "1.5.2709.docx": "T.C.  Anayasası",
     "1.5.4857.docx": "4857 Sayılı İş Kanunu",
-    "1.5.6098.docx":  "6098 Sayılı Türk Borçlar Kanunu",
+    "1.5.6098.docx": "6098 Sayılı Türk Borçlar Kanunu",
     "1.5.6356.docx": "6356 Sayılı Sendikalar ve Toplu İş Sözleşmesi Kanunu",
     "1.5.7036.docx": "7036 Sayılı İş Mahkemeleri Kanunu"
   },
   "questions": [
     {
-      "id":  1,
-      "question": "Türkiye Cumhuriyeti hangi niteliklere sahip bir devlettir?",
+      "id": 1,
+      "question": "Anayasa'ya göre çalışanlar ve işverenler sendika kurabilmek için önceden izin almak zorunda mıdır?",
       "answer": {
-        "main_answer": "BÖLÜM 1 - AÇIKLAMA\nTürkiye Cumhuriyeti, temelleri Anayasa'nın başlangıç kısmında belirtilen ilkelere dayanan bir devlettir. Cumhuriyetin temel nitelikleri; toplumun huzuru, milli dayanışma ve adalet anlayışı içinde insan haklarına saygılı olmasıdır.  Ayrıca devletimiz, Atatürk milliyetçiliğine bağlı, demokratik, laik ve sosyal bir hukuk devleti olarak tanımlanır.\n\nBÖLÜM 2 - HUKUKİ DAYANAKLAR\n- T.C. Anayasası Madde 2",
+        "main_answer": "BÖLÜM 1 - AÇIKLAMA\nAnayasa'nın 51. maddesine göre çalışanlar ve işverenler, üyelerinin çalışma ilişkilerinde ekonomik ve sosyal hak ve menfaatlerini korumak ve geliştirmek için önceden izin almaksızın sendikalar ve üst kuruluşlar kurma, bunlara serbestçe üye olma ve üyelikten serbestçe çekilme haklarına sahiptirler. Kimse sendikaya üye olmaya ya da üyelikten ayrılmaya zorlanamaz.\n\nBÖLÜM 2 - HUKUKİ DAYANAKLAR\n- T.C. Anayasası Madde 51",
         "key_entities": [
-          "Atatürk milliyetçiliği",
-          "demokratik",
-          "laik",
-          "sosyal",
-          "hukuk devleti"
+          "sendika",
+          "önceden izin",
+          "çalışanlar",
+          "işverenler",
+          "üyelik serbestisi"
         ],
-        "source_quote": "Türkiye Cumhuriyeti, toplumun huzuru, milli dayanışma ve adalet anlayışı içinde, insan haklarına saygılı, Atatürk milliyetçiliğine bağlı, başlangıçta belirtilen temel ilkelere dayanan, demokratik, laik ve sosyal bir hukuk Devletidir."
+        "source_quote": "Çalışanlar ve işverenler... önceden izin almaksızın sendikalar ve üst kuruluşlar kurma... haklarına sahiptirler."
       },
       "alternative_correct_answers": [
-        "Demokratik, laik ve sosyal bir hukuk devletidir.",
-        "Atatürk milliyetçiliğine bağlı, insan haklarına saygılı, demokratik, laik ve sosyal bir hukuk devletidir."
+        "Hayır, sendika kurmak için önceden izin gerekmez.",
+        "Çalışanlar ve işverenler önceden izin almaksızın serbestçe sendika kurabilir."
       ],
       "source": "T.C. Anayasası",
       "source_details": {
-        "document":  "1.5.2709.docx",
-        "article": "Madde 2",
-        "section": "Birinci Kısım - Genel Esaslar"
+        "document": "1.5.2709.docx",
+        "article": "Madde 51",
+        "section": "İkinci Kısım - Temel Haklar"
       },
-      "difficulty":  "kolay",
+      "difficulty": "kolay",
       "question_type": "olgusal",
       "evaluation_criteria": {
         "must_include": [
-          "demokratik",
-          "laik",
-          "sosyal",
-          "hukuk devleti"
+          "izin",
+          "sendika"
         ],
         "should_include": [
-          "Atatürk milliyetçiliği"
-        ],
-        "exact_match_required": false
+          "önceden",
+          "serbestçe"
+        ]
       }
     },
     {
       "id": 2,
-      "question": "Anayasa'ya göre egemenlik kayıtsız şartsız kime aittir?",
+      "question": "4857 sayılı İş Kanunu'nun kapsamı dışında kalan işler nelerdir?",
       "answer": {
-        "main_answer": "BÖLÜM 1 - AÇIKLAMA\nAnayasal düzende egemenlik, herhangi bir kayıt veya şart olmaksızın doğrudan Türk Milletine aittir.  Millet, bu egemenlik yetkisini anayasal kurallar çerçevesinde yetkili organları eliyle kullanır.\n\nBÖLÜM 2 - HUKUKİ DAYANAKLAR\n- T.C. Anayasası Madde 6",
+        "main_answer": "BÖLÜM 1 - AÇIKLAMA\nİş Kanunu'nun 4. maddesine göre aşağıdaki işlerde bu Kanun hükümleri uygulanmaz: deniz ve hava taşıma işleri; 50'den az işçi çalıştıran tarım ve orman işyerleri; aile ekonomisi sınırları içindeki tarımsal yapı işleri; ev hizmetleri; çıraklık ilişkileri; sporcular; rehabilite edilenler ve bir ailenin üyeleri ile 3. dereceye kadar kan ve kayın hısımları arasında dışarıdan işçi alınmadan yürütülen ev sanatları.\n\nBÖLÜM 2 - HUKUKİ DAYANAKLAR\n- 4857 Sayılı İş Kanunu Madde 4",
         "key_entities": [
-          "egemenlik",
-          "Türk Milleti",
-          "kayıtsız şartsız"
-        ],
-        "source_quote":  "Egemenlik, kayıtsız şartsız Milletindir."
-      },
-      "alternative_correct_answers": [
-        "Türk Milletine aittir.",
-        "Millet egemenliğin tek sahibidir."
-      ],
-      "source":  "T.C.  Anayasası",
-      "source_details": {
-        "document": "1.5.2709.docx",
-        "article":  "Madde 6",
-        "section": "Birinci Kısım - Genel Esaslar"
-      },
-      "difficulty": "kolay",
-      "question_type": "olgusal",
-      "evaluation_criteria":  {
-        "must_include": [
-          "egemenlik",
-          "Türk Milleti"
-        ],
-        "should_include":  [
-          "kayıtsız şartsız"
-        ],
-        "exact_match_required":  false
-      }
-    },
-    {
-      "id":  3,
-      "question": "Temel hak ve hürriyetler hangi durumlarda sınırlandırılabilir?",
-      "answer": {
-        "main_answer": "BÖLÜM 1 - AÇIKLAMA\nTemel hak ve hürriyetler keyfi olarak kısıtlanamaz. Bir sınırlandırma yapılabilmesi için öncelikle bunun ilgili kanununda açıkça belirtilen sebeplere dayanması gerekir. Ancak kanuni bir dayanak olsa bile, getirilen sınırlama hakkın özüne dokunmamalıdır.  Ayrıca yapılan müdahale Anayasa'nın ruhuna, demokratik toplum düzeninin gereklerine, laik Cumhuriyet ilkelerine ve ölçülülük ilkesine uygun olmak zorundadır.\n\nBÖLÜM 2 - HUKUKİ DAYANAKLAR\n- T.C. Anayasası Madde 13",
-        "key_entities": [
-          "sınırlandırma",
-          "kanun",
-          "öz",
-          "ölçülülük",
-          "demokratik toplum"
-        ],
-        "source_quote": "Temel hak ve hürriyetler, özlerine dokunulmaksızın yalnızca Anayasanın ilgili maddelerinde belirtilen sebeplere bağlı olarak ve ancak kanunla sınırlanabilir. Bu sınırlamalar, Anayasanın sözüne ve ruhuna, demokratik toplum düzeninin ve lâik Cumhuriyetin gereklerine ve ölçülülük ilkesine aykırı olamaz."
-      },
-      "alternative_correct_answers": [
-        "Yalnızca Anayasada belirtilen sebeplerle ve kanunla sınırlandırılabilir.",
-        "Özlerine dokunulmadan, ölçülülük ilkesine uygun şekilde kanunla sınırlandırılabilir."
-      ],
-      "source": "T.C. Anayasası",
-      "source_details": {
-        "document": "1.5.2709.docx",
-        "article": "Madde 13",
-        "section":  "İkinci Kısım - Temel Haklar ve Ödevler"
-      },
-      "difficulty":  "orta",
-      "question_type": "kavramsal",
-      "evaluation_criteria":  {
-        "must_include": [
-          "kanun",
-          "öz",
-          "sınırlandırma"
-        ],
-        "should_include": [
-          "ölçülülük",
-          "demokratik toplum"
-        ]
-      }
-    },
-    {
-      "id": 4,
-      "question": "Sendika kurma hakkı Anayasa'da nasıl güvence altına alınmıştır?",
-      "answer": {
-        "main_answer": "BÖLÜM 1 - AÇIKLAMA\nÇalışanlar ve işverenler, üyelerinin menfaatlerini korumak amacıyla önceden izin almaksızın sendika kurma hakkına sahiptir.  Herkes sendikalara serbestçe üye olabilir veya üyelikten ayrılabilir; hiç kimse sendikaya üye olmaya veya üyelikten ayrılmaya zorlanamaz.\n\nBÖLÜM 2 - HUKUKİ DAYANAKLAR\n- T.C. Anayasası Madde 51",
-        "key_entities": [
-          "sendika kurma",
-          "üyelik",
-          "izin almaksızın",
-          "zorlanamaz"
-        ],
-        "source_quote": "Çalışanlar ve işverenler...  önceden izin almaksızın sendikalar ve üst kuruluşlar kurma...  haklarına sahiptir."
-      },
-      "alternative_correct_answers":  [
-        "Sendika kurma hakkı önceden izne tabi değildir.",
-        "İşçi ve işverenler serbestçe sendika kurabilir ve üye olabilir."
-      ],
-      "source": "T.C.  Anayasası",
-      "source_details": {
-        "document": "1.5.2709.docx",
-        "article": "Madde 51",
-        "section": "İkinci Kısım - Temel Haklar ve Ödevler"
-      },
-      "difficulty": "orta",
-      "question_type": "kavramsal",
-      "evaluation_criteria": {
-        "must_include": [
-          "sendika",
-          "kurma",
-          "hak"
-        ],
-        "should_include": [
-          "izin",
-          "üyelik"
-        ]
-      }
-    },
-    {
-      "id": 5,
-      "question": "TBMM kaç milletvekilinden oluşur? ",
-      "answer": {
-        "main_answer": "BÖLÜM 1 - AÇIKLAMA\nTürkiye Büyük Millet Meclisi, genel oyla seçilen altı yüz milletvekilinden oluşmaktadır.\n\nBÖLÜM 2 - HUKUKİ DAYANAKLAR\n- T.C. Anayasası Madde 75",
-        "key_entities": [
-          "TBMM",
-          "milletvekili",
-          "600"
-        ],
-        "source_quote":  "Türkiye Büyük Millet Meclisi...  altı yüz milletvekilinden oluşur."
-      },
-      "alternative_correct_answers": [
-        "600 milletvekili",
-        "Altı yüz milletvekili"
-      ],
-      "source": "T. C. Anayasası",
-      "source_details":  {
-        "document": "1.5.2709.docx",
-        "article": "Madde 75",
-        "section": "Üçüncü Kısım - Cumhuriyetin Temel Organları"
-      },
-      "difficulty":  "kolay",
-      "question_type": "olgusal",
-      "evaluation_criteria": {
-        "must_include": [
-          "600",
-          "altı yüz"
-        ],
-        "exact_number_required": true
-      }
-    },
-    {
-      "id": 6,
-      "question": "Cumhurbaşkanının görev süresi ne kadardır?",
-      "answer": {
-        "main_answer": "BÖLÜM 1 - AÇIKLAMA\nCumhurbaşkanının görev süresi beş yıldır. Anayasa'daki kural gereği bir kimse en fazla iki defa Cumhurbaşkanı seçilebilir.\n\nBÖLÜM 2 - HUKUKİ DAYANAKLAR\n- T.C. Anayasası Madde 101",
-        "key_entities": [
-          "5 yıl",
-          "iki dönem",
-          "görev süresi"
-        ],
-        "source_quote":  "Cumhurbaşkanının görev süresi beş yıldır. Bir kimse en fazla iki defa Cumhurbaşkanı seçilebilir."
-      },
-      "alternative_correct_answers": [
-        "5 yıl, en fazla 2 dönem",
-        "Beş yıllık süre için seçilir ve iki kez seçilebilir."
-      ],
-      "source": "T.C. Anayasası",
-      "source_details": {
-        "document": "1.5.2709.docx",
-        "article": "Madde 101",
-        "section":  "Üçüncü Kısım - Cumhuriyetin Temel Organları"
-      },
-      "difficulty": "kolay",
-      "question_type": "olgusal",
-      "evaluation_criteria": {
-        "must_include": [
-          "5 yıl",
-          "beş yıl",
-          "iki defa",
-          "2 dönem"
-        ],
-        "exact_number_required":  true
-      }
-    },
-    {
-      "id":  7,
-      "question": "Anayasanın değiştirilemez maddeleri nelerdir?",
-      "answer": {
-        "main_answer": "BÖLÜM 1 - AÇIKLAMA\nAnayasamızın ilk üç maddesi koruma altındadır. Bunlar; Devletin şeklinin Cumhuriyet olduğu (Madde 1), Cumhuriyetin demokratik, laik, sosyal bir hukuk devleti olduğu nitelikleri (Madde 2) ve devletin ülkesi ve milletiyle bölünmez bütünlüğü, dili, bayrağı, milli marşı ve başkenti (Madde 3) hakkındaki hükümlerdir.  Anayasa'nın 4. maddesi uyarınca bu hükümler değiştirilemez ve değiştirilmesi teklif dahi edilemez.\n\nBÖLÜM 2 - HUKUKİ DAYANAKLAR\n- T.C.  Anayasası Madde 4",
-        "key_entities": [
-          "1.  madde",
-          "2. madde",
-          "3. madde",
-          "Cumhuriyet",
-          "değiştirilemez"
-        ],
-        "source_quote":  "Anayasanın 1 inci maddesindeki Devletin şeklinin Cumhuriyet olduğu hakkındaki hüküm ile, 2 nci maddesindeki Cumhuriyetin nitelikleri ve 3 üncü maddesi hükümleri değiştirilemez ve değiştirilmesi teklif edilemez."
-      },
-      "alternative_correct_answers":  [
-        "İlk üç madde değiştirilemez:  Cumhuriyet, nitelikleri, bütünlük ve semboller.",
-        "Devletin Cumhuriyet olması, demokratik laik sosyal hukuk devleti olması ve ülke bütünlüğü değiştirilemez."
-      ],
-      "source": "T.C. Anayasası",
-      "source_details": {
-        "document":  "1.5.2709.docx",
-        "article": "Madde 4",
-        "section": "Birinci Kısım - Genel Esaslar"
-      },
-      "difficulty": "orta",
-      "question_type": "olgusal",
-      "evaluation_criteria": {
-        "must_include": [
-          "1. madde",
-          "2. madde",
-          "3. madde",
-          "değiştirilemez"
-        ],
-        "should_include": [
-          "Cumhuriyet",
-          "teklif edilemez"
-        ]
-      }
-    },
-    {
-      "id": 8,
-      "question": "Anayasa Mahkemesi'nin görevleri nelerdir?",
-      "answer": {
-        "main_answer":  "BÖLÜM 1 - AÇIKLAMA\nAnayasa Mahkemesi'nin temel görevi, kanunların, Cumhurbaşkanlığı kararnamelerinin ve TBMM İçtüzüğünün Anayasa'ya şekil ve esas bakımından uygunluğunu denetlemektir (norm denetimi). Ayrıca bireysel başvuruları karara bağlar.  Bir diğer önemli görevi ise, Cumhurbaşkanı, Bakanlar ve yüksek yargı mensupları gibi üst düzey devlet görevlilerini görevleriyle ilgili suçlardan dolayı \"Yüce Divan\" sıfatıyla yargılamaktır.\n\nBÖLÜM 2 - HUKUKİ DAYANAKLAR\n- T.C. Anayasası Madde 148",
-        "key_entities": [
-          "Anayasa Mahkemesi",
-          "anayasaya uygunluk",
-          "bireysel başvuru",
-          "Yüce Divan"
-        ],
-        "source_quote": "Anayasa Mahkemesi, kanunların, Cumhurbaşkanlığı kararnamelerinin ve Türkiye Büyük Millet Meclisi İçtüzüğünün Anayasaya şekil ve esas bakımlarından uygunluğunu denetler..."
-      },
-      "alternative_correct_answers": [
-        "Kanunların anayasaya uygunluğunu denetler ve Yüce Divan olarak görev yapar.",
-        "Norm denetimi ve bireysel başvuru incelemeleri yapar."
-      ],
-      "source":  "T.C.  Anayasası",
-      "source_details": {
-        "document": "1.5.2709.docx",
-        "article":  "Madde 148",
-        "section": "Üçüncü Kısım - Cumhuriyetin Temel Organları"
-      },
-      "difficulty": "zor",
-      "question_type": "kavramsal",
-      "evaluation_criteria":  {
-        "must_include": [
-          "Anayasa Mahkemesi",
-          "anayasaya uygunluk"
-        ],
-        "should_include":  [
-          "Yüce Divan",
-          "bireysel başvuru",
-          "denetim"
-        ]
-      }
-    },
-    {
-      "id":  9,
-      "question": "Seçme ve seçilme hakkı için yaş sınırı kaçtır?",
-      "answer": {
-        "main_answer": "BÖLÜM 1 - AÇIKLAMA\nTürk hukukunda siyasi hakların kullanımı için belirlenen yaş sınırı on sekizdir. 18 yaşını dolduran her Türk vatandaşı seçme, halkoylamasına katılma ve milletvekili seçilme hakkına sahiptir.\n\nBÖLÜM 2 - HUKUKİ DAYANAKLAR\n- T.C. Anayasası Madde 67, 76",
-        "key_entities": [
-          "18 yaş",
-          "seçme hakkı",
-          "seçilme hakkı",
-          "halkoylaması"
-        ],
-        "source_quote": "Onsekiz yaşını dolduran her Türk vatandaşı, seçme ve halkoylamasına katılma haklarına sahiptir."
-      },
-      "alternative_correct_answers": [
-        "18 yaş hem seçme hem seçilme için gereklidir.",
-        "Onsekiz yaşını dolduranlar oy kullanabilir ve milletvekili adayı olabilir."
-      ],
-      "source": "T.C. Anayasası",
-      "source_details": {
-        "document":  "1.5.2709.docx",
-        "article": "Madde 67, 76",
-        "section": "İkinci ve Üçüncü Kısım"
-      },
-      "difficulty": "kolay",
-      "question_type": "olgusal",
-      "evaluation_criteria": {
-        "must_include": [
-          "18 yaş",
-          "on sekiz yaş"
-        ],
-        "exact_number_required":  true
-      }
-    },
-    {
-      "id":  10,
-      "question": "Yargı yetkisi kime aittir?",
-      "answer": {
-        "main_answer": "BÖLÜM 1 - AÇIKLAMA\nYargı yetkisi Türk Milletine aittir. Millet adına bu yetkiyi, bağımsız ve tarafsız mahkemeler kullanır.\n\nBÖLÜM 2 - HUKUKİ DAYANAKLAR\n- T.C. Anayasası Madde 9",
-        "key_entities": [
-          "yargı yetkisi",
-          "Türk Milleti",
-          "bağımsız",
-          "tarafsız",
-          "mahkemeler"
-        ],
-        "source_quote": "Yargı yetkisi, Türk Milleti adına bağımsız ve tarafsız mahkemelerce kullanılır."
-      },
-      "alternative_correct_answers": [
-        "Bağımsız mahkemeler Türk Milleti adına yargı yetkisini kullanır.",
-        "Yargı bağımsızdır ve millet adına karar verir."
-      ],
-      "source": "T.C.  Anayasası",
-      "source_details": {
-        "document": "1.5.2709.docx",
-        "article": "Madde 9",
-        "section": "Birinci Kısım - Genel Esaslar"
-      },
-      "difficulty": "kolay",
-      "question_type": "olgusal",
-      "evaluation_criteria": {
-        "must_include": [
-          "yargı",
-          "Türk Milleti",
-          "mahkeme"
-        ],
-        "should_include": [
-          "bağımsız",
-          "tarafsız"
-        ]
-      }
-    },
-    {
-      "id": 11,
-      "question": "İş Kanunu'nun kapsamı dışında kalan işler ve işyerleri nelerdir? ",
-      "answer": {
-        "main_answer": "BÖLÜM 1 - AÇIKLAMA\nKanun koyucu bazı iş kollarını ve çalışma biçimlerini İş Kanunu kapsamı dışında tutmuştur. Bunlar şunlardır:  Deniz ve hava taşıma işleri, 50'den az işçi çalıştıran tarım ve orman işyerleri, aile ekonomisi sınırları içinde kalan tarımsal yapı işleri, ev hizmetleri, çıraklar, sporcular, rehabilite edilenler ve bir ailenin üyeleri ile 3.  dereceye kadar hısımları arasında dışarıdan işçi alınmadan yapılan ev sanatları işleri.\n\nBÖLÜM 2 - HUKUKİ DAYANAKLAR\n- 4857 Sayılı İş Kanunu Madde 4",
-        "key_entities": [
+          "kapsam dışı",
           "deniz taşıma",
           "hava taşıma",
           "ev hizmetleri",
-          "çıraklar",
-          "sporcular",
-          "tarım işleri"
+          "çırak",
+          "sporcu"
         ],
-        "source_quote":  "Aşağıda belirtilen işlerde ve iş ilişkilerinde bu Kanun hükümleri uygulanmaz..."
+        "source_quote": "Aşağıda belirtilen işlerde ve iş ilişkilerinde bu Kanun hükümleri uygulanmaz..."
       },
       "alternative_correct_answers": [
-        "Deniz-hava taşımacılığı, ev hizmetleri, çıraklık, sporculuk kapsam dışıdır.",
+        "Deniz-hava taşımacılığı, ev hizmetleri, çıraklık ve sporculuk kapsam dışıdır.",
         "Tarım işlerinin bir kısmı, ev hizmetleri ve deniz-hava taşımacılığı istisnadır."
       ],
-      "source":  "4857 Sayılı İş Kanunu",
+      "source": "4857 Sayılı İş Kanunu",
       "source_details": {
         "document": "1.5.4857.docx",
-        "article":  "Madde 4",
+        "article": "Madde 4",
         "section": "Birinci Bölüm - Genel Hükümler"
       },
       "difficulty": "orta",
-      "question_type": "kavramsal",
-      "evaluation_criteria":  {
+      "question_type": "olgusal",
+      "evaluation_criteria": {
         "must_include": [
           "deniz",
           "hava",
           "ev hizmetleri"
         ],
-        "should_include":  [
+        "should_include": [
           "çırak",
           "sporcu",
           "tarım"
@@ -478,99 +153,99 @@
       }
     },
     {
-      "id": 12,
-      "question": "İş sözleşmesi ne demektir ve hangi unsurları içermelidir?",
+      "id": 3,
+      "question": "4857 sayılı İş Kanunu'na göre işverenin ücret hesap pusulası verme yükümlülüğü nedir?",
       "answer": {
-        "main_answer": "BÖLÜM 1 - AÇIKLAMA\nİş sözleşmesi, işçinin işverene bağımlı olarak iş görmeyi, işverenin de buna karşılık ücret ödemeyi taahhüt ettiği bir sözleşmedir. Tanımdan da anlaşılacağı üzere iş sözleşmesinin varlığı için dört temel unsur gereklidir:  Taraflar (işçi ve işveren), iş görme unsuru, ücret unsuru ve en belirleyici özellik olan bağımlılık (işverenin otoritesi altında çalışma) unsuru.\n\nBÖLÜM 2 - HUKUKİ DAYANAKLAR\n- 4857 Sayılı İş Kanunu Madde 8",
+        "main_answer": "BÖLÜM 1 - AÇIKLAMA\nİş Kanunu Madde 37 uyarınca işveren, işçiye ücretini öderken (ister işyerinde ister banka aracılığıyla yapsın) ücret hesabını gösterir imzalı veya işyerinin özel işaretini taşıyan bir pusula vermek zorundadır. Bu pusulada ödemenin günü ve ilişkin olduğu dönem, yapılan kesintilerin miktarı ve nedenleri ile ödenen net ücret yer alır. Ücret alacaklarında zamanaşımı süresi beş yıldır.\n\nBÖLÜM 2 - HUKUKİ DAYANAKLAR\n- 4857 Sayılı İş Kanunu Madde 37",
         "key_entities": [
-          "iş sözleşmesi",
-          "işçi",
-          "işveren",
-          "ücret",
-          "bağımlılık",
-          "iş görme"
+          "ücret hesap pusulası",
+          "imzalı",
+          "kesinti",
+          "net ücret",
+          "ödeme günü"
         ],
-        "source_quote":  "İş sözleşmesi, bir tarafın (işçi) bağımlı olarak iş görmeyi, diğer tarafın (işveren) da ücret ödemeyi üstlenmesinden oluşan sözleşmedir."
+        "source_quote": "İşveren işyerinde veya bankaya yaptığı ödemelerde işçiye ücret hesabını gösterir imzalı veya işyerinin özel işaretini taşıyan bir pusula vermek zorundadır."
       },
       "alternative_correct_answers": [
-        "İşçinin bağımlı çalışması, işverenin ücret ödemesi esasına dayanan sözleşmedir.",
-        "İş, ücret, bağımlılık ve taraflar olmak üzere dört unsuru vardır."
-      ],
-      "source":  "4857 Sayılı İş Kanunu",
-      "source_details": {
-        "document": "1.5.4857.docx",
-        "article": "Madde 8",
-        "section":  "İkinci Bölüm - İş Sözleşmesi"
-      },
-      "difficulty": "orta",
-      "question_type": "kavramsal",
-      "evaluation_criteria":  {
-        "must_include": [
-          "iş sözleşmesi",
-          "bağımlılık",
-          "ücret"
-        ],
-        "should_include": [
-          "iş görme",
-          "işçi",
-          "işveren"
-        ]
-      }
-    },
-    {
-      "id": 13,
-      "question":  "Belirli süreli ve belirsiz süreli iş sözleşmeleri arasındaki farklar nelerdir? ",
-      "answer": {
-        "main_answer": "BÖLÜM 1 - AÇIKLAMA\nİş hukukunda asıl olan belirsiz süreli iş sözleşmesidir; yani sözleşmenin ne zaman biteceği baştan belirlenmemiştir. Belirli süreli iş sözleşmesi ise ancak belirli bir işin tamamlanması veya belirli bir olgunun ortaya çıkması gibi objektif koşullara bağlı olarak yapılabilir. Önemli bir kural olarak, esaslı bir neden olmadıkça belirli süreli sözleşmeler üst üste (zincirleme) yapılamaz; yapılırsa baştan itibaren belirsiz süreli kabul edilir.\n\nBÖLÜM 2 - HUKUKİ DAYANAKLAR\n- 4857 Sayılı İş Kanunu Madde 11",
-        "key_entities": [
-          "belirli süreli",
-          "belirsiz süreli",
-          "objektif koşul",
-          "esaslı neden"
-        ],
-        "source_quote": "Belirli süreli iş sözleşmesi, esaslı bir neden olmadıkça, birden fazla üst üste (zincirleme) yapılamaz."
-      },
-      "alternative_correct_answers": [
-        "Belirli süreli sözleşme süre veya iş bitiminde sona erer, belirsiz sürelide süre yoktur.",
-        "Belirli süreli sözleşme objektif nedene dayanmalı, zincirleme yapılırsa belirsiz süreliye dönüşür."
+        "İşveren her ücret ödemesinde kesintileri ve net ücreti gösteren imzalı bir pusula vermek zorundadır.",
+        "Ücret pusulasında ödeme günü, kesintiler ve net ücret yer almalıdır."
       ],
       "source": "4857 Sayılı İş Kanunu",
       "source_details": {
-        "document":  "1.5.4857.docx",
-        "article": "Madde 11",
-        "section": "İkinci Bölüm - İş Sözleşmesi"
+        "document": "1.5.4857.docx",
+        "article": "Madde 37",
+        "section": "Üçüncü Bölüm - Ücret"
       },
-      "difficulty": "orta",
-      "question_type": "karşılaştırma",
+      "difficulty": "kolay",
+      "question_type": "olgusal",
       "evaluation_criteria": {
-        "comparison_required": true,
-        "must_include":  [
-          "belirli süreli",
-          "belirsiz süreli",
-          "objektif"
+        "must_include": [
+          "pusula",
+          "ücret",
+          "imzalı"
         ],
         "should_include": [
-          "zincirleme",
-          "esaslı neden"
+          "kesinti",
+          "net ücret"
         ]
       }
     },
     {
-      "id": 14,
-      "question": "Deneme süreli iş sözleşmesi ne kadardır?",
+      "id": 4,
+      "question": "4857 sayılı İş Kanunu'na göre ücretin tanımı nedir ve hangi unsurları kapsar?",
       "answer": {
-        "main_answer": "BÖLÜM 1 - AÇIKLAMA\nİş sözleşmelerine taraflarca deneme kaydı konulabilir. Bireysel iş sözleşmelerinde bu süre en çok iki ay olabilir. Ancak, sendikalı işyerlerinde toplu iş sözleşmeleri ile bu sürenin dört aya kadar uzatılması mümkündür.\n\nBÖLÜM 2 - HUKUKİ DAYANAKLAR\n- 4857 Sayılı İş Kanunu Madde 15",
+        "main_answer": "BÖLÜM 1 - AÇIKLAMA\nİş Kanunu Madde 32 uyarınca genel anlamda ücret, bir kimseye bir iş karşılığında işveren veya üçüncü kişiler tarafından sağlanan ve para ile ödenen tutardır. Ücret prim, ikramiye ve bu nitelikteki her çeşit istihkakı da kapsar. Ücret en geç ayda bir ödenir; iş sözleşmesi veya toplu iş sözleşmesiyle daha kısa ödeme dönemleri kararlaştırılabilir. Ücret alacaklarında zamanaşımı süresi beş yıldır.\n\nBÖLÜM 2 - HUKUKİ DAYANAKLAR\n- 4857 Sayılı İş Kanunu Madde 32",
+        "key_entities": [
+          "ücret tanımı",
+          "prim",
+          "ikramiye",
+          "istihkak",
+          "para",
+          "5 yıl zamanaşımı"
+        ],
+        "source_quote": "Genel anlamda ücret bir kimseye bir iş karşılığında işveren veya üçüncü kişiler tarafından sağlanan ve para ile ödenen tutardır."
+      },
+      "alternative_correct_answers": [
+        "Ücret; para ile ödenen temel maaş, prim ve ikramiyeyi kapsar; aylık ödenir.",
+        "İşveren veya üçüncü kişilerce iş karşılığı para olarak sağlanan her türlü istihkaktır."
+      ],
+      "source": "4857 Sayılı İş Kanunu",
+      "source_details": {
+        "document": "1.5.4857.docx",
+        "article": "Madde 32",
+        "section": "Üçüncü Bölüm - Ücret"
+      },
+      "difficulty": "kolay",
+      "question_type": "olgusal",
+      "evaluation_criteria": {
+        "must_include": [
+          "ücret",
+          "para",
+          "iş karşılığı"
+        ],
+        "should_include": [
+          "prim",
+          "ikramiye"
+        ]
+      }
+    },
+    {
+      "id": 5,
+      "question": "4857 sayılı İş Kanunu'na göre deneme süreli iş sözleşmesinin süresi ne kadar olabilir ve tarafların fesih hakları nedir?",
+      "answer": {
+        "main_answer": "BÖLÜM 1 - AÇIKLAMA\nİş Kanunu Madde 15 uyarınca taraflarca iş sözleşmesine deneme kaydı konulduğunda bu süre en çok iki aydır; ancak toplu iş sözleşmeleriyle dört aya kadar uzatılabilir. Deneme süresi içinde taraflar iş sözleşmesini bildirim süresine gerek olmaksızın ve tazminatsız feshedebilir. İşçinin çalıştığı günlere ait ücret ve diğer hakları her durumda saklıdır.\n\nBÖLÜM 2 - HUKUKİ DAYANAKLAR\n- 4857 Sayılı İş Kanunu Madde 15",
         "key_entities": [
           "deneme süresi",
           "2 ay",
           "4 ay",
-          "toplu iş sözleşmesi"
+          "tazminatsız fesih",
+          "bildirim gerekmez"
         ],
-        "source_quote":  "Taraflarca iş sözleşmesine bir deneme kaydı konulduğunda, bunun süresi en çok iki ay olabilir.  Ancak deneme süresi toplu iş sözleşmeleriyle dört aya kadar uzatılabilir."
+        "source_quote": "Taraflarca iş sözleşmesine bir deneme kaydı konulduğunda, bunun süresi en çok iki ay olabilir. Ancak deneme süresi toplu iş sözleşmeleriyle dört aya kadar uzatılabilir."
       },
       "alternative_correct_answers": [
-        "En fazla 2 ay, toplu sözleşme ile 4 aya uzatılabilir.",
-        "İki ay deneme süresi, toplu iş sözleşmesiyle dört aya çıkabilir."
+        "En fazla 2 ay; toplu sözleşme ile 4 aya uzatılabilir; deneme süresinde tazminatsız fesih mümkündür.",
+        "Deneme süresi 2 ay olup, taraflar bildirim ve tazminat yükümlülüğü olmaksızın feshedebilir."
       ],
       "source": "4857 Sayılı İş Kanunu",
       "source_details": {
@@ -583,362 +258,1583 @@
       "evaluation_criteria": {
         "must_include": [
           "2 ay",
-          "iki ay"
+          "iki ay",
+          "tazminatsız"
         ],
         "should_include": [
           "4 ay",
-          "dört ay",
           "toplu iş sözleşmesi"
-        ],
-        "exact_number_required":  true
-      }
-    },
-    {
-      "id":  15,
-      "question": "Çalışma süreleri nasıl belirlenir ve haftalık azami çalışma süresi kaç saattir?",
-      "answer": {
-        "main_answer": "BÖLÜM 1 - AÇIKLAMA\nİş Kanunu'na göre haftalık çalışma süresi en çok 45 saattir. Kural olarak bu süre, çalışılan günlere eşit olarak bölünür. Ancak taraflar anlaşırsa, günlük çalışma süresi 11 saati aşmamak kaydıyla, bu 45 saatlik süre haftanın günlerine farklı şekillerde dağıtılabilir (denkleştirme esası).\n\nBÖLÜM 2 - HUKUKİ DAYANAKLAR\n- 4857 Sayılı İş Kanunu Madde 63",
-        "key_entities": [
-          "45 saat",
-          "haftalık çalışma",
-          "11 saat",
-          "günlük limit"
-        ],
-        "source_quote": "Genel bakımdan çalışma süresi haftada en çok kırkbeş saattir."
-      },
-      "alternative_correct_answers": [
-        "Haftalık en fazla 45 saat, günlük en fazla 11 saat.",
-        "Kırk beş saat haftalık azami çalışma süresidir."
-      ],
-      "source":  "4857 Sayılı İş Kanunu",
-      "source_details": {
-        "document": "1.5.4857.docx",
-        "article": "Madde 63",
-        "section":  "Dördüncü Bölüm - Çalışma Süreleri"
-      },
-      "difficulty": "kolay",
-      "question_type": "olgusal",
-      "evaluation_criteria": {
-        "must_include": [
-          "45 saat",
-          "kırk beş saat"
-        ],
-        "should_include": [
-          "11 saat",
-          "haftalık"
         ],
         "exact_number_required": true
       }
     },
     {
-      "id": 16,
-      "question": "Fazla çalışma ve fazla sürelerle çalışma arasındaki fark nedir?",
+      "id": 6,
+      "question": "4857 sayılı İş Kanunu'na göre işyerini bildirme yükümlülüğüne aykırılık halinde ne kadar idari para cezası uygulanır?",
       "answer": {
-        "main_answer":  "BÖLÜM 1 - AÇIKLAMA\nBu iki kavram, haftalık 45 saat sınırına göre ayrılır. 'Fazla çalışma', haftalık 45 saati aşan çalışmalardır ve saat başına ücreti %50 zamlı ödenir. 'Fazla sürelerle çalışma' ise, haftalık çalışma süresinin sözleşmeyle 45 saatin altında belirlendiği durumlarda, bu süreyi aşan ancak 45 saate kadar olan çalışmalardır; bunun saat başına ücreti ise %25 zamlı ödenir.\n\nBÖLÜM 2 - HUKUKİ DAYANAKLAR\n- 4857 Sayılı İş Kanunu Madde 41",
+        "main_answer": "BÖLÜM 1 - AÇIKLAMA\nİş Kanunu Madde 98 uyarınca işyeri bildirme yükümlülüğüne (Madde 3) aykırı davranan işveren veya işveren vekiline çalıştırılan her işçi başına idari para cezası uygulanır. Söz konusu ceza, birinci ve ikinci fıkralardaki yükümlülükleri ihlal etmeleri halinde çalıştırılan her işçi için ayrı ayrı hesaplanır. Yaptırımın caydırıcı niteliği, her işçi başına ayrı ceza öngörülmesi suretiyle pekiştirilmektedir.\n\nBÖLÜM 2 - HUKUKİ DAYANAKLAR\n- 4857 Sayılı İş Kanunu Madde 98",
         "key_entities": [
-          "fazla çalışma",
-          "fazla sürelerle çalışma",
-          "%50",
-          "%25",
-          "45 saat"
+          "işyeri bildirme",
+          "idari para cezası",
+          "her işçi başına",
+          "işveren"
         ],
-        "source_quote": "Her bir saat fazla çalışma için verilecek ücret normal çalışma ücretinin saat başına düşen miktarının yüzde elli yükseltilmesi suretiyle ödenir. Haftalık çalışma süresinin sözleşmelerle kırkbeş saatin altında belirlendiği durumlarda... bu süreyi aşan ve kırkbeş saate kadar yapılan çalışmalar fazla sürelerle çalışmadır. ... Her bir saat fazla sürelerle çalışma için verilecek ücret normal çalışma ücretinin saat başına düşen miktarının yüzde yirmibeş yükseltilmesi suretiyle ödenir."
+        "source_quote": "Bu Kanunun 3 üncü maddesinin birinci ve ikinci fıkralarındaki işyeri bildirme yükümlülüğüne aykırı davranan işveren veya işveren vekiline, çalıştırılan her işçi için... idari para cezası uygulanır."
       },
       "alternative_correct_answers": [
-        "Fazla çalışma 45 saati aşar ve %50 zamlı, fazla sürelerle çalışma 45 saate kadar olup %25 zamlıdır.",
-        "45 saat üstü fazla çalışma (%50 zam), 45 saate kadar fazla süre (%25 zam)."
+        "İşyeri bildirimi yapılmadığında çalıştırılan her işçi için ayrı ayrı idari para cezası uygulanır.",
+        "Madde 98 uyarınca bildirme yükümlülüğü ihlalinde her işçi için ceza hesaplanır."
       ],
       "source": "4857 Sayılı İş Kanunu",
-      "source_details":  {
+      "source_details": {
         "document": "1.5.4857.docx",
-        "article": "Madde 41",
-        "section": "Dördüncü Bölüm - Çalışma Süreleri"
+        "article": "Madde 98",
+        "section": "Yedinci Bölüm - Ceza Hükümleri"
       },
-      "difficulty":  "orta",
-      "question_type": "karşılaştırma",
+      "difficulty": "orta",
+      "question_type": "olgusal",
       "evaluation_criteria": {
-        "comparison_required": true,
         "must_include": [
-          "fazla çalışma",
-          "%50",
-          "yüzde elli"
+          "idari para cezası",
+          "her işçi"
         ],
         "should_include": [
-          "%25",
-          "yüzde yirmi beş",
-          "45 saat"
+          "işyeri bildirme",
+          "işveren"
         ]
       }
     },
     {
-      "id":  17,
-      "question": "Yıllık ücretli izin süresi nasıl hesaplanır?",
-      "answer":  {
-        "main_answer": "BÖLÜM 1 - AÇIKLAMA\nYıllık ücretli izne hak kazanmak için en az 1 yıl çalışmış olmak gerekir. İzin süreleri kıdeme göre şöyle belirlenir:  1 yıldan 5 yıla kadar (5 dahil) olanlara en az 14 gün, 5 yıldan fazla 15 yıldan az olanlara en az 20 gün, 15 yıl (dahil) ve daha fazla olanlara en az 26 gün izin verilir.  Yer altı işlerinde çalışanların izin süreleri 4'er gün artırılır.  Ayrıca 18 yaş ve altı ile 50 yaş ve üstü işçilerin izni 20 günden az olamaz.\n\nBÖLÜM 2 - HUKUKİ DAYANAKLAR\n- 4857 Sayılı İş Kanunu Madde 53",
+      "id": 7,
+      "question": "Türk Borçlar Kanunu'na göre hizmet sözleşmesinin feshinin kötüye kullanılması halinde işverenin tazminat yükümlülüğü nedir?",
+      "answer": {
+        "main_answer": "BÖLÜM 1 - AÇIKLAMA\nTBK Madde 434 uyarınca hizmet sözleşmesinin fesih hakkının kötüye kullanılarak sona erdirildiği durumlarda işveren, işçiye fesih bildirim süresine ait ücretin üç katı tutarında tazminat ödemekle yükümlüdür. Bu tazminat, olağan bildirim süresi ücretine ek olarak değil, onun üç katı olarak belirlenmekte olup fesih hakkının dürüstlük kurallarına aykırı kullanıldığının kanıtlanması gerekir.\n\nBÖLÜM 2 - HUKUKİ DAYANAKLAR\n- 6098 Sayılı Türk Borçlar Kanunu Madde 434",
         "key_entities": [
-          "yıllık izin",
-          "14 gün",
-          "20 gün",
-          "26 gün",
-          "1-5 yıl",
-          "5-15 yıl",
-          "15+ yıl"
+          "kötüye kullanma tazminatı",
+          "üç kat",
+          "bildirim süresi ücreti",
+          "dürüstlük kuralı"
         ],
-        "source_quote":  "İşçilere verilecek yıllık ücretli izin süresi, hizmet süresi; a) Bir yıldan beş yıla kadar (beş yıl dahil) olanlara ondört günden, b) Beş yıldan fazla onbeş yıldan az olanlara yirmi günden, c) Onbeş yıl (dahil) ve daha fazla olanlara yirmialtı günden, Az olamaz. Yer altı işlerinde çalışan işçilerin yıllık ücretli izin süreleri dörder gün arttırılarak uygulanır. Ancak onsekiz ve daha küçük yaştaki işçilerle elli ve daha yukarı yaştaki işçilere verilecek yıllık ücretli izin süresi yirmi günden az olamaz."
+        "source_quote": "Hizmet sözleşmesinin fesih hakkının kötüye kullanılarak sona erdirildiği durumlarda işveren, işçiye fesih bildirim süresine ait ücretin üç katı tutarında tazminat ödemekle yükümlüdür."
       },
-      "alternative_correct_answers":  [
-        "1-5 yıl:  14 gün, 5-15 yıl: 20 gün, 15 yıl üzeri:  26 gün.",
-        "Çalışma süresine göre 14, 20 veya 26 gün izin hakkı doğar."
+      "alternative_correct_answers": [
+        "Feshin kötüye kullanılması halinde bildirim süresi ücretinin 3 katı tazminat ödenir.",
+        "Dürüstlük kuralına aykırı fesihte kötüye kullanma tazminatı bildirim süresi ücretinin 3 katıdır."
       ],
-      "source": "4857 Sayılı İş Kanunu",
-      "source_details":  {
-        "document": "1.5.4857.docx",
-        "article": "Madde 53",
-        "section": "Üçüncü Bölüm - Ücret"
+      "source": "6098 Sayılı Türk Borçlar Kanunu",
+      "source_details": {
+        "document": "1.5.6098.docx",
+        "article": "Madde 434",
+        "section": "İkinci Kısım - Hizmet Sözleşmeleri"
       },
       "difficulty": "orta",
       "question_type": "olgusal",
-      "evaluation_criteria":  {
+      "evaluation_criteria": {
         "must_include": [
-          "14 gün",
-          "20 gün",
-          "26 gün"
+          "üç kat",
+          "3 kat",
+          "tazminat"
         ],
-        "should_include":  [
-          "1 yıl",
-          "5 yıl",
-          "15 yıl"
+        "should_include": [
+          "kötüye kullanma",
+          "bildirim süresi"
+        ],
+        "exact_number_required": true
+      }
+    },
+    {
+      "id": 8,
+      "question": "Türk Borçlar Kanunu'na göre işçinin haksız olarak işe başlamaması veya işi aniden bırakması durumunda işverenin tazminat hakkı nedir?",
+      "answer": {
+        "main_answer": "BÖLÜM 1 - AÇIKLAMA\nTBK Madde 439 uyarınca işçi haklı sebep olmaksızın işe başlamadığı veya aniden işi bıraktığı takdirde işveren, aylık ücretin dörtte birine eşit bir tazminat isteme hakkına sahiptir. Bu miktar asgari tazminattır; işveren ayrıca ek zararların tazminini da talep edebilir. İşçi de aynı kurala tabi olup işverenin haksız feshi halinde işçi de benzer tazminat isteyebilir.\n\nBÖLÜM 2 - HUKUKİ DAYANAKLAR\n- 6098 Sayılı Türk Borçlar Kanunu Madde 439",
+        "key_entities": [
+          "haksız işe başlamamak",
+          "aniden bırakmak",
+          "aylık ücretin dörtte biri",
+          "ek zarar"
+        ],
+        "source_quote": "İşçi, haklı sebep olmaksızın işe başlamadığı veya aniden işi bıraktığı takdirde işveren, aylık ücretin dörtte birine eşit bir tazminat isteme hakkına sahiptir."
+      },
+      "alternative_correct_answers": [
+        "İşveren aylık ücretin 1/4'i oranında tazminat ve ek zararlarını talep edebilir.",
+        "Haksız işi bırakmada aylık ücretin dörtte biri tazminat; üstündeki zararlar ayrıca talep edilebilir."
+      ],
+      "source": "6098 Sayılı Türk Borçlar Kanunu",
+      "source_details": {
+        "document": "1.5.6098.docx",
+        "article": "Madde 439",
+        "section": "İkinci Kısım - Hizmet Sözleşmeleri"
+      },
+      "difficulty": "orta",
+      "question_type": "olgusal",
+      "evaluation_criteria": {
+        "must_include": [
+          "dörtte bir",
+          "1/4",
+          "tazminat"
+        ],
+        "should_include": [
+          "aylık ücret",
+          "ek zarar"
+        ],
+        "exact_number_required": true
+      }
+    },
+    {
+      "id": 9,
+      "question": "Türk Borçlar Kanunu'na göre yıllık izin (ücretli tatil) kaç hafta olarak düzenlenmiştir ve genç ve yaşlı işçiler için fark var mıdır?",
+      "answer": {
+        "main_answer": "BÖLÜM 1 - AÇIKLAMA\nTBK Madde 422 uyarınca işveren, en az bir yıl çalışmış olan işçilere yılda en az iki hafta ücretli yıllık izin vermekle yükümlüdür. On sekiz yaşından küçük işçiler ile elli yaşından büyük işçilere ise en az üç hafta ücretli yıllık izin verilmesi zorunludur. Bu süreler asgari limitler olup sözleşmeyle artırılabilir.\n\nBÖLÜM 2 - HUKUKİ DAYANAKLAR\n- 6098 Sayılı Türk Borçlar Kanunu Madde 422",
+        "key_entities": [
+          "yıllık izin",
+          "2 hafta",
+          "3 hafta",
+          "18 yaş altı",
+          "50 yaş üstü"
+        ],
+        "source_quote": "İşveren, en az bir yıl çalışmış olan işçilere yılda en az iki hafta ve onsekiz yaşından küçük işçiler ile elli yaşından büyük işçilere de en az üç hafta ücretli yıllık izin vermekle yükümlüdür."
+      },
+      "alternative_correct_answers": [
+        "Genel kural 2 hafta; 18 yaş altı ve 50 yaş üstü için 3 hafta.",
+        "TBK'ya göre en az 1 yıl çalışana 2 hafta; genç ve yaşlılara 3 hafta izin verilir."
+      ],
+      "source": "6098 Sayılı Türk Borçlar Kanunu",
+      "source_details": {
+        "document": "1.5.6098.docx",
+        "article": "Madde 422",
+        "section": "İkinci Kısım - Hizmet Sözleşmeleri"
+      },
+      "difficulty": "kolay",
+      "question_type": "olgusal",
+      "evaluation_criteria": {
+        "must_include": [
+          "2 hafta",
+          "3 hafta"
+        ],
+        "should_include": [
+          "18 yaş",
+          "50 yaş",
+          "1 yıl"
         ],
         "exact_numbers_required": true
       }
     },
     {
-      "id": 18,
-      "question": "İhbar süresi ne kadardır?",
+      "id": 10,
+      "question": "5510 sayılı SSGSSK'ya göre hastalık hali ve analık hali nasıl tanımlanmaktadır?",
       "answer": {
-        "main_answer": "BÖLÜM 1 - AÇIKLAMA\nBelirsiz süreli iş sözleşmelerinde fesih bildirimi, işçinin kıdemine göre belirlenen süreler kadar önce yapılmalıdır.  Buna göre ihbar süreleri; 6 aydan az çalışanlar için 2 hafta, 6 ay ile 1,5 yıl arası çalışanlar için 4 hafta, 1,5 yıl ile 3 yıl arası çalışanlar için 6 hafta ve 3 yıldan fazla çalışanlar için 8 haftadır.\n\nBÖLÜM 2 - HUKUKİ DAYANAKLAR\n- 4857 Sayılı İş Kanunu Madde 17",
+        "main_answer": "BÖLÜM 1 - AÇIKLAMA\n5510 sayılı Kanun'un 15. maddesine göre hastalık hali; iş kazası ve meslek hastalığı dışında kalan ve iş göremezliğe neden olan rahatsızlıklar olarak tanımlanır. Analık hali ise sigortalı kadının ya da sigortalının sigortalı olmayan eşinin gebeliğinin başladığı tarihten doğumdan sonraki ilk sekiz haftalık, çoğul gebelikte ilk on haftalık süreye kadar olan gebelik ve analıkla ilgili rahatsızlık ve engellilik halleridir.\n\nBÖLÜM 2 - HUKUKİ DAYANAKLAR\n- 5510 Sayılı SSGSSK Madde 15",
         "key_entities": [
-          "ihbar süresi",
-          "2 hafta",
-          "4 hafta",
-          "6 hafta",
-          "8 hafta"
+          "hastalık hali",
+          "analık hali",
+          "8 hafta",
+          "10 hafta",
+          "iş göremezlik"
         ],
-        "source_quote": "İş sözleşmeleri; a) İşi altı aydan az sürmüş olan işçi için...  iki hafta sonra..."
+        "source_quote": "4 üncü maddenin birinci fıkrasının (a) ve (b) bentleri kapsamındaki sigortalının, iş kazası ve meslek hastalığı dışında kalan ve iş göremezliğine neden olan rahatsızlıklar, hastalık halidir."
       },
       "alternative_correct_answers": [
-        "0-6 ay: 2 hafta, 6 ay-1.5 yıl: 4 hafta, 1.5-3 yıl: 6 hafta, 3+ yıl: 8 hafta.",
-        "Kıdeme göre 2, 4, 6 veya 8 hafta ihbar süresi uygulanır."
+        "Hastalık hali iş kazası dışı iş göremezliktir; analık hali doğum öncesi ve sonrası 8 (çoğulda 10) haftayı kapsar.",
+        "İK ve meslek hastalığı dışındaki iş göremezlik hastalık; gebelik ve sonrası analık halidir."
       ],
-      "source": "4857 Sayılı İş Kanunu",
+      "source": "5510 Sayılı SSGSSK",
       "source_details": {
-        "document":  "1.5.4857.docx",
-        "article": "Madde 17",
-        "section": "İkinci Bölüm - İş Sözleşmesi"
+        "document": "1.5.5510.docx",
+        "article": "Madde 15",
+        "section": "İkinci Kısım - Sigorta Kolları"
       },
-      "difficulty":  "orta",
+      "difficulty": "orta",
       "question_type": "olgusal",
-      "evaluation_criteria":  {
+      "evaluation_criteria": {
         "must_include": [
-          "2 hafta",
-          "4 hafta",
-          "6 hafta",
+          "hastalık hali",
+          "analık hali",
           "8 hafta"
         ],
-        "exact_numbers_required":  true
+        "should_include": [
+          "10 hafta",
+          "çoğul gebelik"
+        ],
+        "exact_number_required": true
       }
     },
     {
-      "id":  19,
-      "question": "İşverenin iş sözleşmesini haklı nedenle derhal fesih hakkı hangi durumlarda doğar?",
+      "id": 11,
+      "question": "5510 sayılı SSGSSK'ya göre geçici iş göremezlik ödeneğine hak kazanmak için hangi prim ödeme koşulu aranır?",
       "answer": {
-        "main_answer":  "BÖLÜM 1 - AÇIKLAMA\nİşveren, bazı ciddi durumlarda bildirim süresini beklemeden sözleşmeyi derhal feshedebilir. Bu durumlar kanunda; sağlık sebepleri (işçinin hastalığı, engelliliği veya devamsızlığı), ahlak ve iyi niyet kurallarına uymayan haller (işvereni yanıltma, hırsızlık, hakaret, görevini yapmamakta ısrar vb.) ve zorlayıcı sebepler (işyerinde işin durması vb.) olarak üç ana başlıkta toplanmıştır.\n\nBÖLÜM 2 - HUKUKİ DAYANAKLAR\n- 4857 Sayılı İş Kanunu Madde 25",
+        "main_answer": "BÖLÜM 1 - AÇIKLAMA\n5510 sayılı Kanun'un 18. maddesine göre hastalık nedeniyle geçici iş göremezlik ödeneğine hak kazanabilmek için sigortalının, iş göremezliğin başladığı tarihten önceki bir yıl içinde en az doksan gün kısa vadeli sigorta priminin bildirilmiş olması gerekmektedir. Ayrıca istirahat raporu alınmış olması zorunludur. İş kazası veya meslek hastalığı durumlarında ise prim gün koşulu aranmaksızın her gün için ödenek verilir.\n\nBÖLÜM 2 - HUKUKİ DAYANAKLAR\n- 5510 Sayılı SSGSSK Madde 18",
         "key_entities": [
-          "haklı fesih",
-          "sağlık",
-          "ahlak",
-          "devamsızlık",
-          "zorlayıcı sebep"
+          "geçici iş göremezlik",
+          "90 gün",
+          "1 yıl içinde",
+          "istirahat raporu",
+          "prim koşulu"
         ],
-        "source_quote":  "Süresi belirli olsun veya olmasın işveren, aşağıda yazılı hallerde iş sözleşmesini sürenin bitiminden önce veya bildirim süresini beklemesizin feshedebilir: I- Sağlık sebepleri II- Ahlak ve iyi niyet kurallarına uymayan haller ve benzerleri III- Zorlayıcı sebepler IV- İşçinin gözaltına alınması veya tutuklanması halinde devamsızlığın bildirim süresini aşması."
+        "source_quote": "iş göremezliğin başladığı tarihten önceki bir yıl içinde en az doksan gün kısa vadeli sigorta primi bildirilmiş olması şartıyla geçici iş göremezliğin üçüncü gününden başlamak üzere her gün için..."
       },
       "alternative_correct_answers": [
-        "Sağlık nedenleri, ahlaka aykırı davranışlar veya zorlayıcı sebepler halinde.",
-        "Devamsızlık, işvereni yanıltma, hırsızlık, güvenliği tehlikeye atma gibi hallerde."
+        "Hastalıkta son 1 yılda en az 90 gün prim ve istirahat raporu koşulu aranır.",
+        "90 gün prim ödeme ve istirahat raporu zorunludur; iş kazasında prim şartı yoktur."
+      ],
+      "source": "5510 Sayılı SSGSSK",
+      "source_details": {
+        "document": "1.5.5510.docx",
+        "article": "Madde 18",
+        "section": "İkinci Kısım - Sigorta Kolları"
+      },
+      "difficulty": "orta",
+      "question_type": "olgusal",
+      "evaluation_criteria": {
+        "must_include": [
+          "90 gün",
+          "doksan gün",
+          "1 yıl"
+        ],
+        "should_include": [
+          "istirahat raporu",
+          "prim"
+        ],
+        "exact_number_required": true
+      }
+    },
+    {
+      "id": 12,
+      "question": "854 sayılı Deniz İş Kanunu'nun uygulama kapsamı nedir; hangi gemiler ve çalışanlar bu kanun kapsamındadır?",
+      "answer": {
+        "main_answer": "BÖLÜM 1 - AÇIKLAMA\n854 sayılı Deniz İş Kanunu Madde 1 uyarınca bu kanun; denizlerde, göllerde ve akarsularda Türk Bayrağını taşıyan ve yüz ve daha yukarı grostonilatoluk gemilerde hizmet akdi ile çalışan gemiadamları ve bunların işverenleri hakkında uygulanır. Aynı işverene ait gemilerin toplam groston miktarı yüz veya daha fazla olduğunda ya da işverenin çalıştırdığı gemiadamı sayısı beş veya daha fazla bulunduğunda da kanun uygulanır. Sandal, mavna ve salapurya gibi araçlar da gemi sayılır.\n\nBÖLÜM 2 - HUKUKİ DAYANAKLAR\n- 854 Sayılı Deniz İş Kanunu Madde 1",
+        "key_entities": [
+          "Deniz İş Kanunu",
+          "100 grostonilato",
+          "Türk Bayrağı",
+          "gemiadamı",
+          "5 kişi"
+        ],
+        "source_quote": "Bu kanun denizlerde, göllerde ve akarsularda Türk Bayrağını taşıyan ve yüz ve daha yukarı grostonilatoluk gemilerde bir hizmet akti ile çalışan gemiadamları ve bunların işverenleri hakkında uygulanır."
+      },
+      "alternative_correct_answers": [
+        "Türk Bayrağı taşıyan 100+ groston gemilerdeki gemiadamları ve işverenler kapsam dahilindedir.",
+        "Denizlerde, göllerde ve akarsularda çalışan gemiadamları kapsama girer; sandal ve mavna da gemi sayılır."
+      ],
+      "source": "854 Sayılı Deniz İş Kanunu",
+      "source_details": {
+        "document": "1.5.854.docx",
+        "article": "Madde 1",
+        "section": "Birinci Bölüm - Genel Hükümler"
+      },
+      "difficulty": "kolay",
+      "question_type": "olgusal",
+      "evaluation_criteria": {
+        "must_include": [
+          "Türk Bayrağı",
+          "gemiadamı",
+          "100"
+        ],
+        "should_include": [
+          "grostonilato",
+          "sandal",
+          "mavna"
+        ]
+      }
+    },
+    {
+      "id": 13,
+      "question": "854 sayılı Deniz İş Kanunu'na göre bildirimler nasıl yapılmak zorundadır?",
+      "answer": {
+        "main_answer": "BÖLÜM 1 - AÇIKLAMA\n854 sayılı Deniz İş Kanunu Madde 47 uyarınca bildirimlerin ilgiliye yazılı olarak ve imza karşılığında yapılması zorunludur. Bildirim yapılan kişi imzalamaktan kaçınırsa bu durum tutanakla tespit edilir. 7201 sayılı Tebligat Kanunu kapsamına giren durumlarda ise o kanun hükümlerine göre tebligat yapılır.\n\nBÖLÜM 2 - HUKUKİ DAYANAKLAR\n- 854 Sayılı Deniz İş Kanunu Madde 47",
+        "key_entities": [
+          "yazılı bildirim",
+          "imza karşılığı",
+          "tutanak",
+          "tebligat"
+        ],
+        "source_quote": "Bildirimlerin ilgiliye yazılı olarak ve imza karşılığında yapılması gerekir. Bildirim yapılan kişi bunu imzalamazsa; durum o yerde tutanakla tespit edilir."
+      },
+      "alternative_correct_answers": [
+        "Yazılı ve imza karşılığı yapılır; imzalamama halinde tutanak tutulur.",
+        "Bildirimler yazılı ve imza karşılığı olup redde karşı tutanak düzenlenir."
+      ],
+      "source": "854 Sayılı Deniz İş Kanunu",
+      "source_details": {
+        "document": "1.5.854.docx",
+        "article": "Madde 47",
+        "section": "Genel Hükümler"
+      },
+      "difficulty": "kolay",
+      "question_type": "olgusal",
+      "evaluation_criteria": {
+        "must_include": [
+          "yazılı",
+          "imza",
+          "tutanak"
+        ],
+        "should_include": [
+          "tebligat"
+        ]
+      }
+    },
+    {
+      "id": 14,
+      "question": "5953 sayılı Basın Mesleği Kanunu'na göre devlet kurumlarında çalışan memur ve hizmetliler bu kanun kapsamında mıdır?",
+      "answer": {
+        "main_answer": "BÖLÜM 1 - AÇIKLAMA\n5953 sayılı Kanun'un 2. maddesi uyarınca kanunun kapsamına girmekle birlikte devlet, vilayet ve belediyeler ile iktisadi devlet teşekkülleri ve bunlara ait şirketlerde istihdam edilen memur ve hizmetliler hakkında bu kanun hükümleri uygulanmaz. Dolayısıyla kamu kurumlarındaki gazeteciler bazı koruma hükümlerinin dışında kalabilmektedir.\n\nBÖLÜM 2 - HUKUKİ DAYANAKLAR\n- 5953 Sayılı Basın Mesleği Kanunu Madde 2",
+        "key_entities": [
+          "kamu kurumu",
+          "memur",
+          "hizmetli",
+          "kapsam dışı",
+          "iktisadi devlet teşekkülü"
+        ],
+        "source_quote": "Birinci maddenin şümulü dahilinde bulunup da Devlet, vilayet ve belediyeler ve İktisadi Devlet Teşekkül ve müesseseleriyle sermayesinin yarısından fazlası bu teşekküllere ait şirketlerde istihdam edilen memur ve hizmetliler hakkında bu Kanun hükümleri uygulanmaz."
+      },
+      "alternative_correct_answers": [
+        "Hayır, kamu kurumlarındaki memur ve hizmetliler bu kanun kapsamı dışındadır.",
+        "Devlet ve bağlı kurumların personeli 5953 sayılı Kanun'dan yararlanamaz."
+      ],
+      "source": "5953 Sayılı Basın Mesleği Kanunu",
+      "source_details": {
+        "document": "1.5.5953.docx",
+        "article": "Madde 2",
+        "section": "Birinci Bölüm - Genel Hükümler"
+      },
+      "difficulty": "kolay",
+      "question_type": "olgusal",
+      "evaluation_criteria": {
+        "must_include": [
+          "memur",
+          "kapsam dışı",
+          "devlet"
+        ],
+        "should_include": [
+          "belediye",
+          "iktisadi devlet teşekkülü"
+        ]
+      }
+    },
+    {
+      "id": 15,
+      "question": "4447 sayılı İşsizlik Sigortası Kanunu'na göre günlük işsizlik ödeneğinin hesaplanma yöntemi ve azami sınırı nedir?",
+      "answer": {
+        "main_answer": "BÖLÜM 1 - AÇIKLAMA\n4447 sayılı Kanun'un 50. maddesine göre günlük işsizlik ödeneği, sigortalının son dört aylık prime esas kazançları dikkate alınarak hesaplanan günlük ortalama brüt kazancının yüzde kırkıdır. Hesaplanan ödenek miktarı hiçbir durumda 16 yaşından büyük işçiler için uygulanan aylık asgari ücretin brüt tutarının yüzde seksenini geçemez. Ödeme süreleri ise son 3 yılda; 600 gün prim ödenmiş olması halinde 180 gün, 900 gün için 240 gün, 1080 gün için 300 gündür.\n\nBÖLÜM 2 - HUKUKİ DAYANAKLAR\n- 4447 Sayılı İşsizlik Sigortası Kanunu Madde 50",
+        "key_entities": [
+          "işsizlik ödeneği",
+          "%40",
+          "son 4 ay",
+          "asgari ücretin %80",
+          "prim günü"
+        ],
+        "source_quote": "Günlük işsizlik ödeneği, sigortalının son dört aylık prime esas kazançları dikkate alınarak hesaplanan günlük ortalama brüt kazancının yüzde kırkıdır."
+      },
+      "alternative_correct_answers": [
+        "Son 4 aylık brüt kazancın %40'ı; asgari ücretin %80'ini geçemez.",
+        "Günlük ödenek 4 aylık ortalama brütün %40'ı olup asgari ücretin %80 tavanına tabidir."
+      ],
+      "source": "4447 Sayılı İşsizlik Sigortası Kanunu",
+      "source_details": {
+        "document": "1.5.4447.docx",
+        "article": "Madde 50",
+        "section": "VII. Bölüm - İşsizlik Sigortası"
+      },
+      "difficulty": "orta",
+      "question_type": "olgusal",
+      "evaluation_criteria": {
+        "must_include": [
+          "%40",
+          "yüzde kırk",
+          "4 ay"
+        ],
+        "should_include": [
+          "%80",
+          "asgari ücret"
+        ],
+        "exact_numbers_required": true
+      }
+    },
+    {
+      "id": 16,
+      "question": "6735 sayılı Uluslararası İşgücü Kanunu'na göre yabancılara çalışma izni başvurusu nasıl yapılır ve uzatma için ne zaman başvurulmalıdır?",
+      "answer": {
+        "main_answer": "BÖLÜM 1 - AÇIKLAMA\n6735 sayılı Kanun'un 7. maddesine göre çalışma izni başvuruları; yurt içinde doğrudan Çalışma ve Sosyal Güvenlik Bakanlığı'na, yurt dışında ise yabancının vatandaşı olduğu veya yasal olarak bulunduğu ülkedeki Türkiye büyükelçilikleri ya da başkonsolosluklarına yapılır. Yetkili aracı kurum da başvuru yapabilir. Uzatma başvurusu izin süresinin dolmasına altmış gün kala yapılmalıdır; bu süre geçildikten sonra yapılan uzatma başvuruları reddedilir.\n\nBÖLÜM 2 - HUKUKİ DAYANAKLAR\n- 6735 Sayılı Uluslararası İşgücü Kanunu Madde 7",
+        "key_entities": [
+          "çalışma izni başvurusu",
+          "Bakanlık",
+          "büyükelçilik",
+          "60 gün uzatma",
+          "yurt dışı"
+        ],
+        "source_quote": "Çalışma izni başvuruları yurt içinde doğrudan Bakanlığa, yurt dışında yabancının vatandaşı olduğu veya yasal olarak bulunduğu ülkedeki Türkiye Cumhuriyeti büyükelçilikleri veya başkonsolosluklarına yapılır."
+      },
+      "alternative_correct_answers": [
+        "Yurt içinde Bakanlığa, yurt dışında büyükelçiliğe yapılır; uzatma 60 gün öncesinde başvurulmalıdır.",
+        "Bakanlık veya büyükelçilik yoluyla başvurulur; süresi dolmadan 60 gün içinde uzatma talep edilmeli."
+      ],
+      "source": "6735 Sayılı Uluslararası İşgücü Kanunu",
+      "source_details": {
+        "document": "1.5.6735.docx",
+        "article": "Madde 7",
+        "section": "İkinci Bölüm - Çalışma İzni"
+      },
+      "difficulty": "orta",
+      "question_type": "olgusal",
+      "evaluation_criteria": {
+        "must_include": [
+          "Bakanlık",
+          "büyükelçilik",
+          "60 gün"
+        ],
+        "should_include": [
+          "uzatma",
+          "yurt dışı"
+        ],
+        "exact_number_required": true
+      }
+    },
+    {
+      "id": 17,
+      "question": "7036 sayılı İş Mahkemeleri Kanunu'na göre iş mahkemelerinin görev alanı nedir?",
+      "answer": {
+        "main_answer": "BÖLÜM 1 - AÇIKLAMA\n7036 sayılı Kanun'un 5. maddesine göre iş mahkemeleri iki ana grup uyuşmazlığa bakar. Birinci grup: 5953, 854, 4857 sayılı kanunlara veya TBK'nın hizmet sözleşmesi bölümüne tabi işçiler ile işveren veya işveren vekilleri arasındaki iş ilişkisinden doğan hukuk uyuşmazlıkları. İkinci grup: Sosyal Güvenlik Kurumu ya da Türkiye İş Kurumu'nun taraf olduğu uyuşmazlıklar (idari para cezası itirazları hariç).\n\nBÖLÜM 2 - HUKUKİ DAYANAKLAR\n- 7036 Sayılı İş Mahkemeleri Kanunu Madde 5",
+        "key_entities": [
+          "iş mahkemesi görevi",
+          "işçi-işveren",
+          "SGK",
+          "TİŞ Kurumu",
+          "4857",
+          "854",
+          "5953"
+        ],
+        "source_quote": "İş mahkemeleri; 4857 sayılı İş Kanununa veya 6098 sayılı Türk Borçlar Kanununun İkinci Kısmının Altıncı Bölümünde düzenlenen hizmet sözleşmelerine tabi işçiler ile işveren veya işveren vekilleri arasında, iş ilişkisi nedeniyle sözleşmeden veya kanundan doğan her türlü hukuk uyuşmazlıklarına... bakar."
+      },
+      "alternative_correct_answers": [
+        "4857, 854, 5953 ve TBK kapsamındaki işçi-işveren uyuşmazlıkları ve SGK/İŞKUR uyuşmazlıkları görev alanındadır.",
+        "İş ilişkisinden doğan tüm hukuki uyuşmazlıklar ve sosyal güvenlik uyuşmazlıkları iş mahkemelerinde görülür."
+      ],
+      "source": "7036 Sayılı İş Mahkemeleri Kanunu",
+      "source_details": {
+        "document": "1.5.7036.docx",
+        "article": "Madde 5",
+        "section": "Birinci Bölüm"
+      },
+      "difficulty": "orta",
+      "question_type": "olgusal",
+      "evaluation_criteria": {
+        "must_include": [
+          "iş mahkemesi",
+          "işçi",
+          "işveren",
+          "SGK"
+        ],
+        "should_include": [
+          "4857",
+          "854",
+          "5953"
+        ]
+      }
+    },
+    {
+      "id": 18,
+      "question": "657 sayılı Devlet Memurları Kanunu'na göre kamu hizmetleri hangi istihdam biçimleriyle yürütülmektedir?",
+      "answer": {
+        "main_answer": "BÖLÜM 1 - AÇIKLAMA\n657 sayılı Kanun'un 4. maddesi uyarınca kamu hizmetleri dört istihdam biçimiyle yürütülmektedir: (A) Memur: asli ve sürekli kamu hizmetlerini yürütenler; (B) Sözleşmeli personel: özel uzmanlık gerektiren projelerde görevlendirilenler; (C) Geçici personel: geçici veya mevsimlik hizmetlerde çalıştırılanlar; (D) İşçi: iş mevzuatına tabi olarak çalıştırılanlar. Asli ve sürekli kamu görevleri yalnızca memurlar eliyle gördürülür.\n\nBÖLÜM 2 - HUKUKİ DAYANAKLAR\n- 657 Sayılı Devlet Memurları Kanunu Madde 4",
+        "key_entities": [
+          "memur",
+          "sözleşmeli personel",
+          "geçici personel",
+          "işçi",
+          "4 istihdam biçimi"
+        ],
+        "source_quote": "Kamu hizmetleri; memurlar, sözleşmeli personel, geçici personel ve işçiler eliyle gördürülür."
+      },
+      "alternative_correct_answers": [
+        "Memur, sözleşmeli personel, geçici personel ve işçi olmak üzere dört istihdam biçimi vardır.",
+        "Kamu hizmetleri memur, sözleşmeli, geçici ve işçi aracılığıyla yürütülür."
+      ],
+      "source": "657 Sayılı Devlet Memurları Kanunu",
+      "source_details": {
+        "document": "1.5.657.docx",
+        "article": "Madde 4",
+        "section": "Kısım I - Genel Hükümler"
+      },
+      "difficulty": "kolay",
+      "question_type": "olgusal",
+      "evaluation_criteria": {
+        "must_include": [
+          "memur",
+          "sözleşmeli",
+          "işçi"
+        ],
+        "should_include": [
+          "geçici personel",
+          "4 biçim"
+        ]
+      }
+    },
+    {
+      "id": 19,
+      "question": "4857 sayılı İş Kanunu'na göre çağrı üzerine çalışma ve uzaktan çalışma nasıl tanımlanmaktadır?",
+      "answer": {
+        "main_answer": "BÖLÜM 1 - AÇIKLAMA\nİş Kanunu Madde 14'e göre çağrı üzerine çalışma; işçinin yapmayı üstlendiği işle ilgili kendisine ihtiyaç duyulduğunda iş görme edimini yerine getireceğinin kararlaştırıldığı iş ilişkisidir. İşveren çağrısını işçiye en az dört iş günü önceden yapmak zorundadır; aksi kararlaştırılmamışsa haftalık çalışma süresi yirmi saat kabul edilir. Uzaktan çalışma ise işçinin işveren tarafından oluşturulan iş organizasyonu kapsamında hizmet sunduğu, işyeri dışında bilişim teknolojileri aracılığıyla yürütülen çalışma biçimidir.\n\nBÖLÜM 2 - HUKUKİ DAYANAKLAR\n- 4857 Sayılı İş Kanunu Madde 14",
+        "key_entities": [
+          "çağrı üzerine çalışma",
+          "uzaktan çalışma",
+          "4 iş günü",
+          "20 saat",
+          "bilişim"
+        ],
+        "source_quote": "Yazılı sözleşme ile işçinin yapmayı üstlendiği işle ilgili olarak kendisine ihtiyaç duyulması halinde iş görme ediminin yerine getirileceğinin kararlaştırıldığı iş ilişkisi, çağrı üzerine çalışmadır."
+      },
+      "alternative_correct_answers": [
+        "Çağrı üzerine çalışmada işveren 4 gün önceden bildirim yapar; aksi hâlde haftalık 20 saat esas alınır.",
+        "Uzaktan çalışma işyeri dışında bilişim teknolojileriyle yürütülen çalışma biçimidir."
       ],
       "source": "4857 Sayılı İş Kanunu",
       "source_details": {
-        "document":  "1.5.4857.docx",
-        "article": "Madde 25",
+        "document": "1.5.4857.docx",
+        "article": "Madde 14",
         "section": "İkinci Bölüm - İş Sözleşmesi"
       },
-      "difficulty": "zor",
+      "difficulty": "orta",
       "question_type": "kavramsal",
-      "evaluation_criteria":  {
+      "evaluation_criteria": {
         "must_include": [
-          "haklı fesih",
-          "sağlık",
-          "ahlak"
+          "çağrı üzerine çalışma",
+          "uzaktan çalışma"
         ],
-        "should_include":  [
-          "devamsızlık",
-          "zorlayıcı sebep"
+        "should_include": [
+          "4 iş günü",
+          "20 saat"
         ]
       }
     },
     {
       "id": 20,
-      "question": "Kıdem tazminatı miktarı nasıl hesaplanır?",
-      "answer":  {
-        "main_answer": "BÖLÜM 1 - AÇIKLAMA\nKıdem tazminatı, çalıştığınız her tam yıl için 30 günlük brüt ücretiniz tutarında ödenir.  Bir yıldan artan süreler (ay ve gün) için de aynı oran üzerinden hesaplama yapılır.  Hesaplamada sadece çıplak maaşınız değil; yemek, yol, ikramiye gibi süreklilik arz eden ve parayla ölçülebilen tüm menfaatler de (giydirilmiş ücret) dikkate alınır.\n\nBÖLÜM 2 - HUKUKİ DAYANAKLAR\n- 1475 Sayılı İş Kanunu Madde 14",
+      "question": "4857 sayılı İş Kanunu'na göre feshin geçerli sebebe dayandırılması koşulları nelerdir?",
+      "answer": {
+        "main_answer": "BÖLÜM 1 - AÇIKLAMA\nİş Kanunu Madde 18 uyarınca otuz veya daha fazla işçi çalıştıran işyerlerinde en az altı aylık kıdemi olan işçinin iş sözleşmesini fesheden işveren, işçinin yeterliliğinden ya da davranışlarından veyahut işletmenin, işyerinin veya işin gereklerinden kaynaklanan geçerli bir sebebe dayanmak zorundadır. Yetersiz performans, işyerinin küçülmesi gibi nedenler geçerli sebep sayılabilir; ancak işçinin sendikal faaliyeti, ırk, cinsiyet gibi ayrımcı nedenler geçerli sebep oluşturmaz.\n\nBÖLÜM 2 - HUKUKİ DAYANAKLAR\n- 4857 Sayılı İş Kanunu Madde 18",
         "key_entities": [
-          "30 günlük ücret",
-          "brüt ücret",
-          "her yıl",
-          "menfaatler"
+          "geçerli sebep",
+          "30 işçi",
+          "6 aylık kıdem",
+          "fesih",
+          "işin gerekleri"
         ],
-        "source_quote": "Her geçen tam yıl için işverence işçiye 30 günlük ücreti tutarında kıdem tazminatı ödenir."
+        "source_quote": "Otuz veya daha fazla işçi çalıştıran işyerlerinde en az altı aylık kıdemi olan işçinin belirsiz süreli iş sözleşmesini fesheden işveren, işçinin yeterliliğinden veya davranışlarından ya da işletmenin, işyerinin veya işin gereklerinden kaynaklanan geçerli bir sebebe dayanmak zorundadır."
       },
       "alternative_correct_answers": [
-        "Her yıl için 30 günlük brüt ücret ödenir.",
-        "Çalışılan her tam yıl için bir aylık brüt maaş tutarında hesaplanır."
+        "30+ işçili, 6 ay kıdemli işçi için fesih geçerli sebebe dayanmalıdır.",
+        "İşçinin yeterliliği, davranışı veya işin gerekleri geçerli fesih sebebi oluşturabilir."
       ],
       "source": "4857 Sayılı İş Kanunu",
       "source_details": {
-        "document":  "1.5.4857.docx",
-        "article": "Madde 120 (1475 sayılı Kanun Madde 14)",
-        "section":  "Geçici Maddeler"
+        "document": "1.5.4857.docx",
+        "article": "Madde 18",
+        "section": "İkinci Bölüm - İş Sözleşmesi"
       },
       "difficulty": "orta",
       "question_type": "kavramsal",
-      "evaluation_criteria":  {
+      "evaluation_criteria": {
         "must_include": [
-          "30 gün",
-          "brüt ücret"
+          "geçerli sebep",
+          "30 işçi",
+          "6 ay"
         ],
         "should_include": [
-          "her yıl",
-          "menfaat"
+          "yeterlilik",
+          "davranış",
+          "işin gerekleri"
         ]
       }
     },
     {
       "id": 21,
-      "question": "Fesih bildirimine itiraz süresi ne kadardır?",
+      "question": "4857 sayılı İş Kanunu'na göre toplu işçi çıkarmada işverenin bildirimi kime ve ne kadar süre öncesinden yapması gerekmektedir?",
       "answer": {
-        "main_answer": "BÖLÜM 1 - AÇIKLAMA\nEğer iş sözleşmenizin sebep gösterilmeden veya geçersiz bir sebeple feshedildiğini düşünüyorsanız, fesih bildiriminin size tebliğ edildiği tarihten itibaren bir ay içinde harekete geçmelisiniz. Bu süre hak düşürücü süredir.  İşe iade talebiyle öncelikle arabulucuya başvurmak zorunludur.\n\nBÖLÜM 2 - HUKUKİ DAYANAKLAR\n- 4857 Sayılı İş Kanunu Madde 20",
+        "main_answer": "BÖLÜM 1 - AÇIKLAMA\nİş Kanunu Madde 29 uyarınca ekonomik, teknolojik, yapısal veya benzeri nedenlerle toplu işçi çıkarmak isteyen işveren bu niyetini en az otuz gün önceden yazılı biçimde işyeri sendika temsilcisine, ilgili bölge müdürlüğüne ve Türkiye İş Kurumu'na bildirmek zorundadır. Toplu işçi çıkarma; 20-100 arası işçi bulunan işyerlerinde 10 ve üzeri, 101-300 arası işçide 10%'u aşan, 301 ve üzeri işçide 30 ve üzeri işçinin 30 günlük sürede çıkarılmasıdır.\n\nBÖLÜM 2 - HUKUKİ DAYANAKLAR\n- 4857 Sayılı İş Kanunu Madde 29",
         "key_entities": [
-          "1 ay",
-          "fesih itiraz",
-          "arabulucu",
-          "işe iade"
+          "toplu işçi çıkarma",
+          "30 gün",
+          "sendika temsilcisi",
+          "İŞKUR",
+          "bölge müdürlüğü"
         ],
-        "source_quote": "İş sözleşmesi feshedilen işçi, fesih bildiriminde sebep gösterilmediği veya gösterilen sebebin geçerli bir sebep olmadığı iddiası ile fesih bildiriminin tebliği tarihinden itibaren bir ay içinde işe iade talebiyle...  arabulucuya başvurmak zorundadır."
+        "source_quote": "İşveren; ekonomik, teknolojik, yapısal ve benzeri işletme, işyeri veya işin gerekleri sonucu toplu işçi çıkarmak istediğinde, bunu en az otuz gün önceden bir yazı ile, işyeri sendika temsilcisine... bildirmek zorundadır."
       },
-      "alternative_correct_answers":  [
-        "Fesih tebliğinden itibaren 1 ay içinde arabulucuya başvurulmalıdır.",
-        "Bir ay içinde işe iade için arabuluculuğa başvuru zorunludur."
+      "alternative_correct_answers": [
+        "En az 30 gün önceden sendika temsilcisi, bölge müdürlüğü ve İŞKUR'a yazılı bildirim yapılmalıdır.",
+        "Toplu çıkarma planı 30 gün öncesinden yetkili makamlara bildirilir."
       ],
       "source": "4857 Sayılı İş Kanunu",
       "source_details": {
         "document": "1.5.4857.docx",
-        "article":  "Madde 20",
+        "article": "Madde 29",
         "section": "İkinci Bölüm - İş Sözleşmesi"
       },
-      "difficulty":  "orta",
-      "question_type": "olgusal",
+      "difficulty": "orta",
+      "question_type": "kavramsal",
       "evaluation_criteria": {
         "must_include": [
-          "1 ay",
-          "bir ay"
+          "30 gün",
+          "otuz gün"
         ],
-        "should_include":  [
-          "arabulucu",
-          "işe iade"
+        "should_include": [
+          "sendika temsilcisi",
+          "İŞKUR"
         ],
         "exact_number_required": true
       }
     },
     {
       "id": 22,
-      "question": "Engelli ve eski hükümlü çalıştırma zorunluluğu nedir?",
+      "question": "Türk Borçlar Kanunu'na göre hizmet sözleşmesi özel bir şekil şartına tabi midir ve geçersiz sözleşmenin hukuki sonuçları nelerdir?",
       "answer": {
-        "main_answer": "BÖLÜM 1 - AÇIKLAMA\n50 veya daha fazla işçi çalıştıran işyerlerinde kota sistemine göre engelli çalıştırma zorunluluğu vardır.  Özel sektör işyerleri %3 oranında engelli işçi çalıştırmakla yükümlüdür. Kamu işyerlerinde ise bu oran %4 engelli ve %2 eski hükümlü şeklindedir.\n\nBÖLÜM 2 - HUKUKİ DAYANAKLAR\n- 4857 Sayılı İş Kanunu Madde 30",
+        "main_answer": "BÖLÜM 1 - AÇIKLAMA\nTBK Madde 394'e göre hizmet sözleşmesi kanunda aksine hüküm bulunmadıkça özel bir şekle bağlı değildir. Sözlü, yazılı ya da örtülü biçimde kurulabilir. Önemli bir kural olarak geçersizliği sonradan anlaşılan hizmet sözleşmesi, hizmet ilişkisi ortadan kaldırılıncaya kadar geçerli bir sözleşmenin tüm hüküm ve sonuçlarını doğurur. Bu ilke, işçinin zaten yerine getirdiği edimler nedeniyle korunmasını sağlar.\n\nBÖLÜM 2 - HUKUKİ DAYANAKLAR\n- 6098 Sayılı Türk Borçlar Kanunu Madde 394",
         "key_entities": [
-          "50 işçi",
-          "engelli",
-          "%3",
-          "%4",
-          "eski hükümlü",
-          "%2"
+          "şekil şartı",
+          "geçersizlik",
+          "hizmet ilişkisi",
+          "sonuçları doğurur"
         ],
-        "source_quote": "İşverenler, elli veya daha fazla işçi çalıştırdıkları özel sektör işyerlerinde yüzde üç engelli...  çalıştırmakla yükümlüdürler."
+        "source_quote": "Hizmet sözleşmesi, kanunda aksine bir hüküm olmadıkça özel bir şekle bağlı değildir."
       },
       "alternative_correct_answers": [
-        "50+ işçili özel sektörde %3 engelli zorunludur.",
-        "Kamuda %4 engelli, %2 eski hükümlü çalıştırma zorunluluğu vardır."
+        "Özel şekil şartı yoktur; geçersizliği sonradan anlaşılsa da ilişki süresince geçerlilik sonuçları doğurur.",
+        "Şekle bağlı değildir; geçersiz sözleşme hizmet ilişkisi sonlanana kadar geçerliymiş gibi sonuç doğurur."
       ],
-      "source": "4857 Sayılı İş Kanunu",
+      "source": "6098 Sayılı Türk Borçlar Kanunu",
       "source_details": {
-        "document": "1.5.4857.docx",
-        "article":  "Madde 30",
-        "section": "İkinci Bölüm - İş Sözleşmesi"
+        "document": "1.5.6098.docx",
+        "article": "Madde 394",
+        "section": "İkinci Kısım - Hizmet Sözleşmeleri"
       },
       "difficulty": "orta",
-      "question_type": "olgusal",
+      "question_type": "kavramsal",
       "evaluation_criteria": {
         "must_include": [
-          "50 işçi",
-          "%3",
-          "engelli"
+          "şekil",
+          "geçersizlik"
         ],
         "should_include": [
-          "%4",
-          "%2",
-          "eski hükümlü"
-        ],
-        "exact_numbers_required": true
+          "hizmet ilişkisi",
+          "sonuç doğurur"
+        ]
       }
     },
     {
       "id": 23,
-      "question": "Analık halinde çalışma ve süt izni nasıl düzenlenmiştir?",
+      "question": "Türk Borçlar Kanunu'na göre fazla çalışma borcu nasıl tanımlanmıştır?",
       "answer": {
-        "main_answer": "BÖLÜM 1 - AÇIKLAMA\nKadın işçilere doğumdan önce 8 hafta ve doğumdan sonra 8 hafta olmak üzere toplam 16 hafta analık izni verilir. Çoğul gebeliklerde doğum öncesi süreye 2 hafta daha eklenir. Doğum sonrası işe başlayan kadın işçiye, çocuğu bir yaşına gelene kadar günde toplam 1,5 saat süt izni verilir ve bu sürenin hangi saatlerde kullanılacağını işçi belirler.\n\nBÖLÜM 2 - HUKUKİ DAYANAKLAR\n- 4857 Sayılı İş Kanunu Madde 74",
+        "main_answer": "BÖLÜM 1 - AÇIKLAMA\nTBK Madde 398 uyarınca fazla çalışma, ilgili kanunlarda belirlenen normal çalışma süresinin üzerinde ve işçinin rızasıyla yapılan çalışmadır. Ancak normal süreden daha fazla çalışmayı gerektiren bir işin yerine getirilmesi zorunluysa ve işçi bunu dürüstlük kuralları gereği üstlenmek durumundaysa fazla çalışma rıza olmaksızın da istenebilir; işçi bunun karşılığı olan ücreti talep edebilir.\n\nBÖLÜM 2 - HUKUKİ DAYANAKLAR\n- 6098 Sayılı Türk Borçlar Kanunu Madde 398",
         "key_entities": [
-          "analık izni",
-          "8 hafta",
-          "16 hafta",
-          "süt izni",
-          "1. 5 saat",
-          "çoğul gebelik"
+          "fazla çalışma",
+          "normal çalışma süresi",
+          "işçinin rızası",
+          "ücret hakkı"
         ],
-        "source_quote": "Kadın işçilerin doğumdan önce sekiz ve doğumdan sonra sekiz hafta olmak üzere toplam onaltı haftalık süre için çalıştırılmamaları esastır."
+        "source_quote": "Fazla çalışma, ilgili kanunlarda belirlenen normal çalışma süresinin üzerinde ve işçinin rızasıyla yapılan çalışmadır."
       },
       "alternative_correct_answers": [
-        "Doğum öncesi 8, sonrası 8 hafta izin, günde 1.5 saat süt izni verilir.",
-        "Toplam 16 hafta analık izni ve günlük 1.5 saat süt izni hakkı vardır."
+        "Normal süreyi aşan ve işçinin rızasıyla yapılan çalışmadır; zorunluluk halinde rıza aranmaz.",
+        "TBK'ya göre fazla çalışma işçinin rızasını esas alır; ancak zorunlu hallerde rızasız da istenebilir."
+      ],
+      "source": "6098 Sayılı Türk Borçlar Kanunu",
+      "source_details": {
+        "document": "1.5.6098.docx",
+        "article": "Madde 398",
+        "section": "İkinci Kısım - Hizmet Sözleşmeleri"
+      },
+      "difficulty": "orta",
+      "question_type": "kavramsal",
+      "evaluation_criteria": {
+        "must_include": [
+          "fazla çalışma",
+          "rıza",
+          "normal çalışma"
+        ],
+        "should_include": [
+          "zorunluluk",
+          "ücret"
+        ]
+      }
+    },
+    {
+      "id": 24,
+      "question": "5510 sayılı SSGSSK'ya göre asgari işçilik uygulaması ne anlama gelmekte ve Kurum bu kapsamda nasıl hareket etmektedir?",
+      "answer": {
+        "main_answer": "BÖLÜM 1 - AÇIKLAMA\n5510 sayılı Kanun'un 85. maddesi uyarınca asgari işçilik uygulaması, işverenin işin niteliğine ve kapasitesine göre gerekli olan sigortalı sayısını, çalışma süresini veya prime esas kazanç tutarını eksik bildirdiğinin tespiti halinde devreye girer. Bu durumda Kurum denetim elemanları aracılığıyla tespitte bulunur; tespit edilen eksiklik için işverenden fark prim tahsil edilir. Tespitte; işin niteliği, kullanılan teknoloji, işyeri büyüklüğü ve emsal işletmeler gibi kriterler esas alınır.\n\nBÖLÜM 2 - HUKUKİ DAYANAKLAR\n- 5510 Sayılı SSGSSK Madde 85",
+        "key_entities": [
+          "asgari işçilik",
+          "eksik bildirim",
+          "denetim",
+          "fark prim",
+          "emsal"
+        ],
+        "source_quote": "İşverenin, işin emsaline, niteliğine, kapsam ve kapasitesine göre işin yürütümü açısından gerekli olan sigortalı sayısının... altında bildirimde bulunduğunun tespiti halinde..."
+      },
+      "alternative_correct_answers": [
+        "Eksik prim bildirimi tespitinde Kurum işin niteliğini ve emsalini baz alarak fark prim tahsil eder.",
+        "Asgari işçilik: gereken düzeyin altında prim bildirimi varsa Kurum denetimle fark prim alır."
+      ],
+      "source": "5510 Sayılı SSGSSK",
+      "source_details": {
+        "document": "1.5.5510.docx",
+        "article": "Madde 85",
+        "section": "Beşinci Kısım - Primler"
+      },
+      "difficulty": "zor",
+      "question_type": "kavramsal",
+      "evaluation_criteria": {
+        "must_include": [
+          "asgari işçilik",
+          "eksik bildirim",
+          "prim"
+        ],
+        "should_include": [
+          "emsal",
+          "denetim",
+          "tespiti"
+        ]
+      }
+    },
+    {
+      "id": 25,
+      "question": "5510 sayılı SSGSSK'ya göre kontrol muayenesi ne zaman ve hangi amaçla yapılabilir?",
+      "answer": {
+        "main_answer": "BÖLÜM 1 - AÇIKLAMA\n5510 sayılı Kanun'un 94. maddesi uyarınca Kurum, sağlık hizmetinin gerçekten alınıp alınmadığını tespit etmek amacıyla sağlık hizmeti alan kişilere kontrol muayenesi yaptırabilir. Bunun yanı sıra sigortalıların malullük, iş göremezlik raporlarında belirtilen rahatsızlıklarının devam edip etmediğini denetlemek amacıyla da kontrol muayenesi uygulanabilir. Bu yetki yürütülen soruşturma kapsamıyla sınırlıdır.\n\nBÖLÜM 2 - HUKUKİ DAYANAKLAR\n- 5510 Sayılı SSGSSK Madde 94",
+        "key_entities": [
+          "kontrol muayenesi",
+          "sağlık hizmeti",
+          "malullük",
+          "iş göremezlik",
+          "soruşturma kapsamı"
+        ],
+        "source_quote": "Kurum yürütülen soruşturma kapsamıyla sınırlı olmak üzere; a) Sağlık hizmeti alan genel sağlık sigortalısından... sağlık hizmetinin gerçekten alınıp alınmadığını... tespit amacıyla kontrol muayenesi... talep edebilir."
+      },
+      "alternative_correct_answers": [
+        "Sağlık hizmetinin gerçekten alınıp alınmadığını ve rahatsızlığın devamını denetlemek için yapılır.",
+        "Kontrol muayenesi soruşturma kapsamında sağlık hizmet doğrulaması ve iş göremezlik denetimi için uygulanır."
+      ],
+      "source": "5510 Sayılı SSGSSK",
+      "source_details": {
+        "document": "1.5.5510.docx",
+        "article": "Madde 94",
+        "section": "Altıncı Kısım - Çeşitli Hükümler"
+      },
+      "difficulty": "orta",
+      "question_type": "kavramsal",
+      "evaluation_criteria": {
+        "must_include": [
+          "kontrol muayenesi",
+          "sağlık"
+        ],
+        "should_include": [
+          "malullük",
+          "iş göremezlik",
+          "soruşturma"
+        ]
+      }
+    },
+    {
+      "id": 26,
+      "question": "6331 sayılı İş Sağlığı ve Güvenliği Kanunu'na göre işverenin genel yükümlülükleri nelerdir?",
+      "answer": {
+        "main_answer": "BÖLÜM 1 - AÇIKLAMA\n6331 sayılı İSG Kanunu Madde 4 uyarınca işveren, çalışanların işle ilgili sağlık ve güvenliğini sağlamakla yükümlüdür. Bu yükümlülük kapsamında; mesleki risklerin önlenmesi için her türlü tedbiri almak, organizasyonu yapmak, gerekli araç ve gereçleri sağlamak, tedbirleri değişen şartlara uygun hale getirmek; alınan tedbirlere uyulup uyulmadığını izlemek ve denetlemek; risk değerlendirmesi yapmak veya yaptırmak; çalışanın işe uygunluğunu gözetmek sayılabilir.\n\nBÖLÜM 2 - HUKUKİ DAYANAKLAR\n- 6331 Sayılı İSG Kanunu Madde 4",
+        "key_entities": [
+          "işveren yükümlülüğü",
+          "risk önleme",
+          "denetim",
+          "risk değerlendirmesi",
+          "işe uygunluk"
+        ],
+        "source_quote": "İşveren, çalışanların işle ilgili sağlık ve güvenliğini sağlamakla yükümlü olup bu çerçevede; mesleki risklerin önlenmesi, eğitim ve bilgi verilmesi dâhil her türlü tedbirin alınması..."
+      },
+      "alternative_correct_answers": [
+        "Risk önleme, denetim, risk değerlendirmesi ve işe uygunluk takibi başlıca yükümlülüklerdir.",
+        "İşveren tüm çalışma riskleri için tedbir almak, denetlemek ve risk değerlendirmesi yapmakla yükümlüdür."
+      ],
+      "source": "6331 Sayılı İş Sağlığı ve Güvenliği Kanunu",
+      "source_details": {
+        "document": "1.5.6331.docx",
+        "article": "Madde 4",
+        "section": "İkinci Bölüm - İşverenin Yükümlülükleri"
+      },
+      "difficulty": "orta",
+      "question_type": "kavramsal",
+      "evaluation_criteria": {
+        "must_include": [
+          "işveren",
+          "sağlık güvenlik",
+          "risk"
+        ],
+        "should_include": [
+          "tedbir",
+          "denetim",
+          "değerlendirme"
+        ]
+      }
+    },
+    {
+      "id": 27,
+      "question": "6331 sayılı İSG Kanunu'na göre çalışanın ciddi ve yakın tehlike karşısında çalışmaktan kaçınma hakkı nasıl işler?",
+      "answer": {
+        "main_answer": "BÖLÜM 1 - AÇIKLAMA\n6331 sayılı İSG Kanunu Madde 13 uyarınca ciddi ve yakın tehlike ile karşılaşan çalışan, kurula ya da kurulun bulunmadığı işyerlerinde işverene başvurarak tehlikenin tespitini ve gerekli tedbirlerin alınmasını talep edebilir. Kurul veya işveren çalışanın talebi doğrultusunda karar verirse çalışan tedbirler alınana kadar çalışmaktan kaçınabilir. Bu dönemde ücret ve diğer hakları korunmaktadır. Çalışanlar, önlenemez tehlike durumunda iş sözleşmesini haklı nedenle feshedebilir.\n\nBÖLÜM 2 - HUKUKİ DAYANAKLAR\n- 6331 Sayılı İSG Kanunu Madde 13",
+        "key_entities": [
+          "çalışmaktan kaçınma",
+          "ciddi tehlike",
+          "ücret güvencesi",
+          "haklı fesih"
+        ],
+        "source_quote": "Ciddi ve yakın tehlike ile karşı karşıya kalan çalışanlar kurula, kurulun bulunmadığı işyerlerinde ise işverene başvurarak durumun tespit edilmesini ve gerekli tedbirlerin alınmasına karar verilmesini talep edebilir."
+      },
+      "alternative_correct_answers": [
+        "Ciddi tehlikede çalışan kaçınma hakkını kullanabilir; ücreti ve hakları korunur.",
+        "Tehlike tespiti talep edilir; karar verilirse çalışan tedbirler alınana kadar işi bırakabilir."
+      ],
+      "source": "6331 Sayılı İş Sağlığı ve Güvenliği Kanunu",
+      "source_details": {
+        "document": "1.5.6331.docx",
+        "article": "Madde 13",
+        "section": "İkinci Bölüm - İşverenin Yükümlülükleri"
+      },
+      "difficulty": "orta",
+      "question_type": "kavramsal",
+      "evaluation_criteria": {
+        "must_include": [
+          "çalışmaktan kaçınma",
+          "ciddi tehlike"
+        ],
+        "should_include": [
+          "ücret",
+          "haklı fesih",
+          "tedbir"
+        ]
+      }
+    },
+    {
+      "id": 28,
+      "question": "6356 sayılı Kanun'a göre işyeri sendika temsilcisinin iş sözleşmesi feshedilebilir mi?",
+      "answer": {
+        "main_answer": "BÖLÜM 1 - AÇIKLAMA\n6356 sayılı Kanun'un 24. maddesine göre işveren, işyeri sendika temsilcilerinin iş sözleşmelerini haklı bir neden olmadıkça ve nedenini yazılı olarak açık ve kesin şekilde belirtmedikçe feshedemez. Fesih bildiriminin tebliğinden itibaren bir ay içinde temsilci, feshin geçersizliği için dava açabilir. Mahkeme feshi geçersiz bulursa temsilci başvurduğu tarihten itibaren göreve iade edilir.\n\nBÖLÜM 2 - HUKUKİ DAYANAKLAR\n- 6356 Sayılı Sendikalar ve Toplu İş Sözleşmesi Kanunu Madde 24",
+        "key_entities": [
+          "işyeri sendika temsilcisi",
+          "fesih güvencesi",
+          "yazılı neden",
+          "1 ay",
+          "göreve iade"
+        ],
+        "source_quote": "İşveren, işyeri sendika temsilcilerinin iş sözleşmelerini haklı bir neden olmadıkça ve nedenini yazılı olarak açık ve kesin şekilde belirtmedikçe feshedemez."
+      },
+      "alternative_correct_answers": [
+        "Haklı neden yoksa ve nedeni yazılı belirtilmedikçe feshedilemez; 1 ay içinde dava açılabilir.",
+        "Temsilci güvencesi vardır: fesih yazılı, açık ve haklı nedene dayanmak zorundadır."
+      ],
+      "source": "6356 Sayılı Sendikalar ve Toplu İş Sözleşmesi Kanunu",
+      "source_details": {
+        "document": "1.5.6356.docx",
+        "article": "Madde 24",
+        "section": "İkinci Kısım - Sendika Üyeliği"
+      },
+      "difficulty": "orta",
+      "question_type": "kavramsal",
+      "evaluation_criteria": {
+        "must_include": [
+          "temsilci",
+          "fesih",
+          "yazılı neden"
+        ],
+        "should_include": [
+          "haklı neden",
+          "1 ay",
+          "iade"
+        ]
+      }
+    },
+    {
+      "id": 29,
+      "question": "4688 sayılı Kanun'a göre kamu görevlileri sendika faaliyetlerine katıldıkları için farklı bir işleme tabi tutulabilir mi?",
+      "answer": {
+        "main_answer": "BÖLÜM 1 - AÇIKLAMA\n4688 sayılı Kanun'un 18. maddesi uyarınca kamu görevlileri, iş saatleri dışında veya işverenin izniyle iş saatleri içinde sendika veya konfederasyonların faaliyetlerine katıldıkları için farklı bir işleme tabi tutulamaz ve görevlerine son verilemez. Kamu işvereni ayrıca işyeri sendika temsilcisinin işyerini, sebebini açık ve kesin biçimde belirtmeksizin değiştiremez. Sendika üyesi olup olmama nedeniyle de çalışanlar arasında ayrım yapılamaz.\n\nBÖLÜM 2 - HUKUKİ DAYANAKLAR\n- 4688 Sayılı Kamu Görevlileri Sendikaları Kanunu Madde 18",
+        "key_entities": [
+          "kamu görevlisi",
+          "sendika güvencesi",
+          "farklı işlem yasağı",
+          "görev sonu",
+          "işyeri değiştirme"
+        ],
+        "source_quote": "Kamu görevlileri, iş saatleri dışında veya işverenin izni ile iş saatleri içinde sendika veya konfederasyonların bu Kanunda belirtilen faaliyetlerine katılmalarından dolayı farklı bir işleme tâbi tutulamaz ve görevlerine son verilemez."
+      },
+      "alternative_correct_answers": [
+        "Hayır, sendika faaliyeti nedeniyle kamu görevlisine farklı işlem yapılamaz ve göreve son verilemez.",
+        "Sendika katılımı nedeniyle işlem yasağı, işten çıkarma yasağı ve ayrımcılık yasağı uygulanır."
+      ],
+      "source": "4688 Sayılı Kamu Görevlileri Sendikaları ve Toplu Sözleşme Kanunu",
+      "source_details": {
+        "document": "1.5.4688.docx",
+        "article": "Madde 18",
+        "section": "Sendika Güvencesi"
+      },
+      "difficulty": "kolay",
+      "question_type": "kavramsal",
+      "evaluation_criteria": {
+        "must_include": [
+          "sendika",
+          "farklı işlem",
+          "görev sonu"
+        ],
+        "should_include": [
+          "kamu görevlisi",
+          "ayrım"
+        ]
+      }
+    },
+    {
+      "id": 30,
+      "question": "193 sayılı Gelir Vergisi Kanunu'na göre ücret nasıl tanımlanmaktadır ve hangi ödemeler ücret sayılır?",
+      "answer": {
+        "main_answer": "BÖLÜM 1 - AÇIKLAMA\nGelir Vergisi Kanunu Madde 61 uyarınca ücret; işverene tabi belirli bir işyerine bağlı olarak çalışanlara hizmet karşılığı verilen para ve ayınlar ile sağlanan para ile temsil edilebilen menfaatlerdir. Ücretin ödenek, tazminat, tahsisat, zam, avans, aidat, huzur hakkı, prim, ikramiye veya başka adlar altında ödenmesi onun ücret niteliğini değiştirmez. GVK Madde 62'ye göre işverenler ise hizmet erbabını işe alan, emir ve talimatları dahilinde çalıştıran gerçek ve tüzel kişilerdir.\n\nBÖLÜM 2 - HUKUKİ DAYANAKLAR\n- 193 Sayılı Gelir Vergisi Kanunu Madde 61, 62",
+        "key_entities": [
+          "ücret tanımı GVK",
+          "para ve ayın",
+          "menfaat",
+          "prim",
+          "ikramiye",
+          "işveren tanımı"
+        ],
+        "source_quote": "Ücret, işverene tabi belirli bir işyerine bağlı olarak çalışanlara hizmet karşılığı verilen para ve ayınlar ile sağlanan ve para ile temsil edilebilen menfaatlerdir."
+      },
+      "alternative_correct_answers": [
+        "GVK'ya göre ücret; hizmet karşılığı para, ayın ve para ile temsil edilen menfaatlerdir; prim ve ikramiye de dahildir.",
+        "Ad ne olursa olsun hizmet karşılığı ödenen her şey GVK kapsamında ücrettir."
+      ],
+      "source": "193 Sayılı Gelir Vergisi Kanunu",
+      "source_details": {
+        "document": "1.5.193.docx",
+        "article": "Madde 61",
+        "section": "Ücretler"
+      },
+      "difficulty": "orta",
+      "question_type": "kavramsal",
+      "evaluation_criteria": {
+        "must_include": [
+          "ücret",
+          "hizmet karşılığı",
+          "menfaat"
+        ],
+        "should_include": [
+          "prim",
+          "ikramiye",
+          "ayın"
+        ]
+      }
+    },
+    {
+      "id": 31,
+      "question": "4857 sayılı İş Kanunu ile 6098 sayılı Türk Borçlar Kanunu'ndaki ihbar/bildirim süreleri nasıl farklılaşır?",
+      "answer": {
+        "main_answer": "BÖLÜM 1 - AÇIKLAMA\n4857 sayılı İş Kanunu Madde 17 dört kademe öngörür: 6 aydan az → 2 hafta; 6 ay-1,5 yıl → 4 hafta; 1,5-3 yıl → 6 hafta; 3 yıl üzeri → 8 hafta. 6098 sayılı TBK Madde 432 ise üç kademe öngörür: 1 yıla kadar → 2 hafta; 1-5 yıl → 4 hafta; 5 yıldan fazla → 6 hafta. Temel fark: 4857 en uzun süreyi 8 hafta olarak belirlerken TBK 6 haftada sınırlı tutmaktadır. Ayrıca kademelendirme kriterleri de farklıdır. 4857 kapsamındaki işçilere özel kanun olarak 4857 uygulanır.\n\nBÖLÜM 2 - HUKUKİ DAYANAKLAR\n- 4857 Sayılı İş Kanunu Madde 17\n- 6098 Sayılı Türk Borçlar Kanunu Madde 432",
+        "key_entities": [
+          "ihbar süresi",
+          "4857",
+          "TBK",
+          "4 kademe",
+          "3 kademe",
+          "8 hafta",
+          "6 hafta"
+        ],
+        "source_quote": "İşi üç yıldan fazla sürmüş olan işçi için, bildirimin diğer tarafa yapılmasından başlayarak sekiz hafta sonra... (4857 Md.17)"
+      },
+      "alternative_correct_answers": [
+        "4857: 4 kademe, max 8 hafta; TBK: 3 kademe, max 6 hafta; 4857 kapsamında 4857 esas alınır.",
+        "TBK 6 haftada biterken 4857 Md.17 kıdem 3 yıl üzeri için 8 haftaya çıkar."
       ],
       "source": "4857 Sayılı İş Kanunu",
       "source_details": {
         "document": "1.5.4857.docx",
-        "article": "Madde 74",
-        "section": "Beşinci Bölüm - İş Sağlığı ve Güvenliği"
+        "article": "Madde 17",
+        "section": "İkinci Bölüm"
       },
       "difficulty": "orta",
-      "question_type": "olgusal",
+      "question_type": "karşılaştırma",
       "evaluation_criteria": {
+        "comparison_required": true,
         "must_include": [
+          "4857",
+          "TBK",
           "8 hafta",
-          "16 hafta",
-          "süt izni"
+          "6 hafta"
         ],
         "should_include": [
-          "1.5 saat",
-          "doğum"
-        ],
-        "exact_numbers_required": true
+          "kademe",
+          "kıdem"
+        ]
       }
+    },
+    {
+      "id": 32,
+      "question": "4857 sayılı İş Kanunu ile 6098 sayılı TBK'nın yıllık ücretli izin düzenlemeleri arasındaki temel farklar nelerdir?",
+      "answer": {
+        "main_answer": "BÖLÜM 1 - AÇIKLAMA\n4857 sayılı İş Kanunu Madde 53 kıdeme göre üç kademe öngörür: 1-5 yıl → 14 iş günü; 5-15 yıl → 20 iş günü; 15 yıl ve üzeri → 26 iş günü. 18 yaş altı ve 50 yaş üstü için asgari 20 iş günüdür. TBK Madde 422 ise daha sade bir düzenleme içerir: en az 1 yıl çalışana yılda en az 2 hafta; 18 yaş altı ve 50 yaş üstüne en az 3 hafta. Yani 4857 iş günü, TBK hafta birimi kullanmaktadır. 4857 kapsamındaki işçilere 4857 uygulanır; TBK genel hizmet sözleşmesi ilişkileri için geçerlidir.\n\nBÖLÜM 2 - HUKUKİ DAYANAKLAR\n- 4857 Sayılı İş Kanunu Madde 53\n- 6098 Sayılı Türk Borçlar Kanunu Madde 422",
+        "key_entities": [
+          "yıllık izin",
+          "iş günü",
+          "hafta",
+          "14 gün",
+          "2 hafta",
+          "kıdem kademesi"
+        ],
+        "source_quote": "İşçilere verilecek yıllık ücretli izin süresi, hizmet süresi; a) Bir yıldan beş yıla kadar olanlara ondört günden... (4857 Md.53)"
+      },
+      "alternative_correct_answers": [
+        "4857 iş günü (14/20/26) ve 3 kademe; TBK hafta (2/3) ve daha sade; 4857 kapsamındaki için 4857 esas.",
+        "Birim farkı: 4857 iş günü, TBK hafta; kademelendirme ve süreler de farklıdır."
+      ],
+      "source": "4857 Sayılı İş Kanunu",
+      "source_details": {
+        "document": "1.5.4857.docx",
+        "article": "Madde 53",
+        "section": "Beşinci Bölüm"
+      },
+      "difficulty": "orta",
+      "question_type": "karşılaştırma",
+      "evaluation_criteria": {
+        "comparison_required": true,
+        "must_include": [
+          "4857",
+          "TBK",
+          "iş günü"
+        ],
+        "should_include": [
+          "14 gün",
+          "2 hafta",
+          "kıdem"
+        ]
+      }
+    },
+    {
+      "id": 33,
+      "question": "6356 sayılı Kanun kapsamındaki toplu iş sözleşmesi ile 4688 sayılı Kanun kapsamındaki toplu sözleşme arasındaki temel farklar nelerdir?",
+      "answer": {
+        "main_answer": "BÖLÜM 1 - AÇIKLAMA\n6356 sayılı Kanun kapsamındaki toplu iş sözleşmesi (TİS), işçiler ile işverenler arasında iş sözleşmesinin yapılması, içeriği ve sona ermesini düzenler; 1-3 yıl süreli yapılır ve işkolu/işyeri/işletme düzeyinde olabilir. 4688 sayılı Kanun kapsamındaki toplu sözleşme ise kamu görevlileri ile kamu işvereni arasında yapılır; aylık, zam, tazminat ve diğer mali-sosyal hakları kapsar; iki mali yıl için geçerlidir. Temel fark: TİS iş sözleşmesi hükmü doğururken kamu toplu sözleşmesi idari bir düzenleme niteliği taşır.\n\nBÖLÜM 2 - HUKUKİ DAYANAKLAR\n- 6356 Sayılı Sendikalar ve Toplu İş Sözleşmesi Kanunu Madde 35\n- 4688 Sayılı Kamu Görevlileri Sendikaları Kanunu Madde 28",
+        "key_entities": [
+          "TİS",
+          "toplu sözleşme",
+          "işçi",
+          "kamu görevlisi",
+          "1-3 yıl",
+          "2 mali yıl"
+        ],
+        "source_quote": "Toplu iş sözleşmesi en az bir ve en çok üç yıl süreli olarak yapılabilir. (6356 Md.35)"
+      },
+      "alternative_correct_answers": [
+        "TİS işçi-işveren arası iş sözleşmesi hükmü; kamu toplu sözleşmesi mali hakları düzenleyen idari işlemdir.",
+        "6356 kapsamı özel sektör işçileri, 4688 kamu görevlileri; süre ve hukuki nitelik farklıdır."
+      ],
+      "source": "6356 Sayılı Sendikalar ve Toplu İş Sözleşmesi Kanunu",
+      "source_details": {
+        "document": "1.5.6356.docx",
+        "article": "Madde 35",
+        "section": "Üçüncü Kısım"
+      },
+      "difficulty": "zor",
+      "question_type": "karşılaştırma",
+      "evaluation_criteria": {
+        "comparison_required": true,
+        "must_include": [
+          "TİS",
+          "toplu sözleşme",
+          "kamu"
+        ],
+        "should_include": [
+          "işçi",
+          "kamu görevlisi",
+          "1-3 yıl",
+          "2 yıl"
+        ]
+      }
+    },
+    {
+      "id": 34,
+      "question": "İşsizlik ödeneğine hak kazanma koşulları ile hastalık nedeniyle geçici iş göremezlik ödeneğine hak kazanma koşullarını karşılaştırınız.",
+      "answer": {
+        "main_answer": "BÖLÜM 1 - AÇIKLAMA\nİşsizlik ödeneği (4447 Md.51): Hizmet akdinin kanunda sayılan hallerle son bulması, son 120 gün prim ödeme ve son 3 yılda 600/900/1080 gün prim koşulu ile İŞKUR'a süresinde başvuru gerekmektedir. Kendi isteğiyle işten ayrılanlar veya işvereni tarafından haklı nedenle feshedilen işçiler bu haktan yararlanamaz.\nHastalık GTİGÖ (5510 Md.18): İstirahat raporu alınmış olması ve son 1 yılda en az 90 gün kısa vadeli sigorta primi bildirilmesi yeterlidir; iş akdinin sona ermesi gerekmez.\nTemel fark: işsizlik ödeneği iş akdinin sona ermesini şart koşarken hastalık ödeneği çalışma ilişkisi devam ederken ödenir ve daha az prim gün koşulu içerir.\n\nBÖLÜM 2 - HUKUKİ DAYANAKLAR\n- 4447 Sayılı İşsizlik Sigortası Kanunu Madde 51\n- 5510 Sayılı SSGSSK Madde 18",
+        "key_entities": [
+          "işsizlik ödeneği",
+          "hastalık ödeneği",
+          "600 gün",
+          "90 gün",
+          "iş akdi sona erme"
+        ],
+        "source_quote": "Bu Kanun uyarınca sigortalı sayılanlardan hizmet akitleri aşağıda belirtilen hallerden birisine dayalı olarak sona erenler... işsizlik ödeneği almaya hak kazanırlar. (4447 Md.51)"
+      },
+      "alternative_correct_answers": [
+        "İşsizlik ödeneği iş akdi sona ermeyi ve 600+ gün primi; hastalık ödeneği 90 gün primi şart koşar.",
+        "İşsizlik akdin bitmesini gerektirirken hastalık ödeneği çalışma sürerken verilir."
+      ],
+      "source": "4447 Sayılı İşsizlik Sigortası Kanunu",
+      "source_details": {
+        "document": "1.5.4447.docx",
+        "article": "Madde 51",
+        "section": "VII. Bölüm"
+      },
+      "difficulty": "zor",
+      "question_type": "karşılaştırma",
+      "evaluation_criteria": {
+        "comparison_required": true,
+        "must_include": [
+          "işsizlik ödeneği",
+          "hastalık",
+          "iş akdi"
+        ],
+        "should_include": [
+          "600 gün",
+          "90 gün",
+          "prim"
+        ]
+      }
+    },
+    {
+      "id": 35,
+      "question": "Anayasa'nın grev hakkına ilişkin düzenlemesi ile 6356 sayılı Kanun'un greve katılan işçinin iş sözleşmesine etkisi birbiriyle nasıl bağdaşmaktadır?",
+      "answer": {
+        "main_answer": "BÖLÜM 1 - AÇIKLAMA\nAnayasa Madde 54, toplu iş sözleşmesi uyuşmazlığında işçilere grev hakkı tanır ve bu hakkın kullanılmasının usul ve şartlarının kanunla düzenleneceğini belirtir. 6356 sayılı Kanun Madde 67 bu anayasal güvenceyi somutlaştıran uygulama normu niteliğindedir: kanuni greve katılan işçilerin iş sözleşmeleri grev süresince askıya alınır; işçi çalışmaz, işveren ücret ödemez. Bu askı düzenlemesi anayasal grev hakkını fiilen kullanılabilir kılarken işverenin haksız zarara uğramasını da engeller. İkisi birlikte değerlendirildiğinde; anayasa hakkı tanır, 6356 ise hakkın kullanımının iş ilişkisine etkisini düzenler.\n\nBÖLÜM 2 - HUKUKİ DAYANAKLAR\n- T.C. Anayasası Madde 54\n- 6356 Sayılı Sendikalar ve Toplu İş Sözleşmesi Kanunu Madde 67",
+        "key_entities": [
+          "grev hakkı",
+          "askı",
+          "iş sözleşmesi",
+          "Anayasa Md54",
+          "6356 Md67"
+        ],
+        "source_quote": "Kanuni greve katılan... işçilerin iş sözleşmeleri grev ve lokavt süresince askıda kalır. (6356 Md.67)"
+      },
+      "alternative_correct_answers": [
+        "Anayasa grev hakkını tanır; 6356 Md67 bunu iş sözleşmesi askısı yoluyla hayata geçirir.",
+        "İkisi tamamlayıcıdır: anayasa güvence, 6356 uygulama normu; grevde sözleşme askıya alınır."
+      ],
+      "source": "6356 Sayılı Sendikalar ve Toplu İş Sözleşmesi Kanunu",
+      "source_details": {
+        "document": "1.5.6356.docx",
+        "article": "Madde 67",
+        "section": "Dördüncü Kısım"
+      },
+      "difficulty": "zor",
+      "question_type": "karşılaştırma",
+      "evaluation_criteria": {
+        "comparison_required": true,
+        "must_include": [
+          "grev",
+          "askı",
+          "Anayasa"
+        ],
+        "should_include": [
+          "6356",
+          "iş sözleşmesi",
+          "ücret"
+        ]
+      }
+    },
+    {
+      "id": 36,
+      "question": "4857 sayılı İş Kanunu'nun 250. maddesi işçi haklarını nasıl düzenlemektedir?",
+      "answer": {
+        "main_answer": "BÖLÜM 1 - AÇIKLAMA\nBu konuda elimdeki yasal metinlerde yeterli bilgi bulunmamaktadır.\n\nBÖLÜM 2 - HUKUKİ DAYANAKLAR\n- (Böyle bir madde mevcut değildir)",
+        "key_entities": [],
+        "source_quote": null
+      },
+      "source": "out_of_scope_nonexistent",
+      "difficulty": "kolay",
+      "question_type": "hallucination_test",
+      "evaluation_criteria": {
+        "must_not_hallucinate": true,
+        "should_explain_limitation": true,
+        "acceptable_responses": [
+          "4857 sayılı İş Kanunu'nda 250. madde bulunmamaktadır.",
+          "İş Kanunu 122 esas madde ve geçici maddelerden oluşmakta olup 250. madde yoktur.",
+          "Elimdeki kaynaklarda bu maddeye ilişkin bilgi bulunamadı."
+        ]
+      },
+      "test_purpose": "Halüsinasyon testi — var olmayan 4857 maddesi"
+    },
+    {
+      "id": 37,
+      "question": "6100 sayılı Hukuk Muhakemeleri Kanunu'nun 500. maddesi hangi yargılama kuralını düzenler?",
+      "answer": {
+        "main_answer": "BÖLÜM 1 - AÇIKLAMA\nBu konuda elimdeki yasal metinlerde yeterli bilgi bulunmamaktadır.\n\nBÖLÜM 2 - HUKUKİ DAYANAKLAR\n- (Böyle bir madde mevcut değildir)",
+        "key_entities": [],
+        "source_quote": null
+      },
+      "source": "out_of_scope_nonexistent",
+      "difficulty": "kolay",
+      "question_type": "hallucination_test",
+      "evaluation_criteria": {
+        "must_not_hallucinate": true,
+        "should_explain_limitation": true,
+        "acceptable_responses": [
+          "6100 sayılı HMK'de 500. madde bulunmamaktadır.",
+          "Elimdeki kaynaklarda bu maddeye ilişkin bilgi bulunamadı.",
+          "HMK bu numarada bir madde içermemektedir."
+        ]
+      },
+      "test_purpose": "Halüsinasyon testi — var olmayan HMK maddesi"
+    },
+    {
+      "id": 38,
+      "question": "6098 sayılı Türk Borçlar Kanunu'nun 700. maddesi hizmet sözleşmesindeki ibra hükümlerini nasıl düzenler?",
+      "answer": {
+        "main_answer": "BÖLÜM 1 - AÇIKLAMA\nBu konuda elimdeki yasal metinlerde yeterli bilgi bulunmamaktadır.\n\nBÖLÜM 2 - HUKUKİ DAYANAKLAR\n- (Böyle bir madde mevcut değildir)",
+        "key_entities": [],
+        "source_quote": null
+      },
+      "source": "out_of_scope_nonexistent",
+      "difficulty": "kolay",
+      "question_type": "hallucination_test",
+      "evaluation_criteria": {
+        "must_not_hallucinate": true,
+        "should_explain_limitation": true,
+        "acceptable_responses": [
+          "6098 sayılı TBK'da 700. madde bulunmamaktadır.",
+          "TBK hizmet sözleşmesi hükümleri 393-447. maddeler arasındadır.",
+          "Elimdeki kaynaklarda bu maddeye ilişkin bilgi bulunamadı."
+        ]
+      },
+      "test_purpose": "Halüsinasyon testi — var olmayan TBK maddesi (kapsam dışı numara)"
+    },
+    {
+      "id": 39,
+      "question": "5510 sayılı SSGSSK'nın 300. maddesi prim iadesi prosedürünü nasıl düzenlemektedir?",
+      "answer": {
+        "main_answer": "BÖLÜM 1 - AÇIKLAMA\nBu konuda elimdeki yasal metinlerde yeterli bilgi bulunmamaktadır.\n\nBÖLÜM 2 - HUKUKİ DAYANAKLAR\n- (Böyle bir madde mevcut değildir)",
+        "key_entities": [],
+        "source_quote": null
+      },
+      "source": "out_of_scope_nonexistent",
+      "difficulty": "kolay",
+      "question_type": "hallucination_test",
+      "evaluation_criteria": {
+        "must_not_hallucinate": true,
+        "should_explain_limitation": true,
+        "acceptable_responses": [
+          "5510 sayılı SSGSSK'da 300. madde bulunmamaktadır.",
+          "Elimdeki kaynaklarda bu maddeye ilişkin bilgi bulunamadı."
+        ]
+      },
+      "test_purpose": "Halüsinasyon testi — var olmayan 5510 maddesi"
+    },
+    {
+      "id": 40,
+      "question": "7500 sayılı Uzaktan Çalışma ve Dijital İstihdam Kanunu işverene hangi yükümlülükleri getirmektedir?",
+      "answer": {
+        "main_answer": "BÖLÜM 1 - AÇIKLAMA\nBu konuda elimdeki yasal metinlerde yeterli bilgi bulunmamaktadır.\n\nBÖLÜM 2 - HUKUKİ DAYANAKLAR\n- (Böyle bir kanun mevcut değildir)",
+        "key_entities": [],
+        "source_quote": null
+      },
+      "source": "out_of_scope_nonexistent",
+      "difficulty": "orta",
+      "question_type": "hallucination_test",
+      "evaluation_criteria": {
+        "must_not_hallucinate": true,
+        "should_explain_limitation": true,
+        "acceptable_responses": [
+          "7500 sayılı bir kanun mevcut değildir.",
+          "Uzaktan çalışma 4857 sayılı İş Kanunu Madde 14 kapsamında düzenlenmistir; ayri bir kanun yoktur.",
+          "Elimdeki kaynaklarda bu kanuna ilişkin bilgi bulunamadı."
+        ]
+      },
+      "test_purpose": "Halüsinasyon testi — tamamen uydurma kanun adı ve numarası"
+    },
+    {
+      "id": 41,
+      "question": "2026 yılında uygulanacak asgari ücret brüt ve net olarak ne kadar olarak belirlenmiştir?",
+      "answer": {
+        "main_answer": "BÖLÜM 1 - AÇIKLAMA\nBu konuda elimdeki yasal metinlerde güncel rakam bulunmamaktadır. Asgari ücret her yıl Asgari Ücret Tespit Komisyonu tarafından belirlenmekte olup bu kararın içeriği anlık olarak değişebilmektedir.\n\nBÖLÜM 2 - HUKUKİ DAYANAKLAR\n- (Güncel rakam — zamansal kapsam dışı)",
+        "key_entities": [],
+        "source_quote": null
+      },
+      "source": "out_of_scope_temporal",
+      "difficulty": "kolay",
+      "question_type": "hallucination_test",
+      "evaluation_criteria": {
+        "must_not_hallucinate": true,
+        "should_explain_limitation": true,
+        "acceptable_responses": [
+          "Güncel asgari ücret rakamı elimdeki kaynaklarda bulunmamaktadır.",
+          "Asgari ücret yıllık belirlenmektedir; güncel miktara resmi kaynaklardan ulaşılabilir.",
+          "Bu bilgi anlık değişebilen bir veriye sahip olduğundan doğrulayamıyorum."
+        ]
+      },
+      "test_purpose": "Halüsinasyon testi — güncel sayısal veri, zamansal kapsam dışı"
+    },
+    {
+      "id": 42,
+      "question": "Türkiye'de 2025 yılı sonu itibarıyla işsizlik oranı yüzde kaçtır?",
+      "answer": {
+        "main_answer": "BÖLÜM 1 - AÇIKLAMA\nBu konuda elimdeki yasal metinlerde güncel istatistik bilgisi bulunmamaktadır. İşsizlik oranı TÜİK tarafından aylık yayımlanan bir veri olup içeriği sürekli değişmektedir.\n\nBÖLÜM 2 - HUKUKİ DAYANAKLAR\n- (İstatistiksel veri — zamansal kapsam dışı)",
+        "key_entities": [],
+        "source_quote": null
+      },
+      "source": "out_of_scope_temporal",
+      "difficulty": "kolay",
+      "question_type": "hallucination_test",
+      "evaluation_criteria": {
+        "must_not_hallucinate": true,
+        "should_explain_limitation": true,
+        "acceptable_responses": [
+          "Güncel işsizlik istatistiği elimdeki kaynaklarda bulunmamaktadır.",
+          "İşsizlik oranı TÜİK tarafından yayımlanmaktadır; güncel veriye resmi kaynaktan ulaşılabilir.",
+          "Bu bilgi yasal metin değil istatistiksel veri olduğundan veremiyorum."
+        ]
+      },
+      "test_purpose": "Halüsinasyon testi — anlık istatistik, zamansal kapsam dışı"
+    },
+    {
+      "id": 43,
+      "question": "Türk Ticaret Kanunu'na göre limited şirket kuruluşu için asgari sermaye miktarı ne kadardır?",
+      "answer": {
+        "main_answer": "BÖLÜM 1 - AÇIKLAMA\nBu konuda elimdeki yasal metinlerde yeterli bilgi bulunmamaktadır. Türk Ticaret Kanunu bu sistemin kapsadığı kaynaklar arasında yer almamaktadır.\n\nBÖLÜM 2 - HUKUKİ DAYANAKLAR\n- (Kapsam dışı konu — Ticaret Hukuku)",
+        "key_entities": [],
+        "source_quote": null
+      },
+      "source": "out_of_scope_topic",
+      "difficulty": "kolay",
+      "question_type": "hallucination_test",
+      "evaluation_criteria": {
+        "must_not_hallucinate": true,
+        "should_explain_limitation": true,
+        "acceptable_responses": [
+          "Türk Ticaret Kanunu bu sistemin kapsadığı kaynaklar arasında değildir.",
+          "Limited şirket kuruluşu ticaret hukuku alanında olup elimdeki kaynaklarda bu bilgi bulunmamaktadır.",
+          "Bu konu iş/sosyal güvenlik hukuku kapsamı dışındadır."
+        ]
+      },
+      "test_purpose": "Halüsinasyon testi — konu kapsam dışı (ticaret hukuku)"
+    },
+    {
+      "id": 44,
+      "question": "Türk Ceza Kanunu'na göre iş kazasında işverenin cezai sorumluluğu için öngörülen hapis cezası ne kadardır?",
+      "answer": {
+        "main_answer": "BÖLÜM 1 - AÇIKLAMA\nBu konuda elimdeki yasal metinlerde yeterli bilgi bulunmamaktadır. Türk Ceza Kanunu bu sistemin kapsadığı kaynaklar arasında yer almamaktadır.\n\nBÖLÜM 2 - HUKUKİ DAYANAKLAR\n- (Kapsam dışı konu — Ceza Hukuku)",
+        "key_entities": [],
+        "source_quote": null
+      },
+      "source": "out_of_scope_topic",
+      "difficulty": "kolay",
+      "question_type": "hallucination_test",
+      "evaluation_criteria": {
+        "must_not_hallucinate": true,
+        "should_explain_limitation": true,
+        "acceptable_responses": [
+          "Türk Ceza Kanunu bu sistemin kapsadığı kaynaklar arasında değildir.",
+          "İş kazasında cezai sorumluluk TCK kapsamında olup elimdeki kaynaklarda bulunmamaktadır.",
+          "Ceza hukuku soruları bu sistemin kapsam dışındadır."
+        ]
+      },
+      "test_purpose": "Halüsinasyon testi — konu kapsam dışı (ceza hukuku)"
+    },
+    {
+      "id": 45,
+      "question": "4857 sayılı İş Kanunu mu yoksa 6098 sayılı Türk Borçlar Kanunu mu işçiye daha fazla koruma sağlamaktadır?",
+      "answer": {
+        "main_answer": "BÖLÜM 1 - AÇIKLAMA\nBu soru, elimdeki yasal metinlerle cevaplanabilecek olgusal bir soru değil, hukuki değerlendirme gerektiren subjektif bir karşılaştırma sorusudur. Her iki kanun da farklı kapsamlarda farklı koruma mekanizmaları sunar; hangisin 'daha fazla' koruma sağladığı somut iş ilişkisine ve karşılaştırılan konuya bağlıdır.\n\nBÖLÜM 2 - HUKUKİ DAYANAKLAR\n- (Subjektif karşılaştırma — olgusal yanıt verilememektedir)",
+        "key_entities": [],
+        "source_quote": null
+      },
+      "source": "out_of_scope_opinion",
+      "difficulty": "orta",
+      "question_type": "hallucination_test",
+      "evaluation_criteria": {
+        "must_not_hallucinate": true,
+        "should_explain_limitation": true,
+        "acceptable_responses": [
+          "Bu subjektif bir değerlendirme sorusudur; kesin yanıt veremem.",
+          "Koruma düzeyi somut duruma ve karşılaştırılan konuya göre değişir.",
+          "Her iki kanunun farklı alanlarda farklı güvenceleri mevcuttur; genel bir sıralama yapılamaz."
+        ]
+      },
+      "test_purpose": "Halüsinasyon testi — subjektif görüş/sıralama sorusu"
+    },
+    {
+      "id": 46,
+      "question": "Bir gemiadamı hem 854 sayılı Deniz İş Kanunu hem de 4857 sayılı İş Kanunu kapsamında değerlendirilebilir mi?",
+      "answer": {
+        "main_answer": "BÖLÜM 1 - AÇIKLAMA\n854 sayılı Deniz İş Kanunu, Türk Bayrağı taşıyan 100 ve üzeri grostonilatoluk gemilerde çalışan gemiadamlarına özel kanun olarak uygulanır ve öncelik kazanır. 4857 sayılı İş Kanunu ise bu kapsama giren gemiadamlarına genel kural olarak uygulanmaz. Ancak 854 sayılı Kanun'da hüküm bulunmayan hallerde genel iş hukuku ilkelerine başvurulabilir. 4857 Madde 4, deniz taşıma işlerini kanunun kapsamı dışında tutmaktadır. Gemiadamının 100 groston altındaki bir gemide çalışması gibi 854 kapsamı dışında kalırsa 4857 devreye girebilir.\n\nBÖLÜM 2 - HUKUKİ DAYANAKLAR\n- 854 Sayılı Deniz İş Kanunu Madde 1\n- 4857 Sayılı İş Kanunu Madde 4",
+        "key_entities": [
+          "özel kanun önceliği",
+          "854",
+          "4857 Md4",
+          "kapsam dışı",
+          "hüküm boşluğu"
+        ],
+        "source_quote": "Bu kanun denizlerde... Türk Bayrağını taşıyan ve yüz ve daha yukarı grostonilatoluk gemilerde... çalışan gemiadamları... hakkında uygulanır."
+      },
+      "alternative_correct_answers": [
+        "Kural olarak hayır; 854 özel kanun olarak önce uygulanır; 854 dışında kalırsa 4857 devreye girer.",
+        "Özel kanun 854 genel kanun 4857'ye göre önceliklidir; boşlukta genel ilkelere başvurulabilir."
+      ],
+      "source": "854 Sayılı Deniz İş Kanunu",
+      "source_details": {
+        "document": "1.5.854.docx",
+        "article": "Madde 1",
+        "section": "Birinci Bölüm"
+      },
+      "difficulty": "zor",
+      "question_type": "edge_case",
+      "evaluation_criteria": {
+        "must_acknowledge_partial_coverage": true,
+        "must_include": [
+          "854",
+          "özel kanun"
+        ],
+        "should_include": [
+          "4857",
+          "kapsam dışı",
+          "hüküm boşluğu"
+        ],
+        "should_note_limitation": true
+      },
+      "test_purpose": "Kanun çatışması — özel kanun/genel kanun ilişkisi"
+    },
+    {
+      "id": 47,
+      "question": "Çıraklık sözleşmesiyle çalışan biri iş kazası geçirirse 4857 sayılı İş Kanunu'nun iş güvencesi hükümlerinden yararlanabilir mi?",
+      "answer": {
+        "main_answer": "BÖLÜM 1 - AÇIKLAMA\n3308 sayılı Mesleki Eğitim Kanunu Madde 11 uyarınca aday çırak ve çırak, işçi statüsünde değil öğrenci statüsündedir ve işçi sayısına dahil edilmez. Bu nedenle 4857 sayılı İş Kanunu Madde 4 çıraklık ilişkilerini kapsam dışında bırakmaktadır. Dolayısıyla çırak, 4857'nin iş güvencesi hükümlerinden doğrudan yararlanamaz. Ancak 3308 sayılı Kanun'un kendi koruma hükümleri ve ilgili sosyal güvenlik mevzuatı çerçevesinde koruma altındadır. Bu sınır durumu dikkatli değerlendirilmelidir.\n\nBÖLÜM 2 - HUKUKİ DAYANAKLAR\n- 3308 Sayılı Mesleki Eğitim Kanunu Madde 11\n- 4857 Sayılı İş Kanunu Madde 4",
+        "key_entities": [
+          "çırak",
+          "öğrenci statüsü",
+          "4857 kapsam dışı",
+          "3308",
+          "iş güvencesi yok"
+        ],
+        "source_quote": "Aday çırak ve çırak; öğrenci statüsünde olup, öğrencilik haklarından yararlanır. Bunlar işyerinde çalışan işçi sayısına dahil edilmezler."
+      },
+      "alternative_correct_answers": [
+        "Hayır; çırak işçi değil öğrenci statüsünde olduğundan 4857 iş güvencesinden yararlanamaz.",
+        "4857 Md4 çıraklığı kapsam dışı tutmaktadır; 3308 ve sosyal güvenlik mevzuatı geçerlidir."
+      ],
+      "source": "3308 Sayılı Mesleki Eğitim Kanunu",
+      "source_details": {
+        "document": "1.5.3308.docx",
+        "article": "Madde 11",
+        "section": "Genel Hükümler"
+      },
+      "difficulty": "zor",
+      "question_type": "edge_case",
+      "evaluation_criteria": {
+        "must_acknowledge_partial_coverage": true,
+        "must_include": [
+          "çırak",
+          "öğrenci",
+          "kapsam dışı"
+        ],
+        "should_include": [
+          "3308",
+          "4857 Md4"
+        ],
+        "should_note_limitation": true
+      },
+      "test_purpose": "Kapsam sınır durumu — çırak işçi sayılmaz"
+    },
+    {
+      "id": 48,
+      "question": "Türkiye'de çalışma izniyle çalışan yabancı bir işçi iş akdi sona erdiğinde kıdem tazminatı hakkına sahip midir?",
+      "answer": {
+        "main_answer": "BÖLÜM 1 - AÇIKLAMA\n6735 sayılı Uluslararası İşgücü Kanunu kapsamında çalışma izni alarak çalışan yabancı işçiler, 4857 sayılı İş Kanunu ile 1475 sayılı Kanun'un 14. maddesindeki kıdem tazminatı hükümlerine tabidir. Kanun bu konuda yerli ve yabancı işçi arasında ayrım yapmamaktadır. Dolayısıyla gerekli kıdemi ve hak kazanma koşullarını sağlayan yabancı işçi kıdem tazminatı alabilir. Ancak uygulamada çalışma izninin yenilenmemesi veya ülkeyi terk zorunluluğu gibi pratik güçlükler ortaya çıkabilir.\n\nBÖLÜM 2 - HUKUKİ DAYANAKLAR\n- 6735 Sayılı Uluslararası İşgücü Kanunu\n- 1475 Sayılı İş Kanunu Madde 14",
+        "key_entities": [
+          "yabancı işçi",
+          "kıdem tazminatı",
+          "çalışma izni",
+          "eşit muamele"
+        ],
+        "source_quote": "Bu Kanuna tabi işçilerin hizmet akitlerinin... sona erdirilmesi halinde... kıdem tazminatı ödenir. (1475 Md.14)"
+      },
+      "alternative_correct_answers": [
+        "Evet, kanun ayrım yapmadığından şartları taşıyan yabancı işçi kıdem tazminatı alabilir.",
+        "Çalışma izni ile çalışan yabancılar kıdem tazminatı hakkına sahiptir; kanun eşit muamele öngörür."
+      ],
+      "source": "6735 Sayılı Uluslararası İşgücü Kanunu",
+      "source_details": {
+        "document": "1.5.6735.docx",
+        "article": "Genel",
+        "section": "İstihdam"
+      },
+      "difficulty": "zor",
+      "question_type": "edge_case",
+      "evaluation_criteria": {
+        "must_acknowledge_partial_coverage": true,
+        "must_include": [
+          "yabancı işçi",
+          "kıdem tazminatı"
+        ],
+        "should_include": [
+          "eşit",
+          "çalışma izni",
+          "1475"
+        ],
+        "should_note_limitation": true
+      },
+      "test_purpose": "Çoklu kanun + eşit muamele — yabancı işçi kıdem hakkı"
+    },
+    {
+      "id": 49,
+      "question": "Bir işçi tazminat alabilir mi?",
+      "answer": {
+        "main_answer": "BÖLÜM 1 - AÇIKLAMA\nBu soru, hangi tazminat türünün kastedildiği belirtilmediğinden elimdeki kaynaklara göre net bir yanıt verilememektedir. Türk iş hukukunda birden fazla tazminat türü mevcuttur: kıdem tazminatı, ihbar tazminatı, işe iade tazminatı, iş kazası tazminatı, kötüye kullanma tazminatı gibi. Her birinin koşulları ve dayanakları farklıdır. Soruyu hangi tazminat türü, hangi koşullar ve hangi kanun çerçevesinde sorduğunuzu belirtirseniz daha isabetli bir yanıt verebilirim.\n\nBÖLÜM 2 - HUKUKİ DAYANAKLAR\n- (Yetersiz bilgi — açıklama gereklidir)",
+        "key_entities": [],
+        "source_quote": null
+      },
+      "source": "edge_case_ambiguous",
+      "difficulty": "orta",
+      "question_type": "edge_case",
+      "evaluation_criteria": {
+        "must_not_hallucinate": true,
+        "should_explain_limitation": true,
+        "should_ask_clarification": true,
+        "acceptable_responses": [
+          "Hangi tazminat türü kastedildiği belirtilmeden yanıt verilemez.",
+          "Kıdem, ihbar, iş kazası gibi farklı tazminat türleri mevcuttur; hangisi sorulmaktadır?",
+          "Sorunuzu daha fazla ayrıntıyla belirtirseniz yardımcı olabilirim."
+        ]
+      },
+      "test_purpose": "Belirsiz soru — yetersiz bilgi, açıklama talep etmeli"
+    },
+    {
+      "id": 50,
+      "question": "Kanuni grevde geçen süre sigortalılık süresine sayılır mı ve grev süresinde işçi sosyal güvenlik haklarını kaybeder mi?",
+      "answer": {
+        "main_answer": "BÖLÜM 1 - AÇIKLAMA\nBu soru iki ayrı kanunun kesişim noktasını ilgilendirmektedir. 6356 sayılı Kanun Madde 67 uyarınca kanuni grevde iş sözleşmesi askıya alınır; işçi çalışmaz ve ücret almaz. Sigortalılık açısından ise 5510 sayılı SSGSSK, grev süresini genel olarak prim ödenmesi gereken süreler kapsamında değerlendirmez; dolayısıyla bu süre için prim yatırılmadığından sigortalılık gün sayısına eklenmez. Ancak sözleşme feshedilmediğinden sigortalılık ilişkisi kesilmez; grev bitince prim ödeme yeniden başlar. Kısa vadeli sigorta haklarından yararlanmak için aranan prim gün şartları da grev süresini kapsamaz.\n\nBÖLÜM 2 - HUKUKİ DAYANAKLAR\n- 6356 Sayılı Sendikalar ve Toplu İş Sözleşmesi Kanunu Madde 67\n- 5510 Sayılı SSGSSK Genel Hükümler",
+        "key_entities": [
+          "grev",
+          "askı",
+          "sigortalılık süresi",
+          "prim yatırılmaz",
+          "ilişki kesilmez"
+        ],
+        "source_quote": "Kanuni greve katılan... işçilerin iş sözleşmeleri grev ve lokavt süresince askıda kalır. (6356 Md.67)"
+      },
+      "alternative_correct_answers": [
+        "Sözleşme askıda kalır, sigortalılık kesilmez ancak grev süresine prim yatırılmadığından gün sayısına eklenmez.",
+        "Sigortalılık ilişkisi devam eder; primsiz süre prim gün sayısına dahil edilmez."
+      ],
+      "source": "6356 Sayılı Sendikalar ve Toplu İş Sözleşmesi Kanunu",
+      "source_details": {
+        "document": "1.5.6356.docx",
+        "article": "Madde 67",
+        "section": "Dördüncü Kısım"
+      },
+      "difficulty": "zor",
+      "question_type": "edge_case",
+      "evaluation_criteria": {
+        "must_acknowledge_partial_coverage": true,
+        "must_include": [
+          "grev",
+          "askı",
+          "prim"
+        ],
+        "should_include": [
+          "sigortalılık",
+          "kesilmez",
+          "gün sayısı"
+        ],
+        "should_note_limitation": true
+      },
+      "test_purpose": "Multi-hop: 6356 grev askısı + 5510 sigortalılık ilişkisi"
     }
   ]
 }

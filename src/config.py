@@ -1,174 +1,341 @@
+from __future__ import annotations
 import os
+from dataclasses import dataclass
+from pathlib import Path
+from typing import Dict, List
+
 from dotenv import load_dotenv
+
 load_dotenv()
 
-# DİNAMİK DOSYA YOLU AYARLARI
-SRC_DIR = os.path.dirname(os.path.abspath(__file__))
-PROJECT_ROOT = os.path.dirname(SRC_DIR)
+# ─────────────────────────────────────────────
+# PROJE DİZİN YAPISI
+# ─────────────────────────────────────────────
+SRC_DIR    = Path(__file__).parent.resolve()
+ROOT_DIR   = SRC_DIR.parent
 
-# Veri Klasörleri
-DATA_DIR = os.path.join(PROJECT_ROOT, "data")
-RAW_DATA_DIR = os.path.join(DATA_DIR, "raw", "mevzuat")
-PROCESSED_DATA_DIR = os.path.join(DATA_DIR, "processed")
-VECTOR_STORE_DIR = os.path.join(DATA_DIR, "vector_store")
+DATA_DIR         = ROOT_DIR / "data"
+RAW_DATA_DIR     = DATA_DIR / "raw" / "mevzuat"
+PROCESSED_DIR    = DATA_DIR / "processed"
+VECTOR_STORE_DIR = DATA_DIR / "vector_store"
+REPORTS_DIR      = ROOT_DIR / "reports"
 
-# Dosya Yolları (Mutlak Yollar)
-DB_PATH = os.path.join(VECTOR_STORE_DIR, "chroma_db")
-JSON_FILE_PATH = os.path.join(PROCESSED_DATA_DIR, "cleaned_laws_final.json")
-STATS_FILE_PATH = os.path.join(PROCESSED_DATA_DIR, "cleaned_laws_final_stats.json")
+DB_PATH           = str(VECTOR_STORE_DIR / "chroma_db")
+JSON_FILE_PATH    = str(PROCESSED_DIR / "chunks_final.json")
+STATS_FILE_PATH   = str(PROCESSED_DIR / "chunks_stats.json")
+MAPPING_FILE_PATH = str(DATA_DIR / "raw" / "mülga" / "mapping_registry.json")
 
-# Data Seti Yolu
-DATASET_PATH = os.path.join(DATA_DIR, "test_datasets", "bronze_dataset_final.json")
+DATASET_PATH = str(DATA_DIR / "test_datasets" / "bronze_dataset_final.json")
 
-# Koleksiyon Adı
-COLLECTION_NAME = "turkish_law_collection"
+TEMPLATES_DIR = SRC_DIR / "templates"
 
+
+# ─────────────────────────────────────────────
 # MODEL AYARLARI
-MODEL_NAME = "gemini-2.0-flash"
-EVALUATOR_MODEL_NAME = "gpt-3.5-turbo"
+# ─────────────────────────────────────────────
+COLLECTION_NAME      = "turkish_law_collection"
 EMBEDDING_MODEL_NAME = "intfloat/multilingual-e5-large"
 
-# TEXT SPLITTING PARAMETRELERİ
-CHUNK_SIZE = 1000
-CHUNK_OVERLAP = 200
+MODEL_NAME           = os.getenv("LLM_MODEL",       "gemini-2.0-flash")
+EVALUATOR_MODEL_NAME = os.getenv("EVALUATOR_MODEL", "gpt-3.5-turbo")
 
+
+# ─────────────────────────────────────────────
+# CHUNKING PARAMETRELERİ
+# ─────────────────────────────────────────────
+@dataclass(frozen=True)
+class ChunkConfig:
+    """Configuration for document chunking with semantic boundaries.
+    
+    Attributes:
+        target_size: Target chunk size in characters (2000 for balanced context)
+        overlap_chars: Character overlap between chunks (0 for non-overlapping)
+        min_chunk_chars: Minimum chunk size to prevent fragmentation (100 chars = ~20-25 words)
+        header_repeat: Whether to repeat headers in multi-part chunks
+    """
+    target_size: int      = 2000
+    overlap_chars: int    = 0
+    min_chunk_chars: int  = 100
+    header_repeat: bool   = True
+
+CHUNK_CFG = ChunkConfig()
+
+CHUNK_SIZE    = CHUNK_CFG.target_size
+CHUNK_OVERLAP = CHUNK_CFG.overlap_chars
+
+
+# ─────────────────────────────────────────────
 # RETRIEVER AYARLARI
-RETRIEVER_K = 7 #5 - 9 - 13 test edilcek
-TEMPERATURE = 0 # modelin yaratıcılığı - hukuk asistanı için 0 olmalı
+# ─────────────────────────────────────────────
+RETRIEVER_K  = 7
+TEMPERATURE  = 0
 
-# DATA INGESTION AYARLARI
-SOURCE_MAPPING = {
-    "1.5.1475.docx": "1475 Sayılı İş Kanunu", #*
-    "1.5.2709.docx": "2709 Sayılı T.C. Anayasası",
-    "1.5.3308.docx": "3308 Sayılı Mesleki Eğitim Kanunu", #*
-    "1.5.4447.docx": "4447 Sayılı İşsizlik Sigortası Kanunu", #*
-    "1.5.4857.docx": "4857 Sayılı İş Kanunu",
-    "1.5.6098.docx": "6098 Sayılı Türk Borçlar Kanunu",
-    "1.5.6331.docx": "6331 Sayılı İş Sağlığı ve Güvenliği Kanunu", #*
-    "1.5.6356.docx": "6356 Sayılı Sendikalar ve Toplu İş Sözleşmesi Kanunu",
-    "1.5.7036.docx": "7036 Sayılı İş Mahkemeleri Kanunu"
+
+# ─────────────────────────────────────────────
+# API ENDPOINT SUBLAMASı
+# ─────────────────────────────────────────────
+# External API endpoints for model providers
+SAMBANOVA_API_BASE_URL = "https://api.sambanova.ai/v1"
+"""SambaNova API base URL for Qwen model access.
+
+Used when SAMBANOVA_API_KEY environment variable is set.
+"""
+
+OLLAMA_DEFAULT_BASE_URL = "http://localhost:11434"
+"""Default Ollama server base URL for local model access.
+
+Overridable via OLLAMA_BASE_URL environment variable.
+Use as fallback when no other Qwen provider available.
+"""
+
+
+# ─────────────────────────────────────────────
+# STREAMING AYARLARI (Future)
+# ─────────────────────────────────────────────
+STREAM_ENABLED = os.getenv("STREAM_ENABLED", "false").lower() == "true"
+"""Enable streaming responses from LLM.
+
+Stream responses in chunks instead of waiting for full completion.
+Useful for long answer generation and real-time UX.
+"""
+
+STREAM_CHUNK_SIZE = 50
+"""Minimum chunk size for streamed responses (characters)."""
+
+STREAM_TIMEOUT = 300
+"""Timeout for streaming response in seconds (5 minutes)."""
+
+
+# ─────────────────────────────────────────────
+# PROMPT ŞABLONU
+# ─────────────────────────────────────────────
+@dataclass(frozen=True)
+class LawSourceInfo:
+    display_name: str
+    short_name: str
+    law_number: str
+
+
+SOURCE_FORMAT_MAPPING: Dict[str, LawSourceInfo] = {
+    "1.5.1475.docx": LawSourceInfo(
+        display_name="1475 Sayılı İş Kanunu",
+        short_name="1475 İş Kanunu",
+        law_number="1475",
+    ),
+    "1.5.2709.docx": LawSourceInfo(
+        display_name="T.C. Anayasası",
+        short_name="Anayasa",
+        law_number="2709",
+    ),
+    "1.5.3308.docx": LawSourceInfo(
+        display_name="3308 Sayılı Mesleki Eğitim Kanunu",
+        short_name="Mesleki Eğitim Kanunu",
+        law_number="3308",
+    ),
+    "1.5.4447.docx": LawSourceInfo(
+        display_name="4447 Sayılı İşsizlik Sigortası Kanunu",
+        short_name="İşsizlik Sigortası Kanunu",
+        law_number="4447",
+    ),
+    "1.5.4857.docx": LawSourceInfo(
+        display_name="4857 Sayılı İş Kanunu",
+        short_name="İş Kanunu",
+        law_number="4857",
+    ),
+    "1.5.5510.docx": LawSourceInfo(
+        display_name="5510 Sayılı SSGSSK",
+        short_name="SGK Kanunu",
+        law_number="5510",
+    ),
+    "1.5.6098.docx": LawSourceInfo(
+        display_name="6098 Sayılı Türk Borçlar Kanunu",
+        short_name="Borçlar Kanunu",
+        law_number="6098",
+    ),
+    "1.5.6331.docx": LawSourceInfo(
+        display_name="6331 Sayılı İş Sağlığı ve Güvenliği Kanunu",
+        short_name="İSG Kanunu",
+        law_number="6331",
+    ),
+    "1.5.6356.docx": LawSourceInfo(
+        display_name="6356 Sayılı Sendikalar ve Toplu İş Sözleşmesi Kanunu",
+        short_name="Sendikalar Kanunu",
+        law_number="6356",
+    ),
+    "1.5.6100.docx": LawSourceInfo(
+        display_name="6100 Sayılı Hukuk Muhakemeleri Kanunu",
+        short_name="Hukuk Muhakemeleri Kanunu",
+        law_number="6100",
+    ),
+    "1.5.7036.docx": LawSourceInfo(
+        display_name="7036 Sayılı İş Mahkemeleri Kanunu",
+        short_name="İş Mahkemeleri Kanunu",
+        law_number="7036",
+    ),
+    "1.3.5953.docx": LawSourceInfo(
+        display_name="5953 Sayılı Basın Mesleği Kanunu",
+        short_name="Basın Mesleği Kanunu",
+        law_number="5953",
+    ),
+    "1.4.193.docx": LawSourceInfo(
+        display_name="193 Sayılı Gelir Vergisi Kanunu",
+        short_name="Gelir Vergisi Kanunu",
+        law_number="193",
+    ),
+    "1.5.4688.docx": LawSourceInfo(
+        display_name="4688 Sayılı Kamu Görevlileri Sendikaları ve Toplu Sözleşme Kanunu",
+        short_name="Kamu Görevlileri Sendikaları Kanunu",
+        law_number="4688",
+    ),
+    "1.5.657.docx": LawSourceInfo(
+        display_name="657 Sayılı Devlet Memurları Kanunu",
+        short_name="Devlet Memurları Kanunu",
+        law_number="657",
+    ),
+    "1.5.6458.docx": LawSourceInfo(
+        display_name="6458 Sayılı Yabancılar ve Uluslararası Koruma Kanunu",
+        short_name="Yabancılar Kanunu",
+        law_number="6458",
+    ),
+    "1.5.6735.docx": LawSourceInfo(
+        display_name="6735 Sayılı Uluslararası İşgücü Kanunu",
+        short_name="Uluslararası İşgücü Kanunu",
+        law_number="6735",
+    ),
+    "1.5.854.docx": LawSourceInfo(
+        display_name="854 Sayılı Deniz İş Kanunu",
+        short_name="Deniz İş Kanunu",
+        law_number="854",
+    ),
 }
 
-SOURCE_FORMAT_MAPPING = {
-    "1.5.1475.docx": {
-        "display_name": "1475 Sayılı İş Kanunu",
-        "short_name": "İş Kanunu",
-        "law_number": "1475"
-    },
-    "1.5.2709.docx": {
-        "display_name": "T.C. Anayasası",
-        "short_name": "Anayasa",
-        "law_number": "2709"
-    },
-    "1.5.3308.docx": {
-        "display_name": "3308 Sayılı Mesleki Eğitim Kanunu",
-        "short_name": "Mesleki Eğitim Kanunu",
-        "law_number": "3308"
-    },
-    "1.5.4447.docx": {
-        "display_name": "4447 Sayılı İşsizlik Sigortası Kanunu",
-        "short_name": "İşsizlik Sigortası Kanunu",
-        "law_number": "4447"
-    },
-    "1.5.4857.docx": {
-        "display_name": "4857 Sayılı İş Kanunu",
-        "short_name": "İş Kanunu",
-        "law_number": "4857"
-    },
-    "1.5.6098.docx": {
-        "display_name": "6098 Sayılı Türk Borçlar Kanunu",
-        "short_name": "Borçlar Kanunu",
-        "law_number": "6098"
-    },
-    "1.5.6331.docx": {
-        "display_name": "6331 Sayılı İş Sağlığı ve Güvenliği Kanunu",
-        "short_name": "İSG Kanunu",
-        "law_number": "6331"
-    },
-    "1.5.6356.docx": {
-        "display_name": "6356 Sayılı Sendikalar ve Toplu İş Sözleşmesi Kanunu",
-        "short_name": "Sendikalar Kanunu",
-        "law_number": "6356"
-    },
-    "1.5.7036.docx": {
-        "display_name": "7036 Sayılı İş Mahkemeleri Kanunu",
-        "short_name": "İş Mahkemeleri Kanunu",
-        "law_number": "7036"
-    }
+# Geriye dönük uyumluluk
+SOURCE_MAPPING: Dict[str, str] = {
+    fname: info.display_name
+    for fname, info in SOURCE_FORMAT_MAPPING.items()
 }
 
-LEGAL_TERM_WEIGHTS = {
-    "kıdem tazminatı": 5, "ihbar tazminatı": 5, "iş sözleşmesi": 5, "hizmet sözleşmesi": 5,
-    "fazla çalışma": 5, "yıllık izin": 5, "sendika": 5, "toplu iş sözleşmesi": 5,
-    "grev": 5, "lokavt": 5, "arabuluculuk": 5, "işe iade": 5, "haklı fesih": 5,
-    "geçerli fesih": 5, "iş güvencesi": 5, "sendikal tazminat": 5, "mobbing": 5,
-    "psikolojik taciz": 5, "işveren": 3, "işçi": 3, "ücret": 3, "çalışma süresi": 3,
-    "tazminat": 3, "zamanaşımı": 3, "iş mahkemesi": 3, "eşitlik": 3, "ayrımcılık": 3,
-    "fesih": 3, "bildirim süresi": 3, "deneme süresi": 3, "belirli süreli": 3,
-    "belirsiz süreli": 3, "kısmi süreli": 3, "tam süreli": 3, "işyeri": 2,
-    "işletme": 2, "sözleşme": 2, "hak": 2, "yükümlülük": 2,
+
+# ─────────────────────────────────────────────
+# ANAHTAR KELİME AĞIRLIKLARI
+# ─────────────────────────────────────────────
+LEGAL_TERM_WEIGHTS: Dict[str, int] = {
+    # Çok yüksek öncelik (5)
+    "kıdem tazminatı": 5,
+    "ihbar tazminatı": 5,
+    "iş sözleşmesi": 5,
+    "hizmet sözleşmesi": 5,
+    "işe iade": 5,
+    "haksız fesih": 5,
+    "haklı fesih": 5,
+    "fazla çalışma": 5,
+    "yıllık izin": 5,
+    "sendika": 5,
+    "toplu iş sözleşmesi": 5,
+    "arabuluculuk": 5,
+    "iş mahkemesi": 5,
+    "mobbing": 5,
+    "iş kazası": 5,
+    "meslek hastalığı": 5,
+    # Orta öncelik (3)
+    "ücret": 3,
+    "bordro": 3,
+    "asgari ücret": 3,
+    "işveren": 3,
+    "işçi": 3,
+    "fesih": 3,
+    "deneme süresi": 3,
+    "bildirim süresi": 3,
+    "kıdem": 3,
+    "ihbar": 3,
+    "tazminat": 3,
+    "iş güvencesi": 3,
+    "grev": 3,
+    "lokavt": 3,
+    "performans": 3,
+    "mücbir sebep": 3,
+    "alt işveren": 3,
+    "işyeri": 3,
+    "çalışma süresi": 3,
+    "fazla mesai ücreti": 3,
+    "işe başlama": 3,
+    # Düşük öncelik (2)
+    "sözleşme": 2,
+    "hukuk": 2,
+    "delil": 2,
+    "ispat": 2,
+    "bilirkişi": 2,
+    "kısa çalışma": 2,
+    "işsizlik sigortası": 2,
+    "iş sağlığı ve güvenliği": 2,
+    "işveren vekili": 2,
 }
 
-STOP_WORDS = {
-    "acaba", "ama", "ancak", "arada", "aslında", "ayrıca", "bana", "bazı", "belki",
-    "ben", "benden", "beni", "benim", "beri", "bile", "bin", "bir", "biri", "birkaç",
-    "birkez", "birçok", "birşey", "birşeyi", "biz", "bize", "bizden", "bizi", "bizim",
-    "böyle", "böylece", "bu", "buna", "bunda", "bundan", "bunlar", "bunları", "bunların",
-    "bunu", "bunun", "burada", "bütün", "çoğu", "çünkü", "da", "daha", "dahi", "de",
-    "defa", "değil", "diğer", "diye", "doksan", "dokuz", "dolayı", "dolayısıyla", "dört",
-    "edecek", "eden", "ederek", "edilecek", "ediliyor", "edilmesi", "ediyor", "eğer",
-    "elli", "en", "etmesi", "etti", "ettiği", "ettiğini", "gibi", "göre", "halen",
-    "hangi", "hata", "hepsi", "her", "herkes", "herkese", "herkesi", "herkesin", "hiç",
-    "hiçbir", "için", "iki", "ile", "ilgili", "ise", "işte", "itibaren", "itibariyle",
-    "kadar", "karşın", "katrilyon", "kendi", "kendilerine", "kendini", "kendisi",
-    "kendisine", "kendisini", "kez", "ki", "kim", "kimden", "kime", "kimi", "kimse",
-    "kırk", "milyar", "milyon", "mu", "mü", "mı", "nasıl", "ne", "neden", "nedenle",
-    "nerde", "nerede", "nereye", "niçin", "niye", "o", "olan", "olarak", "oldu",
-    "olduğu", "olduğunu", "olduklarını", "olmadı", "olmadığı", "olmak", "olması",
-    "olmayan", "olmaz", "olsa", "olsun", "olup", "olur", "olursa", "oluyor", "on",
-    "ona", "onlar", "onlardan", "onları", "onların", "onu", "onun", "orada", "oysa",
-    "oyysa", "pek", "rağmen", "sadece", "sanki", "sayı", "sayılı", "sekiz", "seksen",
-    "sen", "senden", "seni", "senin", "siz", "sizden", "sizi", "sizin", "sonra",
-    "tarafından", "trilyon", "tüm", "üç", "üzere", "var", "vardı", "ve", "veya",
-    "ya", "yani", "yapacak", "yapılan", "yapılması", "yapıyor", "yapmak", "yaptı",
-    "yaptığı", "yaptığını", "yaptıkları", "yedi", "yerine", "yetmiş", "yine", "yirmi",
-    "yok", "yoksa", "yüz", "zaten", "madde", "kanun", "fıkra", "bent", "hüküm", "tarihli"
+LEGAL_TERM_MAPPINGS: Dict[str, List[str]] = {
+    "sataşma": ["mobbing", "psikolojik taciz"],
+    "taciz": ["cinsel taciz", "mobbing"],
+    "cinsel taciz": ["cinsel taciz"],
+    "şeref ve namus": ["hakaret", "onur kırma"],
+    "ahlak ve iyi niyet": ["haklı fesih", "tazminatlı çıkış"],
+    "sağlık sebepleri": ["iş kazası", "meslek hastalığı", "haklı fesih"],
+    "fesih": ["fesih", "işten çıkarma", "iş akdinin sona ermesi"],
+    "çıkış parası": ["kıdem tazminatı"],
+    "tazminat hesaplama": ["kıdem tazminatı", "ihbar tazminatı"],
+    "bildirim süresi": ["ihbar tazminatı", "ihbar"],
+    "maaş": ["ücret", "bordro"],
+    "aylık": ["ücret"],
+    "yevmiye": ["ücret"],
+    "fazla mesai parası": ["fazla mesai ücreti"],
+    "prim": ["ücret"],
+    "ikramiye": ["ücret"],
+    "mesai": ["fazla çalışma"],
+    "yıllık ücretli izin": ["yıllık izin"],
+    "sözleşmeli personel": ["belirli süreli"],
+    "kadrolu": ["belirsiz süreli"],
+    "tis": ["toplu iş sözleşmesi"],
+    "toplu sözleşme": ["toplu iş sözleşmesi"],
+    "iş bırakma": ["grev"],
+    "savunma yazısı": ["savunma"],
+    "arabulucu": ["arabuluculuk"],
+    "işe geri dönüş": ["işe iade"],
+    "haksız fesih davası": ["haksız fesih", "işe iade"],
+    "asgariücret": ["asgari ücret"],
 }
 
-LEGAL_TERM_MAPPINGS = {
-    "sataşma": ["mobbing", "psikolojik taciz", "hakaret", "zorbalık", "kötü muamele"],
-    "şeref ve namus": ["hakaret", "onur kırma", "küfür", "mobbing", "iftira"],
-    "cinsel taciz": ["taciz", "sarkıntılık", "haklı fesih", "rahatsız etme", "cinsel istismar"],
-    "ahlak ve iyi niyet": ["haklı fesih", "24/2", "tazminatlı çıkış", "yüz kızartıcı", "hırsızlık", "kavga", "güven sarsıcı"],
-    "sağlık sebepleri": ["iş kazası riski", "meslek hastalığı", "haklı fesih", "raporlu", "sağlık raporu"],
-    "fesih": ["işten çıkarma", "kovulma", "istifa", "ayrılma", "kapının önüne koyma", "iş akdinin sona ermesi"],
-    "kıdem tazminatı": ["çıkış parası", "tazminat hesaplama", "yıllık tazminat", "kıdem hesabı"],
-    "ihbar tazminatı": ["haber verme süresi", "bildirim süresi", "hemen çıkış", "ihbar öneli"],
-    "ücret": ["maaş", "aylık", "yevmiye", "fazla mesai parası", "prim", "ikramiye", "ödeme"],
-    "fazla çalışma": ["mesai", "fazla mesai", "overtime", "ek çalışma", "hafta sonu çalışma"],
-    "yıllık izin": ["yıllık ücretli izin", "tatil", "izin hakkı", "dinlenme hakkı"],
-    "belirli süreli": ["sözleşmeli personel", "geçici iş", "proje bazlı", "süreli sözleşme"],
-    "belirsiz süreli": ["kadrolu", "daimi", "süresiz sözleşme"],
-    "sendikal": ["sendika üyeliği", "sendikal tazminat", "sendikalı olma", "sendika hakkı"],
-    "toplu iş sözleşmesi": ["TİS", "toplu sözleşme", "sendika sözleşmesi"],
-    "grev": ["iş bırakma", "toplu eylem", "grev hakkı"],
-    "verim": ["performans", "düşük performans", "verimsizlik", "yetersizlik", "hedef tutmama", "satış hedefi"],
-    "savunma": ["ifade", "savunması alınmadan", "sözlü savunma", "savunma yazısı", "savunma hakkı"],
-    "davranış": ["tutum", "hal ve hareketler", "uyumsuzluk", "kavga", "disiplin"],
-    "işe iade": ["işe geri dönüş", "haksız fesih davası", "geçersiz fesih", "işe iade davası"],
-    "arabuluculuk": ["zorunlu arabuluculuk", "dava şartı", "uzlaşma", "arabulucu"],
-    "iş mahkemesi": ["iş davası", "işçi davası", "işveren davası"],
+STOP_WORDS: set = {
+    "acaba","ama","ancak","arada","aslında","ayrıca","bana","bazı","belki",
+    "ben","benden","beni","benim","beri","bile","bin","bir","biri","birkaç",
+    "birkez","birçok","biz","bize","bizden","bizi","bizim","böyle","böylece",
+    "bu","buna","bunda","bundan","bunlar","bunları","bunların","bunu","bunun",
+    "burada","bütün","çoğu","çünkü","da","daha","dahi","de","defa","değil",
+    "diğer","diye","dolayı","dolayısıyla","edecek","eden","ederek","edilecek",
+    "ediliyor","edilmesi","ediyor","eğer","en","etmesi","etti","ettiği",
+    "ettiğini","gibi","göre","halen","hangi","hepsi","her","herkes","herkesi",
+    "hiç","hiçbir","için","iki","ile","ilgili","ise","itibaren","kadar",
+    "karşın","kendi","kendini","kendisi","kez","ki","kim","kimden","kime",
+    "kimi","kimse","mı","nasıl","ne","neden","nedenle","nerede","niçin",
+    "o","olan","olarak","oldu","olduğu","olmak","olması","olmayan","olmaz",
+    "olsa","olsun","olup","olur","on","ona","onlar","onları","onların","onu",
+    "onun","oysa","pek","rağmen","sadece","sanki","sayı","sen","siz","sonra",
+    "tarafından","tüm","üç","üzere","var","vardı","ve","veya","ya","yani",
+    "yapacak","yapılan","yapılması","yapıyor","yapmak","yaptı","yaptığı",
+    "yaptığını","yaptıkları","yerine","yine","yok","yoksa","zaten",
+    "maddeki","tarih","tarihi","sayılı","kanun","madde",
 }
 
-# RAG GENERATOR PROMPT (Asistanın kullanacağı prompt)
-PROMPT_TEMPLATE = """
-Sen Türk hukuku konusunda uzman bir Yapay Zeka Hukuk Asistanısın.
+
+# ─────────────────────────────────────────────
+# PROMPT TEMPLATES
+# ─────────────────────────────────────────────
+PROMPT_TEMPLATE = """\
+Sen Türk iş hukuku konusunda uzman bir Yapay Zeka Hukuk Asistanısın.
 
 KURALLAR:
-1. SADECE verilen BAĞLAM'daki bilgileri kullan
-2. Bağlamda yoksa "Bu konuda elimdeki yasal metinlerde yeterli bilgi bulunmamaktadır" de
-3. KISA ve ÖZ cevap ver (maksimum 3-4 cümle)
-4. TÜRKÇE cevap ver
+1. SADECE aşağıdaki BAĞLAM'daki bilgileri kullan.
+2. Bağlamda yoksa: "Bu konuda elimdeki yasal metinlerde yeterli bilgi bulunmamaktadır" de.
+3. KISA ve ÖZ cevap ver (maksimum 3-4 cümle).
+4. TÜRKÇE cevap ver.
+5. [MÜLGA UYARISI] etiketi gördüğünde bunu kullanıcıya açıkça belirt.
 
 CEVAP FORMATI:
 BÖLÜM 1 - AÇIKLAMA
@@ -177,7 +344,7 @@ BÖLÜM 1 - AÇIKLAMA
 BÖLÜM 2 - HUKUKİ DAYANAKLAR
 - [Kanun Adı Madde X]
 
-BAĞLAM: 
+BAĞLAM:
 {context}
 
 SORU: {question}
@@ -185,13 +352,12 @@ SORU: {question}
 CEVAP (TÜRKÇE, KISA VE ÖZ):
 """
 
-# LLM JUDGE PROMPT (Test aşamasında puanlama yapacak prompt)
-ENHANCED_JUDGE_PROMPT = """
+ENHANCED_JUDGE_PROMPT = """\
 SİSTEM ROLÜ:
-Sen, Türk Hukuku alanında uzmanlaşmış, son derece titiz ve objektif bir RAG (Retrieval-Augmented Generation) Denetçisisin. Görevin, sistemin ürettiği cevabı aşağıda belirtilen katı kriterlere göre puanlamaktır. Asla "kibar" olmaya çalışma, sadece teknik doğruluğu ve kanıta dayalılığı değerlendir.
+Sen, Türk Hukuku alanında uzmanlaşmış, titiz ve objektif bir RAG Denetçisisin.
+Görevin: sistemin ürettiği cevabı aşağıdaki kriterlere göre puanlamak.
 
 GİRDİ VERİLERİ:
-----------------
 [SORU]: {question}
 [REFERANS CEVAP]: {expected_answer}
 [ZORUNLU UNSURLAR]: {must_include}
@@ -200,124 +366,86 @@ GİRDİ VERİLERİ:
 [MODELİN CEVABI]: {actual_answer}
 [KAYNAK]: {source}
 
-DEĞERLENDİRME ALGORİTMASI (Adım Adım Uygula):
+DEĞERLENDİRME ADIMLARI:
+1. RETRIEVAL: Context soruyla alakalı mı? Boşsa ve model "bilgi yok" dediyse → başarı.
+2. HALLUCINATION (Faithfulness): Her iddiayı context'te doğrula. Context dışı bilgi → < 0.5
+3. HUKUKİ DOĞRULUK: Madde no, terimler, süreler, rakamlar doğru mu?
+4. KAPSAM: Zorunlu unsurlar var mı?
 
-ADIM 1 - RETRIEVAL ANALİZİ:
-- [KULLANILAN CONTEXT] soruyla alakalı bilgi içeriyor mu?
-- Eğer context boşsa/alakasızsa VE model "Bu konuda yeterli bilgi bulunmamaktadır" gibi bir cevap verdiyse → Bu DOĞRU davranıştır, Faithfulness tam puan almalı.
+PUANLAMA (0.0–1.0):
+| 0.9–1.0 | Mükemmel | 0.7–0.9 | İyi | 0.5–0.7 | Orta | 0.3–0.5 | Zayıf | 0.0–0.3 | Başarısız |
 
-ADIM 2 - HALLUCINATION KONTROLÜ (Faithfulness):
-- [MODELİN CEVABI] içindeki HER İDDİAYI tek tek kontrol et
-- Her iddianın [KULLANILAN CONTEXT] içinde karşılığı var mı?
-- Context'te OLMAYAN bilgi varsa → Faithfulness < 0.5
-- Tamamen uydurma bilgi varsa → Faithfulness < 0.3
+METRİKLER:
+- relevance_score    : Soruya odaklılık
+- faithfulness_score : Context'e bağlılık (hallucination yok)
+- correctness_score  : Hukuki sonuç doğruluğu
+- completeness_score : Kritik bilgilerin tamlığı
+- overall_score      : faith×0.30 + rel×0.25 + corr×0.25 + comp×0.20
 
-ADIM 3 - HUKUKİ DOĞRULUK (Correctness):
-- [MODELİN CEVABI] ile [REFERANS CEVAP] anlamsal olarak örtüşüyor mu?
-- Kanun maddesi numaraları DOĞRU mu? (Md. 25 ≠ Md. 17)
-- Hukuki terimler doğru kullanılmış mı? (fesih ≠ istifa)
-- Süreler/rakamlar doğru mu? (14 gün ≠ 30 gün)
+KURALLAR:
+- Madde numarası yanlışsa → correctness < 0.5
+- Context dışı bilgi varsa → faithfulness < 0.5
+- Pozitiflik yanlılığı YAPMA
 
-ADIM 4 - KAPSAM KONTROLÜ (Completeness):
-- [ZORUNLU UNSURLAR] listesindeki kavramlar cevapta var mı?
-- [ÖNERİLEN UNSURLAR] listesinden kaçı cevapta geçiyor?
-- Kritik bilgi eksikliği var mı?
-
-PUANLAMA REHBERİ (0.0 - 1.0 Arası):
-
-| Skor | Anlam |
-|------|-------|
-| 0.9-1.0 | Mükemmel - Hata yok, tam ve doğru |
-| 0.7-0.9 | İyi - Küçük eksiklikler var ama doğru |
-| 0.5-0.7 | Orta - Önemli eksiklikler veya küçük hatalar |
-| 0.3-0.5 | Zayıf - Ciddi hatalar veya eksiklikler |
-| 0.0-0.3 | Başarısız - Yanlış, alakasız veya uydurma |
-
-METRIK TANIMLAMALARI:
-- relevance_score: Cevap soruya odaklı mı? Konu dağılmış mı?
-- faithfulness_score: Cevap SADECE context'e mi dayanıyor? Dış bilgi var mı?
-- correctness_score: Hukuki sonuç referans cevapla aynı mı?
-- completeness_score: Kritik bilgiler tam mı?
-- overall_score: Tüm faktörlerin ağırlıklı ortalaması (faith×0.3 + rel×0.25 + corr×0.25 + comp×0.2)
-
-STRENGTHS/WEAKNESSES:
-- strengths: Cevabın 2-3 güçlü yönünü kısa maddeler halinde yaz
-- weaknesses: Cevabın 2-3 zayıf yönünü veya eksikliğini kısa maddeler halinde yaz
-
-ÖNEMLİ KURALLAR:
-1. Pozitiflik Yanlılığı (Positivity Bias) YAPMA. Hata varsa acımasızca puan kır.
-2. "Kısmen doğru" ifadeleri hukukta TEHLİKELİDİR. Şüphe durumunda düşük puan ver.
-3. Madde numarası yanlışsa → Correctness < 0.5
-4. Context dışı bilgi varsa → Faithfulness < 0.5
-5. Model "bilgi yok" deyip context gerçekten boşsa → Bu BAŞARI, cezalandırma
-
-ÇIKTI:
-Bu analize dayanarak JSON formatındaki skorları, güçlü/zayıf yönleri ve gerekçeni oluştur.
+ÇIKTI: Sadece JSON formatında döndür.
 """
 
-TEST_CONFIG_DEFAULTS = {
-    "delay_between_questions": 2.0,  
-    "output_dir": "reports",
-    "save_contexts": True,
-    "verbose": True,
-}
-LATENCY_THRESHOLD_MS = 8000
 
-
-TEMPLATES_DIR = os.path.join(SRC_DIR, "templates")
-
-
-# LLM Judge vs Heuristic
+# ─────────────────────────────────────────────
+# PUANLAMA AĞIRLIKLARI
+# ─────────────────────────────────────────────
 SCORING_WEIGHTS = {
-    "judge_weight": 0.70,      # LLM Judge kararı (%70)
-    "heuristic_weight": 0.30,  # Matematiksel/Semantic hesaplamalar (%30)
+    "judge_weight":     0.70,
+    "heuristic_weight": 0.30,
 }
-
 
 JUDGE_SUBWEIGHTS = {
-    "faithfulness": 0.30,  # En kritik: Hallucination kontrolü
-    "relevance": 0.25,     # Soruyla ilgililik
-    "correctness": 0.25,   # Hukuki doğruluk
-    "completeness": 0.20,  # Cevap tamlığı
+    "faithfulness":  0.30,
+    "relevance":     0.25,
+    "correctness":   0.25,
+    "completeness":  0.20,
 }
 
-
 HEURISTIC_SUBWEIGHTS = {
-    "semantic_correctness": 0.25,  # Anlamsal benzerlik (E5 model) - alternatif cevaplar dahil
-    "quote_presence": 0.15,        # YENİ: Kaynak alıntı bulunma (retrieval kalitesi)
-    "citation_accuracy": 0.20,     # Doğru madde/kaynak atıfı
-    "answer_consistency": 0.18,    # Sayısal değer tutarlılığı
-    "keyword_coverage": 0.12,      # Hibrit keyword eşleşme
-    "response_quality": 0.10,      # Cevap kalitesi (uzunluk/yapı)
+    "semantic_correctness": 0.25,
+    "quote_presence":       0.15,
+    "citation_accuracy":    0.20,
+    "answer_consistency":   0.18,
+    "keyword_coverage":     0.12,
+    "response_quality":     0.10,
 }
 
 HYBRID_KEYWORD_WEIGHTS = {
-    "exact_match": 0.40,   # Kritik terimler için tam eşleşme
-    "semantic": 0.60,      # Genel anlam için semantic similarity
+    "exact_match": 0.40,
+    "semantic":    0.60,
 }
 
 MUST_SHOULD_WEIGHTS = {
-    "must_weight": 0.80,   # Zorunlu terimler daha önemli
-    "should_weight": 0.20, # Önerilen terimler
+    "must_weight":   0.80,
+    "should_weight": 0.20,
 }
 
 TEST_THRESHOLDS = {
-    # Genel geçer notu
-    "pass_threshold": 0.70,
-    
-    # LLM Judge eşikleri
-    "relevance_threshold": 0.60,      # İlgisiz cevaba tolerans yok
-    "faithfulness_threshold": 0.75,   # Hallucination'a düşük tolerans
-    
-    # Heuristic eşikleri  
-    "citation_threshold": 0.50,       # Atıf doğruluğu
-    "consistency_threshold": 0.50,    # Sayısal tutarlılık
-    "semantic_threshold": 0.40,       # Minimum anlamsal benzerlik
+    "pass_threshold":          0.70,
+    "relevance_threshold":     0.60,
+    "faithfulness_threshold":  0.75,
+    "citation_threshold":      0.50,
+    "consistency_threshold":   0.50,
+    "semantic_threshold":      0.40,
 }
 
 METRIC_WEIGHTS = {
-    "citation_weight": 2.0,          # Yanlış atıf cezası ağır
-    "keyword_weight": 1.2,           # Semantic search güvenilir
-    "response_quality_weight": 0.5,  # Format daha az önemli
-    "latency_weight": 0.1,           # Hız en az önemli
+    "citation_weight":          2.0,
+    "keyword_weight":           1.2,
+    "response_quality_weight":  0.5,
+    "latency_weight":           0.1,
 }
+
+TEST_CONFIG_DEFAULTS = {
+    "delay_between_questions": 2.0,
+    "output_dir":              str(REPORTS_DIR),
+    "save_contexts":           True,
+    "verbose":                 True,
+}
+
+LATENCY_THRESHOLD_MS = 8_000

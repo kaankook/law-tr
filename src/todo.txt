@@ -1,6 +1,8 @@
-* verisetini iyileştir soruları kontrol et
 * ui soru kısıtlaması düzelt
-* chunk madde kesilmelerini gider
+
 * embeder modellerini belirle
 * llm modellerini belirle
 * k (5-7-9-11) test et
+
+
+!!!systeam promtunda eski kanun atıflarına dikkat eden bir yöntem ekle önemli yoksa hata olur

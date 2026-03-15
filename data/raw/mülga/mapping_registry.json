@@ -1,0 +1,255 @@
+{
+  "_META": {
+    "aciklama": "Türk İş Hukuku RAG Sistemi — Kanun Mapping Dosyası",
+    "surum": "2.0",
+    "son_guncelleme": "2025",
+    "kullanim_amaci": "Mülga kanunlara yapılan atıfları güncel mevzuata yönlendirmek ve temiz kaynakları işaretlemek",
+    "key_formati": "kanun_[ESKİ_NO]_[KISALTMA] veya temiz_[GÜNCEL_NO]_[KISALTMA]"
+  },
+
+  "_TEMIZ_KAYNAKLAR": {
+    "durum": "TEMİZ KAYNAK — BİRİNCİL KAYNAK OLARAK KULLAN",
+    "aciklama": "Bu kanunlar güncel mevzuattır, mülga kanun atfı içermez. RAG sisteminde doğrudan source-of-truth olarak kullanılabilir.",
+    "is_hukuku_genel": {
+      "4857": "İş Kanunu — Genel çalışma ilişkileri",
+      "6098": "Türk Borçlar Kanunu — Hizmet sözleşmesi ve genel borç ilişkileri",
+      "6100": "Hukuk Muhakemeleri Kanunu — Yargılama usulü"
+    },
+    "sosyal_guvenlik": {
+      "5510": "Sosyal Sigortalar ve Genel Sağlık Sigortası Kanunu",
+      "4447": "İşsizlik Sigortası Kanunu"
+    },
+    "is_sagligi_guvenligi": {
+      "6331": "İş Sağlığı ve Güvenliği Kanunu"
+    },
+    "sendika_tis": {
+      "6356": "Sendikalar ve Toplu İş Sözleşmesi Kanunu",
+      "4688": "Kamu Görevlileri Sendikaları ve Toplu Sözleşme Kanunu"
+    },
+    "yargi": {
+      "7036": "İş Mahkemeleri Kanunu"
+    },
+    "yabanci_isci": {
+      "6735": "Uluslararası İşgücü Kanunu"
+    },
+    "ozel_is_kanunlari": {
+      "854": "Deniz İş Kanunu",
+      "5953": "Basın İş Kanunu"
+    },
+    "diger": {
+      "4721": "Türk Medeni Kanunu — Kişilik hakları, eşit davranma",
+      "4904": "Türkiye İş Kurumu Kanunu",
+      "6102": "Türk Ticaret Kanunu",
+      "2429": "Ulusal Bayram ve Genel Tatiller Hakkında Kanun",
+      "5362": "Esnaf ve Sanatkârlar Meslek Kuruluşları Kanunu",
+      "657":  "Devlet Memurları Kanunu — Kamu personel hukuku"
+    }
+  },
+
+  "_MULGA_KAYNAKLAR": {
+    "durum": "MÜLGA — DOĞRUDAN KULLANMA, AŞAĞIDAKİ MAPPING'E GÖRE YÖNLENDİR",
+    "aciklama": "Bu bölümdeki kanunların tamamı veya büyük çoğunluğu yürürlükten kaldırılmıştır. RAG sorgusu bu kanunlara atıf içeriyorsa ilgili güncel kanuna yönlendir."
+  },
+
+  "kanun_1475_genel": {
+    "eski_kanun_no": "1475",
+    "eski_kanun_adi": "1475 Sayılı İş Kanunu",
+    "yururlukten_kalkma_tarihi": "2003-06-10",
+    "guncel_kanun_no": "4857",
+    "guncel_kanun_adi": "4857 Sayılı İş Kanunu",
+    "kapsam": "Genel çalışma koşulları",
+    "kritik_istisna": "1475 sayılı Kanunun YALNIZCA 14. maddesi (kıdem tazminatı) hâlâ yürürlüktedir. Diğer tüm maddeler mülgadır.",
+    "sistem_uyarisi": "DİKKAT: 1475 sayılı İş Kanununun 14. maddesi kıdem tazminatını düzenlemekte olup yürürlüktedir. Bunun dışındaki tüm maddeler mülga olmuştur. Yorum yaparken 4857 sayılı İş Kanununu ve 1475 sayılı Kanunun yalnızca 14. maddesini dikkate al."
+  },
+
+  "kanun_1475_md13_bildirim": {
+    "eski_kanun_no": "1475",
+    "eski_kanun_adi": "1475 Sayılı İş Kanunu Madde 13",
+    "yururlukten_kalkma_tarihi": "2003-06-10",
+    "guncel_kanun_no": "4857",
+    "guncel_kanun_adi": "4857 Sayılı İş Kanunu Madde 17",
+    "kapsam": "Bildirim süreleri (ihbar)",
+    "sistem_uyarisi": "DİKKAT: 1475 sayılı Kanunun 13. maddesi mülgadır. Bildirim (ihbar) süreleri 4857 sayılı Kanunun 17. maddesine göre değerlendirilmelidir."
+  },
+
+  "kanun_1475_md16_17_hakli_fesih": {
+    "eski_kanun_no": "1475",
+    "eski_kanun_adi": "1475 Sayılı İş Kanunu Madde 16 ve 17",
+    "yururlukten_kalkma_tarihi": "2003-06-10",
+    "guncel_kanun_no": "4857",
+    "guncel_kanun_adi": "4857 Sayılı İş Kanunu Madde 24 ve 25",
+    "kapsam": "Haklı nedenle fesih (işçi ve işveren)",
+    "sistem_uyarisi": "DİKKAT: 1475 sayılı Kanunun 16. maddesi (işçinin haklı feshi) → 4857/24; 17. maddesi (işverenin haklı feshi) → 4857/25 olarak uygulanır. Her iki madde de mülgadır."
+  },
+
+  "kanun_1475_isg": {
+    "eski_kanun_no": "1475",
+    "eski_kanun_adi": "1475 Sayılı İş Kanunu (İş Sağlığı ve Güvenliği Hükümleri)",
+    "yururlukten_kalkma_tarihi": "2003-06-10",
+    "guncel_kanun_no": "6331",
+    "guncel_kanun_adi": "6331 Sayılı İş Sağlığı ve Güvenliği Kanunu",
+    "kapsam": "İş sağlığı ve güvenliği",
+    "sistem_uyarisi": "DİKKAT: 1475 sayılı Kanunun iş sağlığı ve güvenliğine ilişkin hükümleri yürürlükten kaldırılmıştır. Bu alan 6331 sayılı İş Sağlığı ve Güvenliği Kanununa göre değerlendirilmelidir."
+  },
+
+  "kanun_3008_genel": {
+    "eski_kanun_no": "3008",
+    "eski_kanun_adi": "3008 Sayılı İş Kanunu",
+    "yururlukten_kalkma_tarihi": "1971-09-01",
+    "guncel_kanun_no": "4857",
+    "guncel_kanun_adi": "4857 Sayılı İş Kanunu",
+    "kapsam": "Çalışma ilişkileri",
+    "sistem_uyarisi": "DİKKAT: 3008 sayılı İş Kanunu yürürlükten kaldırılmıştır. Çalışma ilişkilerine dair hükümler 4857 sayılı İş Kanununa göre değerlendirilmelidir."
+  },
+
+  "kanun_506_genel": {
+    "eski_kanun_no": "506",
+    "eski_kanun_adi": "506 Sayılı Sosyal Sigortalar Kanunu",
+    "yururlukten_kalkma_tarihi": "2008-10-01",
+    "guncel_kanun_no": "5510",
+    "guncel_kanun_adi": "5510 Sayılı Sosyal Sigortalar ve Genel Sağlık Sigortası Kanunu",
+    "kapsam": "Sigortalılık, prim ve emeklilik şartları",
+    "sistem_uyarisi": "DİKKAT: 506 sayılı Kanun 01.10.2008 itibarıyla yürürlükten kaldırılmıştır. Sigortalılık, prim ve emeklilik şartları 5510 sayılı Kanuna göre değerlendirilmelidir. Bu tarihten önce doğan haklar için geçiş hükümleri saklıdır."
+  },
+
+  "kanun_506_md23_24_35_42_ciraklik": {
+    "eski_kanun_no": "506",
+    "eski_kanun_adi": "506 Sayılı Sosyal Sigortalar Kanunu Madde 23, 24, 35, 42",
+    "yururlukten_kalkma_tarihi": "2008-10-01",
+    "guncel_kanun_no": "5510",
+    "guncel_kanun_adi": "5510 Sayılı Sosyal Sigortalar ve Genel Sağlık Sigortası Kanunu",
+    "kapsam": "Çırak ve stajyer sigortası",
+    "sistem_uyarisi": "DİKKAT: Çıraklar ve stajyerler için atıf yapılan 506 sayılı Kanun maddeleri mülgadır. Çırak ve stajyerlerin sigortalılık durumları 5510 sayılı Kanuna göre değerlendirilmelidir."
+  },
+
+  "kanun_5434_emekli_sandigi": {
+    "eski_kanun_no": "5434",
+    "eski_kanun_adi": "5434 Sayılı T.C. Emekli Sandığı Kanunu",
+    "yururlukten_kalkma_tarihi": "Kısmen yürürlükte",
+    "guncel_kanun_no": "5510",
+    "guncel_kanun_adi": "5510 Sayılı Sosyal Sigortalar ve Genel Sağlık Sigortası Kanunu",
+    "kapsam": "Memur emekliliği",
+    "kritik_istisna": "01.10.2008 tarihinden ÖNCE göreve başlayan memurlar için 5434 sayılı Kanun uygulanmaya devam eder.",
+    "sistem_uyarisi": "DİKKAT: 5434 sayılı Kanun tamamen yürürlükten kaldırılmamıştır. 01.10.2008 öncesi memurlar için eski sistem geçerliliğini korur; sonrası için 5510 sayılı Kanun uygulanır. Davayı ilgilendiren memuriyete giriş tarihini mutlaka dikkate al."
+  },
+
+  "kanun_2821_sendikalar": {
+    "eski_kanun_no": "2821",
+    "eski_kanun_adi": "2821 Sayılı Sendikalar Kanunu",
+    "yururlukten_kalkma_tarihi": "2012-11-18",
+    "guncel_kanun_no": "6356",
+    "guncel_kanun_adi": "6356 Sayılı Sendikalar ve Toplu İş Sözleşmesi Kanunu",
+    "kapsam": "Sendika kurma, üyelik ve sendikal güvenceler",
+    "sistem_uyarisi": "DİKKAT: 2821 sayılı Sendikalar Kanunu mülga olmuştur. Sendika üyeliği ve sendikal güvenceler 6356 sayılı Kanuna göre değerlendirilmelidir."
+  },
+
+  "kanun_2822_tis": {
+    "eski_kanun_no": "2822",
+    "eski_kanun_adi": "2822 Sayılı Toplu İş Sözleşmesi Grev ve Lokavt Kanunu",
+    "yururlukten_kalkma_tarihi": "2012-11-18",
+    "guncel_kanun_no": "6356",
+    "guncel_kanun_adi": "6356 Sayılı Sendikalar ve Toplu İş Sözleşmesi Kanunu",
+    "kapsam": "Toplu iş sözleşmesi, grev ve lokavt",
+    "sistem_uyarisi": "DİKKAT: 2822 sayılı Kanun mülga olmuştur. Toplu iş sözleşmesi süreci, grev ve lokavt hakkı 6356 sayılı Kanuna göre değerlendirilmelidir."
+  },
+
+  "kanun_5521_is_mahkemeleri": {
+    "eski_kanun_no": "5521",
+    "eski_kanun_adi": "5521 Sayılı İş Mahkemeleri Kanunu",
+    "yururlukten_kalkma_tarihi": "2017-10-25",
+    "guncel_kanun_no": "7036",
+    "guncel_kanun_adi": "7036 Sayılı İş Mahkemeleri Kanunu",
+    "kapsam": "İş uyuşmazlıklarında görevli mahkeme, dava açma usulü ve arabuluculuk zorunluluğu",
+    "sistem_uyarisi": "DİKKAT: 5521 sayılı Kanun yürürlükten kaldırılmıştır. İş uyuşmazlıklarında görevli mahkeme, dava açma usulü ve zorunlu arabuluculuk şartı 7036 sayılı Kanuna göre belirlenir."
+  },
+
+  "kanun_818_bk": {
+    "eski_kanun_no": "818",
+    "eski_kanun_adi": "818 Sayılı Borçlar Kanunu",
+    "yururlukten_kalkma_tarihi": "2012-07-01",
+    "guncel_kanun_no": "6098",
+    "guncel_kanun_adi": "6098 Sayılı Türk Borçlar Kanunu",
+    "kapsam": "Hizmet sözleşmesi, ibraname, cezai şart ve genel borç ilişkileri",
+    "sistem_uyarisi": "DİKKAT: 818 sayılı Borçlar Kanunu 01.07.2012 itibarıyla yürürlükten kaldırılmıştır. Hizmet sözleşmesi ve genel borç ilişkileri 6098 sayılı Türk Borçlar Kanununa göre değerlendirilmelidir."
+  },
+
+  "kanun_1086_humk": {
+    "eski_kanun_no": "1086",
+    "eski_kanun_adi": "1086 Sayılı Hukuk Usulü Muhakemeleri Kanunu (HUMK)",
+    "yururlukten_kalkma_tarihi": "2011-10-01",
+    "guncel_kanun_no": "6100",
+    "guncel_kanun_adi": "6100 Sayılı Hukuk Muhakemeleri Kanunu (HMK)",
+    "kapsam": "Yargılama usulü, delil hukuku, tebligat ve icra",
+    "sistem_uyarisi": "DİKKAT: 1086 sayılı HUMK 01.10.2011 itibarıyla yürürlükten kaldırılmıştır. İş yargılamasında usul hükümleri için 6100 sayılı HMK esas alınmalıdır. İş mahkemelerine özgü düzenlemeler için ek olarak 7036 sayılı Kanuna bakılmalıdır."
+  },
+
+  "kanun_743_mk": {
+    "eski_kanun_no": "743",
+    "eski_kanun_adi": "743 Sayılı Türk Kanunu Medenisi",
+    "yururlukten_kalkma_tarihi": "2002-01-01",
+    "guncel_kanun_no": "4721",
+    "guncel_kanun_adi": "4721 Sayılı Türk Medeni Kanunu",
+    "kapsam": "Kişilik hakları, eşit davranma yükümlülüğü, aile hukuku boyutlu iş uyuşmazlıkları",
+    "sistem_uyarisi": "DİKKAT: 743 sayılı Medeni Kanun 01.01.2002 itibarıyla yürürlükten kaldırılmıştır. Kişilik hakları ihlali, eşit davranma ve aile hukukuna ilişkin iş uyuşmazlıklarında 4721 sayılı Türk Medeni Kanunu uygulanır."
+  },
+
+  "kanun_507_esnaf": {
+    "eski_kanun_no": "507",
+    "eski_kanun_adi": "507 Sayılı Esnaf ve Sanatkârlar Kanunu",
+    "yururlukten_kalkma_tarihi": "2005-06-21",
+    "guncel_kanun_no": "5362",
+    "guncel_kanun_adi": "5362 Sayılı Esnaf ve Sanatkârlar Meslek Kuruluşları Kanunu",
+    "kapsam": "Esnaf ve sanatkâr tanımı, İş Kanunu kapsamı dışında kalma",
+    "sistem_uyarisi": "DİKKAT: 507 sayılı Kanun yürürlükten kaldırılmıştır. Esnaf ve sanatkâr tanımı ile 4857 sayılı Kanun kapsamı dışında kalma kriterleri 5362 sayılı Kanuna göre değerlendirilmelidir."
+  },
+
+  "kanun_2739_tatil": {
+    "eski_kanun_no": "2739",
+    "eski_kanun_adi": "2739 Sayılı Ulusal Bayram ve Genel Tatiller Kanunu",
+    "yururlukten_kalkma_tarihi": "1981-01-01",
+    "guncel_kanun_no": "2429",
+    "guncel_kanun_adi": "2429 Sayılı Ulusal Bayram ve Genel Tatiller Hakkında Kanun",
+    "kapsam": "Resmi tatil günleri ve çalışma ücret hakları",
+    "sistem_uyarisi": "DİKKAT: 2739 sayılı Kanun yürürlükten kaldırılmıştır. Ulusal bayram ve genel tatil günleri ile bu günlere ait ücret hakları 2429 sayılı Kanuna göre değerlendirilmelidir."
+  },
+
+  "kanun_6762_ttk": {
+    "eski_kanun_no": "6762",
+    "eski_kanun_adi": "6762 Sayılı Türk Ticaret Kanunu",
+    "yururlukten_kalkma_tarihi": "2012-07-01",
+    "guncel_kanun_no": "6102",
+    "guncel_kanun_adi": "6102 Sayılı Türk Ticaret Kanunu",
+    "kapsam": "Ticari işletmeler, şirketler ve ticari temsilcilik iş uyuşmazlıkları",
+    "sistem_uyarisi": "DİKKAT: 6762 sayılı Türk Ticaret Kanunu mülga olmuştur. Ticari işletme ve şirket bünyesindeki iş uyuşmazlıklarında ticaret hukuku boyutu için 6102 sayılı Türk Ticaret Kanunu esas alınmalıdır."
+  },
+
+  "kanun_4817_calisma_izni": {
+    "eski_kanun_no": "4817",
+    "eski_kanun_adi": "4817 Sayılı Yabancıların Çalışma İzinleri Hakkında Kanun",
+    "yururlukten_kalkma_tarihi": "2016-08-13",
+    "guncel_kanun_no": "6735",
+    "guncel_kanun_adi": "6735 Sayılı Uluslararası İşgücü Kanunu",
+    "kapsam": "Yabancı uyruklu çalışanların izin, muafiyet ve yaptırım hükümleri",
+    "sistem_uyarisi": "DİKKAT: 4817 sayılı Kanun yürürlükten kaldırılmıştır. Yabancıların çalışma izinleri, muafiyetleri ve izinsiz çalıştırmanın yaptırımları 6735 sayılı Uluslararası İşgücü Kanununa göre değerlendirilmelidir."
+  },
+
+  "kanun_3146_bakanlik": {
+    "eski_kanun_no": "3146",
+    "eski_kanun_adi": "3146 Sayılı Çalışma ve Sosyal Güvenlik Bakanlığı Teşkilat Kanunu",
+    "yururlukten_kalkma_tarihi": "2018-07-09",
+    "guncel_kanun_no": "CBK-1",
+    "guncel_kanun_adi": "1 Sayılı Cumhurbaşkanlığı Teşkilatı Hakkında Cumhurbaşkanlığı Kararnamesi",
+    "kapsam": "Bakanlık teşkilatı ve görev dağılımı",
+    "sistem_uyarisi": "BİLGİ: 3146 sayılı Kanun Cumhurbaşkanlığı Hükümet Sistemine geçişle (09.07.2018) kaldırılmıştır. Bakanlık teşkilatı ve görev dağılımı 1 sayılı Cumhurbaşkanlığı Kararnamesine göre düzenlenmektedir."
+  },
+
+  "kanun_190_khk_kadro": {
+    "eski_kanun_no": "190",
+    "eski_kanun_adi": "190 Sayılı Genel Kadro ve Usulü Hakkında KHK",
+    "yururlukten_kalkma_tarihi": "2018-07-09",
+    "guncel_kanun_no": "CBK-2",
+    "guncel_kanun_adi": "2 Sayılı Genel Kadro ve Usulü Hakkında Cumhurbaşkanlığı Kararnamesi",
+    "kapsam": "Kamu kadro sistemi",
+    "sistem_uyarisi": "BİLGİ: 190 sayılı KHK yürürlükten kaldırılmıştır. Kamu kadro sistemi 2 sayılı Cumhurbaşkanlığı Kararnamesi ile düzenlenmektedir."
+  }
+}

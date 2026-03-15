@@ -1,7 +1,6 @@
 import json
 import csv
 import time
-import re
 import statistics
 import numpy as np
 from datetime import datetime
@@ -12,10 +11,9 @@ from collections import defaultdict
 
 from sentence_transformers import SentenceTransformer
 from langchain_core.prompts import ChatPromptTemplate
-from langchain_openai import ChatOpenAI
 from pydantic import BaseModel, Field
 
-from rag_pipeline import RAGPipeline, RAGResult
+from rag_pipeline import RAGPipeline, RAGResult, create_chat_model, get_article_reference
 from config import (
     MODEL_NAME,
     RETRIEVER_K,
@@ -397,12 +395,12 @@ class HeuristicEvaluator:
         word_count = len(generated.split())
         
         WORD_COUNT_RANGES = {
-            "factual": {"min": 15, "ideal_min": 30, "ideal_max": 150, "max": 300},
-            "procedural": {"min": 40, "ideal_min": 80, "ideal_max": 400, "max": 600},
-            "conceptual": {"min": 50, "ideal_min": 100, "ideal_max": 500, "max": 800},
-            "comparative": {"min": 60, "ideal_min": 120, "ideal_max": 600, "max": 900},
-            "calculation": {"min": 20, "ideal_min": 40, "ideal_max": 200, "max": 400},
-            "unknown": {"min": 20, "ideal_min": 50, "ideal_max": 300, "max": 500}
+            "factual": {"min": 8, "ideal_min": 14, "ideal_max": 70, "max": 140},
+            "procedural": {"min": 12, "ideal_min": 20, "ideal_max": 100, "max": 200},
+            "conceptual": {"min": 12, "ideal_min": 24, "ideal_max": 110, "max": 220},
+            "comparative": {"min": 14, "ideal_min": 28, "ideal_max": 120, "max": 240},
+            "calculation": {"min": 8, "ideal_min": 14, "ideal_max": 80, "max": 160},
+            "unknown": {"min": 8, "ideal_min": 16, "ideal_max": 90, "max": 180}
         }
         
         ranges = WORD_COUNT_RANGES.get(question_type.lower(), WORD_COUNT_RANGES["unknown"])
@@ -431,13 +429,16 @@ class HeuristicEvaluator:
         else:
             structure_weight = 0.3
         
-        structure_score = 1.0 if has_structure else 0.75
+        structure_score = 1.0 if has_structure else 0.85
         
         # "Bilmiyorum" kontrolü
         uncertainty_phrases = ["bilgi bulunamadı", "elimde yeterli", "mevcut değil", 
                              "bu konuda bilgi", "kapsamı dışında"]
         is_uncertain = any(phrase in generated.lower() for phrase in uncertainty_phrases)
         
+        if is_uncertain and word_count <= ranges["ideal_max"]:
+            length_score = max(length_score, 0.9)
+
         # Final skor hesapla
         length_weight = 1.0 - structure_weight
         final_score = (length_score * length_weight) + (structure_score * structure_weight)
@@ -570,9 +571,9 @@ class HeuristicEvaluator:
 
 class RAGJudge:
     def __init__(self, model_name: str = EVALUATOR_MODEL_NAME):
-        self.llm = ChatOpenAI(
-            model=model_name,
-            temperature=0
+        self.llm = create_chat_model(
+            model_name=model_name,
+            temperature=0,
         ).with_structured_output(TriadJudgeOutput)
         
         self.prompt = ChatPromptTemplate.from_template(ENHANCED_JUDGE_PROMPT)
@@ -1005,7 +1006,7 @@ class RAGTestRunner:
         alternative_answers = question_data.get('alternative_correct_answers', [])
         source_details = question_data.get('source_details', {})
         expected_article = source_details.get('article', '')
-        retrieved_articles = [m.get('article', '') for m in rag_result.retrieval.metadata_list]
+        retrieved_articles = [get_article_reference(m) for m in rag_result.retrieval.metadata_list]
         
         heuristic_metrics = []
         
@@ -1247,7 +1248,7 @@ class RAGTestRunner:
         for r in self.results:
             for key, data_dict in [(r.difficulty, by_difficulty), 
                                     (r.category, by_category),
-                                    (r.source[:30], by_source)]:
+                                    (r.source, by_source)]:
                 data_dict[key]["total"] += 1
                 data_dict[key]["passed"] += 1 if r.passed else 0
                 data_dict[key]["scores"].append(r.final_score)
@@ -1295,7 +1296,7 @@ class RAGTestRunner:
             avg_latency_ms=statistics.mean(latencies) if latencies else 0,
             min_latency_ms=min(latencies) if latencies else 0,
             max_latency_ms=max(latencies) if latencies else 0,
-            p95_latency_ms=sorted(latencies)[int(len(latencies) * 0.95)] if len(latencies) > 1 else 0,
+            p95_latency_ms=float(np.percentile(latencies, 95)) if latencies else 0,
             by_difficulty=dict(by_difficulty),
             by_category=dict(by_category),
             by_source=dict(by_source),
@@ -1335,7 +1336,7 @@ class RAGTestRunner:
         self._save_html_report()
         print("   ✓ report.html")
         
-        print(f"\n📊 Rapor: file://{self.output_path.absolute()}/report.html")
+        print(f"\n📊 Rapor: {self.output_path / 'report.html'}")
     
     def _save_csv(self):
         """CSV formatında kaydet"""
@@ -1365,7 +1366,7 @@ class RAGTestRunner:
                     r.question[:100],
                     r.category,
                     r.difficulty,
-                    r.source[:30],
+                    r.source,
                     f"{r.final_score:.3f}",
                     "Yes" if r.passed else "No",
                     f"{j.relevance_score:.2f}" if j else "N/A",

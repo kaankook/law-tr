@@ -3,5 +3,16 @@
     "python.terminal.activateEnvironment": true,
     "python.analysis.extraPaths": [
         "${workspaceFolder}"
-    ]
+    ],
+    "terminal.integrated.profiles.windows": {
+        "PowerShell (.venv)": {
+            "source": "PowerShell",
+            "args": [
+                "-NoExit",
+                "-Command",
+                "& '${workspaceFolder}\\.venv\\Scripts\\Activate.ps1'"
+            ]
+        }
+    },
+    "terminal.integrated.defaultProfile.windows": "PowerShell (.venv)"
 }

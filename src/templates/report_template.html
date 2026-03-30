@@ -312,8 +312,8 @@
                 // Truncate long answers
                 const genAnswer = r.generated_answer || '';
                 const expAnswer = r.expected_answer || '';
-                const genTruncated = genAnswer.length > 500 ? genAnswer.substring(0, 500) + '...' : genAnswer;
-                const expTruncated = expAnswer.length > 500 ? expAnswer.substring(0, 500) + '...' : expAnswer;
+                const genTruncated = genAnswer;
+                const expTruncated = expAnswer;
                 
                 html += `
                     <div class="question-card ${statusClass}" data-passed="${r.passed}">

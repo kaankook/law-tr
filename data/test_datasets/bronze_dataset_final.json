@@ -1,438 +1,122 @@
-{
-  "_README": {
-    "format_version": "3.1",
-    "compatibility": "test_runner. py ile uyumlu",
-    "last_validated": "2025-12-29",
-    "notes": [
-      "Her soru test_runner.py tarafından otomatik değerlendirilir",
-      "out_of_scope ve edge_case sorularında özel kurallar uygulanır",
-      "Bu veri seti golden_dataset_final. json'dan seçilen 10 sorudan oluşmaktadır"
-    ]
-  },
-  "_FIELD_DESCRIPTIONS": {
-    "id": "Benzersiz soru numarası (1-10)",
-    "question": "RAG sistemine gönderilecek soru metni",
-    "answer": {
-      "main_answer": "Beklenen referans cevap - PROMPT_TEMPLATE formatında (BÖLÜM 1 + BÖLÜM 2)",
-      "key_entities": "Cevapta bulunması gereken anahtar kavramlar (fallback must_include)",
-      "source_quote": "Kaynak metinden birebir alıntı - quote_presence metriği için kullanılır"
+[
+  {
+    "question": "Deneme süreli iş sözleşmesinde deneme süresi en çok ne kadar olabilir ve toplu iş sözleşmeleriyle bu süre en fazla ne kadar uzatılabilir?",
+    "expected_answer": "Deneme süresi en çok iki ay olabilir. Ancak deneme süresi toplu iş sözleşmeleriyle dört aya kadar uzatılabilir.",
+    "evaluation_rules": {
+        "must_include": ["iki ay", "dört ay", "toplu iş sözleşme"]
     },
-    "alternative_correct_answers": "Alternatif doğru cevaplar - semantic_correctness MAX skoru için",
-    "source": "Ana kaynak kanun/belge adı - out_of_scope kontrolü için kritik",
-    "source_details": {
-      "document": "Kaynak dosya adı (config.py SOURCE_MAPPING ile eşleşmeli)",
-      "article": "İlgili madde numarası - citation_accuracy kontrolü için",
-      "section": "Kanundaki bölüm/kısım bilgisi"
-    },
-    "difficulty": "kolay|orta|zor - raporlamada kategori bazlı analiz için",
-    "question_type": "olgusal|kavramsal|karşılaştırma|multi_hop_reasoning|hallucination_test|cross_reference|edge_case",
-    "evaluation_criteria": {
-      "must_include": "Cevapta ZORUNLU olması gereken terimler - exact match kontrolü",
-      "should_include": "Cevapta olması ÖNERİLEN terimler - bonus puan",
-      "must_not_hallucinate": "true ise model bilgi uydurarsa FAIL (out_of_scope sorular)",
-      "should_explain_limitation": "true ise model kısıtlamayı açıklamalı",
-      "acceptable_responses": "Kabul edilebilir alternatif cevap kalıpları"
-    },
-    "test_purpose": "Bu sorunun test amacı açıklaması"
-  },
-  "_SPECIAL_SOURCES": {
-    "out_of_scope_temporal": "Zamansal kapsam dışı - güncel rakam/tarih soruları",
-    "out_of_scope_topic": "Konu kapsam dışı - farklı kanun/alan soruları",
-    "out_of_scope_nonexistent": "Var olmayan madde/kanun soruları",
-    "out_of_scope_opinion": "Subjektif/görüş soruları",
-    "out_of_scope_future": "Gelecek tahmini soruları",
-    "edge_case_ambiguous": "Belirsiz soru - açıklama istemeli",
-    "edge_case_incomplete": "Eksik bilgi - tamamlama istemeli",
-    "edge_case_insufficient_info": "Yetersiz bilgi - yargı yapmamalı",
-    "edge_case_subjective": "Subjektif karşılaştırma - sıralama yapmamalı"
-  },
-  "_USAGE_IN_TEST_RUNNER": {
-    "semantic_correctness": "main_answer + alternative_correct_answers ile MAX similarity hesaplanır",
-    "quote_presence": "source_quote context içinde aranır (exact + semantic match)",
-    "keyword_coverage": "must_include (exact) + should_include (bonus) ile hesaplanır",
-    "citation_accuracy": "source_details.article retrieved chunks ile karşılaştırılır",
-    "llm_judge": "Tüm veriler ENHANCED_JUDGE_PROMPT'a gönderilir"
-  },
-  "dataset_info": {
-    "version": "1.0",
-    "total_questions": 10,
-    "description": "Türk Hukuk RAG Sistemi - Bronze Test Veri Seti\nDağılım: 4 olgusal (%40) + 2 kavramsal (%20) + 1 karşılaştırma (%10) + 2 hallucination_test (%20) + 1 edge_case (%10)\nSilver dataset ile aynı oranlar, 10'a ölçeklenmiş",
-    "last_updated": "15.03.2026",
-    "author": "Kaan Kök",
-    "sources": [
-      "T.C. Anayasası (1.5.2709.docx)",
-      "4857 Sayılı İş Kanunu (1.5.4857.docx)",
-      "6098 Sayılı Türk Borçlar Kanunu (1.5.6098.docx)",
-      "7036 Sayılı İş Mahkemeleri Kanunu (1.5.7036.docx)"
-    ]
-  },
-  "source_mapping": {
-    "1.5.2709.docx": "T.C.  Anayasası",
-    "1.5.4857.docx": "4857 Sayılı İş Kanunu",
-    "1.5.6098.docx": "6098 Sayılı Türk Borçlar Kanunu",
-    "1.5.6356.docx": "6356 Sayılı Sendikalar ve Toplu İş Sözleşmesi Kanunu",
-    "1.5.7036.docx": "7036 Sayılı İş Mahkemeleri Kanunu"
-  },
-  "questions": [
-    {
-      "id": 1,
-      "question": "Anayasaya göre çalışma bir hak mıdır, yoksa ödev midir?",
-      "answer": {
-        "main_answer": "BÖLÜM 1 - AÇIKLAMA\nAnayasa'ya göre çalışma, herkesin hem hakkı hem de ödevidir. Devlet bu çerçevede çalışanların hayat seviyesini yükseltmek, çalışma hayatını geliştirmek amacıyla çalışanları ve işsizleri koruma, çalışmayı destekleme ve işsizliği önlemeye elverişli ekonomik bir ortam oluşturma yükümlülüğü altındadır.\n\nBÖLÜM 2 - HUKUKİ DAYANAKLAR\n- T.C. Anayasası Madde 49",
-        "key_entities": [
-          "çalışma",
-          "hak",
-          "ödev",
-          "devlet",
-          "işsizlik"
-        ],
-        "source_quote": "Çalışma, herkesin hakkı ve ödevidir. Devlet, çalışanların hayat seviyesini yükseltmek, çalışma hayatını geliştirmek için çalışanları ve işsizleri korumak, çalışmayı desteklemek, işsizliği önlemeye elverişli ekonomik bir ortam yaratmak için gerekli tedbirleri alır."
-      },
-      "alternative_correct_answers": [
-        "Çalışma hem hak hem ödevdir.",
-        "Anayasa Madde 49'a göre çalışma herkesin hakkı ve ödevidir."
-      ],
-      "source": "T.C. Anayasası",
-      "source_details": {
-        "document": "1.5.2709.docx",
-        "article": "Madde 49",
-        "section": "İkinci Kısım - Temel Haklar ve Ödevler"
-      },
+    "metadata": {
+      "category": "olgusal",
       "difficulty": "kolay",
-      "question_type": "olgusal",
-      "evaluation_criteria": {
-        "must_include": [
-          "hak",
-          "ödev",
-          "çalışma"
-        ],
-        "should_include": [
-          "devlet",
-          "işsizlik"
-        ],
-        "exact_match_required": false
-      }
-    },
-    {
-      "id": 2,
-      "question": "Deneme süreli iş sözleşmesinde deneme süresi ne kadar olabilir?",
-      "answer": {
-        "main_answer": "BÖLÜM 1 - AÇIKLAMA\nİş sözleşmelerine taraflarca deneme kaydı konulabilir. Bireysel iş sözleşmelerinde bu süre en çok iki ay olabilir. Ancak, toplu iş sözleşmeleriyle bu süre dört aya kadar uzatılabilir. Deneme süresi içinde taraflar iş sözleşmesini bildirim süresine gerek olmaksızın ve tazminatsız feshedebilir; yalnızca işçinin çalıştığı günlere ait ücret ve diğer hakları saklıdır.\n\nBÖLÜM 2 - HUKUKİ DAYANAKLAR\n- 4857 Sayılı İş Kanunu Madde 15",
-        "key_entities": [
-          "deneme süresi",
-          "2 ay",
-          "4 ay",
-          "toplu iş sözleşmesi",
-          "tazminatsız"
-        ],
-        "source_quote": "Taraflarca iş sözleşmesine bir deneme kaydı konulduğunda, bunun süresi en çok iki ay olabilir. Ancak deneme süresi toplu iş sözleşmeleriyle dört aya kadar uzatılabilir."
-      },
-      "alternative_correct_answers": [
-        "En fazla 2 ay, toplu sözleşme ile 4 aya uzatılabilir.",
-        "İki ay deneme süresi, toplu iş sözleşmesiyle dört aya çıkabilir."
-      ],
-      "source": "4857 Sayılı İş Kanunu",
-      "source_details": {
-        "document": "1.5.4857.docx",
-        "article": "Madde 15",
-        "section": "İkinci Bölüm - İş Sözleşmesi"
-      },
-      "difficulty": "kolay",
-      "question_type": "olgusal",
-      "evaluation_criteria": {
-        "must_include": [
-          "2 ay",
-          "iki ay"
-        ],
-        "should_include": [
-          "4 ay",
-          "dört ay",
-          "toplu iş sözleşmesi"
-        ],
-        "exact_number_required": true
-      }
-    },
-    {
-      "id": 3,
-      "question": "4857 sayılı İş Kanunu'na göre yıllık ücretli izin süreleri kıdeme göre nasıl belirlenir?",
-      "answer": {
-        "main_answer": "BÖLÜM 1 - AÇIKLAMA\nYıllık ücretli izne hak kazanabilmek için işçinin, deneme süresi dahil, işyerinde en az bir yıl çalışmış olması gerekmektedir. Kanuna göre yıllık ücretli izin süresi, hizmet süresine göre kademeli olarak belirlenmektedir: 1 yıldan 5 yıla kadar (5 yıl dahil) çalışanlara 14 iş günü, 5 yıldan fazla 15 yıldan az çalışanlara 20 iş günü, 15 yıl ve daha fazla çalışanlara ise 26 iş günü izin verilir. 18 yaşından küçük ve 50 yaşından büyük işçilere ise en az 20 iş günü izin verilmesi zorunludur.\n\nBÖLÜM 2 - HUKUKİ DAYANAKLAR\n- 4857 Sayılı İş Kanunu Madde 53",
-        "key_entities": [
-          "yıllık izin",
-          "14 iş günü",
-          "20 iş günü",
-          "26 iş günü",
-          "1 yıl"
-        ],
-        "source_quote": "İşçilere verilecek yıllık ücretli izin süresi, hizmet süresi; bir yıldan beş yıla kadar (beş yıl dahil) olanlara ondört günden, beş yıldan fazla onbeş yıldan az olanlara yirmi günden, onbeş yıl (dahil) ve daha fazla olanlara yirmialtı günden az olamaz."
-      },
-      "alternative_correct_answers": [
-        "1-5 yıl: 14 gün, 5-15 yıl: 20 gün, 15 yıl üzeri: 26 gün.",
-        "Kıdeme göre 14, 20 veya 26 iş günü yıllık izin verilir."
-      ],
-      "source": "4857 Sayılı İş Kanunu",
-      "source_details": {
-        "document": "1.5.4857.docx",
-        "article": "Madde 53",
-        "section": "Beşinci Bölüm - Yıllık Ücretli İzin"
-      },
-      "difficulty": "orta",
-      "question_type": "olgusal",
-      "evaluation_criteria": {
-        "must_include": [
-          "14",
-          "20",
-          "26"
-        ],
-        "should_include": [
-          "1 yıl",
-          "iş günü",
-          "15 yıl"
-        ],
-        "exact_numbers_required": true
-      }
-    },
-    {
-      "id": 4,
-      "question": "Türk Borçlar Kanunu'nda genel zamanaşımı süresi ne kadardır ve hangi alacaklar için daha kısa süre öngörülmüştür?",
-      "answer": {
-        "main_answer": "BÖLÜM 1 - AÇIKLAMA\nTürk Borçlar Kanunu'na göre, kanunda aksine bir hüküm bulunmadıkça her alacak on yıllık zamanaşımına tabidir. Bununla birlikte belirli alacak türleri için beş yıllık daha kısa zamanaşımı süresi öngörülmüştür. Beş yıllık zamanaşımına tabi alacaklar arasında; kira bedelleri, anapara faizleri ve ücret gibi dönemsel edimler, otel ve lokanta gibi yerlerdeki konaklama ve yeme-içme bedelleri ile küçük sanat işlerinden ve küçük çapta perakende satışlardan doğan alacaklar yer almaktadır.\n\nBÖLÜM 2 - HUKUKİ DAYANAKLAR\n- 6098 Sayılı Türk Borçlar Kanunu Madde 146, 147",
-        "key_entities": [
-          "zamanaşımı",
-          "10 yıl",
-          "5 yıl",
-          "dönemsel edimler",
-          "kira"
-        ],
-        "source_quote": "Kanunda aksine bir hüküm bulunmadıkça, her alacak on yıllık zamanaşımına tabidir."
-      },
-      "alternative_correct_answers": [
-        "Genel zamanaşımı 10 yıl, dönemsel alacaklar (kira, faiz, ücret) için 5 yıldır.",
-        "On yıllık genel süre; kira ve ücret gibi dönemsel edimler için beş yıla iner."
-      ],
-      "source": "6098 Sayılı Türk Borçlar Kanunu",
-      "source_details": {
-        "document": "1.5.6098.docx",
-        "article": "Madde 146, 147",
-        "section": "Birinci Kısım - Genel Hükümler"
-      },
-      "difficulty": "orta",
-      "question_type": "olgusal",
-      "evaluation_criteria": {
-        "must_include": [
-          "10 yıl",
-          "5 yıl",
-          "zamanaşımı"
-        ],
-        "should_include": [
-          "dönemsel",
-          "kira"
-        ],
-        "exact_numbers_required": true
-      }
-    },
-    {
-      "id": 5,
-      "question": "Anayasa'ya göre sendika kurma hakkı kime aittir ve bu hakkı kullanmanın ön koşulu nedir?",
-      "answer": {
-        "main_answer": "BÖLÜM 1 - AÇIKLAMA\nAnayasa'ya göre sendika kurma hakkı çalışanlar ve işverenlere aittir. Bu hak, üyelerinin çalışma ilişkilerinde ekonomik ve sosyal hak ve menfaatlerini korumak ve geliştirmek amacıyla kullanılır. Önemli bir husus olarak, sendika kurulabilmesi için önceden izin alınması gerekmemektedir. Ayrıca hiç kimse bir sendikaya üye olmaya ya da üyelikten ayrılmaya zorlanamaz.\n\nBÖLÜM 2 - HUKUKİ DAYANAKLAR\n- T.C. Anayasası Madde 51",
-        "key_entities": [
-          "sendika",
-          "çalışanlar",
-          "işverenler",
-          "önceden izin",
-          "üyelik"
-        ],
-        "source_quote": "Çalışanlar ve işverenler, üyelerinin çalışma ilişkilerinde, ekonomik ve sosyal hak ve menfaatlerini korumak ve geliştirmek için önceden izin almaksızın sendikalar ve üst kuruluşlar kurma, bunlara serbestçe üye olma ve üyelikten serbestçe çekilme haklarına sahiptirler."
-      },
-      "alternative_correct_answers": [
-        "Çalışanlar ve işverenler önceden izin almaksızın sendika kurabilir.",
-        "Sendika kurma hakkı çalışanlara ve işverenlere aittir, önceden izin gerekmez."
-      ],
-      "source": "T.C. Anayasası",
-      "source_details": {
-        "document": "1.5.2709.docx",
-        "article": "Madde 51",
-        "section": "İkinci Kısım - Temel Haklar ve Ödevler"
-      },
-      "difficulty": "orta",
-      "question_type": "kavramsal",
-      "evaluation_criteria": {
-        "must_include": [
-          "sendika",
-          "önceden izin"
-        ],
-        "should_include": [
-          "çalışanlar",
-          "işverenler",
-          "üyelik"
-        ],
-        "exact_match_required": false
-      }
-    },
-    {
-      "id": 6,
-      "question": "İşverenin iş sözleşmesini haklı nedenle derhal fesih hakkı hangi hallerde doğar?",
-      "answer": {
-        "main_answer": "BÖLÜM 1 - AÇIKLAMA\nİş Kanunu'nun 25. maddesi uyarınca işveren, belirli ya da belirsiz süreli iş sözleşmesini sürenin bitimini beklemeksizin ve bildirim süresi tanımaksızın derhal feshedebilir. Bu hakkın doğduğu haller dört başlık altında toplanmıştır: (I) Sağlık sebepleri: İşçinin kendi kusuru ya da düzensiz yaşamından kaynaklanan hastalık veya özür hali ve başkalarını tehlikeye sokacak bir hastalığa yakalanması; (II) Ahlak ve iyi niyet kurallarına uymayan haller: İşçinin işvereni yanıltması, şeref ve namusa dokunacak söz veya davranışları, işyerinde cinsel taciz, işverene saldırı, işyerinde hırsızlık ve dolandırıcılık gibi eylemler, devamsızlık ve işçinin kendi isteğiyle işi bırakması; (III) Zorlayıcı sebepler: İşçiyi bir haftadan fazla süre çalışmaktan alıkoyan zorlayıcı bir nedenin ortaya çıkması; (IV) İşçinin tutuklanması veya gözaltına alınması.\n\nBÖLÜM 2 - HUKUKİ DAYANAKLAR\n- 4857 Sayılı İş Kanunu Madde 25",
-        "key_entities": [
-          "haklı fesih",
-          "sağlık sebepleri",
-          "ahlak kuralları",
-          "zorlayıcı sebep",
-          "derhal fesih"
-        ],
-        "source_quote": "Süresi belirli olsun veya olmasın işveren, aşağıda yazılı hallerde iş sözleşmesini sürenin bitiminden önce veya bildirim süresini beklemeksizin feshedebilir."
-      },
-      "alternative_correct_answers": [
-        "Sağlık, ahlak/iyi niyet, zorlayıcı sebep veya tutukluluk hallerinde işveren derhal feshedebilir.",
-        "İş Kanunu Madde 25'te sayılan sağlık, ahlak ve zorlayıcı nedenler haklı fesih hakkı doğurur."
-      ],
-      "source": "4857 Sayılı İş Kanunu",
-      "source_details": {
-        "document": "1.5.4857.docx",
-        "article": "Madde 25",
-        "section": "İkinci Bölüm - İş Sözleşmesi"
-      },
-      "difficulty": "zor",
-      "question_type": "kavramsal",
-      "evaluation_criteria": {
-        "must_include": [
-          "haklı fesih",
-          "sağlık",
-          "ahlak"
-        ],
-        "should_include": [
-          "zorlayıcı sebep",
-          "bildirim süresi",
-          "derhal"
-        ],
-        "exact_match_required": false
-      }
-    },
-    {
-      "id": 7,
-      "question": "Fazla çalışma ile fazla sürelerle çalışma arasındaki fark nedir?",
-      "answer": {
-        "main_answer": "BÖLÜM 1 - AÇIKLAMA\nFazla çalışma ve fazla sürelerle çalışma, haftalık çalışma süresi açısından farklı kavramlardır. Genel haftalık çalışma süresi 45 saattir. Fazla çalışma; haftalık 45 saati aşan çalışmalar olup her saat için yüzde elli zamlı ücret ödenir ya da işçiye serbest zaman kullandırılır. Fazla sürelerle çalışma ise tarafların anlaşarak 45 saatin altında kararlaştırdıkları haftalık çalışma süresini aşan ancak 45 saate kadar olan çalışmalardır; bu durumda her saat için yüzde yirmi beş zamlı ücret veya serbest zaman uygulanır.\n\nBÖLÜM 2 - HUKUKİ DAYANAKLAR\n- 4857 Sayılı İş Kanunu Madde 41, 63",
-        "key_entities": [
-          "fazla çalışma",
-          "fazla sürelerle çalışma",
-          "45 saat",
-          "%50",
-          "%25"
-        ],
-        "source_quote": "Fazla çalışma, Kanunda yazılı koşullar çerçevesinde, haftalık kırkbeş saati aşan çalışmalardır."
-      },
-      "alternative_correct_answers": [
-        "Fazla çalışma 45 saati aşar (%50 zam), fazla sürelerle çalışma sözleşmesel sınırı aşar ama 45 saate kadardır (%25 zam).",
-        "45 saatin üstü fazla çalışma, sözleşme sınırı ile 45 saat arası fazla sürelerle çalışmadır."
-      ],
-      "source": "4857 Sayılı İş Kanunu",
-      "source_details": {
-        "document": "1.5.4857.docx",
-        "article": "Madde 41, 63",
-        "section": "Dördüncü Bölüm - Çalışma Süresi"
-      },
-      "difficulty": "orta",
-      "question_type": "karşılaştırma",
-      "evaluation_criteria": {
-        "must_include": [
-          "fazla çalışma",
-          "45 saat"
-        ],
-        "should_include": [
-          "%50",
-          "%25",
-          "fazla sürelerle çalışma"
-        ],
-        "exact_match_required": false
-      }
-    },
-    {
-      "id": 8,
-      "question": "İş Kanunu'nun 200. maddesi neyi düzenler?",
-      "answer": {
-        "main_answer": "BÖLÜM 1 - AÇIKLAMA\nBu konuda elimdeki yasal metinlerde yeterli bilgi bulunmamaktadır.\n\nBÖLÜM 2 - HUKUKİ DAYANAKLAR\n- (Böyle bir madde mevcut değildir)",
-        "key_entities": [],
-        "source_quote": null
-      },
-      "source": "out_of_scope_nonexistent",
-      "difficulty": "orta",
-      "question_type": "hallucination_test",
-      "evaluation_criteria": {
-        "must_not_hallucinate": true,
-        "should_explain_limitation": true,
-        "acceptable_responses": [
-          "4857 sayılı İş Kanunu'nda 200. madde bulunmamaktadır.",
-          "Böyle bir madde mevcut değildir.",
-          "İş Kanunu 122 madde ve geçici maddelerden oluşmaktadır, 200. madde yoktur."
-        ]
-      },
-      "test_purpose": "Halüsinasyon testi — var olmayan madde (out_of_scope_nonexistent)"
-    },
-    {
-      "id": 9,
-      "question": "Türk Ticaret Kanunu'na göre anonim şirketlerde işçilerin yönetim kuruluna katılım hakkı nasıl düzenlenmiştir?",
-      "answer": {
-        "main_answer": "BÖLÜM 1 - AÇIKLAMA\nBu konuda elimdeki yasal metinlerde yeterli bilgi bulunmamaktadır. Türk Ticaret Kanunu bu sistemin kapsadığı kaynaklar arasında yer almamaktadır.\n\nBÖLÜM 2 - HUKUKİ DAYANAKLAR\n- (Kapsam dışı konu — Ticaret Hukuku)",
-        "key_entities": [],
-        "source_quote": null
-      },
-      "source": "out_of_scope_topic",
-      "difficulty": "orta",
-      "question_type": "hallucination_test",
-      "evaluation_criteria": {
-        "must_not_hallucinate": true,
-        "should_explain_limitation": true,
-        "acceptable_responses": [
-          "Türk Ticaret Kanunu bu sistemin kapsadığı kaynaklar arasında değildir.",
-          "Bu konu iş/sosyal güvenlik hukuku kapsamı dışındadır; ticaret hukukuna ilişkindir.",
-          "Elimdeki kaynaklarda bu konuya ilişkin bilgi bulunmamaktadır."
-        ]
-      },
-      "test_purpose": "Halüsinasyon testi — kapsam dışı konu (ticaret hukuku, out_of_scope_topic)"
-    },
-    {
-      "id": 10,
-      "question": "İşçi, iş sözleşmesinden doğan alacağı için doğrudan mahkemeye dava açabilir mi?",
-      "answer": {
-        "main_answer": "BÖLÜM 1 - AÇIKLAMA\n7036 sayılı İş Mahkemeleri Kanunu'na göre, kanuna veya bireysel ya da toplu iş sözleşmesine dayanan işçi ya da işveren alacağı ile tazminat ve işe iade taleplerinde arabulucuya başvurulmuş olması dava şartıdır. Bu nedenle işçi, dava açmadan önce zorunlu olarak arabulucuya başvurmalıdır. Arabuluculuk sürecinde anlaşma sağlanamaması halinde, son tutanağın aslı veya onaylı örneği dava dilekçesine eklenerek mahkemeye başvurulabilir. Arabuluculuk şartı yerine getirilmeden açılan davalar usulden reddedilir.\n\nBÖLÜM 2 - HUKUKİ DAYANAKLAR\n- 7036 Sayılı İş Mahkemeleri Kanunu Madde 3",
-        "key_entities": [
-          "arabuluculuk",
-          "dava şartı",
-          "zorunlu",
-          "son tutanak",
-          "usulden ret"
-        ],
-        "source_quote": "Kanuna, bireysel veya toplu iş sözleşmesine dayanan işçi veya işveren alacağı ve tazminatı ile işe iade talebiyle açılan davalarda, arabulucuya başvurulmuş olması dava şartıdır."
-      },
-      "alternative_correct_answers": [
-        "Hayır, önce arabulucuya başvurulması zorunlu dava şartıdır.",
-        "Doğrudan dava açılamaz; arabuluculuk süreci tamamlanmadan dava usulden reddedilir."
-      ],
-      "source": "7036 Sayılı İş Mahkemeleri Kanunu",
-      "source_details": {
-        "document": "1.5.7036.docx",
-        "article": "Madde 3",
-        "section": "Birinci Bölüm"
-      },
-      "difficulty": "zor",
-      "question_type": "edge_case",
-      "evaluation_criteria": {
-        "must_acknowledge_partial_coverage": true,
-        "must_include": [
-          "arabuluculuk",
-          "dava şartı"
-        ],
-        "should_include": [
-          "zorunlu",
-          "son tutanak",
-          "usulden ret"
-        ],
-        "should_note_limitation": true
-      },
-      "test_purpose": "Prosedürel bilgi testi - arabuluculuk zorunluluğu"
+      "article_reference": "Madde 15"
     }
-  ]
-}
+  },
+  {
+    "question": "Kadın işçilerin doğumdan önce ve doğumdan sonra toplam kaç hafta çalıştırılmamaları esastır?",
+    "expected_answer": "Kadın işçilerin doğumdan önce sekiz ve doğumdan sonra sekiz hafta olmak üzere toplam on altı hafta çalıştırılmamaları esastır.",
+    "evaluation_rules": {
+        "must_include": ["on altı hafta", "sekiz", "doğum"]
+    },
+    "metadata": {
+      "category": "olgusal",
+      "difficulty": "kolay",
+      "article_reference": "Madde 74"
+    }
+  },
+  {
+    "question": "İşyerinde işe başladığı günden itibaren, deneme süresi de dahil olmak üzere en az ne kadar süre çalışmış olan işçilere yıllık ücretli izin verilir?",
+    "expected_answer": "İşe başladığı günden itibaren, deneme süresi de içinde olmak üzere, en az bir yıl çalışmış olan işçilere yıllık ücretli izin verilir.",
+    "evaluation_rules": {
+        "must_include": ["en az bir yıl", "deneme süresi"]
+    },
+    "metadata": {
+      "category": "olgusal",
+      "difficulty": "kolay",
+      "article_reference": "Madde 53"
+    }
+  },
+  {
+    "question": "Haftalık normal çalışma süresi genel bakımdan en çok kaç saattir?",
+    "expected_answer": "Genel bakımdan çalışma süresi haftada en çok kırk beş saattir.",
+    "evaluation_rules": {
+        "must_include": ["kırk beş", "haftada"]
+    },
+    "metadata": {
+      "category": "olgusal",
+      "difficulty": "kolay",
+      "article_reference": "Madde 63"
+    }
+  },
+  {
+    "question": "İşi altı aydan az sürmüş olan bir işçi için belirsiz süreli iş sözleşmesinin feshinde ihbar süresi kaç haftadır?",
+    "expected_answer": "İşi altı aydan az sürmüş olan işçi için, bildirimin diğer tarafa yapılmasından başlayarak iki hafta sonradır.",
+    "evaluation_rules": {
+        "must_include": ["iki hafta"]
+    },
+    "metadata": {
+      "category": "olgusal",
+      "difficulty": "kolay",
+      "article_reference": "Madde 17"
+    }
+  },
+  {
+    "question": "İş kanununa göre ücret en geç ne kadar sürede bir ödenmelidir?",
+    "expected_answer": "Ücret en geç ayda bir ödenir. İş sözleşmeleri veya toplu iş sözleşmeleri ile bu süre bir haftaya kadar indirilebilir.",
+    "evaluation_rules": {
+        "must_include": ["ayda bir", "bir hafta"]
+    },
+    "metadata": {
+      "category": "olgusal",
+      "difficulty": "kolay",
+      "article_reference": "Madde 32"
+    }
+  },
+  {
+    "question": "Dört saatten fazla ve yedi buçuk saate kadar (yedi buçuk saat dahil) süreli işlerde ara dinlenmesi en az kaç dakikadır?",
+    "expected_answer": "Dört saatten fazla ve yedi buçuk saate kadar (yedi buçuk saat dahil) süreli işlerde ara dinlenmesi en az yarım saattir (30 dakika).",
+    "evaluation_rules": {
+        "must_include": ["yarım saat"]
+    },
+    "metadata": {
+      "category": "olgusal",
+      "difficulty": "orta",
+      "article_reference": "Madde 68"
+    }
+  },
+  {
+    "question": "Fazla çalışma (mesai) yapan bir işçinin fazla çalışma saat ücreti, normal çalışma saat ücretinin yüzde kaç yükseltilmesiyle ödenir?",
+    "expected_answer": "Fazla çalışma saat ücreti, normal çalışma saat ücretinin yüzde elli (%50) yükseltilmesiyle ödenir.",
+    "evaluation_rules": {
+        "must_include": ["yüzde elli", "elli"]
+    },
+    "metadata": {
+      "category": "olgusal",
+      "difficulty": "orta",
+      "article_reference": "Madde 41"
+    }
+  },
+  {
+    "question": "Yer altı işlerinde çalışan işçilerin yıllık ücretli izin süreleri kaçar gün artırılarak uygulanır?",
+    "expected_answer": "Yer altı işlerinde çalışan işçilerin yıllık ücretli izin süreleri dörder gün artırılarak uygulanır.",
+    "evaluation_rules": {
+        "must_include": ["dörder gün"]
+    },
+    "metadata": {
+      "category": "olgusal",
+      "difficulty": "orta",
+      "article_reference": "Madde 53"
+    }
+  },
+  {
+    "question": "İş ilişkisinde dil, ırk, renk, cinsiyet, engellilik, siyasal düşünce, felsefî inanç, din ve mezhep ve benzeri sebeplere dayalı ayrımcılık yapılması durumunda işçi, en çok kaç aya kadar ücreti tutarında tazminat talep edebilir?",
+    "expected_answer": "İşçi, dört aya kadar ücreti tutarındaki uygun bir tazminatın yanı sıra yoksun bırakıldığı haklarını da talep edebilir.",
+    "evaluation_rules": {
+        "must_include": ["dört ay", "yoksun bırakıldığı hak"]
+    },
+    "metadata": {
+      "category": "olgusal",
+      "difficulty": "zor",
+      "article_reference": "Madde 5"
+    }
+  }
+]

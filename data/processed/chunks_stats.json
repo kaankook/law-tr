@@ -1,37 +1,136 @@
 {
-  "total_chunks": 715,
+  "total_chunks": 713,
   "by_source": {
-    "5953 Sayılı Basın Mesleği Kanunu": 26,
+    "5953 Sayılı Basın Mesleği Kanunu": 24,
     "193 Sayılı Gelir Vergisi Kanunu": 14,
-    "1475 Sayılı İş Kanunu": 5,
+    "1475 Sayılı İş Kanunu": 4,
     "T.C. Anayasası": 7,
     "3308 Sayılı Mesleki Eğitim Kanunu": 5,
-    "4447 Sayılı İşsizlik Sigortası Kanunu": 10,
+    "4447 Sayılı İşsizlik Sigortası Kanunu": 9,
     "4688 Sayılı Kamu Görevlileri Sendikaları ve Toplu Sözleşme Kanunu": 7,
     "4857 Sayılı İş Kanunu": 127,
-    "5510 Sayılı SSGSSK": 119,
-    "6098 Sayılı Türk Borçlar Kanunu": 78,
+    "5510 Sayılı SSGSSK": 123,
+    "6098 Sayılı Türk Borçlar Kanunu": 76,
     "6100 Sayılı Hukuk Muhakemeleri Kanunu": 152,
-    "6331 Sayılı İş Sağlığı ve Güvenliği Kanunu": 47,
+    "6331 Sayılı İş Sağlığı ve Güvenliği Kanunu": 49,
     "6356 Sayılı Sendikalar ve Toplu İş Sözleşmesi Kanunu": 36,
-    "6458 Sayılı Yabancılar ve Uluslararası Koruma Kanunu": 4,
-    "657 Sayılı Devlet Memurları Kanunu": 6,
+    "6458 Sayılı Yabancılar ve Uluslararası Koruma Kanunu": 5,
+    "657 Sayılı Devlet Memurları Kanunu": 5,
     "6735 Sayılı Uluslararası İşgücü Kanunu": 9,
     "7036 Sayılı İş Mahkemeleri Kanunu": 9,
-    "854 Sayılı Deniz İş Kanunu": 54
+    "854 Sayılı Deniz İş Kanunu": 52
   },
   "by_article_type": {
-    "giris": 8,
-    "madde": 697,
+    "madde": 703,
     "ek_madde": 10
   },
-  "mulga_chunks": 5,
+  "mulga_chunks": 34,
   "char_count": {
-    "min": 71,
-    "max": 4789,
-    "avg": 868.0
+    "min": 10,
+    "max": 4769,
+    "avg": 867.7
   },
   "multi_part_articles": [
+    {
+      "article": "Madde 102",
+      "parts": 11
+    },
+    {
+      "article": "Madde 94",
+      "parts": 9
+    },
+    {
+      "article": "Madde 80",
+      "parts": 9
+    },
+    {
+      "article": "Madde 88",
+      "parts": 8
+    },
+    {
+      "article": "Madde 81",
+      "parts": 7
+    },
+    {
+      "article": "Madde 7",
+      "parts": 5
+    },
+    {
+      "article": "Madde 14",
+      "parts": 4
+    },
+    {
+      "article": "Madde 30",
+      "parts": 4
+    },
+    {
+      "article": "Madde 111",
+      "parts": 4
+    },
+    {
+      "article": "Madde 4",
+      "parts": 4
+    },
+    {
+      "article": "Madde 9",
+      "parts": 4
+    },
+    {
+      "article": "Madde 85",
+      "parts": 4
+    },
+    {
+      "article": "Madde 26",
+      "parts": 4
+    },
+    {
+      "article": "Madde 50",
+      "parts": 3
+    },
+    {
+      "article": "Madde 51",
+      "parts": 3
+    },
+    {
+      "article": "Madde 2",
+      "parts": 3
+    },
+    {
+      "article": "Madde 112",
+      "parts": 3
+    },
+    {
+      "article": "Madde 5",
+      "parts": 3
+    },
+    {
+      "article": "Madde 6",
+      "parts": 3
+    },
+    {
+      "article": "Madde 8",
+      "parts": 3
+    },
+    {
+      "article": "Madde 86",
+      "parts": 3
+    },
+    {
+      "article": "Madde 100",
+      "parts": 3
+    },
+    {
+      "article": "Madde 103",
+      "parts": 3
+    },
+    {
+      "article": "Ek Madde 6",
+      "parts": 3
+    },
+    {
+      "article": "Madde 20",
+      "parts": 3
+    },
     {
       "article": "Madde 16",
       "parts": 2
@@ -41,23 +140,7 @@
       "parts": 2
     },
     {
-      "article": "Madde 94",
-      "parts": 9
-    },
-    {
-      "article": "Madde 14",
-      "parts": 4
-    },
-    {
       "article": "Madde 47",
-      "parts": 2
-    },
-    {
-      "article": "Madde 50",
-      "parts": 4
-    },
-    {
-      "article": "Madde 51",
       "parts": 2
     },
     {
@@ -65,16 +148,8 @@
       "parts": 2
     },
     {
-      "article": "Madde 2",
-      "parts": 3
-    },
-    {
       "article": "Madde 3",
       "parts": 2
-    },
-    {
-      "article": "Madde 7",
-      "parts": 5
     },
     {
       "article": "Madde 13",
@@ -93,10 +168,6 @@
       "parts": 2
     },
     {
-      "article": "Madde 30",
-      "parts": 4
-    },
-    {
       "article": "Madde 32",
       "parts": 2
     },
@@ -111,34 +182,6 @@
     {
       "article": "Madde 74",
       "parts": 2
-    },
-    {
-      "article": "Madde 111",
-      "parts": 4
-    },
-    {
-      "article": "Madde 112",
-      "parts": 3
-    },
-    {
-      "article": "Madde 4",
-      "parts": 4
-    },
-    {
-      "article": "Madde 5",
-      "parts": 2
-    },
-    {
-      "article": "Madde 6",
-      "parts": 2
-    },
-    {
-      "article": "Madde 8",
-      "parts": 3
-    },
-    {
-      "article": "Madde 9",
-      "parts": 3
     },
     {
       "article": "Madde 11",
@@ -157,24 +200,8 @@
       "parts": 2
     },
     {
-      "article": "Madde 80",
-      "parts": 8
-    },
-    {
-      "article": "Madde 81",
-      "parts": 7
-    },
-    {
-      "article": "Madde 85",
-      "parts": 4
-    },
-    {
-      "article": "Madde 86",
-      "parts": 3
-    },
-    {
-      "article": "Madde 88",
-      "parts": 8
+      "article": "Madde 87",
+      "parts": 2
     },
     {
       "article": "Madde 89",
@@ -182,6 +209,10 @@
     },
     {
       "article": "Madde 90",
+      "parts": 2
+    },
+    {
+      "article": "Madde 91",
       "parts": 2
     },
     {
@@ -193,39 +224,11 @@
       "parts": 2
     },
     {
-      "article": "Madde 100",
-      "parts": 3
-    },
-    {
-      "article": "Madde 102",
-      "parts": 12
-    },
-    {
-      "article": "Madde 103",
-      "parts": 3
-    },
-    {
       "article": "Ek Madde 2",
       "parts": 2
     },
     {
-      "article": "Ek Madde 6",
-      "parts": 3
-    },
-    {
-      "article": "Madde 26",
-      "parts": 3
-    },
-    {
       "article": "Madde 23",
-      "parts": 2
-    },
-    {
-      "article": "Madde 20",
-      "parts": 3
-    },
-    {
-      "article": "Giriş",
       "parts": 2
     }
   ]

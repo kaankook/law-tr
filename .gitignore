@@ -1,60 +1,32 @@
 # Python
 __pycache__/
 *.py[cod]
-*$py.class
+*.pyo
+*.pyd
 *.so
-.Python
-build/
-develop-eggs/
-dist/
-downloads/
-eggs/
-.eggs/
-lib/
-lib64/
-parts/
-sdist/
-var/
-wheels/
 *.egg-info/
-.installed.cfg
-*.egg
+.pytest_cache/
+.mypy_cache/
 
-# Virtual Environment
+# Virtual environments
+.venv/
 venv/
 env/
-.env
-.venv/
 
-# IDE
+# Secrets and local config
+.env
+.env.*
+!.env.example
+
+# IDE / OS
+.vscode/*
+!.vscode/launch.json
+!.vscode/settings.json
 .idea/
-.vscode/
-*.swp
-*.swo
-*~
-
-# Jupyter Notebook
-.ipynb_checkpoints/
-
-# Keep processed data structure but ignore large files
-# data/processed/*.json
-
-# Environment variables
-.env
-.env.local
-.env.*.local
-
-# Logs
-*.log
-logs/
-
-# OS
 .DS_Store
 Thumbs.db
 
-# Test outputs (optional - uncomment if you want to exclude)
-# reports/
-
-# Temporary files
-*.tmp
-*.temp
+# Build and reports
+build/
+dist/
+reports/

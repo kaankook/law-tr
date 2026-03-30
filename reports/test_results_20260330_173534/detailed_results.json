@@ -1,0 +1,1205 @@
+[
+  {
+    "question_id": 0,
+    "question": "Deneme süreli iş sözleşmesinde deneme süresi en çok ne kadar olabilir ve toplu iş sözleşmeleriyle bu süre en fazla ne kadar uzatılabilir?",
+    "category": "olgusal",
+    "difficulty": "kolay",
+    "source": "",
+    "generated_answer": "AÇIKLAMA\nDeneme süreli iş sözleşmelerinde deneme süresi en çok 2 ay olabilir. Ancak toplu iş sözleşmeleri ile bu süre 4 aya kadar uzatılabilir. Bu süre içinde taraflar, bildirim süresine uymak zorunda olmaksızın ve tazminatsız olarak iş sözleşmesini feshedebilirler.\n\nHUKUKİ DAYANAKLAR\n- 4857 Sayılı İş Kanunu, Madde 15",
+    "expected_answer": "Deneme süresi en çok iki ay olabilir. Ancak deneme süresi toplu iş sözleşmeleriyle dört aya kadar uzatılabilir.",
+    "retrieved_articles": [
+      "Madde 10",
+      "Madde 15",
+      "Madde 433",
+      "Madde 35",
+      "Madde 9"
+    ],
+    "total_latency_ms": 11307.326078414917,
+    "mulga_warnings": [],
+    "article_mapping_detected": false,
+    "heuristic_metrics": [
+      {
+        "name": "keyword_coverage",
+        "score": 0.7062572232882182,
+        "weight": 0.4,
+        "details": {
+          "must_include_found": 1,
+          "must_include_total": 3,
+          "should_include_found": 0,
+          "should_include_total": 0,
+          "exact_match_score": 0.467,
+          "semantic_similarity": 0.866,
+          "missing_must": [
+            "iki ay",
+            "dört ay"
+          ]
+        }
+      },
+      {
+        "name": "semantic_correctness",
+        "score": 0.9000958204269409,
+        "weight": 0.8,
+        "details": {
+          "main_answer_similarity": 0.9,
+          "best_similarity": 0.9,
+          "best_match_source": "main_answer",
+          "alternative_scores": {},
+          "interpretation": "Çok yüksek benzerlik - neredeyse aynı"
+        }
+      },
+      {
+        "name": "quote_presence",
+        "score": 1.0,
+        "weight": 0.5,
+        "details": {
+          "note": "No source quote to check"
+        }
+      },
+      {
+        "name": "citation_accuracy",
+        "score": 1.0,
+        "weight": 2.0,
+        "details": {
+          "expected": "Madde 15",
+          "retrieved": [
+            "Madde 10",
+            "Madde 15",
+            "Madde 433"
+          ],
+          "exact_match": true,
+          "number_match": false,
+          "partial_match": false
+        }
+      },
+      {
+        "name": "response_quality",
+        "score": 1.0,
+        "weight": 0.5,
+        "details": {
+          "word_count": 47,
+          "question_type": "olgusal",
+          "expected_range": "16-90",
+          "has_structure": true,
+          "length_score": 1.0
+        }
+      },
+      {
+        "name": "answer_consistency",
+        "score": 1.0,
+        "weight": 0.8,
+        "details": {
+          "matches": 0,
+          "total_checks": 0,
+          "inconsistencies": []
+        }
+      },
+      {
+        "name": "latency",
+        "score": 0.5,
+        "weight": 0.1,
+        "details": {
+          "latency_ms": 11307.326078414917,
+          "threshold_ms": 8000
+        }
+      }
+    ],
+    "judge_scores": {
+      "relevance": 1.0,
+      "faithfulness": 1.0,
+      "correctness": 1.0,
+      "completeness": 1.0,
+      "overall": 1.0
+    },
+    "judge_reasoning": "Asistanın cevabı, beklenen cevapla tamamen örtüşmekte ve tüm gerekli bilgileri içermektedir. Ayrıca, verilen bağlama sadık kalınmış ve gereksiz bilgi eklenmemiştir.",
+    "strengths": [
+      "Cevap, deneme süresi ve toplu iş sözleşmeleriyle uzatma sürelerini doğru bir şekilde belirtmiştir.",
+      "Cevap, hukuki dayanakları ve bağlamı doğru bir şekilde yansıtmaktadır."
+    ],
+    "weaknesses": [],
+    "passed": true,
+    "final_score": 0.9889822732114791,
+    "failure_reasons": []
+  },
+  {
+    "question_id": 0,
+    "question": "Kadın işçilerin doğumdan önce ve doğumdan sonra toplam kaç hafta çalıştırılmamaları esastır?",
+    "category": "olgusal",
+    "difficulty": "kolay",
+    "source": "",
+    "generated_answer": "AÇIKLAMA\nKadın işçilerin doğumdan önce 8 hafta ve doğumdan sonra 8 hafta olmak üzere toplam 16 hafta çalıştırılmamaları esastır. Ancak sağlık durumu uygunsa doktor onayı ile doğumdan önceki 3 haftaya kadar çalışabilirler.\n\nHUKUKİ DAYANAKLAR\n- 4857 Sayılı İş Kanunu, Madde 74",
+    "expected_answer": "Kadın işçilerin doğumdan önce sekiz ve doğumdan sonra sekiz hafta olmak üzere toplam on altı hafta çalıştırılmamaları esastır.",
+    "retrieved_articles": [
+      "Madde 74",
+      "Madde 74"
+    ],
+    "total_latency_ms": 2789.720296859741,
+    "mulga_warnings": [],
+    "article_mapping_detected": false,
+    "heuristic_metrics": [
+      {
+        "name": "keyword_coverage",
+        "score": 0.6956184021631876,
+        "weight": 0.4,
+        "details": {
+          "must_include_found": 1,
+          "must_include_total": 3,
+          "should_include_found": 0,
+          "should_include_total": 0,
+          "exact_match_score": 0.467,
+          "semantic_similarity": 0.848,
+          "missing_must": [
+            "on altı hafta",
+            "sekiz"
+          ]
+        }
+      },
+      {
+        "name": "semantic_correctness",
+        "score": 0.9160304665565491,
+        "weight": 0.8,
+        "details": {
+          "main_answer_similarity": 0.916,
+          "best_similarity": 0.916,
+          "best_match_source": "main_answer",
+          "alternative_scores": {},
+          "interpretation": "Çok yüksek benzerlik - neredeyse aynı"
+        }
+      },
+      {
+        "name": "quote_presence",
+        "score": 1.0,
+        "weight": 0.5,
+        "details": {
+          "note": "No source quote to check"
+        }
+      },
+      {
+        "name": "citation_accuracy",
+        "score": 1.0,
+        "weight": 2.0,
+        "details": {
+          "expected": "Madde 74",
+          "retrieved": [
+            "Madde 74",
+            "Madde 74"
+          ],
+          "exact_match": true,
+          "number_match": false,
+          "partial_match": false
+        }
+      },
+      {
+        "name": "response_quality",
+        "score": 1.0,
+        "weight": 0.5,
+        "details": {
+          "word_count": 41,
+          "question_type": "olgusal",
+          "expected_range": "16-90",
+          "has_structure": true,
+          "length_score": 1.0
+        }
+      },
+      {
+        "name": "answer_consistency",
+        "score": 1.0,
+        "weight": 0.8,
+        "details": {
+          "matches": 0,
+          "total_checks": 0,
+          "inconsistencies": []
+        }
+      },
+      {
+        "name": "latency",
+        "score": 1.0,
+        "weight": 0.1,
+        "details": {
+          "latency_ms": 2789.720296859741,
+          "threshold_ms": 8000
+        }
+      }
+    ],
+    "judge_scores": {
+      "relevance": 1.0,
+      "faithfulness": 1.0,
+      "correctness": 1.0,
+      "completeness": 0.75,
+      "overall": 0.94
+    },
+    "judge_reasoning": "Cevap, soruya tam olarak yanıt vermekte ve hukuki bağlamla uyumlu görünmektedir. Ancak, toplu iş sözleşmesiyle uzatma durumu eksik olduğu için tamlık puanı düşmüştür.",
+    "strengths": [
+      "Cevap, doğrudan soruya odaklanıyor.",
+      "Verilen bağlama sadık kalınmış.",
+      "Cevap, hukuken doğru ve anlam olarak beklenen cevapla örtüşüyor."
+    ],
+    "weaknesses": [
+      "Cevapta, toplu iş sözleşmesiyle uzatma durumu belirtilmemiş."
+    ],
+    "passed": true,
+    "final_score": 0.9550497058176994,
+    "failure_reasons": []
+  },
+  {
+    "question_id": 0,
+    "question": "İşyerinde işe başladığı günden itibaren, deneme süresi de dahil olmak üzere en az ne kadar süre çalışmış olan işçilere yıllık ücretli izin verilir?",
+    "category": "olgusal",
+    "difficulty": "kolay",
+    "source": "",
+    "generated_answer": "AÇIKLAMA\nİşyerinde işe başladığı günden itibaren, deneme süresi de dahil olmak üzere en az bir yıl çalışmış olan işçilere yıllık ücretli izin verilir. Bu izin hakkından vazgeçilemez.\n\nHUKUKİ DAYANAKLAR\n- 4857 Sayılı İş Kanunu, Madde 53",
+    "expected_answer": "İşe başladığı günden itibaren, deneme süresi de içinde olmak üzere, en az bir yıl çalışmış olan işçilere yıllık ücretli izin verilir.",
+    "retrieved_articles": [
+      "Madde 53",
+      "Madde 422",
+      "Madde 40",
+      "Madde 424",
+      "Madde 54",
+      "Madde 425",
+      "Madde 56"
+    ],
+    "total_latency_ms": 2910.219192504883,
+    "mulga_warnings": [],
+    "article_mapping_detected": false,
+    "heuristic_metrics": [
+      {
+        "name": "keyword_coverage",
+        "score": 0.9170587301254273,
+        "weight": 0.4,
+        "details": {
+          "must_include_found": 2,
+          "must_include_total": 2,
+          "should_include_found": 0,
+          "should_include_total": 0,
+          "exact_match_score": 1.0,
+          "semantic_similarity": 0.862,
+          "missing_must": []
+        }
+      },
+      {
+        "name": "semantic_correctness",
+        "score": 0.9072747826576233,
+        "weight": 0.8,
+        "details": {
+          "main_answer_similarity": 0.907,
+          "best_similarity": 0.907,
+          "best_match_source": "main_answer",
+          "alternative_scores": {},
+          "interpretation": "Çok yüksek benzerlik - neredeyse aynı"
+        }
+      },
+      {
+        "name": "quote_presence",
+        "score": 1.0,
+        "weight": 0.5,
+        "details": {
+          "note": "No source quote to check"
+        }
+      },
+      {
+        "name": "citation_accuracy",
+        "score": 1.0,
+        "weight": 2.0,
+        "details": {
+          "expected": "Madde 53",
+          "retrieved": [
+            "Madde 53",
+            "Madde 422",
+            "Madde 40"
+          ],
+          "exact_match": true,
+          "number_match": false,
+          "partial_match": false
+        }
+      },
+      {
+        "name": "response_quality",
+        "score": 1.0,
+        "weight": 0.5,
+        "details": {
+          "word_count": 36,
+          "question_type": "olgusal",
+          "expected_range": "16-90",
+          "has_structure": true,
+          "length_score": 1.0
+        }
+      },
+      {
+        "name": "answer_consistency",
+        "score": 1.0,
+        "weight": 0.8,
+        "details": {
+          "matches": 0,
+          "total_checks": 0,
+          "inconsistencies": []
+        }
+      },
+      {
+        "name": "latency",
+        "score": 1.0,
+        "weight": 0.1,
+        "details": {
+          "latency_ms": 2910.219192504883,
+          "threshold_ms": 8000
+        }
+      }
+    ],
+    "judge_scores": {
+      "relevance": 1.0,
+      "faithfulness": 1.0,
+      "correctness": 1.0,
+      "completeness": 0.75,
+      "overall": 0.94
+    },
+    "judge_reasoning": "Cevap, soruya tam olarak yanıt vermekte ve hukuki bağlama sadık kalmaktadır. Ancak, beklenen cevapta yer almayan bir bilgi eklenmesi nedeniyle tamlık puanı düşmüştür.",
+    "strengths": [
+      "Cevap, soruya doğrudan yanıt veriyor.",
+      "Cevap, hukuki bağlama sadık kalıyor."
+    ],
+    "weaknesses": [
+      "Cevapta yıllık izin hakkından vazgeçilemeyeceği bilgisi eklenmiş, bu durum beklenen cevapta yer almıyor."
+    ],
+    "passed": true,
+    "final_score": 0.9570503134608269,
+    "failure_reasons": []
+  },
+  {
+    "question_id": 0,
+    "question": "Haftalık normal çalışma süresi genel bakımdan en çok kaç saattir?",
+    "category": "olgusal",
+    "difficulty": "kolay",
+    "source": "",
+    "generated_answer": "AÇIKLAMA\nGenel bakımdan haftalık normal çalışma süresi en çok 45 saattir. Bu süre, işyerlerinde haftanın çalışılan günlerine eşit olarak bölünerek uygulanır. Tarafların anlaşması ile bu süre, günde 11 saati aşmamak koşuluyla farklı şekilde dağıtılabilir.\n\nHUKUKİ DAYANAKLAR\n- 4857 Sayılı İş Kanunu, Madde 63",
+    "expected_answer": "Genel bakımdan çalışma süresi haftada en çok kırk beş saattir.",
+    "retrieved_articles": [
+      "Madde 63",
+      "Madde 26"
+    ],
+    "total_latency_ms": 2556.9751262664795,
+    "mulga_warnings": [],
+    "article_mapping_detected": false,
+    "heuristic_metrics": [
+      {
+        "name": "keyword_coverage",
+        "score": 0.5709609794616699,
+        "weight": 0.4,
+        "details": {
+          "must_include_found": 0,
+          "must_include_total": 2,
+          "should_include_found": 0,
+          "should_include_total": 0,
+          "exact_match_score": 0.2,
+          "semantic_similarity": 0.818,
+          "missing_must": [
+            "kırk beş",
+            "haftada"
+          ]
+        }
+      },
+      {
+        "name": "semantic_correctness",
+        "score": 0.8798495531082153,
+        "weight": 0.8,
+        "details": {
+          "main_answer_similarity": 0.88,
+          "best_similarity": 0.88,
+          "best_match_source": "main_answer",
+          "alternative_scores": {},
+          "interpretation": "Yüksek benzerlik - anlam korunmuş"
+        }
+      },
+      {
+        "name": "quote_presence",
+        "score": 1.0,
+        "weight": 0.5,
+        "details": {
+          "note": "No source quote to check"
+        }
+      },
+      {
+        "name": "citation_accuracy",
+        "score": 1.0,
+        "weight": 2.0,
+        "details": {
+          "expected": "Madde 63",
+          "retrieved": [
+            "Madde 63",
+            "Madde 26"
+          ],
+          "exact_match": true,
+          "number_match": false,
+          "partial_match": false
+        }
+      },
+      {
+        "name": "response_quality",
+        "score": 1.0,
+        "weight": 0.5,
+        "details": {
+          "word_count": 43,
+          "question_type": "olgusal",
+          "expected_range": "16-90",
+          "has_structure": true,
+          "length_score": 1.0
+        }
+      },
+      {
+        "name": "answer_consistency",
+        "score": 1.0,
+        "weight": 0.8,
+        "details": {
+          "matches": 0,
+          "total_checks": 0,
+          "inconsistencies": []
+        }
+      },
+      {
+        "name": "latency",
+        "score": 1.0,
+        "weight": 0.1,
+        "details": {
+          "latency_ms": 2556.9751262664795,
+          "threshold_ms": 8000
+        }
+      }
+    ],
+    "judge_scores": {
+      "relevance": 1.0,
+      "faithfulness": 1.0,
+      "correctness": 1.0,
+      "completeness": 0.75,
+      "overall": 0.94
+    },
+    "judge_reasoning": "Cevap, soruya doğrudan yanıt vererek ve hukuki dayanağı belirterek yüksek bir relevans ve faithfulness puanı alıyor. Ancak, beklenen cevapta belirtilen denkleştirme süresi ve toplu iş sözleşmesi ile uzatma gibi istisnaların eksikliği nedeniyle completeness puanı düşüyor.",
+    "strengths": [
+      "Cevap, soruya doğrudan yanıt veriyor.",
+      "Cevap, hukuki dayanağı doğru bir şekilde belirtiyor.",
+      "Cevap, çalışma süresinin dağıtımına dair ek bilgi veriyor."
+    ],
+    "weaknesses": [
+      "Cevap, denkleştirme süresi ve toplu iş sözleşmesi ile uzatma gibi istisnaları tam olarak belirtmiyor."
+    ],
+    "passed": true,
+    "final_score": 0.9508402482366562,
+    "failure_reasons": []
+  },
+  {
+    "question_id": 0,
+    "question": "İşi altı aydan az sürmüş olan bir işçi için belirsiz süreli iş sözleşmesinin feshinde ihbar süresi kaç haftadır?",
+    "category": "olgusal",
+    "difficulty": "kolay",
+    "source": "",
+    "generated_answer": "AÇIKLAMA\nİşi altı aydan az sürmüş olan bir işçi için belirsiz süreli iş sözleşmesinin feshinde ihbar süresi 2 haftadır. Bu süre, bildirimin diğer tarafa yapılmasından itibaren başlar.\n\nHUKUKİ DAYANAKLAR\n- 4857 Sayılı İş Kanunu, Madde 17",
+    "expected_answer": "İşi altı aydan az sürmüş olan işçi için, bildirimin diğer tarafa yapılmasından başlayarak iki hafta sonradır.",
+    "retrieved_articles": [
+      "Madde 17",
+      "Madde 15",
+      "Madde 432",
+      "Madde 26",
+      "Madde 16"
+    ],
+    "total_latency_ms": 2989.7875785827637,
+    "mulga_warnings": [],
+    "article_mapping_detected": false,
+    "heuristic_metrics": [
+      {
+        "name": "keyword_coverage",
+        "score": 0.5605075168609619,
+        "weight": 0.4,
+        "details": {
+          "must_include_found": 0,
+          "must_include_total": 1,
+          "should_include_found": 0,
+          "should_include_total": 0,
+          "exact_match_score": 0.2,
+          "semantic_similarity": 0.801,
+          "missing_must": [
+            "iki hafta"
+          ]
+        }
+      },
+      {
+        "name": "semantic_correctness",
+        "score": 0.9047048091888428,
+        "weight": 0.8,
+        "details": {
+          "main_answer_similarity": 0.905,
+          "best_similarity": 0.905,
+          "best_match_source": "main_answer",
+          "alternative_scores": {},
+          "interpretation": "Çok yüksek benzerlik - neredeyse aynı"
+        }
+      },
+      {
+        "name": "quote_presence",
+        "score": 1.0,
+        "weight": 0.5,
+        "details": {
+          "note": "No source quote to check"
+        }
+      },
+      {
+        "name": "citation_accuracy",
+        "score": 1.0,
+        "weight": 2.0,
+        "details": {
+          "expected": "Madde 17",
+          "retrieved": [
+            "Madde 17",
+            "Madde 15",
+            "Madde 432"
+          ],
+          "exact_match": true,
+          "number_match": false,
+          "partial_match": false
+        }
+      },
+      {
+        "name": "response_quality",
+        "score": 1.0,
+        "weight": 0.5,
+        "details": {
+          "word_count": 36,
+          "question_type": "olgusal",
+          "expected_range": "16-90",
+          "has_structure": true,
+          "length_score": 1.0
+        }
+      },
+      {
+        "name": "answer_consistency",
+        "score": 1.0,
+        "weight": 0.8,
+        "details": {
+          "matches": 0,
+          "total_checks": 0,
+          "inconsistencies": []
+        }
+      },
+      {
+        "name": "latency",
+        "score": 1.0,
+        "weight": 0.1,
+        "details": {
+          "latency_ms": 2989.7875785827637,
+          "threshold_ms": 8000
+        }
+      }
+    ],
+    "judge_scores": {
+      "relevance": 1.0,
+      "faithfulness": 1.0,
+      "correctness": 1.0,
+      "completeness": 1.0,
+      "overall": 1.0
+    },
+    "judge_reasoning": "Asistanın cevabı, beklenen cevapla tamamen örtüşüyor ve tüm gerekli bilgileri içeriyor. Ayrıca, verilen bağlama sadık kalınmış ve gereksiz bilgi eklenmemiş.",
+    "strengths": [
+      "Cevap, soruya doğrudan yanıt veriyor.",
+      "Verilen bilgi, hukuki dayanağa uygun ve doğru."
+    ],
+    "weaknesses": [],
+    "passed": true,
+    "final_score": 0.9875789508914947,
+    "failure_reasons": []
+  },
+  {
+    "question_id": 0,
+    "question": "İş kanununa göre ücret en geç ne kadar sürede bir ödenmelidir?",
+    "category": "olgusal",
+    "difficulty": "kolay",
+    "source": "",
+    "generated_answer": "AÇIKLAMA\nİş sözleşmeleri veya toplu iş sözleşmeleri ile belirlenen ödeme süresi bir haftaya kadar indirilebilse de, genel kural olarak ücretler en geç ayda bir kez ödenmelidir. Bu, işçinin emeğinin karşılığını zamanında almasını sağlamayı amaçlar.\n\nHUKUKİ DAYANAKLAR\n- 4857 Sayılı İş Kanunu, Madde 32",
+    "expected_answer": "Ücret en geç ayda bir ödenir. İş sözleşmeleri veya toplu iş sözleşmeleri ile bu süre bir haftaya kadar indirilebilir.",
+    "retrieved_articles": [
+      "Madde 32",
+      "Madde 32",
+      "Madde 34"
+    ],
+    "total_latency_ms": 2444.678783416748,
+    "mulga_warnings": [],
+    "article_mapping_detected": false,
+    "heuristic_metrics": [
+      {
+        "name": "keyword_coverage",
+        "score": 0.8966939687728882,
+        "weight": 0.4,
+        "details": {
+          "must_include_found": 2,
+          "must_include_total": 2,
+          "should_include_found": 0,
+          "should_include_total": 0,
+          "exact_match_score": 1.0,
+          "semantic_similarity": 0.828,
+          "missing_must": []
+        }
+      },
+      {
+        "name": "semantic_correctness",
+        "score": 0.887546718120575,
+        "weight": 0.8,
+        "details": {
+          "main_answer_similarity": 0.888,
+          "best_similarity": 0.888,
+          "best_match_source": "main_answer",
+          "alternative_scores": {},
+          "interpretation": "Yüksek benzerlik - anlam korunmuş"
+        }
+      },
+      {
+        "name": "quote_presence",
+        "score": 1.0,
+        "weight": 0.5,
+        "details": {
+          "note": "No source quote to check"
+        }
+      },
+      {
+        "name": "citation_accuracy",
+        "score": 1.0,
+        "weight": 2.0,
+        "details": {
+          "expected": "Madde 32",
+          "retrieved": [
+            "Madde 32",
+            "Madde 32",
+            "Madde 34"
+          ],
+          "exact_match": true,
+          "number_match": false,
+          "partial_match": false
+        }
+      },
+      {
+        "name": "response_quality",
+        "score": 1.0,
+        "weight": 0.5,
+        "details": {
+          "word_count": 43,
+          "question_type": "olgusal",
+          "expected_range": "16-90",
+          "has_structure": true,
+          "length_score": 1.0
+        }
+      },
+      {
+        "name": "answer_consistency",
+        "score": 1.0,
+        "weight": 0.8,
+        "details": {
+          "matches": 0,
+          "total_checks": 0,
+          "inconsistencies": []
+        }
+      },
+      {
+        "name": "latency",
+        "score": 1.0,
+        "weight": 0.1,
+        "details": {
+          "latency_ms": 2444.678783416748,
+          "threshold_ms": 8000
+        }
+      }
+    ],
+    "judge_scores": {
+      "relevance": 1.0,
+      "faithfulness": 1.0,
+      "correctness": 1.0,
+      "completeness": 0.75,
+      "overall": 0.94
+    },
+    "judge_reasoning": "Cevap, soruya doğrudan yanıt veriyor ve hukuki dayanağı doğru bir şekilde yansıtıyor. Ancak, toplu iş sözleşmeleriyle ilgili istisna eksik olduğu için tamlık puanı düşüyor.",
+    "strengths": [
+      "Cevap, soruya doğrudan yanıt veriyor.",
+      "Cevap, hukuki dayanağı ve bağlamı doğru bir şekilde yansıtıyor."
+    ],
+    "weaknesses": [
+      "Cevapta 'ayda bir' ve 'bir hafta' ifadeleri açıkça belirtilmiş olsa da, 'toplu iş sözleşmeleriyle' ifadesi eksik kalmış."
+    ],
+    "passed": true,
+    "final_score": 0.9553263314843179,
+    "failure_reasons": []
+  },
+  {
+    "question_id": 0,
+    "question": "Dört saatten fazla ve yedi buçuk saate kadar (yedi buçuk saat dahil) süreli işlerde ara dinlenmesi en az kaç dakikadır?",
+    "category": "olgusal",
+    "difficulty": "orta",
+    "source": "",
+    "generated_answer": "AÇIKLAMA\nDört saatten fazla ve yedibuçuk saate kadar (yedibuçuk saat dahil) süreli işlerde ara dinlenmesi en az yarım saattir. Bu dinlenme süresi çalışma süresinden sayılmaz.\n\nHUKUKİ DAYANAKLAR\n- 4857 Sayılı İş Kanunu, Madde 68",
+    "expected_answer": "Dört saatten fazla ve yedi buçuk saate kadar (yedi buçuk saat dahil) süreli işlerde ara dinlenmesi en az yarım saattir (30 dakika).",
+    "retrieved_articles": [
+      "Madde 68",
+      "Madde 69"
+    ],
+    "total_latency_ms": 2725.2793312072754,
+    "mulga_warnings": [],
+    "article_mapping_detected": false,
+    "heuristic_metrics": [
+      {
+        "name": "keyword_coverage",
+        "score": 0.9017799735069275,
+        "weight": 0.4,
+        "details": {
+          "must_include_found": 1,
+          "must_include_total": 1,
+          "should_include_found": 0,
+          "should_include_total": 0,
+          "exact_match_score": 1.0,
+          "semantic_similarity": 0.836,
+          "missing_must": []
+        }
+      },
+      {
+        "name": "semantic_correctness",
+        "score": 0.9096778631210327,
+        "weight": 0.8,
+        "details": {
+          "main_answer_similarity": 0.91,
+          "best_similarity": 0.91,
+          "best_match_source": "main_answer",
+          "alternative_scores": {},
+          "interpretation": "Çok yüksek benzerlik - neredeyse aynı"
+        }
+      },
+      {
+        "name": "quote_presence",
+        "score": 1.0,
+        "weight": 0.5,
+        "details": {
+          "note": "No source quote to check"
+        }
+      },
+      {
+        "name": "citation_accuracy",
+        "score": 1.0,
+        "weight": 2.0,
+        "details": {
+          "expected": "Madde 68",
+          "retrieved": [
+            "Madde 68",
+            "Madde 69"
+          ],
+          "exact_match": true,
+          "number_match": false,
+          "partial_match": false
+        }
+      },
+      {
+        "name": "response_quality",
+        "score": 1.0,
+        "weight": 0.5,
+        "details": {
+          "word_count": 34,
+          "question_type": "olgusal",
+          "expected_range": "16-90",
+          "has_structure": true,
+          "length_score": 1.0
+        }
+      },
+      {
+        "name": "answer_consistency",
+        "score": 1.0,
+        "weight": 0.8,
+        "details": {
+          "matches": 0,
+          "total_checks": 0,
+          "inconsistencies": []
+        }
+      },
+      {
+        "name": "latency",
+        "score": 1.0,
+        "weight": 0.1,
+        "details": {
+          "latency_ms": 2725.2793312072754,
+          "threshold_ms": 8000
+        }
+      }
+    ],
+    "judge_scores": {
+      "relevance": 1.0,
+      "faithfulness": 1.0,
+      "correctness": 1.0,
+      "completeness": 0.75,
+      "overall": 0.94
+    },
+    "judge_reasoning": "Cevap, soruya doğrudan yanıt veriyor ve hukuki dayanağı referans alıyor. Ancak, beklenen cevapta belirtilen 'yarım saat' ifadesi tam olarak vurgulanmamış ve dinlenme süresinin çalışma süresinden sayılmadığı bilgisi eklenmiş, bu da tamlık puanını etkiliyor.",
+    "strengths": [
+      "Cevap, soruya doğrudan yanıt veriyor.",
+      "Dinlenme süresinin ne kadar olduğu açıkça belirtilmiş.",
+      "Cevap, hukuki dayanağı referans alıyor."
+    ],
+    "weaknesses": [
+      "Cevapta 'yarım saat' ifadesi geçiyor, ancak 'dinlenme süresi çalışma süresinden sayılmaz' ifadesi beklenen cevapta yoktu."
+    ],
+    "passed": true,
+    "final_score": 0.9570471994161607,
+    "failure_reasons": []
+  },
+  {
+    "question_id": 0,
+    "question": "Fazla çalışma (mesai) yapan bir işçinin fazla çalışma saat ücreti, normal çalışma saat ücretinin yüzde kaç yükseltilmesiyle ödenir?",
+    "category": "olgusal",
+    "difficulty": "orta",
+    "source": "",
+    "generated_answer": "AÇIKLAMA\nFazla çalışma (mesai) yapan bir işçinin fazla çalışma saat ücreti, normal çalışma saat ücretinin yüzde kaç yükseltilmesiyle ödenir sorusuna, farklı kanunlar farklı oranlar belirlemektedir. 6098 Sayılı Türk Borçlar Kanunu'na göre bu oran en az %50'dir. 854 Sayılı Deniz İş Kanunu'na göre ise bu oran en az %25'tir. 4857 Sayılı İş Kanunu'nda yer altında maden işlerinde çalışan işçiler için bu oran en az %100'dür. 5953 Sayılı Basın Mesleği Kanunu'na göre ise bu oran %50'dir, ancak gece saat 24'ten sonraki çalışmalar için bu oran bir misli fazlasıyla ödenir.\n\nHUKUKİ DAYANAKLAR\n- 6098 Sayılı Türk Borçlar Kanunu, Madde 402\n- 854 Sayılı Deniz İş Kanunu, Madde 28\n- 4857 Sayılı İş Kanunu, Madde 41\n- 5953 Sayılı Basın Mesleği Kanunu, Ek Madde 1",
+    "expected_answer": "Fazla çalışma saat ücreti, normal çalışma saat ücretinin yüzde elli (%50) yükseltilmesiyle ödenir.",
+    "retrieved_articles": [
+      "Madde 41",
+      "Madde 402",
+      "Ek Madde 1",
+      "Madde 398",
+      "Madde 28"
+    ],
+    "total_latency_ms": 3041.1717891693115,
+    "mulga_warnings": [],
+    "article_mapping_detected": false,
+    "heuristic_metrics": [
+      {
+        "name": "keyword_coverage",
+        "score": 0.5585485744476318,
+        "weight": 0.4,
+        "details": {
+          "must_include_found": 0,
+          "must_include_total": 2,
+          "should_include_found": 0,
+          "should_include_total": 0,
+          "exact_match_score": 0.2,
+          "semantic_similarity": 0.798,
+          "missing_must": [
+            "yüzde elli",
+            "elli"
+          ]
+        }
+      },
+      {
+        "name": "semantic_correctness",
+        "score": 0.8814077377319336,
+        "weight": 0.8,
+        "details": {
+          "main_answer_similarity": 0.881,
+          "best_similarity": 0.881,
+          "best_match_source": "main_answer",
+          "alternative_scores": {},
+          "interpretation": "Yüksek benzerlik - anlam korunmuş"
+        }
+      },
+      {
+        "name": "quote_presence",
+        "score": 1.0,
+        "weight": 0.5,
+        "details": {
+          "note": "No source quote to check"
+        }
+      },
+      {
+        "name": "citation_accuracy",
+        "score": 1.0,
+        "weight": 2.0,
+        "details": {
+          "expected": "Madde 41",
+          "retrieved": [
+            "Madde 41",
+            "Madde 402",
+            "Ek Madde 1"
+          ],
+          "exact_match": true,
+          "number_match": false,
+          "partial_match": false
+        }
+      },
+      {
+        "name": "response_quality",
+        "score": 0.9517777777777778,
+        "weight": 0.5,
+        "details": {
+          "word_count": 121,
+          "question_type": "olgusal",
+          "expected_range": "16-90",
+          "has_structure": true,
+          "length_score": 0.93
+        }
+      },
+      {
+        "name": "answer_consistency",
+        "score": 1.0,
+        "weight": 0.8,
+        "details": {
+          "matches": 1,
+          "total_checks": 1,
+          "inconsistencies": []
+        }
+      },
+      {
+        "name": "latency",
+        "score": 1.0,
+        "weight": 0.1,
+        "details": {
+          "latency_ms": 3041.1717891693115,
+          "threshold_ms": 8000
+        }
+      }
+    ],
+    "judge_scores": {
+      "relevance": 0.75,
+      "faithfulness": 0.5,
+      "correctness": 0.5,
+      "completeness": 0.25,
+      "overall": 0.5
+    },
+    "judge_reasoning": "Cevap, fazla çalışma ücretinin %50 olarak ödeneceği bilgisine tam olarak ulaşamıyor ve gereksiz detaylar içeriyor. Ayrıca, beklenen cevaptaki anahtar kelimeleri yeterince vurgulamıyor.",
+    "strengths": [
+      "Cevap, farklı kanunların fazla çalışma ücretleri ile ilgili bilgileri içeriyor.",
+      "Cevap, hukuki dayanakları belirtiyor."
+    ],
+    "weaknesses": [
+      "Cevap, beklenen cevapta belirtilen %50 oranını net bir şekilde vurgulamıyor.",
+      "Cevap, fazla çalışma ücretinin %50 olarak ödeneceği bilgisini eksik veriyor.",
+      "Cevap, gereksiz detaylar ve farklı kanunlar hakkında bilgi vererek sorunun özünden sapıyor."
+    ],
+    "passed": false,
+    "final_score": 0.6431114965566,
+    "failure_reasons": [
+      "Context'e sadakatsiz (0.50)"
+    ]
+  },
+  {
+    "question_id": 0,
+    "question": "Yer altı işlerinde çalışan işçilerin yıllık ücretli izin süreleri kaçar gün artırılarak uygulanır?",
+    "category": "olgusal",
+    "difficulty": "orta",
+    "source": "",
+    "generated_answer": "AÇIKLAMA\nBu konuda elimdeki yasal metinlerde yeterli bilgi bulunmamaktadır.\nHUKUKİ DAYANAKLAR\n- (Mevcut değildir)",
+    "expected_answer": "Yer altı işlerinde çalışan işçilerin yıllık ücretli izin süreleri dörder gün artırılarak uygulanır.",
+    "retrieved_articles": [
+      "Madde 422"
+    ],
+    "total_latency_ms": 2163.8519763946533,
+    "mulga_warnings": [],
+    "article_mapping_detected": false,
+    "heuristic_metrics": [
+      {
+        "name": "keyword_coverage",
+        "score": 0.5512881207466125,
+        "weight": 0.4,
+        "details": {
+          "must_include_found": 0,
+          "must_include_total": 1,
+          "should_include_found": 0,
+          "should_include_total": 0,
+          "exact_match_score": 0.2,
+          "semantic_similarity": 0.785,
+          "missing_must": [
+            "dörder gün"
+          ]
+        }
+      },
+      {
+        "name": "semantic_correctness",
+        "score": 0.8129873275756836,
+        "weight": 0.8,
+        "details": {
+          "main_answer_similarity": 0.813,
+          "best_similarity": 0.813,
+          "best_match_source": "main_answer",
+          "alternative_scores": {},
+          "interpretation": "Yüksek benzerlik - anlam korunmuş"
+        }
+      },
+      {
+        "name": "quote_presence",
+        "score": 1.0,
+        "weight": 0.5,
+        "details": {
+          "note": "No source quote to check"
+        }
+      },
+      {
+        "name": "citation_accuracy",
+        "score": 0.0,
+        "weight": 2.0,
+        "details": {
+          "expected": "Madde 53",
+          "retrieved": [
+            "Madde 422"
+          ],
+          "exact_match": false,
+          "number_match": false,
+          "partial_match": false
+        }
+      },
+      {
+        "name": "response_quality",
+        "score": 0.9299999999999999,
+        "weight": 0.5,
+        "details": {
+          "word_count": 14,
+          "question_type": "olgusal",
+          "expected_range": "16-90",
+          "has_structure": true,
+          "length_score": 0.9
+        }
+      },
+      {
+        "name": "answer_consistency",
+        "score": 1.0,
+        "weight": 0.8,
+        "details": {
+          "matches": 0,
+          "total_checks": 0,
+          "inconsistencies": []
+        }
+      },
+      {
+        "name": "latency",
+        "score": 1.0,
+        "weight": 0.1,
+        "details": {
+          "latency_ms": 2163.8519763946533,
+          "threshold_ms": 8000
+        }
+      }
+    ],
+    "judge_scores": {
+      "relevance": 0.0,
+      "faithfulness": 0.0,
+      "correctness": 0.0,
+      "completeness": 0.0,
+      "overall": 0.0
+    },
+    "judge_reasoning": "Asistanın verdiği cevap, soruya yanıt vermemekte ve beklenen bilgiyi içermemektedir. Ayrıca, bağlamda belirtilen yasal metinle ilgili herhangi bir bilgi sunmamaktadır. Bu nedenle tüm puanlar 0.0 olarak değerlendirilmiştir.",
+    "strengths": [],
+    "weaknesses": [
+      "Cevap, soruya doğrudan yanıt vermemektedir.",
+      "Cevap, beklenen bilgiyi içermemektedir.",
+      "Cevap, bağlamda belirtilen yasal metinle ilgili bilgi sunmamaktadır."
+    ],
+    "passed": false,
+    "final_score": 0.19448950701713563,
+    "failure_reasons": [
+      "Düşük ilgililik (0.00)",
+      "Context'e sadakatsiz (0.00)",
+      "Yanlış/eksik atıf (0.00)"
+    ]
+  },
+  {
+    "question_id": 0,
+    "question": "İş ilişkisinde dil, ırk, renk, cinsiyet, engellilik, siyasal düşünce, felsefî inanç, din ve mezhep ve benzeri sebeplere dayalı ayrımcılık yapılması durumunda işçi, en çok kaç aya kadar ücreti tutarında tazminat talep edebilir?",
+    "category": "olgusal",
+    "difficulty": "zor",
+    "source": "",
+    "generated_answer": "AÇIKLAMA\nİş ilişkisinde dil, ırk, renk, cinsiyet, engellilik, siyasal düşünce, felsefî inanç, din ve mezhep ve benzeri sebeplere dayalı ayrımcılık yapılması durumunda işçi, 4 aya kadar ücreti tutarında uygun bir tazminat talep edebilir. Bu tazminata ek olarak, yoksun bırakıldığı haklarını da talep etme hakkı bulunur.\n\nHUKUKİ DAYANAKLAR\n- 4857 Sayılı İş Kanunu, Madde 5",
+    "expected_answer": "İşçi, dört aya kadar ücreti tutarındaki uygun bir tazminatın yanı sıra yoksun bırakıldığı haklarını da talep edebilir.",
+    "retrieved_articles": [
+      "Madde 5",
+      "Madde 438",
+      "Ek Madde 3"
+    ],
+    "total_latency_ms": 3017.658233642578,
+    "mulga_warnings": [],
+    "article_mapping_detected": false,
+    "heuristic_metrics": [
+      {
+        "name": "keyword_coverage",
+        "score": 0.7538969421386719,
+        "weight": 0.4,
+        "details": {
+          "must_include_found": 1,
+          "must_include_total": 2,
+          "should_include_found": 0,
+          "should_include_total": 0,
+          "exact_match_score": 0.6,
+          "semantic_similarity": 0.856,
+          "missing_must": [
+            "dört ay"
+          ]
+        }
+      },
+      {
+        "name": "semantic_correctness",
+        "score": 0.8988071084022522,
+        "weight": 0.8,
+        "details": {
+          "main_answer_similarity": 0.899,
+          "best_similarity": 0.899,
+          "best_match_source": "main_answer",
+          "alternative_scores": {},
+          "interpretation": "Yüksek benzerlik - anlam korunmuş"
+        }
+      },
+      {
+        "name": "quote_presence",
+        "score": 1.0,
+        "weight": 0.5,
+        "details": {
+          "note": "No source quote to check"
+        }
+      },
+      {
+        "name": "citation_accuracy",
+        "score": 1.0,
+        "weight": 2.0,
+        "details": {
+          "expected": "Madde 5",
+          "retrieved": [
+            "Madde 5",
+            "Madde 438",
+            "Ek Madde 3"
+          ],
+          "exact_match": true,
+          "number_match": false,
+          "partial_match": false
+        }
+      },
+      {
+        "name": "response_quality",
+        "score": 1.0,
+        "weight": 0.5,
+        "details": {
+          "word_count": 54,
+          "question_type": "olgusal",
+          "expected_range": "16-90",
+          "has_structure": true,
+          "length_score": 1.0
+        }
+      },
+      {
+        "name": "answer_consistency",
+        "score": 1.0,
+        "weight": 0.8,
+        "details": {
+          "matches": 0,
+          "total_checks": 0,
+          "inconsistencies": []
+        }
+      },
+      {
+        "name": "latency",
+        "score": 1.0,
+        "weight": 0.1,
+        "details": {
+          "latency_ms": 3017.658233642578,
+          "threshold_ms": 8000
+        }
+      }
+    ],
+    "judge_scores": {
+      "relevance": 1.0,
+      "faithfulness": 1.0,
+      "correctness": 1.0,
+      "completeness": 1.0,
+      "overall": 1.0
+    },
+    "judge_reasoning": "Asistanın cevabı, beklenen cevapla tamamen örtüşüyor ve tüm gerekli bilgileri içeriyor. Ayrıca, bağlamda belirtilen anahtar kelimeleri de eksiksiz kullanıyor.",
+    "strengths": [
+      "Cevap, soruya doğrudan yanıt veriyor.",
+      "Verilen bağlama sadık kalıyor.",
+      "Cevap, hukuken doğru ve eksiksiz."
+    ],
+    "weaknesses": [],
+    "passed": true,
+    "final_score": 0.9894572964358329,
+    "failure_reasons": []
+  }
+]

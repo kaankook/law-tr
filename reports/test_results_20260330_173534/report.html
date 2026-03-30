@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>RAG Test Raporu - 2025-12-30</title>
+    <title>RAG Test Raporu - 2026-03-30</title>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
 /* RAG Test Raporu - Modern Light Theme CSS */
@@ -681,51 +681,51 @@ body {
             <h1>🧪 RAG Test Raporu</h1>
             <p class="subtitle">Kapsamlı Değerlendirme Sonuçları</p>
             <div class="meta">
-                <div class="meta-item">📅 2025-12-30</div>
-                <div class="meta-item">🤖 gemini-2.0-flash</div>
-                <div class="meta-item">⚖️ gpt-3.5-turbo</div>
-                <div class="meta-item">🔍 K=7</div>
-                <div class="meta-item">⏱️ 271.1s</div>
+                <div class="meta-item">📅 2026-03-30</div>
+                <div class="meta-item">🤖 gemini-2.5-flash-lite</div>
+                <div class="meta-item">⚖️ gpt-4o-mini</div>
+                <div class="meta-item">🔍 K={{retriever_k}}</div>
+                <div class="meta-item">⏱️ 132.0s</div>
             </div>
         </div>
         
         <!-- Score Cards -->
         <div class="score-grid">
-            <div class="score-card danger">
+            <div class="score-card success">
                 <div class="icon">🎯</div>
                 <div class="label">Başarı Oranı</div>
-                <div class="value">40.0%</div>
-                <div class="subvalue">4/10 başarılı</div>
+                <div class="value">80.0%</div>
+                <div class="subvalue">8/10 başarılı</div>
             </div>
             <div class="score-card info">
                 <div class="icon">📊</div>
                 <div class="label">Ortalama Skor</div>
-                <div class="value">0.80</div>
+                <div class="value">0.86</div>
                 <div class="subvalue">0-1 arası</div>
             </div>
             <div class="score-card success">
                 <div class="icon">🎯</div>
                 <div class="label">İlgililik</div>
-                <div class="value">0.93</div>
+                <div class="value">0.88</div>
                 <div class="subvalue">Relevance</div>
             </div>
-            <div class="score-card warning">
+            <div class="score-card success">
                 <div class="icon">📚</div>
                 <div class="label">Sadakat</div>
-                <div class="value">0.76</div>
+                <div class="value">0.85</div>
                 <div class="subvalue">Faithfulness</div>
             </div>
-            <div class="score-card warning">
+            <div class="score-card success">
                 <div class="icon">✅</div>
                 <div class="label">Doğruluk</div>
-                <div class="value">0.78</div>
+                <div class="value">0.85</div>
                 <div class="subvalue">Correctness</div>
             </div>
             <div class="score-card info">
                 <div class="icon">⚡</div>
                 <div class="label">Ort. Yanıt Süresi</div>
-                <div class="value">1.9s</div>
-                <div class="subvalue">P95: 4.0s</div>
+                <div class="value">3.6s</div>
+                <div class="subvalue">P95: 7.6s</div>
             </div>
         </div>
         
@@ -778,8 +778,8 @@ body {
         
         <!-- Footer -->
         <div class="footer">
-            <p>RAG Test Runner v2.0 | Oluşturulma: 2025-12-30 11:25:43</p>
-            <p>Model: gemini-2.0-flash | Evaluator: gpt-3.5-turbo</p>
+            <p>RAG Test Runner v2.0 | Oluşturulma: 2026-03-30 17:37:55</p>
+            <p>Model: gemini-2.5-flash-lite | Evaluator: gpt-4o-mini</p>
         </div>
     </div>
     
@@ -789,66 +789,37 @@ body {
   "metrics": [
     {
       "name": "İlgililik (Relevance)",
-      "score": 0.93
+      "score": 0.875
     },
     {
       "name": "Sadakat (Faithfulness)",
-      "score": 0.76
+      "score": 0.85
     },
     {
       "name": "Doğruluk (Correctness)",
-      "score": 0.78
+      "score": 0.85
     },
     {
       "name": "Tamlık (Completeness)",
-      "score": 0.73
+      "score": 0.7
     },
     {
       "name": "Genel Judge Skoru",
-      "score": 0.8
+      "score": 0.82
     }
   ],
   "questions": [
     {
-      "question_id": 1,
-      "question": "Türkiye Cumhuriyeti hangi niteliklere sahip bir devlettir?",
+      "question_id": 0,
+      "question": "Deneme süreli iş sözleşmesinde deneme süresi en çok ne kadar olabilir ve toplu iş sözleşmeleriyle bu süre en fazla ne kadar uzatılabilir?",
       "category": "olgusal",
       "difficulty": "kolay",
-      "source": "T.C. Anayasası",
-      "generated_answer": "BÖLÜM 1 - AÇIKLAMA\nTürkiye Cumhuriyeti, toplumun huzuru, milli dayanışma ve adalet anlayışı içinde, insan haklarına saygılı, Atatürk milliyetçiliğine bağlı, başlangıçta belirtilen temel ilkelere dayanan, demokratik, laik ve sosyal bir hukuk devletidir. Bu nitelikler Anayasa'da belirtilmiştir ve değiştirilemez.\n\nBÖLÜM 2 - HUKUKİ DAYANAKLAR\n- T.C. Anayasası Madde 2\n- T.C. Anayasası Madde 4",
-      "expected_answer": "BÖLÜM 1 - AÇIKLAMA\nTürkiye Cumhuriyeti, temelleri Anayasa'nın başlangıç kısmında belirtilen ilkelere dayanan bir devlettir. Cumhuriyetin temel nitelikleri; toplumun huzuru, milli dayanışma ve adalet anlayışı içinde insan haklarına saygılı olmasıdır.  Ayrıca devletimiz, Atatürk milliyetçiliğine bağlı, demokratik, laik ve sosyal bir hukuk devleti olarak tanımlanır.\n\nBÖLÜM 2 - HUKUKİ DAYANAKLAR\n- T.C. Anayasası Madde 2",
-      "total_latency_ms": 3963.8442993164062,
+      "source": "",
+      "generated_answer": "AÇIKLAMA\nDeneme süreli iş sözleşmelerinde deneme süresi en çok 2 ay olabilir. Ancak toplu iş sözleşmeleri ile bu süre 4 aya kadar uzatılabilir. Bu süre içinde taraflar, bildirim süresine uymak zorunda olmaksızın ve tazminatsız olarak iş sözleşmesini feshedebilirler.\n\nHUKUKİ DAYANAKLAR\n- 4857 Sayılı İş Kanunu, Madde 15",
+      "expected_answer": "Deneme süresi en çok iki ay olabilir. Ancak deneme süresi toplu iş sözleşmeleriyle dört aya kadar uzatılabilir.",
+      "total_latency_ms": 11307.326078414917,
       "passed": true,
-      "final_score": 0.8858344477653504,
-      "failure_reasons": [],
-      "judge_scores": {
-        "relevance": 0.9,
-        "faithfulness": 0.8,
-        "correctness": 0.9,
-        "completeness": 0.8,
-        "overall": 0.86
-      },
-      "judge_reasoning": "Cevap soruya odaklı ve konuya uygun olduğu için yüksek bir relevance puanı aldı. Hukuki terimlerin doğru kullanımı ve anlamlı olması correctness puanını artırdı. Ancak bazı önerilen unsurların eksik olması ve faithfulness puanının biraz düşük olması completeness ve faithfulness puanlarını etkiledi. Genel olarak iyi bir performans sergiledi.",
-      "strengths": [
-        "Cevap soruya odaklı ve konuya uygun.",
-        "Hukuki terimler doğru ve anlamlı kullanılmış."
-      ],
-      "weaknesses": [
-        "Cevapta bazı önerilen unsurlar eksik.",
-        "Faithfulness puanı biraz düşük."
-      ]
-    },
-    {
-      "question_id": 2,
-      "question": "Cumhurbaşkanının görev süresi ne kadardır?",
-      "category": "olgusal",
-      "difficulty": "kolay",
-      "source": "T.C. Anayasası",
-      "generated_answer": "BÖLÜM 1 - AÇIKLAMA\nCumhurbaşkanının görev süresi, doğrudan halk tarafından seçildikten sonra beş yıldır. Bir kişi en fazla iki defa Cumhurbaşkanı seçilebilir.\n\nBÖLÜM 2 - HUKUKİ DAYANAKLAR\n- [T.C. Anayasası Madde 101]",
-      "expected_answer": "BÖLÜM 1 - AÇIKLAMA\nCumhurbaşkanının görev süresi beş yıldır. Anayasa'daki kural gereği bir kimse en fazla iki defa Cumhurbaşkanı seçilebilir.\n\nBÖLÜM 2 - HUKUKİ DAYANAKLAR\n- T.C. Anayasası Madde 101",
-      "total_latency_ms": 1461.369276046753,
-      "passed": true,
-      "final_score": 0.9750064016127586,
+      "final_score": 0.9889822732114791,
       "failure_reasons": [],
       "judge_scores": {
         "relevance": 1.0,
@@ -857,323 +828,317 @@ body {
         "completeness": 1.0,
         "overall": 1.0
       },
-      "judge_reasoning": "Cevap, soruya odaklı, referans cevapla anlamsal olarak örtüşüyor, kritik bilgiler tam ve doğru bir şekilde verilmiştir.",
+      "judge_reasoning": "Asistanın cevabı, beklenen cevapla tamamen örtüşmekte ve tüm gerekli bilgileri içermektedir. Ayrıca, verilen bağlama sadık kalınmış ve gereksiz bilgi eklenmemiştir.",
       "strengths": [
-        "Doğru bilgiyi tam ve eksiksiz şekilde veriyor"
+        "Cevap, deneme süresi ve toplu iş sözleşmeleriyle uzatma sürelerini doğru bir şekilde belirtmiştir.",
+        "Cevap, hukuki dayanakları ve bağlamı doğru bir şekilde yansıtmaktadır."
       ],
       "weaknesses": []
     },
     {
-      "question_id": 3,
-      "question": "Temel hak ve hürriyetler hangi durumlarda sınırlandırılabilir?",
-      "category": "kavramsal",
-      "difficulty": "orta",
-      "source": "T.C. Anayasası",
-      "generated_answer": "BÖLÜM 1 - AÇIKLAMA\nTemel hak ve hürriyetler ancak kanunla, Anayasanın ilgili maddelerinde belirtilen sebeplere bağlı olarak ve özlerine dokunulmaksızın sınırlandırılabilir. Savaş, seferberlik veya olağanüstü hallerde ise milletlerarası hukuktan doğan yükümlülükler ihlal edilmemek kaydıyla, durumun gerektirdiği ölçüde temel hak ve hürriyetlerin kullanılması kısmen veya tamamen durdurulabilir. Yabancıların temel hak ve hürriyetleri ise, milletlerarası hukuka uygun olarak kanunla sınırlandırılabilir.\n\nBÖLÜM 2 - HUKUKİ DAYANAKLAR\n- T.C. Anayasası Madde 13\n- T.C. Anayasası Madde 15\n- T.C. Anayasası Madde 16",
-      "expected_answer": "BÖLÜM 1 - AÇIKLAMA\nTemel hak ve hürriyetler keyfi olarak kısıtlanamaz. Bir sınırlandırma yapılabilmesi için öncelikle bunun ilgili kanununda açıkça belirtilen sebeplere dayanması gerekir.  Ancak kanuni bir dayanak olsa bile, getirilen sınırlama hakkın özüne dokunmamalıdır.  Ayrıca yapılan müdahale Anayasa'nın ruhuna, demokratik toplum düzeninin gereklerine, laik Cumhuriyet ilkelerine ve ölçülülük ilkesine uygun olmak zorundadır.\n\nBÖLÜM 2 - HUKUKİ DAYANAKLAR\n- T.C. Anayasası Madde 13",
-      "total_latency_ms": 2151.127815246582,
-      "passed": true,
-      "final_score": 0.877153363161087,
-      "failure_reasons": [],
-      "judge_scores": {
-        "relevance": 0.9,
-        "faithfulness": 0.8,
-        "correctness": 0.9,
-        "completeness": 0.8,
-        "overall": 0.86
-      },
-      "judge_reasoning": "Cevap soruya odaklı ve hukuki doğruluk yüksek. Ancak context dışı bilgi ve önerilen unsurların tamamının cevapta yer almaması puanı düşürdü.",
-      "strengths": [
-        "Hukuki terimlerin doğru kullanımı",
-        "Anayasa maddelerine referans verme"
-      ],
-      "weaknesses": [
-        "Context dışı bilgi bulunması",
-        "Önerilen unsurların tamamının cevapta geçmemesi"
-      ]
-    },
-    {
-      "question_id": 4,
-      "question": "Deneme süreli iş sözleşmesi ne kadardır?",
+      "question_id": 0,
+      "question": "Kadın işçilerin doğumdan önce ve doğumdan sonra toplam kaç hafta çalıştırılmamaları esastır?",
       "category": "olgusal",
       "difficulty": "kolay",
-      "source": "4857 Sayılı İş Kanunu",
-      "generated_answer": "BÖLÜM 1 - AÇIKLAMA\nDeneme süreli iş sözleşmesi, tarafların iş ilişkisini tanımaları ve değerlendirmeleri için belirli bir süre öngören bir sözleşme türüdür. Bu süre içinde hem işçi hem de işveren sözleşmeyi tazminatsız feshedebilir.\n\nBÖLÜM 2 - HUKUKİ DAYANAKLAR\n- 4857 Sayılı İş Kanunu Madde 15\n- 6098 Sayılı Türk Borçlar Kanunu Madde 433",
-      "expected_answer": "BÖLÜM 1 - AÇIKLAMA\nİş sözleşmelerine taraflarca deneme kaydı konulabilir. Bireysel iş sözleşmelerinde bu süre en çok iki ay olabilir. Ancak, sendikalı işyerlerinde toplu iş sözleşmeleri ile bu sürenin dört aya kadar uzatılması mümkündür.\n\nBÖLÜM 2 - HUKUKİ DAYANAKLAR\n- 4857 Sayılı İş Kanunu Madde 15",
-      "total_latency_ms": 1565.1581287384033,
+      "source": "",
+      "generated_answer": "AÇIKLAMA\nKadın işçilerin doğumdan önce 8 hafta ve doğumdan sonra 8 hafta olmak üzere toplam 16 hafta çalıştırılmamaları esastır. Ancak sağlık durumu uygunsa doktor onayı ile doğumdan önceki 3 haftaya kadar çalışabilirler.\n\nHUKUKİ DAYANAKLAR\n- 4857 Sayılı İş Kanunu, Madde 74",
+      "expected_answer": "Kadın işçilerin doğumdan önce sekiz ve doğumdan sonra sekiz hafta olmak üzere toplam on altı hafta çalıştırılmamaları esastır.",
+      "total_latency_ms": 2789.720296859741,
       "passed": true,
-      "final_score": 0.8830845206499098,
+      "final_score": 0.9550497058176994,
       "failure_reasons": [],
       "judge_scores": {
         "relevance": 1.0,
-        "faithfulness": 0.8,
-        "correctness": 0.9,
-        "completeness": 0.8,
-        "overall": 0.85
+        "faithfulness": 1.0,
+        "correctness": 1.0,
+        "completeness": 0.75,
+        "overall": 0.94
       },
-      "judge_reasoning": "Cevap soruya odaklı ve hukuki doğruluk yüksek olsa da bazı önerilen unsurlar eksik kalmış ve faithfulness puanı yüksek olsa da bazı bilgiler context dışından gelmiştir.",
+      "judge_reasoning": "Cevap, soruya tam olarak yanıt vermekte ve hukuki bağlamla uyumlu görünmektedir. Ancak, toplu iş sözleşmesiyle uzatma durumu eksik olduğu için tamlık puanı düşmüştür.",
       "strengths": [
-        "Cevap soruya odaklı ve konuya uygun.",
-        "Hukuki terimler doğru ve uygun şekilde kullanılmış."
+        "Cevap, doğrudan soruya odaklanıyor.",
+        "Verilen bağlama sadık kalınmış.",
+        "Cevap, hukuken doğru ve anlam olarak beklenen cevapla örtüşüyor."
       ],
       "weaknesses": [
-        "Cevapta bazı önerilen unsurlar eksik kalmış.",
-        "Faithfulness puanı yüksek olsa da bazı bilgiler context dışından gelmiş."
+        "Cevapta, toplu iş sözleşmesiyle uzatma durumu belirtilmemiş."
       ]
     },
     {
-      "question_id": 5,
-      "question": "Yıllık ücretli izin süresi nasıl hesaplanır?",
+      "question_id": 0,
+      "question": "İşyerinde işe başladığı günden itibaren, deneme süresi de dahil olmak üzere en az ne kadar süre çalışmış olan işçilere yıllık ücretli izin verilir?",
+      "category": "olgusal",
+      "difficulty": "kolay",
+      "source": "",
+      "generated_answer": "AÇIKLAMA\nİşyerinde işe başladığı günden itibaren, deneme süresi de dahil olmak üzere en az bir yıl çalışmış olan işçilere yıllık ücretli izin verilir. Bu izin hakkından vazgeçilemez.\n\nHUKUKİ DAYANAKLAR\n- 4857 Sayılı İş Kanunu, Madde 53",
+      "expected_answer": "İşe başladığı günden itibaren, deneme süresi de içinde olmak üzere, en az bir yıl çalışmış olan işçilere yıllık ücretli izin verilir.",
+      "total_latency_ms": 2910.219192504883,
+      "passed": true,
+      "final_score": 0.9570503134608269,
+      "failure_reasons": [],
+      "judge_scores": {
+        "relevance": 1.0,
+        "faithfulness": 1.0,
+        "correctness": 1.0,
+        "completeness": 0.75,
+        "overall": 0.94
+      },
+      "judge_reasoning": "Cevap, soruya tam olarak yanıt vermekte ve hukuki bağlama sadık kalmaktadır. Ancak, beklenen cevapta yer almayan bir bilgi eklenmesi nedeniyle tamlık puanı düşmüştür.",
+      "strengths": [
+        "Cevap, soruya doğrudan yanıt veriyor.",
+        "Cevap, hukuki bağlama sadık kalıyor."
+      ],
+      "weaknesses": [
+        "Cevapta yıllık izin hakkından vazgeçilemeyeceği bilgisi eklenmiş, bu durum beklenen cevapta yer almıyor."
+      ]
+    },
+    {
+      "question_id": 0,
+      "question": "Haftalık normal çalışma süresi genel bakımdan en çok kaç saattir?",
+      "category": "olgusal",
+      "difficulty": "kolay",
+      "source": "",
+      "generated_answer": "AÇIKLAMA\nGenel bakımdan haftalık normal çalışma süresi en çok 45 saattir. Bu süre, işyerlerinde haftanın çalışılan günlerine eşit olarak bölünerek uygulanır. Tarafların anlaşması ile bu süre, günde 11 saati aşmamak koşuluyla farklı şekilde dağıtılabilir.\n\nHUKUKİ DAYANAKLAR\n- 4857 Sayılı İş Kanunu, Madde 63",
+      "expected_answer": "Genel bakımdan çalışma süresi haftada en çok kırk beş saattir.",
+      "total_latency_ms": 2556.9751262664795,
+      "passed": true,
+      "final_score": 0.9508402482366562,
+      "failure_reasons": [],
+      "judge_scores": {
+        "relevance": 1.0,
+        "faithfulness": 1.0,
+        "correctness": 1.0,
+        "completeness": 0.75,
+        "overall": 0.94
+      },
+      "judge_reasoning": "Cevap, soruya doğrudan yanıt vererek ve hukuki dayanağı belirterek yüksek bir relevans ve faithfulness puanı alıyor. Ancak, beklenen cevapta belirtilen denkleştirme süresi ve toplu iş sözleşmesi ile uzatma gibi istisnaların eksikliği nedeniyle completeness puanı düşüyor.",
+      "strengths": [
+        "Cevap, soruya doğrudan yanıt veriyor.",
+        "Cevap, hukuki dayanağı doğru bir şekilde belirtiyor.",
+        "Cevap, çalışma süresinin dağıtımına dair ek bilgi veriyor."
+      ],
+      "weaknesses": [
+        "Cevap, denkleştirme süresi ve toplu iş sözleşmesi ile uzatma gibi istisnaları tam olarak belirtmiyor."
+      ]
+    },
+    {
+      "question_id": 0,
+      "question": "İşi altı aydan az sürmüş olan bir işçi için belirsiz süreli iş sözleşmesinin feshinde ihbar süresi kaç haftadır?",
+      "category": "olgusal",
+      "difficulty": "kolay",
+      "source": "",
+      "generated_answer": "AÇIKLAMA\nİşi altı aydan az sürmüş olan bir işçi için belirsiz süreli iş sözleşmesinin feshinde ihbar süresi 2 haftadır. Bu süre, bildirimin diğer tarafa yapılmasından itibaren başlar.\n\nHUKUKİ DAYANAKLAR\n- 4857 Sayılı İş Kanunu, Madde 17",
+      "expected_answer": "İşi altı aydan az sürmüş olan işçi için, bildirimin diğer tarafa yapılmasından başlayarak iki hafta sonradır.",
+      "total_latency_ms": 2989.7875785827637,
+      "passed": true,
+      "final_score": 0.9875789508914947,
+      "failure_reasons": [],
+      "judge_scores": {
+        "relevance": 1.0,
+        "faithfulness": 1.0,
+        "correctness": 1.0,
+        "completeness": 1.0,
+        "overall": 1.0
+      },
+      "judge_reasoning": "Asistanın cevabı, beklenen cevapla tamamen örtüşüyor ve tüm gerekli bilgileri içeriyor. Ayrıca, verilen bağlama sadık kalınmış ve gereksiz bilgi eklenmemiş.",
+      "strengths": [
+        "Cevap, soruya doğrudan yanıt veriyor.",
+        "Verilen bilgi, hukuki dayanağa uygun ve doğru."
+      ],
+      "weaknesses": []
+    },
+    {
+      "question_id": 0,
+      "question": "İş kanununa göre ücret en geç ne kadar sürede bir ödenmelidir?",
+      "category": "olgusal",
+      "difficulty": "kolay",
+      "source": "",
+      "generated_answer": "AÇIKLAMA\nİş sözleşmeleri veya toplu iş sözleşmeleri ile belirlenen ödeme süresi bir haftaya kadar indirilebilse de, genel kural olarak ücretler en geç ayda bir kez ödenmelidir. Bu, işçinin emeğinin karşılığını zamanında almasını sağlamayı amaçlar.\n\nHUKUKİ DAYANAKLAR\n- 4857 Sayılı İş Kanunu, Madde 32",
+      "expected_answer": "Ücret en geç ayda bir ödenir. İş sözleşmeleri veya toplu iş sözleşmeleri ile bu süre bir haftaya kadar indirilebilir.",
+      "total_latency_ms": 2444.678783416748,
+      "passed": true,
+      "final_score": 0.9553263314843179,
+      "failure_reasons": [],
+      "judge_scores": {
+        "relevance": 1.0,
+        "faithfulness": 1.0,
+        "correctness": 1.0,
+        "completeness": 0.75,
+        "overall": 0.94
+      },
+      "judge_reasoning": "Cevap, soruya doğrudan yanıt veriyor ve hukuki dayanağı doğru bir şekilde yansıtıyor. Ancak, toplu iş sözleşmeleriyle ilgili istisna eksik olduğu için tamlık puanı düşüyor.",
+      "strengths": [
+        "Cevap, soruya doğrudan yanıt veriyor.",
+        "Cevap, hukuki dayanağı ve bağlamı doğru bir şekilde yansıtıyor."
+      ],
+      "weaknesses": [
+        "Cevapta 'ayda bir' ve 'bir hafta' ifadeleri açıkça belirtilmiş olsa da, 'toplu iş sözleşmeleriyle' ifadesi eksik kalmış."
+      ]
+    },
+    {
+      "question_id": 0,
+      "question": "Dört saatten fazla ve yedi buçuk saate kadar (yedi buçuk saat dahil) süreli işlerde ara dinlenmesi en az kaç dakikadır?",
       "category": "olgusal",
       "difficulty": "orta",
-      "source": "4857 Sayılı İş Kanunu",
-      "generated_answer": "BÖLÜM 1 - AÇIKLAMA\nYıllık ücretli izin süresi, işçinin işyerindeki hizmet süresine göre belirlenir. Hizmet süresi arttıkça yıllık izin süresi de artar. İş sözleşmeleri ve toplu iş sözleşmeleri ile bu süreler artırılabilir.\n\nBÖLÜM 2 - HUKUKİ DAYANAKLAR\n- 4857 Sayılı İş Kanunu Madde 53",
-      "expected_answer": "BÖLÜM 1 - AÇIKLAMA\nYıllık ücretli izne hak kazanmak için en az 1 yıl çalışmış olmak gerekir.  İzin süreleri kıdeme göre şöyle belirlenir:  1 yıldan 5 yıla kadar (5 dahil) olanlara en az 14 gün, 5 yıldan fazla 15 yıldan az olanlara en az 20 gün, 15 yıl (dahil) ve daha fazla olanlara en az 26 gün izin verilir.  Yer altı işlerinde çalışanların izin süreleri 4'er gün artırılır.  Ayrıca 18 yaş ve altı ile 50 yaş ve üstü işçilerin izni 20 günden az olamaz.\n\nBÖLÜM 2 - HUKUKİ DAYANAKLAR\n- 4857 Sayılı İş Kanunu Madde 53",
-      "total_latency_ms": 1707.6382637023926,
-      "passed": false,
-      "final_score": 0.8219013215780258,
-      "failure_reasons": [
-        "Sayısal tutarsızlık (0.00)"
-      ],
+      "source": "",
+      "generated_answer": "AÇIKLAMA\nDört saatten fazla ve yedibuçuk saate kadar (yedibuçuk saat dahil) süreli işlerde ara dinlenmesi en az yarım saattir. Bu dinlenme süresi çalışma süresinden sayılmaz.\n\nHUKUKİ DAYANAKLAR\n- 4857 Sayılı İş Kanunu, Madde 68",
+      "expected_answer": "Dört saatten fazla ve yedi buçuk saate kadar (yedi buçuk saat dahil) süreli işlerde ara dinlenmesi en az yarım saattir (30 dakika).",
+      "total_latency_ms": 2725.2793312072754,
+      "passed": true,
+      "final_score": 0.9570471994161607,
+      "failure_reasons": [],
       "judge_scores": {
         "relevance": 1.0,
-        "faithfulness": 0.8,
-        "correctness": 0.9,
-        "completeness": 0.8,
-        "overall": 0.85
+        "faithfulness": 1.0,
+        "correctness": 1.0,
+        "completeness": 0.75,
+        "overall": 0.94
       },
-      "judge_reasoning": "Cevap soruya odaklı ve hukuki terimler doğru kullanılmış ancak kritik bilgilerin tam olmadığı yerler olduğu için eksiklikler bulunmaktadır.",
+      "judge_reasoning": "Cevap, soruya doğrudan yanıt veriyor ve hukuki dayanağı referans alıyor. Ancak, beklenen cevapta belirtilen 'yarım saat' ifadesi tam olarak vurgulanmamış ve dinlenme süresinin çalışma süresinden sayılmadığı bilgisi eklenmiş, bu da tamlık puanını etkiliyor.",
       "strengths": [
-        "Cevap soruya odaklı ve konuya uygun.",
-        "Hukuki terimler doğru kullanılmış."
+        "Cevap, soruya doğrudan yanıt veriyor.",
+        "Dinlenme süresinin ne kadar olduğu açıkça belirtilmiş.",
+        "Cevap, hukuki dayanağı referans alıyor."
       ],
       "weaknesses": [
-        "Cevapta kritik bilgilerin tam olmadığı yerler var."
+        "Cevapta 'yarım saat' ifadesi geçiyor, ancak 'dinlenme süresi çalışma süresinden sayılmaz' ifadesi beklenen cevapta yoktu."
       ]
     },
     {
-      "question_id": 6,
-      "question": "Fazla çalışma ve fazla sürelerle çalışma arasındaki fark nedir?",
-      "category": "karşılaştırma",
+      "question_id": 0,
+      "question": "Fazla çalışma (mesai) yapan bir işçinin fazla çalışma saat ücreti, normal çalışma saat ücretinin yüzde kaç yükseltilmesiyle ödenir?",
+      "category": "olgusal",
       "difficulty": "orta",
-      "source": "4857 Sayılı İş Kanunu",
-      "generated_answer": "BÖLÜM 1 - AÇIKLAMA\nFazla çalışma, haftalık 45 saati aşan çalışmaları ifade ederken, fazla sürelerle çalışma ise haftalık çalışma süresinin sözleşmelerle 45 saatin altında belirlendiği durumlarda, bu süreyi aşan ve 45 saate kadar yapılan çalışmaları ifade eder. Her iki durumda da işçiye farklı oranlarda zamlı ücret ödenir veya serbest zaman kullandırılabilir.\n\nBÖLÜM 2 - HUKUKİ DAYANAKLAR\n- İş Kanunu Madde 41",
-      "expected_answer": "BÖLÜM 1 - AÇIKLAMA\nBu iki kavram, haftalık 45 saat sınırına göre ayrılır. 'Fazla çalışma', haftalık 45 saati aşan çalışmalardır ve saat başına ücreti %50 zamlı ödenir. 'Fazla sürelerle çalışma' ise, haftalık çalışma süresinin sözleşmeyle 45 saatin altında belirlendiği durumlarda, bu süreyi aşan ancak 45 saate kadar olan çalışmalardır; bunun saat başına ücreti ise %25 zamlı ödenir.\n\nBÖLÜM 2 - HUKUKİ DAYANAKLAR\n- 4857 Sayılı İş Kanunu Madde 41",
-      "total_latency_ms": 1650.8677005767822,
+      "source": "",
+      "generated_answer": "AÇIKLAMA\nFazla çalışma (mesai) yapan bir işçinin fazla çalışma saat ücreti, normal çalışma saat ücretinin yüzde kaç yükseltilmesiyle ödenir sorusuna, farklı kanunlar farklı oranlar belirlemektedir. 6098 Sayılı Türk Borçlar Kanunu'na göre bu oran en az %50'dir. 854 Sayılı Deniz İş Kanunu'na göre ise bu oran en az %25'tir. 4857 Sayılı İş Kanunu'nda yer altında maden işlerinde çalışan işçiler için bu oran en az %100'dür. 5953 Sayılı Basın Mesleği Kanunu'na göre ise bu oran %50'dir, ancak gece saat 24'ten sonraki çalışmalar için bu oran bir misli fazlasıyla ödenir.\n\nHUKUKİ DAYANAKLAR\n- 6098 Sayılı Türk Borçlar Kanunu, Madde 402\n- 854 Sayılı Deniz İş Kanunu, Madde 28\n- 4857 Sayılı İş Kanunu, Madde 41\n- 5953 Sayılı Basın Mesleği Kanunu, Ek Madde 1",
+      "expected_answer": "Fazla çalışma saat ücreti, normal çalışma saat ücretinin yüzde elli (%50) yükseltilmesiyle ödenir.",
+      "total_latency_ms": 3041.1717891693115,
       "passed": false,
-      "final_score": 0.8369821234464645,
+      "final_score": 0.6431114965566,
       "failure_reasons": [
-        "Sayısal tutarsızlık (0.00)"
+        "Context'e sadakatsiz (0.50)"
       ],
       "judge_scores": {
-        "relevance": 1.0,
-        "faithfulness": 0.8,
-        "correctness": 0.9,
-        "completeness": 0.8,
-        "overall": 0.85
+        "relevance": 0.75,
+        "faithfulness": 0.5,
+        "correctness": 0.5,
+        "completeness": 0.25,
+        "overall": 0.5
       },
-      "judge_reasoning": "Cevap soruya odaklı ve konuya uygun olmasına rağmen bazı kritik bilgiler eksik kalmış ve referans cevapla tam anlamıyla örtüşmeyen detaylar bulunmaktadır. Bu nedenle overall puan 0.85 olarak belirlenmiştir.",
+      "judge_reasoning": "Cevap, fazla çalışma ücretinin %50 olarak ödeneceği bilgisine tam olarak ulaşamıyor ve gereksiz detaylar içeriyor. Ayrıca, beklenen cevaptaki anahtar kelimeleri yeterince vurgulamıyor.",
       "strengths": [
-        "Cevap soruya odaklı ve konuya uygun.",
-        "Hukuki terimlerin doğru kullanımı."
+        "Cevap, farklı kanunların fazla çalışma ücretleri ile ilgili bilgileri içeriyor.",
+        "Cevap, hukuki dayanakları belirtiyor."
       ],
       "weaknesses": [
-        "Bazı kritik bilgiler eksik.",
-        "Referans cevapla tam anlamıyla örtüşmeyen detaylar var."
+        "Cevap, beklenen cevapta belirtilen %50 oranını net bir şekilde vurgulamıyor.",
+        "Cevap, fazla çalışma ücretinin %50 olarak ödeneceği bilgisini eksik veriyor.",
+        "Cevap, gereksiz detaylar ve farklı kanunlar hakkında bilgi vererek sorunun özünden sapıyor."
       ]
     },
     {
-      "question_id": 7,
-      "question": "İşverenin iş sözleşmesini haklı nedenle derhal fesih hakkı hangi durumlarda doğar?",
-      "category": "kavramsal",
-      "difficulty": "zor",
-      "source": "4857 Sayılı İş Kanunu",
-      "generated_answer": "BÖLÜM 1 - AÇIKLAMA\nİşverenin haklı nedenle derhal fesih hakkı, işçinin davranışları veya işyerindeki zorlayıcı sebepler gibi durumlarda ortaya çıkabilir. Bu hak, iş ilişkisinin dürüstlük kurallarına göre sürdürülmesinin beklenemeyeceği hallerde kullanılır. Ayrıca işverenin ödeme güçsüzlüğüne düşmesi durumunda da işçi sözleşmeyi feshedebilir.\n\nBÖLÜM 2 - HUKUKİ DAYANAKLAR\n- 4857 Sayılı İş Kanunu Madde 24\n- 6098 Sayılı Türk Borçlar Kanunu Madde 435\n- 6098 Sayılı Türk Borçlar Kanunu Madde 436",
-      "expected_answer": "BÖLÜM 1 - AÇIKLAMA\nİşveren, bazı ciddi durumlarda bildirim süresini beklemeden sözleşmeyi derhal feshedebilir. Bu durumlar kanunda; sağlık sebepleri (işçinin hastalığı, engelliliği veya devamsızlığı), ahlak ve iyi niyet kurallarına uymayan haller (işvereni yanıltma, hırsızlık, hakaret, görevini yapmamakta ısrar vb.) ve zorlayıcı sebepler (işyerinde işin durması vb.) olarak üç ana başlıkta toplanmıştır.\n\nBÖLÜM 2 - HUKUKİ DAYANAKLAR\n- 4857 Sayılı İş Kanunu Madde 25",
-      "total_latency_ms": 1862.6437187194824,
+      "question_id": 0,
+      "question": "Yer altı işlerinde çalışan işçilerin yıllık ücretli izin süreleri kaçar gün artırılarak uygulanır?",
+      "category": "olgusal",
+      "difficulty": "orta",
+      "source": "",
+      "generated_answer": "AÇIKLAMA\nBu konuda elimdeki yasal metinlerde yeterli bilgi bulunmamaktadır.\nHUKUKİ DAYANAKLAR\n- (Mevcut değildir)",
+      "expected_answer": "Yer altı işlerinde çalışan işçilerin yıllık ücretli izin süreleri dörder gün artırılarak uygulanır.",
+      "total_latency_ms": 2163.8519763946533,
       "passed": false,
-      "final_score": 0.8067342747354507,
+      "final_score": 0.19448950701713563,
       "failure_reasons": [
+        "Düşük ilgililik (0.00)",
+        "Context'e sadakatsiz (0.00)",
         "Yanlış/eksik atıf (0.00)"
       ],
       "judge_scores": {
-        "relevance": 0.9,
-        "faithfulness": 0.8,
-        "correctness": 0.9,
-        "completeness": 0.8,
-        "overall": 0.86
-      },
-      "judge_reasoning": "Cevap soruya odaklı ve hukuki doğruluk yüksek. Ancak bazı kritik bilgiler eksik kalmış, bu nedenle completeness puanı düşük.",
-      "strengths": [
-        "Hukuki terimlerin doğru kullanımı",
-        "Referans cevapla anlamsal örtüşme"
-      ],
-      "weaknesses": [
-        "Bazı kritik bilgilerin eksikliği"
-      ]
-    },
-    {
-      "question_id": 8,
-      "question": "Zamanaşımı süreleri Borçlar Kanunu'nda nasıl düzenlenmiştir?",
-      "category": "olgusal",
-      "difficulty": "orta",
-      "source": "6098 Sayılı Türk Borçlar Kanunu",
-      "generated_answer": "BÖLÜM 1 - AÇIKLAMA\nTürk Borçlar Kanunu, zamanaşımı sürelerinin başlangıcını, hesaplanmasını, durmasını ve kesilmesini düzenler. Zamanaşımı, alacağın muaccel olmasıyla başlar. Bazı alacaklar için özel zamanaşımı süreleri öngörülmüştür.\n\nBÖLÜM 2 - HUKUKİ DAYANAKLAR\n- Türk Borçlar Kanunu Madde 147\n- Türk Borçlar Kanunu Madde 149\n- Türk Borçlar Kanunu Madde 151\n- Türk Borçlar Kanunu Madde 153\n- Türk Borçlar Kanunu Madde 156",
-      "expected_answer": "BÖLÜM 1 - AÇIKLAMA\nBorçlar Kanunu'nda genel zamanaşımı süresi on yıldır. Ancak kira, faiz, ücret gibi dönemsel alacaklarda bu süre beş yıldır. Haksız fiilden kaynaklanan tazminat davalarında ise süre, zararın ve failin öğrenilmesinden itibaren iki yıl, her halükarda fiilin üzerinden on yıl geçmesiyle dolar.\n\nBÖLÜM 2 - HUKUKİ DAYANAKLAR\n- 6098 Sayılı Türk Borçlar Kanunu Madde 146-147, 72",
-      "total_latency_ms": 2068.4616565704346,
-      "passed": false,
-      "final_score": 0.8249433738017081,
-      "failure_reasons": [
-        "Yanlış/eksik atıf (0.00)"
-      ],
-      "judge_scores": {
-        "relevance": 1.0,
-        "faithfulness": 0.8,
-        "correctness": 0.9,
-        "completeness": 0.8,
-        "overall": 0.85
-      },
-      "judge_reasoning": "Cevap soruya odaklı ve hukuki doğruluk yüksek. Ancak bazı önerilen unsurlar cevapta eksik kalmış ve referans cevapla tam örtüşmemiş.",
-      "strengths": [
-        "Hukuki terimlerin doğru kullanımı",
-        "Kanun maddesi numaralarının doğru referanslanması"
-      ],
-      "weaknesses": [
-        "Bazı önerilen unsurların eksikliği",
-        "Referans cevapla tam örtüşmeme"
-      ]
-    },
-    {
-      "question_id": 9,
-      "question": "İş Kanunu'nun 250.  maddesi neyi düzenler?",
-      "category": "hallucination_test",
-      "difficulty": "orta",
-      "source": "out_of_scope_nonexistent",
-      "generated_answer": "BÖLÜM 1 - AÇIKLAMA\n4857 Sayılı İş Kanunu'nda 250. madde bulunmamaktadır. Bu nedenle, bu madde hakkında bir açıklama yapmak mümkün değildir.\n\nBÖLÜM 2 - HUKUKİ DAYANAKLAR\n- Bu konuda elimdeki yasal metinlerde yeterli bilgi bulunmamaktadır.",
-      "expected_answer": "BÖLÜM 1 - AÇIKLAMA\nBu konuda elimdeki yasal metinlerde yeterli bilgi bulunmamaktadır.\n\nBÖLÜM 2 - HUKUKİ DAYANAKLAR\n- (Böyle bir madde mevcut değildir)",
-      "total_latency_ms": 1507.1918964385986,
-      "passed": false,
-      "final_score": 0.42313927106857296,
-      "failure_reasons": [
-        "Context'e sadakatsiz (0.00)"
-      ],
-      "judge_scores": {
-        "relevance": 0.8,
+        "relevance": 0.0,
         "faithfulness": 0.0,
         "correctness": 0.0,
         "completeness": 0.0,
-        "overall": 0.26
+        "overall": 0.0
       },
-      "judge_reasoning": "Cevap soruyla ilgili bilgi vermiş ancak referans cevap olmadığından hukuki doğruluk ve kapsam eksikliği var. Faithfulness skoru 0 olduğundan dolayı overall skor düşük.",
-      "strengths": [
-        "Soruyla ilgili bilgi verilmiş"
-      ],
+      "judge_reasoning": "Asistanın verdiği cevap, soruya yanıt vermemekte ve beklenen bilgiyi içermemektedir. Ayrıca, bağlamda belirtilen yasal metinle ilgili herhangi bir bilgi sunmamaktadır. Bu nedenle tüm puanlar 0.0 olarak değerlendirilmiştir.",
+      "strengths": [],
       "weaknesses": [
-        "Referans cevap olmaması",
-        "Hukuki doğruluk ve kapsam eksikliği"
+        "Cevap, soruya doğrudan yanıt vermemektedir.",
+        "Cevap, beklenen bilgiyi içermemektedir.",
+        "Cevap, bağlamda belirtilen yasal metinle ilgili bilgi sunmamaktadır."
       ]
     },
     {
-      "question_id": 10,
-      "question": "Yapay zeka işçinin yerini alırsa tazminat ödenir mi?",
-      "category": "edge_case",
+      "question_id": 0,
+      "question": "İş ilişkisinde dil, ırk, renk, cinsiyet, engellilik, siyasal düşünce, felsefî inanç, din ve mezhep ve benzeri sebeplere dayalı ayrımcılık yapılması durumunda işçi, en çok kaç aya kadar ücreti tutarında tazminat talep edebilir?",
+      "category": "olgusal",
       "difficulty": "zor",
-      "source": "4857 Sayılı İş Kanunu",
-      "generated_answer": "BÖLÜM 1 - AÇIKLAMA\nVerilen bağlamda yapay zekanın işçinin yerini alması durumunda tazminat ödenip ödenmeyeceğine dair bir bilgi bulunmamaktadır. Bu nedenle bu konuda bir açıklama yapmak mümkün değildir.\n\nBÖLÜM 2 - HUKUKİ DAYANAKLAR\nBu konuda elimdeki yasal metinlerde yeterli bilgi bulunmamaktadır.",
-      "expected_answer": "BÖLÜM 1 - AÇIKLAMA\nYasal metinlerde \"yapay zeka\" ifadesi geçmese de, bu durum \"teknolojik nedenlerle işin gereklerinden kaynaklanan fesih\" kapsamında değerlendirilir. İşveren teknolojiyi yenilediği için işçiyi çıkarıyorsa, bu \"geçerli nedenle fesih\" sayılabilir. Bu durumda 1 yıldan fazla kıdemi olan işçiye kıdem tazminatı ve ihbar tazminatı ödenmesi zorunludur. İşveren önce işçiyi başka pozisyonda değerlendirmeyi denemelidir (feshin son çare olması ilkesi).\n\nBÖLÜM 2 - HUKUKİ DAYANAKLAR\n- 4857 Sayılı İş Kanunu Madde 18, 17, 120",
-      "total_latency_ms": 1497.9617595672607,
-      "passed": false,
-      "final_score": 0.681996685051918,
-      "failure_reasons": [
-        "Yanlış/eksik atıf (0.00)",
-        "Sayısal tutarsızlık (0.00)"
-      ],
+      "source": "",
+      "generated_answer": "AÇIKLAMA\nİş ilişkisinde dil, ırk, renk, cinsiyet, engellilik, siyasal düşünce, felsefî inanç, din ve mezhep ve benzeri sebeplere dayalı ayrımcılık yapılması durumunda işçi, 4 aya kadar ücreti tutarında uygun bir tazminat talep edebilir. Bu tazminata ek olarak, yoksun bırakıldığı haklarını da talep etme hakkı bulunur.\n\nHUKUKİ DAYANAKLAR\n- 4857 Sayılı İş Kanunu, Madde 5",
+      "expected_answer": "İşçi, dört aya kadar ücreti tutarındaki uygun bir tazminatın yanı sıra yoksun bırakıldığı haklarını da talep edebilir.",
+      "total_latency_ms": 3017.658233642578,
+      "passed": true,
+      "final_score": 0.9894572964358329,
+      "failure_reasons": [],
       "judge_scores": {
-        "relevance": 0.8,
+        "relevance": 1.0,
         "faithfulness": 1.0,
-        "correctness": 0.5,
-        "completeness": 0.7,
-        "overall": 0.76
+        "correctness": 1.0,
+        "completeness": 1.0,
+        "overall": 1.0
       },
-      "judge_reasoning": "Cevap soruya odaklı ve context'e sadık olmasına rağmen hukuki doğrulukta bazı eksiklikler ve kapsamda bilgi eksiklikleri bulunmaktadır. Bu nedenle puanlama sonucu 0.76 olarak belirlenmiştir.",
+      "judge_reasoning": "Asistanın cevabı, beklenen cevapla tamamen örtüşüyor ve tüm gerekli bilgileri içeriyor. Ayrıca, bağlamda belirtilen anahtar kelimeleri de eksiksiz kullanıyor.",
       "strengths": [
-        "Cevap soruya odaklı ve context'e sadık.",
-        "Dış bilgi eklemesi yapılmamış."
+        "Cevap, soruya doğrudan yanıt veriyor.",
+        "Verilen bağlama sadık kalıyor.",
+        "Cevap, hukuken doğru ve eksiksiz."
       ],
-      "weaknesses": [
-        "Hukuki doğrulukta eksiklik var.",
-        "Kapsamda bazı bilgiler eksik."
-      ]
+      "weaknesses": []
     }
   ],
   "by_difficulty": {
     "kolay": {
-      "total": 3,
-      "passed": 3,
-      "avg_score": 0.9146417900093397,
+      "total": 6,
+      "passed": 6,
+      "avg_score": 0.9658046371837457,
       "pass_rate": 1.0
     },
     "orta": {
-      "total": 5,
+      "total": 3,
       "passed": 1,
-      "avg_score": 0.7568238906111716,
-      "pass_rate": 0.2
+      "avg_score": 0.5982160676632988,
+      "pass_rate": 0.3333333333333333
     },
     "zor": {
-      "total": 2,
-      "passed": 0,
-      "avg_score": 0.7443654798936843,
-      "pass_rate": 0.0
+      "total": 1,
+      "passed": 1,
+      "avg_score": 0.9894572964358329,
+      "pass_rate": 1.0
     }
   },
   "by_category": {
     "olgusal": {
-      "total": 5,
-      "passed": 3,
-      "avg_score": 0.8781540130815506,
-      "pass_rate": 0.6
-    },
-    "kavramsal": {
-      "total": 2,
-      "passed": 1,
-      "avg_score": 0.8419438189482689,
-      "pass_rate": 0.5
-    },
-    "karşılaştırma": {
-      "total": 1,
-      "passed": 0,
-      "avg_score": 0.8369821234464645,
-      "pass_rate": 0.0
-    },
-    "hallucination_test": {
-      "total": 1,
-      "passed": 0,
-      "avg_score": 0.42313927106857296,
-      "pass_rate": 0.0
-    },
-    "edge_case": {
-      "total": 1,
-      "passed": 0,
-      "avg_score": 0.681996685051918,
-      "pass_rate": 0.0
+      "total": 10,
+      "passed": 8,
+      "avg_score": 0.8578933322528203,
+      "pass_rate": 0.8
     }
   },
   "failure_reasons": {
-    "Sayısal tutarsızlık": 3,
-    "Yanlış Atıf": 3,
-    "Context Sadakatsizliği": 1
+    "Context Sadakatsizliği": 2,
+    "Düşük İlgililik": 1,
+    "Yanlış Atıf": 1
   },
   "chart_data": {
     "triad": [
-      0.93,
-      0.76,
-      0.78,
-      0.73,
-      0.8
+      0.875,
+      0.85,
+      0.85,
+      0.7,
+      0.82
     ],
     "pass_fail": [
-      4,
-      6
+      8,
+      2
     ]
   }
 };
@@ -1368,8 +1333,8 @@ body {
                 // Truncate long answers
                 const genAnswer = r.generated_answer || '';
                 const expAnswer = r.expected_answer || '';
-                const genTruncated = genAnswer.length > 500 ? genAnswer.substring(0, 500) + '...' : genAnswer;
-                const expTruncated = expAnswer.length > 500 ? expAnswer.substring(0, 500) + '...' : expAnswer;
+                const genTruncated = genAnswer;
+                const expTruncated = expAnswer;
                 
                 html += `
                     <div class="question-card ${statusClass}" data-passed="${r.passed}">

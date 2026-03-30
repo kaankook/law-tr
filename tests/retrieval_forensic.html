@@ -1,0 +1,693 @@
+
+    <html>
+    <head>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+        <title>RAG Forensic Debug</title>
+    </head>
+    <body class="p-4 bg-light">
+        <div class="container-fluid">
+            <h2>🔬 RAG Forensic Retrieval Debug</h2>
+            <div class="alert alert-info">Sorgu: <strong>Türk Borçlar Kanunu'nda genel zamanaşımı süresi ne kadardır ve hangi alacaklar için daha kısa süre öngörülmüştür?</strong></div>
+            
+            <div class="row mb-4">
+                <div class="col-md-3">
+                    <div class="card p-3">
+                        <h6>Ayarlar</h6>
+                        <small>Q-Threshold: 0.2</small><br>
+                        <small>R-Threshold: 0.3</small><br>
+                        <small>Min Chars: 1</small>
+                    </div>
+                </div>
+            </div>
+
+            <table class="table table-bordered table-hover bg-white">
+                <thead class="table-dark">
+                    <tr>
+                        <th>Sıra</th>
+                        <th>Madde Referans</th>
+                        <th>Qdrant Skoru</th>
+                        <th>Reranker Skoru</th>
+                        <th>Karakter</th>
+                        <th>Durum</th>
+                        <th>Elenme Nedeni</th>
+                        <th>İçerik Önizleme</th>
+                    </tr>
+                </thead>
+                <tbody>
+        <tr class="">
+            <td>1</td>
+            <td><strong>Madde 147</strong></td>
+            <td>0.8333</td>
+            <td>0.5683</td>
+            <td>1436</td>
+            <td>✅ GEÇTİ<br><small>✅ OK</small></td>
+            <td style="font-size: 0.8rem;"></td>
+            <td style="font-size: 0.7rem; max-width: 300px;">BAĞLAM: KAYNAK: 6098 Sayılı Türk Borçlar Kanunu | MADDE: Madde 147
+
+ÖZET: Bu madde, belirli alacakların tahsil edilmesi için beş yıl içinde dava açılması gerektiğini belirtir. Yani, bu süre içinde ala...</td>
+        </tr>
+        
+        <tr class="">
+            <td>2</td>
+            <td><strong>Madde 152</strong></td>
+            <td>0.8333</td>
+            <td>0.5932</td>
+            <td>682</td>
+            <td>✅ GEÇTİ<br><small>✅ OK</small></td>
+            <td style="font-size: 0.8rem;"></td>
+            <td style="font-size: 0.7rem; max-width: 300px;">BAĞLAM: KAYNAK: 6098 Sayılı Türk Borçlar Kanunu | MADDE: Madde 152
+
+ÖZET: Bir alacak için belirli bir süre geçtikten sonra, bu alacak artık talep edilemez hale gelir. Bu durumda, alacakla birlikte ona...</td>
+        </tr>
+        
+        <tr class="">
+            <td>3</td>
+            <td><strong>Madde 149</strong></td>
+            <td>0.4167</td>
+            <td>0.5972</td>
+            <td>759</td>
+            <td>✅ GEÇTİ<br><small>✅ OK</small></td>
+            <td style="font-size: 0.8rem;"></td>
+            <td style="font-size: 0.7rem; max-width: 300px;">BAĞLAM: KAYNAK: 6098 Sayılı Türk Borçlar Kanunu | MADDE: Madde 149
+
+ÖZET: Alacakların ne zaman talep edilebileceğini belirleyen süre, alacak talep edilebilir hale geldiği anda başlar. Eğer alacak, bir...</td>
+        </tr>
+        
+        <tr class="">
+            <td>4</td>
+            <td><strong>Madde 156</strong></td>
+            <td>0.4000</td>
+            <td>0.5760</td>
+            <td>794</td>
+            <td>✅ GEÇTİ<br><small>✅ OK</small></td>
+            <td style="font-size: 0.8rem;"></td>
+            <td style="font-size: 0.7rem; max-width: 300px;">BAĞLAM: KAYNAK: 6098 Sayılı Türk Borçlar Kanunu | MADDE: Madde 156
+
+ÖZET: Bu madde, bir borcun zamanaşımının kesilmesi durumunda yeni bir zamanaşımı süresinin başladığını belirtir. Eğer borç bir senet...</td>
+        </tr>
+        
+        <tr class="">
+            <td>5</td>
+            <td><strong>Madde 151</strong></td>
+            <td>0.3333</td>
+            <td>0.5169</td>
+            <td>890</td>
+            <td>✅ GEÇTİ<br><small>✅ OK</small></td>
+            <td style="font-size: 0.8rem;"></td>
+            <td style="font-size: 0.7rem; max-width: 300px;">BAĞLAM: KAYNAK: 6098 Sayılı Türk Borçlar Kanunu | MADDE: Madde 151
+
+ÖZET: Bu madde, zamanaşımının başladığı günün hesaba katılmadığını ve zamanaşımının sürenin son günü geçtikten sonra geçerli olduğun...</td>
+        </tr>
+        
+        <tr class="">
+            <td>6</td>
+            <td><strong>Madde 150</strong></td>
+            <td>0.2857</td>
+            <td>0.5850</td>
+            <td>976</td>
+            <td>✅ GEÇTİ<br><small>✅ OK</small></td>
+            <td style="font-size: 0.8rem;"></td>
+            <td style="font-size: 0.7rem; max-width: 300px;">BAĞLAM: KAYNAK: 6098 Sayılı Türk Borçlar Kanunu | MADDE: Madde 150
+
+ÖZET: Bu madde, bir kişinin gelir veya benzeri düzenli ödemeleri için alacaklarının ne zaman zamanaşımına uğrayacağını belirler. Eğe...</td>
+        </tr>
+        
+        <tr class="">
+            <td>7</td>
+            <td><strong>Madde 153</strong></td>
+            <td>0.2778</td>
+            <td>0.5465</td>
+            <td>1586</td>
+            <td>✅ GEÇTİ<br><small>✅ OK</small></td>
+            <td style="font-size: 0.8rem;"></td>
+            <td style="font-size: 0.7rem; max-width: 300px;">BAĞLAM: KAYNAK: 6098 Sayılı Türk Borçlar Kanunu | MADDE: Madde 153
+
+ÖZET: Bu madde, belirli durumlarda alacakların zamanaşımına uğramasını engeller. Örneğin, evlilik süresince eşler arasındaki alacakl...</td>
+        </tr>
+        
+        <tr class="table-danger">
+            <td>8</td>
+            <td><strong>Madde 159</strong></td>
+            <td>0.1880</td>
+            <td>N/A</td>
+            <td>853</td>
+            <td>❌ ELENDİ (Düşük Skor)<br><small></small></td>
+            <td style="font-size: 0.8rem;">Skor 0.1880 < Eşik 0.2</td>
+            <td style="font-size: 0.7rem; max-width: 300px;">BAĞLAM: KAYNAK: 6098 Sayılı Türk Borçlar Kanunu | MADDE: Madde 159
+
+ÖZET: Alacakların taşınır rehni ile güvence altına alınması, bu alacakların zamanaşımına uğramasını engellemez. Ancak alacaklı, rehn...</td>
+        </tr>
+        
+        <tr class="table-danger">
+            <td>9</td>
+            <td><strong>Madde 155</strong></td>
+            <td>0.1806</td>
+            <td>N/A</td>
+            <td>1070</td>
+            <td>❌ ELENDİ (Düşük Skor)<br><small></small></td>
+            <td style="font-size: 0.8rem;">Skor 0.1806 < Eşik 0.2</td>
+            <td style="font-size: 0.7rem; max-width: 300px;">BAĞLAM: KAYNAK: 6098 Sayılı Türk Borçlar Kanunu | MADDE: Madde 155
+
+ÖZET: Bu madde, bir borçluya karşı zamanaşımının kesilmesi durumunda, diğer borçluların da bu durumdan nasıl etkileneceğini düzenliy...</td>
+        </tr>
+        
+        <tr class="table-danger">
+            <td>10</td>
+            <td><strong>Madde 416</strong></td>
+            <td>0.1467</td>
+            <td>N/A</td>
+            <td>833</td>
+            <td>❌ ELENDİ (Düşük Skor)<br><small></small></td>
+            <td style="font-size: 0.8rem;">Skor 0.1467 < Eşik 0.2</td>
+            <td style="font-size: 0.7rem; max-width: 300px;">BAĞLAM: KAYNAK: 6098 Sayılı Türk Borçlar Kanunu | MADDE: Madde 416
+
+ÖZET: İşçinin yaptığı masraflar, eğer başka bir süre belirlenmemişse, her ay maaşıyla birlikte ödenir. Ayrıca, işçi düzenli masraf y...</td>
+        </tr>
+        
+        <tr class="table-danger">
+            <td>11</td>
+            <td><strong>Madde 409</strong></td>
+            <td>0.1422</td>
+            <td>N/A</td>
+            <td>1079</td>
+            <td>❌ ELENDİ (Düşük Skor)<br><small></small></td>
+            <td style="font-size: 0.8rem;">Skor 0.1422 < Eşik 0.2</td>
+            <td style="font-size: 0.7rem; max-width: 300px;">BAĞLAM: KAYNAK: 6098 Sayılı Türk Borçlar Kanunu | MADDE: Madde 409
+
+ÖZET: Mülga olan bu madde, uzun süreli bir iş ilişkisi içinde işçinin hastalık, askerlik gibi nedenlerle kısa süreli iş görememesi d...</td>
+        </tr>
+        
+        <tr class="table-danger">
+            <td>12</td>
+            <td><strong>Madde 93</strong></td>
+            <td>0.1385</td>
+            <td>N/A</td>
+            <td>2342</td>
+            <td>❌ ELENDİ (Düşük Skor)<br><small></small></td>
+            <td style="font-size: 0.8rem;">Skor 0.1385 < Eşik 0.2</td>
+            <td style="font-size: 0.7rem; max-width: 300px;">BAĞLAM: KAYNAK: 5510 Sayılı SSGSSK | MADDE: Madde 93 | PARÇA: 1/2
+
+ÖZET: Bu madde, sigortalıların ve hak sahiplerinin gelir, aylık ve ödeneklerinin devredilemeyeceğini ve haczedilemeyeceğini belirtir....</td>
+        </tr>
+        
+        <tr class="table-danger">
+            <td>13</td>
+            <td><strong>Madde 158</strong></td>
+            <td>0.1381</td>
+            <td>N/A</td>
+            <td>902</td>
+            <td>❌ ELENDİ (Düşük Skor)<br><small></small></td>
+            <td style="font-size: 0.8rem;">Skor 0.1381 < Eşik 0.2</td>
+            <td style="font-size: 0.7rem; max-width: 300px;">BAĞLAM: KAYNAK: 6098 Sayılı Türk Borçlar Kanunu | MADDE: Madde 158
+
+ÖZET: Bu madde, bir davanın mahkeme tarafından reddedilmesi durumunda, alacaklının belirli bir süre içinde haklarını yeniden talep e...</td>
+        </tr>
+        
+        <tr class="table-danger">
+            <td>14</td>
+            <td><strong>Madde 406</strong></td>
+            <td>0.1213</td>
+            <td>N/A</td>
+            <td>1404</td>
+            <td>❌ ELENDİ (Düşük Skor)<br><small></small></td>
+            <td style="font-size: 0.8rem;">Skor 0.1213 < Eşik 0.2</td>
+            <td style="font-size: 0.7rem; max-width: 300px;">BAĞLAM: KAYNAK: 6098 Sayılı Türk Borçlar Kanunu | MADDE: Madde 406
+
+ÖZET: İşçilerin maaşları genellikle her ayın sonunda ödenir, ancak daha kısa ödeme süreleri belirlenebilir. Eğer işçinin zorunlu bir...</td>
+        </tr>
+        
+        <tr class="table-danger">
+            <td>15</td>
+            <td><strong>Madde 442</strong></td>
+            <td>0.1204</td>
+            <td>N/A</td>
+            <td>1254</td>
+            <td>❌ ELENDİ (Düşük Skor)<br><small></small></td>
+            <td style="font-size: 0.8rem;">Skor 0.1204 < Eşik 0.2</td>
+            <td style="font-size: 0.7rem; max-width: 300px;">BAĞLAM: KAYNAK: 6098 Sayılı Türk Borçlar Kanunu | MADDE: Madde 442
+
+ÖZET: Sözleşme sona erdiğinde, işçi ve işverenin tüm borçları hemen ödenmesi gereken hale gelir. Ancak bazı durumlarda, borçların öd...</td>
+        </tr>
+        
+        <tr class="table-danger">
+            <td>16</td>
+            <td><strong>Madde 157</strong></td>
+            <td>0.1114</td>
+            <td>N/A</td>
+            <td>1078</td>
+            <td>❌ ELENDİ (Düşük Skor)<br><small></small></td>
+            <td style="font-size: 0.8rem;">Skor 0.1114 < Eşik 0.2</td>
+            <td style="font-size: 0.7rem; max-width: 300px;">BAĞLAM: KAYNAK: 6098 Sayılı Türk Borçlar Kanunu | MADDE: Madde 157
+
+ÖZET: Bu madde, bir dava veya icra takibi sırasında zamanaşımının nasıl kesileceğini ve yeniden başlayacağını açıklıyor. Örneğin, bi...</td>
+        </tr>
+        
+        <tr class="table-danger">
+            <td>17</td>
+            <td><strong>Madde 154</strong></td>
+            <td>0.1109</td>
+            <td>N/A</td>
+            <td>898</td>
+            <td>❌ ELENDİ (Düşük Skor)<br><small></small></td>
+            <td style="font-size: 0.8rem;">Skor 0.1109 < Eşik 0.2</td>
+            <td style="font-size: 0.7rem; max-width: 300px;">BAĞLAM: KAYNAK: 6098 Sayılı Türk Borçlar Kanunu | MADDE: Madde 154
+
+ÖZET: Bu madde, borçlu veya alacaklının belirli eylemleri gerçekleştirmesi durumunda zamanaşımının duracağını belirtir. Yani, borçlu...</td>
+        </tr>
+        
+        <tr class="table-danger">
+            <td>18</td>
+            <td><strong>Madde 287</strong></td>
+            <td>0.1101</td>
+            <td>N/A</td>
+            <td>848</td>
+            <td>❌ ELENDİ (Düşük Skor)<br><small></small></td>
+            <td style="font-size: 0.8rem;">Skor 0.1101 < Eşik 0.2</td>
+            <td style="font-size: 0.7rem; max-width: 300px;">BAĞLAM: KAYNAK: 6100 Sayılı Hukuk Muhakemeleri Kanunu | MADDE: Madde 287
+
+ÖZET: Devlet, ödediği tazminat için bilirkişiye bir yıl içinde geri ödeme talep edebilir. Eğer bilirkişi raporu kasıtlı olarak...</td>
+        </tr>
+        
+        <tr class="table-danger">
+            <td>19</td>
+            <td><strong>Madde 32</strong></td>
+            <td>0.1032</td>
+            <td>N/A</td>
+            <td>1049</td>
+            <td>❌ ELENDİ (Düşük Skor)<br><small></small></td>
+            <td style="font-size: 0.8rem;">Skor 0.1032 < Eşik 0.2</td>
+            <td style="font-size: 0.7rem; max-width: 300px;">BAĞLAM: KAYNAK: 4857 Sayılı İş Kanunu | MADDE: Madde 32 | PARÇA: 2/2
+
+ÖZET: İş sözleşmesi sona erdiğinde, işçiye olan tüm ücret ve hakların tam olarak ödenmesi gerekiyor. Ancak, bazı eğlence yerlerind...</td>
+        </tr>
+        
+        <tr class="table-danger">
+            <td>20</td>
+            <td><strong>Madde 160</strong></td>
+            <td>0.1000</td>
+            <td>N/A</td>
+            <td>928</td>
+            <td>❌ ELENDİ (Düşük Skor)<br><small></small></td>
+            <td style="font-size: 0.8rem;">Skor 0.1000 < Eşik 0.2</td>
+            <td style="font-size: 0.7rem; max-width: 300px;">BAĞLAM: KAYNAK: 6098 Sayılı Türk Borçlar Kanunu | MADDE: Madde 160
+
+ÖZET: Bu madde, bir borcun zamanaşımından feragat edilmesinin mümkün olmadığını belirtir. Eğer bir borçlu zamanaşımından feragat ede...</td>
+        </tr>
+        
+        <tr class="table-danger">
+            <td>21</td>
+            <td><strong>Madde 433</strong></td>
+            <td>0.0909</td>
+            <td>N/A</td>
+            <td>951</td>
+            <td>❌ ELENDİ (Düşük Skor)<br><small></small></td>
+            <td style="font-size: 0.8rem;">Skor 0.0909 < Eşik 0.2</td>
+            <td style="font-size: 0.7rem; max-width: 300px;">BAĞLAM: KAYNAK: 6098 Sayılı Türk Borçlar Kanunu | MADDE: Madde 433
+
+ÖZET: Deneme süresi, işverenin ve işçinin birbirlerini tanıması için belirlenen bir süre olup, bu süre içinde sözleşme tazminatsız s...</td>
+        </tr>
+        
+        <tr class="table-danger">
+            <td>22</td>
+            <td><strong>Ek Madde 3</strong></td>
+            <td>0.0820</td>
+            <td>N/A</td>
+            <td>1051</td>
+            <td>❌ ELENDİ (Düşük Skor)<br><small></small></td>
+            <td style="font-size: 0.8rem;">Skor 0.0820 < Eşik 0.2</td>
+            <td style="font-size: 0.7rem; max-width: 300px;">BAĞLAM: KAYNAK: 4857 Sayılı İş Kanunu | MADDE: Ek Madde 3
+
+ÖZET: Bu madde, iş sözleşmesinden doğan yıllık izin ücreti ve bazı tazminatların talep edilebilmesi için beş yıllık bir süre olduğunu belirti...</td>
+        </tr>
+        
+        <tr class="table-danger">
+            <td>23</td>
+            <td><strong>Madde 119</strong></td>
+            <td>0.0778</td>
+            <td>N/A</td>
+            <td>1014</td>
+            <td>❌ ELENDİ (Düşük Skor)<br><small></small></td>
+            <td style="font-size: 0.8rem;">Skor 0.0778 < Eşik 0.2</td>
+            <td style="font-size: 0.7rem; max-width: 300px;">BAĞLAM: KAYNAK: 6098 Sayılı Türk Borçlar Kanunu | MADDE: Madde 119
+
+ÖZET: Temerrüde düşen borçlu, beklenmedik bir durumdan kaynaklanan zararlardan sorumludur. Ancak, borçlu bu duruma sebep olan bir ku...</td>
+        </tr>
+        
+        <tr class="table-danger">
+            <td>24</td>
+            <td><strong>Madde 55</strong></td>
+            <td>0.0720</td>
+            <td>N/A</td>
+            <td>1347</td>
+            <td>❌ ELENDİ (Düşük Skor)<br><small></small></td>
+            <td style="font-size: 0.8rem;">Skor 0.0720 < Eşik 0.2</td>
+            <td style="font-size: 0.7rem; max-width: 300px;">BAĞLAM: KAYNAK: 6098 Sayılı Türk Borçlar Kanunu | MADDE: Madde 55
+
+ÖZET: Bu madde, bir kişinin bedensel zararları veya destekten yoksun kalma durumunda tazminat hesaplamalarının nasıl yapılacağını bel...</td>
+        </tr>
+        
+        <tr class="table-danger">
+            <td>25</td>
+            <td><strong>Madde 436</strong></td>
+            <td>0.0677</td>
+            <td>N/A</td>
+            <td>710</td>
+            <td>❌ ELENDİ (Düşük Skor)<br><small></small></td>
+            <td style="font-size: 0.8rem;">Skor 0.0677 < Eşik 0.2</td>
+            <td style="font-size: 0.7rem; max-width: 300px;">BAĞLAM: KAYNAK: 6098 Sayılı Türk Borçlar Kanunu | MADDE: Madde 436
+
+ÖZET: İşverenin maddi durumu kötüleşirse ve işçi haklarını güvence altına almazsa, işçi hemen iş sözleşmesini sona erdirebilir.
+
+SOR...</td>
+        </tr>
+        
+        <tr class="table-danger">
+            <td>26</td>
+            <td><strong>Madde 431</strong></td>
+            <td>0.0670</td>
+            <td>N/A</td>
+            <td>669</td>
+            <td>❌ ELENDİ (Düşük Skor)<br><small></small></td>
+            <td style="font-size: 0.8rem;">Skor 0.0670 < Eşik 0.2</td>
+            <td style="font-size: 0.7rem; max-width: 300px;">BAĞLAM: KAYNAK: 6098 Sayılı Türk Borçlar Kanunu | MADDE: Madde 431
+
+ÖZET: Belirsiz süreli iş sözleşmeleri, taraflardan birinin belirli bir süreye uyarak sona erdirme hakkına sahip olduğunu gösterir. İ...</td>
+        </tr>
+        
+        <tr class="table-danger">
+            <td>27</td>
+            <td><strong>Madde 8</strong></td>
+            <td>0.0667</td>
+            <td>N/A</td>
+            <td>1710</td>
+            <td>❌ ELENDİ (Düşük Skor)<br><small></small></td>
+            <td style="font-size: 0.8rem;">Skor 0.0667 < Eşik 0.2</td>
+            <td style="font-size: 0.7rem; max-width: 300px;">BAĞLAM: KAYNAK: 4857 Sayılı İş Kanunu | MADDE: Madde 8
+
+ÖZET: İş sözleşmesi, işçi ve işveren arasında iş yapma ve ücret ödeme taahhütlerini içeren bir anlaşmadır. Süresi bir yıl ve daha uzun olan sözl...</td>
+        </tr>
+        
+        <tr class="table-danger">
+            <td>28</td>
+            <td><strong>Madde 420</strong></td>
+            <td>0.0622</td>
+            <td>N/A</td>
+            <td>1570</td>
+            <td>❌ ELENDİ (Düşük Skor)<br><small></small></td>
+            <td style="font-size: 0.8rem;">Skor 0.0622 < Eşik 0.2</td>
+            <td style="font-size: 0.7rem; max-width: 300px;">BAĞLAM: KAYNAK: 6098 Sayılı Türk Borçlar Kanunu | MADDE: Madde 420
+
+ÖZET: Mülga bir madde olduğundan geçerliliği kalmamıştır. Önceden, işçi aleyhine konulan ceza koşullarının geçersiz olduğunu ve işçi...</td>
+        </tr>
+        
+        <tr class="table-danger">
+            <td>29</td>
+            <td><strong>Madde 430</strong></td>
+            <td>0.0558</td>
+            <td>N/A</td>
+            <td>1423</td>
+            <td>❌ ELENDİ (Düşük Skor)<br><small></small></td>
+            <td style="font-size: 0.8rem;">Skor 0.0558 < Eşik 0.2</td>
+            <td style="font-size: 0.7rem; max-width: 300px;">BAĞLAM: KAYNAK: 6098 Sayılı Türk Borçlar Kanunu | MADDE: Madde 430
+
+ÖZET: Belirli süreli hizmet sözleşmeleri, süresi dolduğunda otomatik olarak sona erer. Eğer sözleşme süresi dolduktan sonra devam ed...</td>
+        </tr>
+        
+        <tr class="table-danger">
+            <td>30</td>
+            <td><strong>Madde 56</strong></td>
+            <td>0.0551</td>
+            <td>N/A</td>
+            <td>1008</td>
+            <td>❌ ELENDİ (Düşük Skor)<br><small></small></td>
+            <td style="font-size: 0.8rem;">Skor 0.0551 < Eşik 0.2</td>
+            <td style="font-size: 0.7rem; max-width: 300px;">BAĞLAM: KAYNAK: 6098 Sayılı Türk Borçlar Kanunu | MADDE: Madde 56
+
+ÖZET: Bu madde, bir kişinin bedensel bütünlüğüne zarar verildiğinde, zarar görene veya yakınlarına manevi tazminat ödenmesine imkan t...</td>
+        </tr>
+        
+        <tr class="table-danger">
+            <td>31</td>
+            <td><strong>Madde 427</strong></td>
+            <td>0.0526</td>
+            <td>N/A</td>
+            <td>1588</td>
+            <td>❌ ELENDİ (Düşük Skor)<br><small></small></td>
+            <td style="font-size: 0.8rem;">Skor 0.0526 < Eşik 0.2</td>
+            <td style="font-size: 0.7rem; max-width: 300px;">BAĞLAM: KAYNAK: 6098 Sayılı Türk Borçlar Kanunu | MADDE: Madde 427
+
+ÖZET: İşyerinin tamamı veya bir kısmı başka birine devredildiğinde, işçilerin mevcut sözleşmeleri ve hakları yeni işverene geçer. İş...</td>
+        </tr>
+        
+        <tr class="table-danger">
+            <td>32</td>
+            <td><strong>Madde 418</strong></td>
+            <td>0.0511</td>
+            <td>N/A</td>
+            <td>1287</td>
+            <td>❌ ELENDİ (Düşük Skor)<br><small></small></td>
+            <td style="font-size: 0.8rem;">Skor 0.0511 < Eşik 0.2</td>
+            <td style="font-size: 0.7rem; max-width: 300px;">BAĞLAM: KAYNAK: 6098 Sayılı Türk Borçlar Kanunu | MADDE: Madde 418
+
+ÖZET: Bu madde, işverenin işçiye yeterli gıda ve barınak sağlaması gerektiğini belirtir. Ayrıca, işçi hastalık veya kaza nedeniyle ç...</td>
+        </tr>
+        
+        <tr class="table-danger">
+            <td>33</td>
+            <td><strong>Madde 398</strong></td>
+            <td>0.0500</td>
+            <td>N/A</td>
+            <td>1052</td>
+            <td>❌ ELENDİ (Düşük Skor)<br><small></small></td>
+            <td style="font-size: 0.8rem;">Skor 0.0500 < Eşik 0.2</td>
+            <td style="font-size: 0.7rem; max-width: 300px;">BAĞLAM: KAYNAK: 6098 Sayılı Türk Borçlar Kanunu | MADDE: Madde 398
+
+ÖZET: Fazla çalışma, normal çalışma süresinin üzerinde ve işçinin rızasıyla yapılan çalışmadır. Eğer işin gerekliliği varsa ve işçi ...</td>
+        </tr>
+        
+        <tr class="table-danger">
+            <td>34</td>
+            <td><strong>Madde 97</strong></td>
+            <td>0.0455</td>
+            <td>N/A</td>
+            <td>1990</td>
+            <td>❌ ELENDİ (Düşük Skor)<br><small></small></td>
+            <td style="font-size: 0.8rem;">Skor 0.0455 < Eşik 0.2</td>
+            <td style="font-size: 0.7rem; max-width: 300px;">BAĞLAM: KAYNAK: 5510 Sayılı SSGSSK | MADDE: Madde 97 | PARÇA: 1/2
+
+ÖZET: Bu madde, iş kazası, meslek hastalığı, vazife malullüğü ve ölüm durumlarında, hakların talep edilmesi için belirli süreler öngö...</td>
+        </tr>
+        
+        <tr class="table-danger">
+            <td>35</td>
+            <td><strong>Madde 432</strong></td>
+            <td>0.0417</td>
+            <td>N/A</td>
+            <td>1415</td>
+            <td>❌ ELENDİ (Düşük Skor)<br><small></small></td>
+            <td style="font-size: 0.8rem;">Skor 0.0417 < Eşik 0.2</td>
+            <td style="font-size: 0.7rem; max-width: 300px;">BAĞLAM: KAYNAK: 6098 Sayılı Türk Borçlar Kanunu | MADDE: Madde 432
+
+ÖZET: Belirsiz süreli hizmet sözleşmeleri sona ermeden önce, tarafların birbirine bildirimde bulunması gerekiyor. İşçinin çalışma sü...</td>
+        </tr>
+        
+        <tr class="table-danger">
+            <td>36</td>
+            <td><strong>Madde 412</strong></td>
+            <td>0.0417</td>
+            <td>N/A</td>
+            <td>917</td>
+            <td>❌ ELENDİ (Düşük Skor)<br><small></small></td>
+            <td style="font-size: 0.8rem;">Skor 0.0417 < Eşik 0.2</td>
+            <td style="font-size: 0.7rem; max-width: 300px;">BAĞLAM: KAYNAK: 6098 Sayılı Türk Borçlar Kanunu | MADDE: Madde 412
+
+ÖZET: İşveren, işçiye parça başına veya götürü çalışma için ne kadar ücret ödeyeceğini iş başlamadan önce bildirmek zorundadır. Eğer...</td>
+        </tr>
+        
+        <tr class="table-danger">
+            <td>37</td>
+            <td><strong>Madde 439</strong></td>
+            <td>0.0385</td>
+            <td>N/A</td>
+            <td>1312</td>
+            <td>❌ ELENDİ (Düşük Skor)<br><small></small></td>
+            <td style="font-size: 0.8rem;">Skor 0.0385 < Eşik 0.2</td>
+            <td style="font-size: 0.7rem; max-width: 300px;">BAĞLAM: KAYNAK: 6098 Sayılı Türk Borçlar Kanunu | MADDE: Madde 439
+
+ÖZET: İşçi işe başlamazsa veya aniden işi bırakırsa, işveren bu durumdan dolayı işçiden aylık ücretinin dörtte biri kadar tazminat t...</td>
+        </tr>
+        
+        <tr class="table-danger">
+            <td>38</td>
+            <td><strong>Madde 408</strong></td>
+            <td>0.0370</td>
+            <td>N/A</td>
+            <td>1117</td>
+            <td>❌ ELENDİ (Düşük Skor)<br><small></small></td>
+            <td style="font-size: 0.8rem;">Skor 0.0370 < Eşik 0.2</td>
+            <td style="font-size: 0.7rem; max-width: 300px;">BAĞLAM: KAYNAK: 6098 Sayılı Türk Borçlar Kanunu | MADDE: Madde 408
+
+ÖZET: İşveren, işçinin çalışmasını engellerse, işçiye maaşını ödemek zorundadır ve işçiden bu süre zarfında çalışmasını talep edemez...</td>
+        </tr>
+        
+        <tr class="table-danger">
+            <td>39</td>
+            <td><strong>Madde 421</strong></td>
+            <td>0.0370</td>
+            <td>N/A</td>
+            <td>1083</td>
+            <td>❌ ELENDİ (Düşük Skor)<br><small></small></td>
+            <td style="font-size: 0.8rem;">Skor 0.0370 < Eşik 0.2</td>
+            <td style="font-size: 0.7rem; max-width: 300px;">BAĞLAM: KAYNAK: 6098 Sayılı Türk Borçlar Kanunu | MADDE: Madde 421
+
+ÖZET: İşveren, çalışanına her hafta genellikle pazar günü bir tam gün tatil vermek zorundadır. Ayrıca, iş sözleşmesi feshedildiğinde...</td>
+        </tr>
+        
+        <tr class="table-danger">
+            <td>40</td>
+            <td><strong>Madde 404</strong></td>
+            <td>0.0357</td>
+            <td>N/A</td>
+            <td>1898</td>
+            <td>❌ ELENDİ (Düşük Skor)<br><small></small></td>
+            <td style="font-size: 0.8rem;">Skor 0.0357 < Eşik 0.2</td>
+            <td style="font-size: 0.7rem; max-width: 300px;">BAĞLAM: KAYNAK: 6098 Sayılı Türk Borçlar Kanunu | MADDE: Madde 404
+
+ÖZET: Bu madde, işçiye belirli işlerde aracılık yapması karşılığında ücret ödeneceğini ve bu ücretin, aracılık yapılan işlemin geçer...</td>
+        </tr>
+        
+        <tr class="table-danger">
+            <td>41</td>
+            <td><strong>Madde 10</strong></td>
+            <td>0.0345</td>
+            <td>N/A</td>
+            <td>1064</td>
+            <td>❌ ELENDİ (Düşük Skor)<br><small></small></td>
+            <td style="font-size: 0.8rem;">Skor 0.0345 < Eşik 0.2</td>
+            <td style="font-size: 0.7rem; max-width: 300px;">BAĞLAM: KAYNAK: 4857 Sayılı İş Kanunu | MADDE: Madde 10
+
+ÖZET: Bu madde, işlerin sürekliliğine göre sınıflandırılmasını yapar; 30 günden kısa süren işler süreksiz, daha uzun sürenler ise sürekli iş ol...</td>
+        </tr>
+        
+        <tr class="table-danger">
+            <td>42</td>
+            <td><strong>Madde 88</strong></td>
+            <td>0.0333</td>
+            <td>N/A</td>
+            <td>2493</td>
+            <td>❌ ELENDİ (Düşük Skor)<br><small></small></td>
+            <td style="font-size: 0.8rem;">Skor 0.0333 < Eşik 0.2</td>
+            <td style="font-size: 0.7rem; max-width: 300px;">BAĞLAM: KAYNAK: 5510 Sayılı SSGSSK | MADDE: Madde 88 | PARÇA: 7/8 | [MÜLGA → ]
+
+ÖZET: Bu madde, kurumun prim ve diğer alacaklarının kamu alacağı olarak kabul edildiğini ve bu alacakların tahsilinde öz...</td>
+        </tr>
+        
+        <tr class="table-danger">
+            <td>43</td>
+            <td><strong>Madde 35</strong></td>
+            <td>0.0333</td>
+            <td>N/A</td>
+            <td>1407</td>
+            <td>❌ ELENDİ (Düşük Skor)<br><small></small></td>
+            <td style="font-size: 0.8rem;">Skor 0.0333 < Eşik 0.2</td>
+            <td style="font-size: 0.7rem; max-width: 300px;">BAĞLAM: KAYNAK: 6356 Sayılı Sendikalar ve Toplu İş Sözleşmesi Kanunu | MADDE: Madde 35
+
+ÖZET: Toplu iş sözleşmeleri yazılı olarak yapılmalı ve en az bir, en fazla üç yıl süreli olmalıdır. Süre bitmede...</td>
+        </tr>
+        
+        <tr class="table-danger">
+            <td>44</td>
+            <td><strong>Madde 411</strong></td>
+            <td>0.0323</td>
+            <td>N/A</td>
+            <td>1459</td>
+            <td>❌ ELENDİ (Düşük Skor)<br><small></small></td>
+            <td style="font-size: 0.8rem;">Skor 0.0323 < Eşik 0.2</td>
+            <td style="font-size: 0.7rem; max-width: 300px;">BAĞLAM: KAYNAK: 6098 Sayılı Türk Borçlar Kanunu | MADDE: Madde 411
+
+ÖZET: Bu madde, işçinin sadece bir işveren için belirli bir iş yapmayı kabul ettiği durumlarda, işverenin ona yeterli iş sağlaması g...</td>
+        </tr>
+        
+        <tr class="table-danger">
+            <td>45</td>
+            <td><strong>Madde 440</strong></td>
+            <td>0.0323</td>
+            <td>N/A</td>
+            <td>884</td>
+            <td>❌ ELENDİ (Düşük Skor)<br><small></small></td>
+            <td style="font-size: 0.8rem;">Skor 0.0323 < Eşik 0.2</td>
+            <td style="font-size: 0.7rem; max-width: 300px;">BAĞLAM: KAYNAK: 6098 Sayılı Türk Borçlar Kanunu | MADDE: Madde 440
+
+ÖZET: İşçinin ölümü durumunda, iş sözleşmesi otomatik olarak sona erer ve işveren, işçinin geride kalan eşine ve çocuklarına belirli...</td>
+        </tr>
+        
+        <tr class="table-danger">
+            <td>46</td>
+            <td><strong>Madde 345</strong></td>
+            <td>0.0303</td>
+            <td>N/A</td>
+            <td>738</td>
+            <td>❌ ELENDİ (Düşük Skor)<br><small></small></td>
+            <td style="font-size: 0.8rem;">Skor 0.0303 < Eşik 0.2</td>
+            <td style="font-size: 0.7rem; max-width: 300px;">BAĞLAM: KAYNAK: 6100 Sayılı Hukuk Muhakemeleri Kanunu | MADDE: Madde 345
+
+ÖZET: İstinaf başvurusu yapmak için iki haftalık bir süreniz var ve bu süre, kararın taraflara tebliğ edilmesiyle başlıyor. Eğ...</td>
+        </tr>
+        
+        <tr class="table-danger">
+            <td>47</td>
+            <td><strong>Madde 399</strong></td>
+            <td>0.0294</td>
+            <td>N/A</td>
+            <td>829</td>
+            <td>❌ ELENDİ (Düşük Skor)<br><small></small></td>
+            <td style="font-size: 0.8rem;">Skor 0.0294 < Eşik 0.2</td>
+            <td style="font-size: 0.7rem; max-width: 300px;">BAĞLAM: KAYNAK: 6098 Sayılı Türk Borçlar Kanunu | MADDE: Madde 399
+
+ÖZET: İşveren, iş yerindeki düzeni sağlamak için kurallar koyabilir ve işçilere özel talimatlar verebilir. İşçiler de bu kurallara v...</td>
+        </tr>
+        
+        <tr class="table-danger">
+            <td>48</td>
+            <td><strong>Madde 117</strong></td>
+            <td>0.0286</td>
+            <td>N/A</td>
+            <td>1236</td>
+            <td>❌ ELENDİ (Düşük Skor)<br><small></small></td>
+            <td style="font-size: 0.8rem;">Skor 0.0286 < Eşik 0.2</td>
+            <td style="font-size: 0.7rem; max-width: 300px;">BAĞLAM: KAYNAK: 6098 Sayılı Türk Borçlar Kanunu | MADDE: Madde 117
+
+ÖZET: Bu madde, bir borcun ödenmesi gereken tarihin geçmesi durumunda borçlunun temerrüde düşeceğini belirtir. Eğer borçlu, alacaklı...</td>
+        </tr>
+        
+        <tr class="table-danger">
+            <td>49</td>
+            <td><strong>Madde 435</strong></td>
+            <td>0.0278</td>
+            <td>N/A</td>
+            <td>952</td>
+            <td>❌ ELENDİ (Düşük Skor)<br><small></small></td>
+            <td style="font-size: 0.8rem;">Skor 0.0278 < Eşik 0.2</td>
+            <td style="font-size: 0.7rem; max-width: 300px;">BAĞLAM: KAYNAK: 6098 Sayılı Türk Borçlar Kanunu | MADDE: Madde 435
+
+ÖZET: Taraflardan biri, iş ilişkisini derhal sonlandırmak istediğinde, bunu haklı bir sebebe dayanarak yapabilir ve fesih nedenini y...</td>
+        </tr>
+        
+        <tr class="table-danger">
+            <td>50</td>
+            <td><strong>Madde 103</strong></td>
+            <td>0.0270</td>
+            <td>N/A</td>
+            <td>2450</td>
+            <td>❌ ELENDİ (Düşük Skor)<br><small></small></td>
+            <td style="font-size: 0.8rem;">Skor 0.0270 < Eşik 0.2</td>
+            <td style="font-size: 0.7rem; max-width: 300px;">BAĞLAM: KAYNAK: 5510 Sayılı SSGSSK | MADDE: Madde 103 | PARÇA: 2/3
+
+ÖZET: Bu madde, sağlık hizmeti sunucularının alacaklarının ödemelerinin, inceleme veya soruşturma sürecinde risk altında olduğu duru...</td>
+        </tr>
+        </tbody>
+            </table>
+        </div>
+    </body>
+    </html>
+    

@@ -1,6 +1,0 @@
-ID,Question,Category,Difficulty,Source,Final Score,Passed,Relevance,Faithfulness,Correctness,Completeness,Latency (ms),Failure Reasons
-1,Türkiye Cumhuriyeti hangi niteliklere sahip bir devlettir?,olgusal,kolay,T.C. Anayasası,0.940,Yes,0.90,0.95,0.90,0.90,1739,
-2,Anayasa'ya göre egemenlik kayıtsız şartsız kime aittir?,olgusal,kolay,T.C. Anayasası,0.940,Yes,1.00,0.80,1.00,1.00,1861,
-3,Türk Bayrağı'nın şekli nasıl tanımlanmıştır?,olgusal,kolay,T.C.  Anayasası,0.873,Yes,0.80,0.90,0.90,0.80,1156,
-4,Devletin resmi dili hangisidir?,olgusal,kolay,T.C. Anayasası,0.940,Yes,1.00,0.80,1.00,1.00,1249,
-5,Anayasa'da düzenlenen eşitlik ilkesi neyi ifade eder?,kavramsal,orta,T.C.  Anayasası,0.905,Yes,0.90,0.80,0.90,0.90,2095,

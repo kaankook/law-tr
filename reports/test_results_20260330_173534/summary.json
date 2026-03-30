@@ -1,0 +1,111 @@
+{
+  "total_questions": 10,
+  "passed": 8,
+  "failed": 2,
+  "pass_rate": 0.8,
+  "avg_final_score": 0.8578933322528204,
+  "avg_relevance": 0.875,
+  "avg_faithfulness": 0.85,
+  "avg_correctness": 0.85,
+  "avg_completeness": 0.7,
+  "avg_overall_judge": 0.82,
+  "avg_latency_ms": 3594.666838645935,
+  "min_latency_ms": 2163.8519763946533,
+  "max_latency_ms": 11307.326078414917,
+  "p95_latency_ms": 7587.556648254385,
+  "by_difficulty": {
+    "kolay": {
+      "total": 6,
+      "passed": 6,
+      "avg_score": 0.9658046371837457,
+      "pass_rate": 1.0
+    },
+    "orta": {
+      "total": 3,
+      "passed": 1,
+      "avg_score": 0.5982160676632988,
+      "pass_rate": 0.3333333333333333
+    },
+    "zor": {
+      "total": 1,
+      "passed": 1,
+      "avg_score": 0.9894572964358329,
+      "pass_rate": 1.0
+    }
+  },
+  "by_category": {
+    "olgusal": {
+      "total": 10,
+      "passed": 8,
+      "avg_score": 0.8578933322528203,
+      "pass_rate": 0.8
+    }
+  },
+  "by_source": {
+    "": {
+      "total": 10,
+      "passed": 8,
+      "avg_score": 0.8578933322528203,
+      "pass_rate": 0.8
+    }
+  },
+  "model_name": "gemini-2.5-flash-lite",
+  "evaluator_model": "gpt-4o-mini",
+  "dataset_path": "C:\\Users\\kaank\\Desktop\\turkish-law-rag-assistant\\data\\test_datasets\\bronze_dataset_final.json",
+  "qdrant_k": 15,
+  "reranker_top_n": 7,
+  "timestamp": "2026-03-30T17:37:55.661425",
+  "duration_seconds": 132.013962,
+  "best_questions": [
+    {
+      "id": 0,
+      "score": 0.9894572964358329,
+      "q": "İş ilişkisinde dil, ırk, renk, cinsiyet, engellili"
+    },
+    {
+      "id": 0,
+      "score": 0.9889822732114791,
+      "q": "Deneme süreli iş sözleşmesinde deneme süresi en ço"
+    },
+    {
+      "id": 0,
+      "score": 0.9875789508914947,
+      "q": "İşi altı aydan az sürmüş olan bir işçi için belirs"
+    },
+    {
+      "id": 0,
+      "score": 0.9570503134608269,
+      "q": "İşyerinde işe başladığı günden itibaren, deneme sü"
+    },
+    {
+      "id": 0,
+      "score": 0.9570471994161607,
+      "q": "Dört saatten fazla ve yedi buçuk saate kadar (yedi"
+    }
+  ],
+  "worst_questions": [
+    {
+      "id": 0,
+      "score": 0.6431114965566,
+      "q": "Fazla çalışma (mesai) yapan bir işçinin fazla çalı",
+      "reasons": [
+        "Context'e sadakatsiz (0.50)"
+      ]
+    },
+    {
+      "id": 0,
+      "score": 0.19448950701713563,
+      "q": "Yer altı işlerinde çalışan işçilerin yıllık ücretl",
+      "reasons": [
+        "Düşük ilgililik (0.00)",
+        "Context'e sadakatsiz (0.00)",
+        "Yanlış/eksik atıf (0.00)"
+      ]
+    }
+  ],
+  "common_failure_reasons": {
+    "Context Sadakatsizliği": 2,
+    "Düşük İlgililik": 1,
+    "Yanlış Atıf": 1
+  }
+}

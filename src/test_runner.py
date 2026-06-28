@@ -11,30 +11,25 @@ from pathlib import Path
 from typing import Any, Dict, List, Optional, Tuple
 
 import numpy as np
-from langchain_core.prompts import ChatPromptTemplate
 from pydantic import BaseModel, Field
 from sentence_transformers import SentenceTransformer
 
 from src.config import (
     DATASET_PATH,
-    EVALUATOR_MODEL_NAME,
-    HEURISTIC_SUBWEIGHTS,
-    JUDGE_SUBWEIGHTS,
-    JUDGE_SYSTEM_PROMPT,
-    LATENCY_THRESHOLD_MS,
+    GENERATION_WEIGHTS,
     MAPPING_FILE_PATH,
     METRIC_WEIGHTS,
     MODEL_NAME,
-    MUST_SHOULD_WEIGHTS,
+    EVALUATOR_MODEL_NAME,
     RERANKER_CFG,
     RETRIEVAL_CFG,
+    RETRIEVAL_WEIGHTS,
     SCORING_WEIGHTS,
-    TEMPLATES_DIR,
     TEST_CONFIG_DEFAULTS,
     TEST_THRESHOLDS,
 )
 from src.law_mapping_resolver import LawMappingResolver
-from src.rag_pipeline import RAGPipeline, RAGResult, create_chat_model, get_article_reference
+from src.rag_pipeline import RAGPipeline, RAGResult, get_article_reference
 
 # Genel log ayarlari
 logging.basicConfig(
@@ -56,43 +51,6 @@ def print_startup_banner() -> None:
     logger.info("━" * 70)
 
 
-def load_template(template_name: str) -> str:
-    if not template_name or not isinstance(template_name, str):
-        raise ValueError(f"Geçersiz template adı: {template_name}")
-    try:
-        template_path = Path(TEMPLATES_DIR) / template_name
-        if not template_path.exists():
-            logger.error(f"Template dosyası bulunamadı: {template_path}")
-            raise FileNotFoundError(f"Template dosyası bulunamadı: {template_path}")
-        with open(template_path, 'r', encoding='utf-8') as f:
-            content = f.read()
-            if not content:
-                logger.warning(f"Template dosyası boş: {template_path}")
-            return content
-    except FileNotFoundError:
-        raise
-    except (IOError, OSError) as e:
-        logger.error(f"Template okuma hatası: {e}")
-        raise RuntimeError(f"Template yüklenemedi: {template_name}") from e
-
-
-def load_css_styles() -> str:
-    return load_template("report_styles.css")
-
-
-def load_html_template() -> str:
-    return load_template("report_template.html")
-
-
-class TriadJudgeOutput(BaseModel):
-    relevance_score: float = Field(description="Cevabın sorulan soruyla ne kadar ilgili olduğu (0.0-1.0).")
-    faithfulness_score: float = Field(description="Cevabın verilen context'e ne kadar sadık kaldığı (0.0-1.0).")
-    correctness_score: float = Field(description="Cevabın referans cevapla anlamsal ve hukuki örtüşmesi (0.0-1.0).")
-    completeness_score: float = Field(description="Cevabın beklenen bilgileri ne kadar kapsadığı (0.0-1.0).")
-    overall_score: float = Field(description="Tüm faktörler göz önüne alınarak genel kalite puanı (0.0-1.0).")
-    strengths: List[str] = Field(description="Cevabın güçlü yönleri.")
-    weaknesses: List[str] = Field(description="Cevabın zayıf yönleri veya eksikleri.")
-    reasoning: str = Field(description="Puanların gerekçesi (2-3 cümle).")
 
 
 @dataclass
@@ -114,7 +72,6 @@ class HeuristicEvaluator:
     def get_embedding_model(cls) -> SentenceTransformer:
         if cls._embedding_model is None:
             logger.info(f"  🔄 Embedding modeli indiriliyor/yükleniyor: {cls._model_name}")
-            logger.info("     (İlk çalıştırmada birkaç dakika sürebilir...)")
             import torch
             device = "cuda" if torch.cuda.is_available() else "cpu"
             cls._embedding_model = SentenceTransformer(cls._model_name, device=device)
@@ -135,314 +92,174 @@ class HeuristicEvaluator:
         return float(max(0.0, min(1.0, similarity)))
 
     @classmethod
-    def exact_match_check(cls, text: str, keyword: str) -> bool:
-        return keyword.lower() in text.lower()
-
-    @classmethod
-    def keyword_coverage(
-        cls,
-        generated: str,
-        must_include: List[str],
-        should_include: List[str],
-        expected_answer: str = ""
-    ) -> MetricResult:
-        if not must_include and not should_include and not expected_answer:
+    def precision_score(cls, retrieved_articles: List[str], expected_article: str) -> MetricResult:
+        """Retrieval Precision: Getirilen makalelerden kaçı ilgili?"""
+        if not retrieved_articles or not expected_article:
             return MetricResult(
-                name="keyword_coverage",
-                score=1.0,
-                weight=METRIC_WEIGHTS["keyword_weight"],
-                details={"note": "No keywords expected"}
+                name="precision",
+                score=1.0 if not expected_article else 0.0,
+                weight=RETRIEVAL_WEIGHTS["precision"],
+                details={"note": "Eksik veri"}
             )
-
-        must_found = sum(1 for kw in must_include if cls.exact_match_check(generated, kw))
-        should_found = sum(1 for kw in should_include if cls.exact_match_check(generated, kw))
-        must_score = must_found / len(must_include) if must_include else 1.0
-        should_score = should_found / len(should_include) if should_include else 1.0
-        exact_match_score = (must_score * MUST_SHOULD_WEIGHTS["must_weight"]) + (should_score * MUST_SHOULD_WEIGHTS["should_weight"])
-
-        all_keywords = (must_include or []) + (should_include or [])
-        combined_keywords_text = " ".join(all_keywords)
-        semantic_score = cls.compute_semantic_similarity(generated, combined_keywords_text) if combined_keywords_text.strip() else 1.0
         
-        # Anahtar kelime skorunu exact + semantik harmanlayarak hesapla.
-        final_score = (exact_match_score * 0.40) + (semantic_score * 0.60)
-
-        return MetricResult(
-            name="keyword_coverage",
-            score=final_score,
-            weight=METRIC_WEIGHTS["keyword_weight"],
-            details={
-                "must_include_found": must_found,
-                "must_include_total": len(must_include),
-                "should_include_found": should_found,
-                "should_include_total": len(should_include),
-                "exact_match_score": round(exact_match_score, 3),
-                "semantic_similarity": round(semantic_score, 3),
-                "missing_must": [kw for kw in must_include if not cls.exact_match_check(generated, kw)]
-            }
-        )
-
-    @classmethod
-    def semantic_correctness(cls, generated: str, expected: str, alternative_answers: List[str] = None) -> MetricResult:
-        if not expected:
-            return MetricResult(name="semantic_correctness", score=1.0, weight=0.8, details={"note": "No expected answer provided"})
-
-        main_similarity = cls.compute_semantic_similarity(generated, expected)
-        best_similarity = main_similarity
-        best_match = "main_answer"
-        alternative_scores = {}
-
-        if alternative_answers:
-            for i, alt_answer in enumerate(alternative_answers):
-                if alt_answer and alt_answer.strip():
-                    alt_sim = cls.compute_semantic_similarity(generated, alt_answer)
-                    alternative_scores[f"alt_{i+1}"] = round(alt_sim, 3)
-                    if alt_sim > best_similarity:
-                        best_similarity = alt_sim
-                        best_match = f"alternative_{i+1}"
-
-        return MetricResult(
-            name="semantic_correctness",
-            score=best_similarity,
-            weight=0.8,
-            details={
-                "main_answer_similarity": round(main_similarity, 3),
-                "best_similarity": round(best_similarity, 3),
-                "best_match_source": best_match,
-                "alternative_scores": alternative_scores,
-                "interpretation": cls._interpret_similarity(best_similarity)
-            }
-        )
-
-    @staticmethod
-    def _interpret_similarity(score: float) -> str:
-        if score >= 0.9: return "Çok yüksek benzerlik - neredeyse aynı"
-        elif score >= 0.75: return "Yüksek benzerlik - anlam korunmuş"
-        elif score >= 0.6: return "Orta benzerlik - kısmi örtüşme"
-        elif score >= 0.4: return "Düşük benzerlik - farklı içerik"
-        else: return "Çok düşük benzerlik - alakasız"
-
-    @classmethod
-    def quote_presence(cls, context: str, source_quote: str) -> MetricResult:
-        if isinstance(context, list):
-            context = "\n".join(str(c) for c in context if c)
-        if not source_quote or not source_quote.strip():
-            return MetricResult(name="quote_presence", score=1.0, weight=0.5, details={"note": "No source quote to check"})
-        if not context or not context.strip():
-            return MetricResult(name="quote_presence", score=0.0, weight=0.5, details={"note": "Empty context", "quote_found": False})
-
-        context_lower = context.lower().strip()
-        quote_lower = source_quote.lower().strip()
-        if quote_lower in context_lower:
-            return MetricResult(name="quote_presence", score=1.0, weight=0.5, details={"quote_found": True, "match_type": "exact"})
-
-        context_sentences = [s.strip() for s in re.split(r'[.!?\n]+', context) if len(s.strip()) > 20]
-        best_similarity = 0.0
-        best_sentence = ""
-        for sentence in context_sentences[:30]:
-            sim = cls.compute_semantic_similarity(quote_lower, sentence.lower())
-            if sim > best_similarity:
-                best_similarity = sim
-                best_sentence = sentence
-
-        return MetricResult(
-            name="quote_presence",
-            score=best_similarity,
-            weight=0.5,
-            details={
-                "quote_found": best_similarity >= 0.7,
-                "match_type": "semantic" if best_similarity >= 0.7 else "not_found",
-                "semantic_similarity": round(best_similarity, 3),
-                "best_matching_sentence": best_sentence[:100],
-            }
-        )
-
-    @staticmethod
-    def citation_accuracy(retrieved_articles: List[str], expected_article: str, expected_source: str) -> MetricResult:
-        if not expected_article:
-            return MetricResult(name="citation_accuracy", score=1.0, weight=METRIC_WEIGHTS["citation_weight"])
-
         expected_lower = expected_article.lower().strip()
-        retrieved_lower = [a.lower().strip() for a in retrieved_articles if a]
-
-        def extract_article_numbers(text: str) -> List[str]:
-            patterns = [r'madde\s*(\d+(?:/[a-zA-Z])?)', r'm\.?\s*(\d+(?:/[a-zA-Z])?)', r'(\d+)(?:\.|\s)*madde']
-            numbers = []
-            for pattern in patterns:
-                numbers.extend(re.findall(pattern, text, re.IGNORECASE))
-            return [n.lower() for n in numbers]
-
-        expected_numbers = extract_article_numbers(expected_lower)
-        exact_match = partial_match = number_match = False
-
-        for art in retrieved_lower:
-            if expected_lower in art:
-                exact_match = True; break
-            if expected_numbers:
-                for exp_num in expected_numbers:
-                    if exp_num in extract_article_numbers(art):
-                        number_match = True; break
-            if expected_source:
-                source_words = set(expected_source.lower().split())
-                if len(source_words & set(art.split())) >= len(source_words) * 0.5:
-                    partial_match = True
-
-        score = 1.0 if exact_match else 0.9 if number_match else 0.5 if partial_match else 0.0
+        exact_matches = sum(1 for art in retrieved_articles if expected_lower in art.lower())
+        
+        precision = exact_matches / len(retrieved_articles) if retrieved_articles else 0.0
+        
         return MetricResult(
-            name="citation_accuracy", score=score, weight=METRIC_WEIGHTS["citation_weight"],
-            details={"expected": expected_article, "retrieved": retrieved_articles[:3],
-                     "exact_match": exact_match, "number_match": number_match, "partial_match": partial_match}
-        )
-
-    @staticmethod
-    def response_quality(generated: str, question_type: str = "unknown") -> MetricResult:
-        word_count = len(generated.split())
-        WORD_COUNT_RANGES = {
-            "factual": {"min": 8, "ideal_min": 14, "ideal_max": 70, "max": 140},
-            "procedural": {"min": 12, "ideal_min": 20, "ideal_max": 100, "max": 200},
-            "conceptual": {"min": 12, "ideal_min": 24, "ideal_max": 110, "max": 220},
-            "comparative": {"min": 14, "ideal_min": 28, "ideal_max": 120, "max": 240},
-            "calculation": {"min": 8, "ideal_min": 14, "ideal_max": 80, "max": 160},
-            "unknown": {"min": 8, "ideal_min": 16, "ideal_max": 90, "max": 180}
-        }
-        ranges = WORD_COUNT_RANGES.get(question_type.lower(), WORD_COUNT_RANGES["unknown"])
-        if word_count < ranges["min"]: length_score = 0.3
-        elif word_count < ranges["ideal_min"]:
-            progress = (word_count - ranges["min"]) / (ranges["ideal_min"] - ranges["min"])
-            length_score = 0.3 + (progress * 0.5)
-        elif word_count <= ranges["ideal_max"]: length_score = 1.0
-        elif word_count <= ranges["max"]:
-            progress = (word_count - ranges["ideal_max"]) / (ranges["max"] - ranges["ideal_max"])
-            length_score = 1.0 - (progress * 0.2)
-        else: length_score = 0.7
-
-        has_structure = any(m in generated for m in ["1.", "2.", "-", "•", ": ", "\n-", "\n1.", "a)", "b)"])
-        structure_weight = 0.5 if question_type.lower() in ["procedural", "comparative"] else 0.3
-        structure_score = 1.0 if has_structure else 0.85
-        is_uncertain = any(p in generated.lower() for p in ["bilgi bulunamadı", "elimde yeterli", "mevcut değil"])
-        if is_uncertain and word_count <= ranges["ideal_max"]:
-            length_score = max(length_score, 0.9)
-        final_score = (length_score * (1.0 - structure_weight)) + (structure_score * structure_weight)
-
-        return MetricResult(
-            name="response_quality", score=final_score, weight=METRIC_WEIGHTS["response_quality_weight"],
-            details={"word_count": word_count, "question_type": question_type,
-                     "expected_range": f"{ranges['ideal_min']}-{ranges['ideal_max']}",
-                     "has_structure": has_structure, "length_score": round(length_score, 2)}
-        )
-
-    @staticmethod
-    def answer_consistency(generated: str, expected: str, must_include: List[str] = None) -> MetricResult:
-        if not expected:
-            return MetricResult(name="answer_consistency", score=1.0, weight=0.8, details={"note": "No expected answer provided"})
-
-        def extract_numbers(text: str) -> Dict[str, List[str]]:
-            patterns = {
-                "money": r'(\d{1,3}(?:\.\d{3})*(?:,\d{2})?\s*(?:TL|lira|kuruş))',
-                "percentage": r'(%\s*\d+(?:[.,]\d+)?|\d+(?:[.,]\d+)?\s*%)',
-                "days": r'(\d+)\s*(?:gün|günlük|günden)',
-                "months": r'(\d+)\s*(?:ay|aylık|aydan)',
-                "years": r'(\d+)\s*(?:yıl|yıllık|yıldan|sene)',
+            name="precision",
+            score=min(1.0, precision),
+            weight=RETRIEVAL_WEIGHTS["precision"],
+            details={
+                "exact_matches": exact_matches,
+                "total_retrieved": len(retrieved_articles),
+                "precision_value": round(precision, 3)
             }
-            results = {}
-            for name, pattern in patterns.items():
-                matches = re.findall(pattern, text.lower(), re.IGNORECASE)
-                if matches: results[name] = [str(m).strip() for m in matches]
-            return results
-
-        expected_numbers = extract_numbers(expected)
-        generated_numbers = extract_numbers(generated)
-        inconsistencies, matches, total_checks = [], 0, 0
-
-        for category in ["money", "percentage", "days", "months", "years"]:
-            for exp_val in expected_numbers.get(category, []):
-                total_checks += 1
-                exp_digits = re.sub(r'[^\d.]', '', exp_val.replace(".", "").replace(",", "."))
-                found = False
-                for gen_val in generated_numbers.get(category, []):
-                    gen_digits = re.sub(r'[^\d.]', '', gen_val.replace(".", "").replace(",", "."))
-                    try:
-                        if exp_digits and gen_digits and abs(float(exp_digits) - float(gen_digits)) < 0.01:
-                            found = True; matches += 1; break
-                    except ValueError:
-                        if exp_digits == gen_digits:
-                            found = True; matches += 1; break
-                if not found and exp_val:
-                    inconsistencies.append(f"{category}: expected '{exp_val}'")
-
-        score = 1.0 if total_checks == 0 else min(matches / total_checks, 0.6 if inconsistencies else 1.0)
-        return MetricResult(
-            name="answer_consistency", score=score, weight=0.8,
-            details={"matches": matches, "total_checks": total_checks, "inconsistencies": inconsistencies[:5]}
         )
 
-    @staticmethod
-    def latency_score(latency_ms: float, threshold_ms: float = LATENCY_THRESHOLD_MS) -> MetricResult:
-        if latency_ms <= threshold_ms * 0.5: score = 1.0
-        elif latency_ms <= threshold_ms: score = 0.8
-        elif latency_ms <= threshold_ms * 2: score = 0.5
-        else: score = 0.2
-        return MetricResult(name="latency", score=score, weight=METRIC_WEIGHTS["latency_weight"],
-                            details={"latency_ms": latency_ms, "threshold_ms": threshold_ms})
-
-
-class RAGJudge:
-    def __init__(self, model_name: str = EVALUATOR_MODEL_NAME):
-        self.llm = create_chat_model(model_name=model_name, temperature=0).with_structured_output(TriadJudgeOutput)
-        # Sistem mesaji puanlama kurallarini, insan mesaji test girdisini tasir.
-        self.prompt = ChatPromptTemplate.from_messages([
-            ("system", "{judge_system_prompt}"),
-            ("human",
-             "SORU: {question}\n\n"
-             "BEKLENEN CEVAP: {expected_answer}\n\n"
-             "ASISTANIN VERDİĞİ CEVAP: {actual_answer}\n\n"
-             "BAĞLAM (RAG tarafından getirilen kaynaklar):\n{context}\n\n"
-             "ZORUNLU ANAHTAR KELİMELER (must_include — eksik olursa puan kır): {must_include}\n"
-             "İSTENEN ANAHTAR KELİMELER (should_include): {should_include}\n"
-             "KAYNAK: {source}\n"
-             "MÜLGA UYARILARI: {mulga_warnings}"
-             ),
-        ])
-        self.call_count = 0
-        self.total_latency = 0
-
-    def evaluate(self, question: str, expected: str, actual: str, context: List[str],
-                 must_include: List[str] = None, should_include: List[str] = None, source: str = "",
-                 mulga_warnings: List[str] = None) -> TriadJudgeOutput:
-        try:
-            start = time.time()
-            context_text = "\n\n---\n\n".join(context) if context else "Context bulunamadı/boş."
-            
-            mulga_text = ""
-            if mulga_warnings:
-                mulga_text = "\n\n[UYARI - MÜLGA/ESKI KANUN]:\n" + "\n".join(f"• {w}" for w in mulga_warnings)
-            
-            chain = self.prompt | self.llm
-            result = chain.invoke({
-                "judge_system_prompt": JUDGE_SYSTEM_PROMPT,
-                "question": question,
-                "expected_answer": expected,
-                "actual_answer": actual,
-                "context": context_text,          
-                "must_include": ", ".join(must_include or []) or "Belirtilmemiş",
-                "should_include": ", ".join(should_include or []) or "Belirtilmemiş",
-                "source": source or "Belirtilmemiş",
-                "mulga_warnings": "\n".join(f"• {w}" for w in mulga_warnings) if mulga_warnings else "Yok",
-            })
-            self.call_count += 1
-            self.total_latency += (time.time() - start) * 1000
-            return result
-        except (ValueError, RuntimeError, TimeoutError) as e:
-            logger.error(f"  ⚠️  Judge değerlendirme hatası: {type(e).__name__}: {e}")
-            return TriadJudgeOutput(
-                relevance_score=0.0, faithfulness_score=0.0, correctness_score=0.0,
-                completeness_score=0.0, overall_score=0.0, strengths=[],
-                weaknesses=[f"Değerlendirme hatası: {str(e)}"],
-                reasoning=f"Teknik hata oluştu: {str(e)}"
+    @classmethod
+    def recall_score(cls, retrieved_articles: List[str], expected_article: str) -> MetricResult:
+        """Retrieval Recall: Beklenen makale retrieve edildi mi?"""
+        if not expected_article:
+            return MetricResult(
+                name="recall",
+                score=1.0,
+                weight=RETRIEVAL_WEIGHTS["recall"],
+                details={"note": "Beklenen makale yok"}
             )
-        except Exception as e:
-            logger.exception(f"  ❌ Beklenmeyen Judge hatası: {e}")
-            raise RuntimeError(f"Judge değerlendirmesi başarısız: {e}") from e
+        
+        expected_lower = expected_article.lower().strip()
+        found = any(expected_lower in art.lower() for art in retrieved_articles)
+        
+        # Semantic similarity de kontrol et
+        if not found and retrieved_articles:
+            similarities = [cls.compute_semantic_similarity(expected_lower, art.lower()) for art in retrieved_articles]
+            max_sim = max(similarities) if similarities else 0.0
+            found = max_sim >= 0.7
+            score = max_sim if max_sim >= 0.7 else 0.0
+        else:
+            score = 1.0 if found else 0.0
+        
+        return MetricResult(
+            name="recall",
+            score=float(score),
+            weight=RETRIEVAL_WEIGHTS["recall"],
+            details={
+                "expected_article_found": bool(found),
+                "total_retrieved": len(retrieved_articles)
+            }
+        )
+
+    @classmethod
+    def faithfulness_score(cls, answer: str, context: List[str]) -> MetricResult:
+        """Generation Faithfulness: Cevap context'e sadık mı?"""
+        if not context or not answer:
+            return MetricResult(
+                name="faithfulness",
+                score=1.0 if not answer else 0.5,
+                weight=GENERATION_WEIGHTS["faithfulness"],
+                details={"note": "Eksik veri"}
+            )
+        
+        context_text = " ".join(str(c) for c in context if c)
+        if not context_text.strip():
+            return MetricResult(
+                name="faithfulness",
+                score=0.5,
+                weight=GENERATION_WEIGHTS["faithfulness"],
+                details={"note": "Context boş"}
+            )
+        
+        # Cevabın her cümlesini context ile karşılaştır
+        sentences = [s.strip() for s in answer.split('.') if len(s.strip()) > 10]
+        if not sentences:
+            return MetricResult(name="faithfulness", score=0.7, weight=GENERATION_WEIGHTS["faithfulness"])
+        
+        faithfulness_scores = [
+            cls.compute_semantic_similarity(sent, context_text) for sent in sentences
+        ]
+        
+        avg_score = float(np.mean(faithfulness_scores)) if faithfulness_scores else 0.0        
+        
+        return MetricResult(
+            name="faithfulness",
+            score=min(1.0, avg_score),
+            weight=GENERATION_WEIGHTS["faithfulness"],
+            details={
+                "sentences_checked": len(sentences),
+                "avg_similarity": round(avg_score, 3)
+            }
+        )
+
+    @classmethod
+    def answer_relevance_score(cls, answer: str, question: str) -> MetricResult:
+        """Generation Answer Relevance: Cevap soruya ne kadar ilgili?"""
+        if not answer or not question:
+            return MetricResult(
+                name="answer_relevance",
+                score=0.0,
+                weight=GENERATION_WEIGHTS["answer_relevance"],
+                details={"note": "Eksik veri"}
+            )
+        
+        relevance = cls.compute_semantic_similarity(question, answer)
+        
+        return MetricResult(
+            name="answer_relevance",
+            score=min(1.0, relevance),
+            weight=GENERATION_WEIGHTS["answer_relevance"],
+            details={
+                "question_length": len(question.split()),
+                "answer_length": len(answer.split()),
+                "relevance_score": round(relevance, 3)
+            }
+        )
+
+    @classmethod
+    def answer_correctness_score(cls, answer: str, expected_answer: str, 
+                                  alternative_answers: List[str] = None) -> MetricResult:
+        """Generation Answer Correctness: Cevap doğru mu?"""
+        if not expected_answer:
+            return MetricResult(
+                name="answer_correctness",
+                score=1.0,
+                weight=GENERATION_WEIGHTS["answer_correctness"],
+                details={"note": "Beklenen cevap yok"}
+            )
+        
+        if not answer:
+            return MetricResult(
+                name="answer_correctness",
+                score=0.0,
+                weight=GENERATION_WEIGHTS["answer_correctness"],
+                details={"note": "Cevap boş"}
+            )
+        
+        main_score = cls.compute_semantic_similarity(answer, expected_answer)
+        best_score = main_score
+        best_match = "main_answer"
+        
+        if alternative_answers:
+            for i, alt in enumerate(alternative_answers):
+                if alt and alt.strip():
+                    alt_score = cls.compute_semantic_similarity(answer, alt)
+                    if alt_score > best_score:
+                        best_score = alt_score
+                        best_match = f"alt_{i+1}"
+        
+        return MetricResult(
+            name="answer_correctness",
+            score=min(1.0, best_score),
+            weight=GENERATION_WEIGHTS["answer_correctness"],
+            details={
+                "main_answer_score": round(main_score, 3),
+                "best_match": best_match,
+                "best_score": round(best_score, 3)
+            }
+        )
+
+
 
 
 @dataclass
@@ -460,7 +277,6 @@ class EvaluationResult:
     generation_latency_ms: float = 0.0
     total_latency_ms: float = 0.0
     heuristic_metrics: List[MetricResult] = field(default_factory=list)
-    judge_result: Optional[TriadJudgeOutput] = None
     passed: bool = False
     final_score: float = 0.0
     failure_reasons: List[str] = field(default_factory=list)
@@ -472,20 +288,10 @@ class EvaluationResult:
             "question_id": self.question_id, "question": self.question,
             "category": self.category, "difficulty": self.difficulty, "source": self.source,
             "generated_answer": self.generated_answer, "expected_answer": self.expected_answer,
-            "retrieved_articles": self.retrieved_articles, "total_latency_ms": self.total_latency_ms,
-            "mulga_warnings": self.mulga_warnings, "article_mapping_detected": self.article_mapping_detected,
+            "retrieved_articles": self.retrieved_articles, "total_latency_ms": float(self.total_latency_ms),
+            "mulga_warnings": self.mulga_warnings, "article_mapping_detected": bool(self.article_mapping_detected),
             "heuristic_metrics": [asdict(m) for m in self.heuristic_metrics],
-            "judge_scores": {
-                "relevance": self.judge_result.relevance_score if self.judge_result else 0,
-                "faithfulness": self.judge_result.faithfulness_score if self.judge_result else 0,
-                "correctness": self.judge_result.correctness_score if self.judge_result else 0,
-                "completeness": self.judge_result.completeness_score if self.judge_result else 0,
-                "overall": self.judge_result.overall_score if self.judge_result else 0,
-            },
-            "judge_reasoning": self.judge_result.reasoning if self.judge_result else "",
-            "strengths": self.judge_result.strengths if self.judge_result else [],
-            "weaknesses": self.judge_result.weaknesses if self.judge_result else [],
-            "passed": self.passed, "final_score": self.final_score, "failure_reasons": self.failure_reasons
+            "passed": bool(self.passed), "final_score": float(self.final_score), "failure_reasons": self.failure_reasons
         }
 
 
@@ -529,9 +335,6 @@ class TestConfig:
     output_dir: str = TEST_CONFIG_DEFAULTS["output_dir"]
     run_name: Optional[str] = None
     pass_threshold: float = TEST_THRESHOLDS["pass_threshold"]
-    relevance_threshold: float = TEST_THRESHOLDS["relevance_threshold"]
-    faithfulness_threshold: float = TEST_THRESHOLDS["faithfulness_threshold"]
-    citation_threshold: float = TEST_THRESHOLDS["citation_threshold"]
     save_contexts: bool = TEST_CONFIG_DEFAULTS["save_contexts"]
     verbose: bool = TEST_CONFIG_DEFAULTS["verbose"]
 
@@ -540,94 +343,10 @@ class TestConfig:
             self.run_name = f"test_results_{datetime.now().strftime('%Y%m%d_%H%M%S')}"
 
 
-class HTMLReportGenerator:
-    def __init__(self, results: List[EvaluationResult], summary: TestSummary):
-        self.results = results
-        self.summary = summary
-
-    def generate(self) -> str:
-        s = self.summary
-        css_styles = load_css_styles()
-        html_template = load_html_template()
-
-        def get_score_class(score: float) -> str:
-            return "success" if score >= 0.8 else "warning" if score >= 0.6 else "danger"
-
-        report_data = self._prepare_report_data()
-        report_data_json = json.dumps(report_data, ensure_ascii=False, indent=2)
-
-        template_vars = {
-            "css_styles": css_styles,
-            "timestamp_date": s.timestamp[:10] if s.timestamp else "",
-            "model_name": s.model_name, 
-            "evaluator_model": s.evaluator_model,
-            "qdrant_k": s.qdrant_k,
-            "reranker_top_n": s.reranker_top_n, 
-            "duration_seconds": f"{s.duration_seconds:.1f}",
-            "pass_rate_class": get_score_class(s.pass_rate), "pass_rate_percent": f"{s.pass_rate*100:.1f}",
-            "passed": s.passed, "failed": s.failed, "total_questions": s.total_questions,
-            "avg_final_score": f"{s.avg_final_score:.2f}",
-            "relevance_class": get_score_class(s.avg_relevance), "avg_relevance": f"{s.avg_relevance:.2f}",
-            "faithfulness_class": get_score_class(s.avg_faithfulness), "avg_faithfulness": f"{s.avg_faithfulness:.2f}",
-            "correctness_class": get_score_class(s.avg_correctness), "avg_correctness": f"{s.avg_correctness:.2f}",
-            "avg_completeness": f"{s.avg_completeness:.2f}", "avg_overall_judge": f"{s.avg_overall_judge:.2f}",
-            "avg_latency_sec": f"{s.avg_latency_ms/1000:.1f}", "p95_latency_sec": f"{s.p95_latency_ms/1000:.1f}",
-            "created_at": datetime.now().strftime("%Y-%m-%d %H:%M:%S"), "report_data_json": report_data_json,
-        }
-
-        html = html_template
-        for key, value in template_vars.items():
-            html = html.replace("{{" + key + "}}", str(value))
-        return html
-
-    def _prepare_report_data(self) -> Dict[str, Any]:
-        s = self.summary
-        metrics = [
-            {"name": "İlgililik (Relevance)", "score": s.avg_relevance},
-            {"name": "Sadakat (Faithfulness)", "score": s.avg_faithfulness},
-            {"name": "Doğruluk (Correctness)", "score": s.avg_correctness},
-            {"name": "Tamlık (Completeness)", "score": s.avg_completeness},
-            {"name": "Genel Judge Skoru", "score": s.avg_overall_judge},
-        ]
-        questions = []
-        for r in self.results:
-            q_data = {
-                "question_id": r.question_id, "question": r.question,
-                "category": r.category, "difficulty": r.difficulty, "source": r.source,
-                "generated_answer": r.generated_answer, "expected_answer": r.expected_answer,
-                "total_latency_ms": r.total_latency_ms, "passed": r.passed,
-                "final_score": r.final_score, "failure_reasons": r.failure_reasons,
-                "judge_scores": None, "judge_reasoning": "", "strengths": [], "weaknesses": [],
-            }
-            if r.judge_result:
-                q_data["judge_scores"] = {
-                    "relevance": r.judge_result.relevance_score,
-                    "faithfulness": r.judge_result.faithfulness_score,
-                    "correctness": r.judge_result.correctness_score,
-                    "completeness": r.judge_result.completeness_score,
-                    "overall": r.judge_result.overall_score,
-                }
-                q_data["judge_reasoning"] = r.judge_result.reasoning
-                q_data["strengths"] = r.judge_result.strengths
-                q_data["weaknesses"] = r.judge_result.weaknesses
-            questions.append(q_data)
-
-        return {
-            "metrics": metrics, "questions": questions,
-            "by_difficulty": s.by_difficulty, "by_category": s.by_category,
-            "failure_reasons": s.common_failure_reasons,
-            "chart_data": {
-                "triad": [s.avg_relevance, s.avg_faithfulness, s.avg_correctness, s.avg_completeness, s.avg_overall_judge],
-                "pass_fail": [s.passed, s.failed],
-            }
-        }
-
-
 class RAGTestRunner:
     def __init__(self, config: TestConfig) -> None:
         self.config = config
         self.pipeline: Optional[RAGPipeline] = None
-        self.judge: Optional[RAGJudge] = None
         self.heuristic = HeuristicEvaluator()
         self.law_resolver = LawMappingResolver(MAPPING_FILE_PATH)
         self.results: List[EvaluationResult] = []
@@ -689,10 +408,6 @@ class RAGTestRunner:
         _ = self.pipeline.llm
         logger.info("  ✓ RAG Pipeline hazır")
 
-        logger.info(f"  🔄 LLM Judge yükleniyor ({self.config.evaluator_model})...")
-        self.judge = RAGJudge(model_name=self.config.evaluator_model)
-        logger.info("  ✓ LLM Judge hazır")
-
         logger.info("  ✓ Tüm sistemler hazır")
         logger.info("━" * 70)
 
@@ -727,29 +442,18 @@ class RAGTestRunner:
         q_id = question_id if question_id is not None else self._normalize_question_id(question_data.get('id'), 1)
         question = question_data.get('question', '')
 
-        # Dataset alanlarini geriye donuk uyumla normalize et.
-        meta          = question_data.get('metadata', {})
-        category      = meta.get('category',  question_data.get('question_type', 'unknown'))
-        difficulty    = meta.get('difficulty', question_data.get('difficulty',    'unknown'))
-        source        = question_data.get('source', '')
+        # Dataset alanlarini normalize et
+        meta = question_data.get('metadata', {})
+        category = meta.get('category', question_data.get('question_type', 'unknown'))
+        difficulty = meta.get('difficulty', question_data.get('difficulty', 'unknown'))
+        source = question_data.get('source', '')
 
-        eval_rules    = question_data.get('evaluation_rules',   question_data.get('evaluation_criteria', {}))
-        must_include  = eval_rules.get('must_include',  [])
-        should_include = eval_rules.get('should_include', [])
-
-        # Beklenen cevap hem duz metin hem de dict yapisinda gelebilir.
-        raw_answer    = question_data.get('expected_answer', question_data.get('answer', ''))
+        raw_answer = question_data.get('expected_answer', question_data.get('answer', ''))
         if isinstance(raw_answer, dict):
             expected_answer = raw_answer.get('main_answer', '')
-            source_quote    = raw_answer.get('source_quote', '')
-            key_entities    = raw_answer.get('key_entities', [])
-            if not must_include:
-                must_include = key_entities
         else:
             expected_answer = raw_answer
-            source_quote    = ''
 
-        # Madde referansini metadata veya source_details altindan al.
         expected_article = (
             meta.get('article_reference')
             or question_data.get('source_details', {}).get('article', '')
@@ -757,48 +461,32 @@ class RAGTestRunner:
 
         alternative_answers = question_data.get('alternative_correct_answers', [])
         retrieved_articles = [get_article_reference(m) for m in rag_result.retrieval.metadata_list]
-        
-        article_mapping_detected = False
-        if rag_result.mulga_warnings and expected_article:
-            expected_law_match = re.search(r'(\d+)\s+[Ss]ayılı', expected_article)
-            if expected_law_match:
-                expected_law_no = expected_law_match.group(1)
-                mapping_flags = self.law_resolver.get_metadata_flags(expected_law_no)
-                if mapping_flags.get('is_mulga_source'):
-                    mapped_law_name = mapping_flags.get('maps_to_law_name', '')
-                    mapped_law_no = mapping_flags.get('maps_to_law_no', '')
-                    if mapped_law_name and any(mapped_law_name.lower() in art.lower() for art in retrieved_articles):
-                        article_mapping_detected = True
-                        logger.debug(f"    ✓ Mülga kanun mapping detected: {expected_law_no} → {mapped_law_no}")
 
-        logger.debug(f"    🔍 Heuristik değerlendirme yapılıyor...")
-        citation_metric = self.heuristic.citation_accuracy(retrieved_articles, expected_article, source)
+        logger.debug(f"    🔍 Metrikler hesaplanıyor...")
         
-        if article_mapping_detected and citation_metric.score < 0.7:
-            citation_metric.score = min(0.85, citation_metric.score + 0.35)
-            citation_metric.details['mapping_adjusted'] = True
-            logger.debug(f"    📝 Citation accuracy artırıldı (mülga mapping): {citation_metric.score:.2f}")
+        # RETRIEVAL METRİKLERİ
+        precision_metric = self.heuristic.precision_score(retrieved_articles, expected_article)
+        recall_metric = self.heuristic.recall_score(retrieved_articles, expected_article)
+        
+        # GENERATION METRİKLERİ
+        faithfulness_metric = self.heuristic.faithfulness_score(rag_result.answer, rag_result.retrieval.contexts)
+        answer_relevance_metric = self.heuristic.answer_relevance_score(rag_result.answer, question)
+        answer_correctness_metric = self.heuristic.answer_correctness_score(
+            rag_result.answer, expected_answer, alternative_answers=alternative_answers
+        )
         
         heuristic_metrics = [
-            self.heuristic.keyword_coverage(rag_result.answer, must_include, should_include, expected_answer=expected_answer),
-            self.heuristic.semantic_correctness(rag_result.answer, expected_answer, alternative_answers=alternative_answers),
-            self.heuristic.quote_presence(rag_result.retrieval.contexts, source_quote),
-            citation_metric,
-            self.heuristic.response_quality(rag_result.answer, question_type=category),
-            self.heuristic.answer_consistency(rag_result.answer, expected_answer, must_include),
-            self.heuristic.latency_score(rag_result.total_latency_ms),
+            precision_metric,
+            recall_metric,
+            faithfulness_metric,
+            answer_relevance_metric,
+            answer_correctness_metric,
         ]
 
-        logger.info(f"    🤖 LLM Judge değerlendiriyor...")
-        judge_result = self.judge.evaluate(
-            question=question, expected=expected_answer, actual=rag_result.answer,
-            context=rag_result.retrieval.contexts,
-            must_include=must_include, should_include=should_include, source=source,
-            mulga_warnings=rag_result.mulga_warnings
-        )
-        logger.info(f"    ✓ Judge: Rel={judge_result.relevance_score:.2f} | Faith={judge_result.faithfulness_score:.2f} | Corr={judge_result.correctness_score:.2f} | Comp={judge_result.completeness_score:.2f}")
+        logger.info(f"    ✓ Retrieval - Precision: {precision_metric.score:.2f} | Recall: {recall_metric.score:.2f}")
+        logger.info(f"    ✓ Generation - Faithfulness: {faithfulness_metric.score:.2f} | Relevance: {answer_relevance_metric.score:.2f} | Correctness: {answer_correctness_metric.score:.2f}")
 
-        final_score, passed, failure_reasons = self._calculate_final_result(heuristic_metrics, judge_result, source)
+        final_score, passed, failure_reasons = self._calculate_final_result(heuristic_metrics, source)
 
         return EvaluationResult(
             question_id=q_id, question=question, category=category,
@@ -809,82 +497,69 @@ class RAGTestRunner:
             retrieval_latency_ms=rag_result.retrieval.latency_ms,
             generation_latency_ms=rag_result.generation.latency_ms,
             total_latency_ms=rag_result.total_latency_ms,
-            heuristic_metrics=heuristic_metrics, judge_result=judge_result,
             passed=passed, final_score=final_score, failure_reasons=failure_reasons,
-            mulga_warnings=rag_result.mulga_warnings, article_mapping_detected=article_mapping_detected
+            mulga_warnings=rag_result.mulga_warnings, article_mapping_detected=False
         )
 
-    def _extract_metric_scores(self, metric_map: Dict[str, MetricResult]) -> Tuple[float, float, float, float, float, float]:
-        def get_score(name: str) -> float:
-            metric = metric_map.get(name)
-            return metric.score if metric else 1.0
-
-        return (
-            get_score("citation_accuracy"),
-            get_score("keyword_coverage"),
-            get_score("response_quality"),
-            get_score("answer_consistency"),
-            get_score("semantic_correctness"),
-            get_score("quote_presence"),
-        )
-
-    def _calculate_judge_score(self, j: TriadJudgeOutput) -> float:
-        return (j.faithfulness_score * JUDGE_SUBWEIGHTS["faithfulness"] +
-                j.relevance_score * JUDGE_SUBWEIGHTS["relevance"] +
-                j.correctness_score * JUDGE_SUBWEIGHTS["correctness"] +
-                j.completeness_score * JUDGE_SUBWEIGHTS["completeness"])
-
-    def _calculate_heuristic_score(self, semantic, quote, cit, consistency, kw, qual) -> float:
-        return (semantic * HEURISTIC_SUBWEIGHTS["semantic_correctness"] +
-                quote * HEURISTIC_SUBWEIGHTS["quote_presence"] +
-                cit * HEURISTIC_SUBWEIGHTS["citation_accuracy"] +
-                consistency * HEURISTIC_SUBWEIGHTS["answer_consistency"] +
-                kw * HEURISTIC_SUBWEIGHTS["keyword_coverage"] +
-                qual * HEURISTIC_SUBWEIGHTS["response_quality"])
-
-    def _check_thresholds(
-        self,
-        judge_result,
-        metric_map: Dict[str, MetricResult],
-        scores,
-        final_score,
-        is_out_of_scope,
-    ) -> Tuple[bool, List[str]]:
-        failure_reasons = []
-        cit_score, kw_score, qual_score, consistency_score, semantic_score, quote_score = scores
-
-        if judge_result.relevance_score < self.config.relevance_threshold:
-            failure_reasons.append(f"Düşük ilgililik ({judge_result.relevance_score:.2f})")
-        if judge_result.faithfulness_score < self.config.faithfulness_threshold and not is_out_of_scope:
-            failure_reasons.append(f"Context'e sadakatsiz ({judge_result.faithfulness_score:.2f})")
-        if cit_score < self.config.citation_threshold and not is_out_of_scope:
-            failure_reasons.append(f"Yanlış/eksik atıf ({cit_score:.2f})")
-        if consistency_score < TEST_THRESHOLDS["consistency_threshold"] and not is_out_of_scope:
-            consistency_metric = metric_map.get("answer_consistency")
-            if consistency_metric and consistency_metric.details.get("inconsistencies"):
-                failure_reasons.append(f"Sayısal tutarsızlık ({consistency_score:.2f})")
-        if semantic_score < TEST_THRESHOLDS["semantic_threshold"] and not is_out_of_scope:
-            failure_reasons.append(f"Düşük anlamsal benzerlik ({semantic_score:.2f})")
-        if final_score < self.config.pass_threshold and not failure_reasons:
-            failure_reasons.append(f"Düşük genel skor ({final_score:.2f})")
-
-        return len(failure_reasons) == 0, failure_reasons
-
-    def _calculate_final_result(self, heuristic_metrics, judge_result, source) -> Tuple[float, bool, List[str]]:
-        is_out_of_scope = any(s in source.lower() for s in ['out_of_scope', 'edge_case'])
+    def _calculate_final_result(self, heuristic_metrics: List[MetricResult], source: str) -> Tuple[float, bool, List[str]]:
+        """
+        Yeni metrik yapısı kullanarak final skoru hesapla.
+        
+        Retrieval: Precision + Recall
+        Generation: Faithfulness + Answer Relevance + Answer Correctness
+        """
         metric_map = {metric.name: metric for metric in heuristic_metrics}
-        metric_scores = self._extract_metric_scores(metric_map)
-        cit_score, kw_score, qual_score, consistency_score, semantic_score, quote_score = metric_scores
-        judge_avg = self._calculate_judge_score(judge_result)
-        heuristic_avg = self._calculate_heuristic_score(semantic_score, quote_score, cit_score, consistency_score, kw_score, qual_score)
-        final_score = (judge_avg * SCORING_WEIGHTS["judge_weight"]) + (heuristic_avg * SCORING_WEIGHTS["heuristic_weight"])
-        passed, failure_reasons = self._check_thresholds(
-            judge_result,
-            metric_map,
-            metric_scores,
-            final_score,
-            is_out_of_scope,
+        failure_reasons = []
+        
+        # Retrieval metrikleri
+        precision = metric_map.get("precision")
+        recall = metric_map.get("recall")
+        
+        # Generation metrikleri
+        faithfulness = metric_map.get("faithfulness")
+        answer_relevance = metric_map.get("answer_relevance")
+        answer_correctness = metric_map.get("answer_correctness")
+        
+        # Eğer metrik hesaplanamadıysa
+        if not all([precision, recall, faithfulness, answer_relevance, answer_correctness]):
+            return 0.0, False, ["Metrik hesaplama hatası"]
+        
+        # Retrieval skoru
+        retrieval_score = (
+            precision.score * RETRIEVAL_WEIGHTS["precision"] +
+            recall.score * RETRIEVAL_WEIGHTS["recall"]
         )
+        
+        # Generation skoru
+        generation_score = (
+            faithfulness.score * GENERATION_WEIGHTS["faithfulness"] +
+            answer_relevance.score * GENERATION_WEIGHTS["answer_relevance"] +
+            answer_correctness.score * GENERATION_WEIGHTS["answer_correctness"]
+        )
+        
+        # Final skor
+        final_score = float(
+            retrieval_score * SCORING_WEIGHTS["retrieval_weight"] +
+            generation_score * SCORING_WEIGHTS["generation_weight"]
+        )
+        
+        # Eşik kontrolü
+        passed = bool(final_score >= self.config.pass_threshold)        
+        
+        if precision.score < TEST_THRESHOLDS["precision_threshold"]:
+            failure_reasons.append(f"Düşük Precision ({precision.score:.2f})")
+        if recall.score < TEST_THRESHOLDS["recall_threshold"]:
+            failure_reasons.append(f"Düşük Recall ({recall.score:.2f})")
+        if faithfulness.score < TEST_THRESHOLDS["faithfulness_threshold"]:
+            failure_reasons.append(f"Düşük Faithfulness ({faithfulness.score:.2f})")
+        if answer_relevance.score < TEST_THRESHOLDS["answer_relevance_threshold"]:
+            failure_reasons.append(f"Düşük Answer Relevance ({answer_relevance.score:.2f})")
+        if answer_correctness.score < TEST_THRESHOLDS["answer_correctness_threshold"]:
+            failure_reasons.append(f"Düşük Answer Correctness ({answer_correctness.score:.2f})")
+        
+        if not failure_reasons and final_score < self.config.pass_threshold:
+            failure_reasons.append(f"Düşük final skor ({final_score:.2f})")
+        
         return final_score, passed, failure_reasons
 
     def run(self) -> List[EvaluationResult]:
@@ -937,10 +612,13 @@ class RAGTestRunner:
                 else:
                     failed_count += 1
 
-                j = eval_result.judge_result
+                metric_map = {m.name: m for m in eval_result.heuristic_metrics}
+                rel = metric_map.get("answer_relevance").score if "answer_relevance" in metric_map else 0.0
+                faith = metric_map.get("faithfulness").score if "faithfulness" in metric_map else 0.0
+                corr = metric_map.get("answer_correctness").score if "answer_correctness" in metric_map else 0.0
+
                 logger.info(f"└─ {status} | Final Skor: {eval_result.final_score:.3f} | "
-                            f"Rel: {j.relevance_score:.2f} | Faith: {j.faithfulness_score:.2f} | "
-                            f"Corr: {j.correctness_score:.2f} | Comp: {j.completeness_score:.2f}")
+                            f"Rel: {rel:.2f} | Faith: {faith:.2f} | Corr: {corr:.2f}")
 
                 if not eval_result.passed and eval_result.failure_reasons:
                     logger.warning(f"   ⚠️  Başarısızlık: {', '.join(eval_result.failure_reasons)}")
@@ -984,11 +662,13 @@ class RAGTestRunner:
         passed = 0
         scores: List[float] = []
         latencies: List[float] = []
-        relevance_scores: List[float] = []
+        
+        # Yeni metrikler
+        precision_scores: List[float] = []
+        recall_scores: List[float] = []
         faithfulness_scores: List[float] = []
-        correctness_scores: List[float] = []
-        completeness_scores: List[float] = []
-        overall_scores: List[float] = []
+        answer_relevance_scores: List[float] = []
+        answer_correctness_scores: List[float] = []
 
         by_difficulty = defaultdict(lambda: {"total": 0, "passed": 0, "avg_score": 0, "scores": []})
         by_category = defaultdict(lambda: {"total": 0, "passed": 0, "avg_score": 0, "scores": []})
@@ -1004,12 +684,19 @@ class RAGTestRunner:
             if r.total_latency_ms > 0:
                 latencies.append(r.total_latency_ms)
 
-            if r.judge_result:
-                relevance_scores.append(r.judge_result.relevance_score)
-                faithfulness_scores.append(r.judge_result.faithfulness_score)
-                correctness_scores.append(r.judge_result.correctness_score)
-                completeness_scores.append(r.judge_result.completeness_score)
-                overall_scores.append(r.judge_result.overall_score)
+            # Metrikleri topla
+            metric_map = {m.name: m for m in r.heuristic_metrics}
+            
+            if "precision" in metric_map:
+                precision_scores.append(metric_map["precision"].score)
+            if "recall" in metric_map:
+                recall_scores.append(metric_map["recall"].score)
+            if "faithfulness" in metric_map:
+                faithfulness_scores.append(metric_map["faithfulness"].score)
+            if "answer_relevance" in metric_map:
+                answer_relevance_scores.append(metric_map["answer_relevance"].score)
+            if "answer_correctness" in metric_map:
+                answer_correctness_scores.append(metric_map["answer_correctness"].score)
 
             for key, d in [(r.difficulty, by_difficulty), (r.category, by_category), (r.source, by_source)]:
                 d[key]["total"] += 1
@@ -1017,10 +704,8 @@ class RAGTestRunner:
                 d[key]["scores"].append(r.final_score)
 
             for reason in r.failure_reasons:
-                if "ilgililik" in reason.lower(): failure_reasons["Düşük İlgililik"] += 1
-                elif "sadakat" in reason.lower(): failure_reasons["Context Sadakatsizliği"] += 1
-                elif "atıf" in reason.lower(): failure_reasons["Yanlış Atıf"] += 1
-                else: failure_reasons[reason.split("(")[0].strip()] += 1
+                reason_key = reason.split("(")[0].strip()
+                failure_reasons[reason_key] += 1
 
         for d in [by_difficulty, by_category, by_source]:
             for key, val in d.items():
@@ -1038,11 +723,11 @@ class RAGTestRunner:
             failed=len(self.results) - passed,
             pass_rate=passed / len(self.results) if self.results else 0,
             avg_final_score=statistics.mean(scores) if scores else 0,
-            avg_relevance=statistics.mean(relevance_scores) if relevance_scores else 0,
+            avg_relevance=statistics.mean(precision_scores) if precision_scores else 0,
             avg_faithfulness=statistics.mean(faithfulness_scores) if faithfulness_scores else 0,
-            avg_correctness=statistics.mean(correctness_scores) if correctness_scores else 0,
-            avg_completeness=statistics.mean(completeness_scores) if completeness_scores else 0,
-            avg_overall_judge=statistics.mean(overall_scores) if overall_scores else 0,
+            avg_correctness=statistics.mean(answer_correctness_scores) if answer_correctness_scores else 0,
+            avg_completeness=statistics.mean(answer_relevance_scores) if answer_relevance_scores else 0,
+            avg_overall_judge=statistics.mean(recall_scores) if recall_scores else 0,
             avg_latency_ms=statistics.mean(latencies) if latencies else 0,
             min_latency_ms=min(latencies) if latencies else 0,
             max_latency_ms=max(latencies) if latencies else 0,
@@ -1076,9 +761,6 @@ class RAGTestRunner:
             self._save_csv()
             logger.info("  ✓ results.csv")
 
-            self._save_html_report()
-            logger.info("  ✓ report.html")
-
             logger.info(f"  📂 Tüm dosyalar kaydedildi: {self.output_path}")
         except (IOError, OSError) as e:
             logger.error(f"  ❌ Kaydetme hatası: {e}")
@@ -1088,30 +770,27 @@ class RAGTestRunner:
         with open(self.output_path / "results.csv", 'w', newline='', encoding='utf-8') as f:
             writer = csv.writer(f)
             writer.writerow(['ID', 'Question', 'Category', 'Difficulty', 'Source',
-                             'Final Score', 'Passed', 'Relevance', 'Faithfulness',
-                             'Correctness', 'Completeness', 'Semantic Sim', 'Keyword Cov',
+                             'Final Score', 'Passed', 'Precision', 'Recall',
+                             'Faithfulness', 'Answer Relevance', 'Answer Correctness',
                              'Latency (ms)', 'Failure Reasons'])
             for r in self.results:
-                j = r.judge_result
                 metric_map = {m.name: m for m in r.heuristic_metrics}
-                semantic_m = metric_map.get("semantic_correctness")
-                keyword_m = metric_map.get("keyword_coverage")
+                precision_m = metric_map.get("precision")
+                recall_m = metric_map.get("recall")
+                faithfulness_m = metric_map.get("faithfulness")
+                relevance_m = metric_map.get("answer_relevance")
+                correctness_m = metric_map.get("answer_correctness")
+                
                 writer.writerow([
                     r.question_id, r.question[:100], r.category, r.difficulty, r.source,
                     f"{r.final_score:.3f}", "Yes" if r.passed else "No",
-                    f"{j.relevance_score:.2f}" if j else "N/A",
-                    f"{j.faithfulness_score:.2f}" if j else "N/A",
-                    f"{j.correctness_score:.2f}" if j else "N/A",
-                    f"{j.completeness_score:.2f}" if j else "N/A",
-                    f"{semantic_m.score:.2f}" if semantic_m else "N/A",
-                    f"{keyword_m.score:.2f}" if keyword_m else "N/A",
+                    f"{precision_m.score:.2f}" if precision_m else "N/A",
+                    f"{recall_m.score:.2f}" if recall_m else "N/A",
+                    f"{faithfulness_m.score:.2f}" if faithfulness_m else "N/A",
+                    f"{relevance_m.score:.2f}" if relevance_m else "N/A",
+                    f"{correctness_m.score:.2f}" if correctness_m else "N/A",
                     f"{r.total_latency_ms:.0f}", "; ".join(r.failure_reasons)
                 ])
-
-    def _save_html_report(self) -> None:
-        html_content = HTMLReportGenerator(self.results, self.summary).generate()
-        with open(self.output_path / "report.html", 'w', encoding='utf-8') as f:
-            f.write(html_content)
 
     def print_summary(self) -> None:
         if not self.summary:
@@ -1127,12 +806,14 @@ class RAGTestRunner:
         logger.info(f"  {status_emoji} Başarı Oranı    : %{s.pass_rate*100:.1f} ({s.passed} geçti / {s.failed} kaldı / {s.total_questions} toplam)")
         logger.info(f"  📈 Final Skor Ort. : {s.avg_final_score:.3f}")
         logger.info("")
-        logger.info("  RAG TRIAD METRİKLERİ:")
-        logger.info(f"    İlgililik (Relevance)    : {s.avg_relevance:.3f}")
-        logger.info(f"    Sadakat (Faithfulness)   : {s.avg_faithfulness:.3f}")
-        logger.info(f"    Doğruluk (Correctness)   : {s.avg_correctness:.3f}")
-        logger.info(f"    Tamlık (Completeness)    : {s.avg_completeness:.3f}")
-        logger.info(f"    Genel Judge Skoru        : {s.avg_overall_judge:.3f}")
+        logger.info("  📊 RETRİEVAL METRİKLERİ:")
+        logger.info(f"    Precision (Kesinlik)     : {s.avg_relevance:.3f}")
+        logger.info(f"    Recall (Hatırlama)       : {s.avg_overall_judge:.3f}")
+        logger.info("")
+        logger.info("  📊 GENERATION METRİKLERİ:")
+        logger.info(f"    Faithfulness (Sadakat)   : {s.avg_faithfulness:.3f}")
+        logger.info(f"    Answer Correctness       : {s.avg_correctness:.3f}")
+        logger.info(f"    Answer Relevance         : {s.avg_completeness:.3f}")
         logger.info("")
         logger.info("  ⚡ PERFORMANS:")
         logger.info(f"    Ort. Yanıt Süresi  : {s.avg_latency_ms:.0f}ms")
@@ -1146,17 +827,32 @@ class RAGTestRunner:
             for diff, stats in sorted(s.by_difficulty.items()):
                 logger.info(f"    {diff:12s}: %{stats['pass_rate']*100:.0f} başarı | Ort. Skor: {stats['avg_score']:.3f} ({stats['passed']}/{stats['total']})")
 
+        if s.by_category:
+            logger.info("")
+            logger.info("  📂 KATEGORİ BAZLI SONUÇLAR:")
+            for cat, stats in sorted(s.by_category.items()):
+                logger.info(f"    {cat:15s}: %{stats['pass_rate']*100:.0f} başarı | Ort. Skor: {stats['avg_score']:.3f} ({stats['passed']}/{stats['total']})")
+
         if s.common_failure_reasons:
             logger.info("")
             logger.info("  ⚠️  EN YAYGIN HATALAR:")
             for reason, count in sorted(s.common_failure_reasons.items(), key=lambda x: x[1], reverse=True)[:5]:
                 logger.info(f"    • {reason}: {count}x")
 
+        if s.best_questions:
+            logger.info("")
+            logger.info("  ✅ EN YÜKSEK SKORLU SORULAR:")
+            for q in s.best_questions[:3]:
+                logger.info(f"    Q{q['id']} ({q['score']:.2f}): {q['q']}")
+
         if s.worst_questions:
             logger.info("")
             logger.info("  ❌ EN DÜŞÜK SKORLU SORULAR:")
             for q in s.worst_questions[:3]:
+                reasons_str = " | ".join(q.get('reasons', [])[:2])
                 logger.info(f"    Q{q['id']} ({q['score']:.2f}): {q['q']}")
+                if reasons_str:
+                    logger.info(f"      Sebepler: {reasons_str}")
 
         logger.info("━" * 70)
 

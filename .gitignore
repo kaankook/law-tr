@@ -31,4 +31,3 @@ build/
 dist/
 reports/
 data/vector_store/
-data/test_datasets/copy.json

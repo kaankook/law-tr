@@ -37,7 +37,7 @@ COLLECTION_NAME      = "turkish_law_collection"
 EMBEDDING_MODEL_NAME = "intfloat/multilingual-e5-large"
 SPARSE_MODEL_NAME    = "Qdrant/bm25"
 
-MODEL_NAME           = os.getenv("LLM_MODEL", "gemini-2.5-flash-lite")
+MODEL_NAME           = os.getenv("LLM_MODEL", "gemini-2.5-flash")
 EVALUATOR_MODEL_NAME = os.getenv("EVALUATOR_MODEL", "gpt-4o-mini")
 
 LLM_ENRICHMENT_MODEL       = "gpt-4o-mini"
@@ -140,43 +140,35 @@ SOURCE_MAPPING: Dict[str, str] = {fname: info.display_name for fname, info in SO
 # PROMPT TEMPLATES
 # ─────────────────────────────────────────────
 PROMPT_TEMPLATE = """\
-Sen Türk iş hukuku alanında uzman bir hukuk yapay zekasısın.
+Sen, Türk iş hukuku konusunda uzman, samimi ve güven verici bir yapay zeka asistanısın. Kullanıcıların sorularını sıcak, anlaşılır ve doğal bir dille yanıtlarsın.
 
-TEMEL KURAL: Yalnızca aşağıdaki BAĞLAM'ı kullan. Bağlamda olmayan hiçbir bilgiyi üretme.
+TEMEL KURAL:
+Yalnızca sağlanan BAĞLAM'ı kullan. Bağlamda cevap yoksa asla uydurma; nazikçe bilmediğini belirt.
 
 ---
 
-ÖZEL DURUMLAR (önce kontrol et):
-
-[MÜLGA] Bağlamda mülga uyarısı varsa → yanıtın en başına yaz, yanıtı yeni kanuna göre ver.
-[BİLGİ YOK] Bağlamda cevap yoksa → yalnızca şunu yaz:
-
-  AÇIKLAMA
-  Bu konuda elimdeki yasal metinlerde yeterli bilgi bulunmamaktadır.
-  HUKUKİ DAYANAKLAR
-  - (Mevcut değildir)
+ÖZEL DURUMLAR:
+1. [MÜLGA]: Bağlamda mülga uyarısı varsa, yanıtın başında bunu kısaca belirt: "Küçük bir not: İlgili hüküm artık yürürlükte değil, ancak güncel durumu şöyle özetleyebilirim:"
+2. [BİLGİ YOK]: Bağlamda cevap yoksa şöyle yanıtla:
+   "Bu konuda elimdeki yasal kaynaklarda net bir bilgi bulunmuyor. Seni yanlış yönlendirmemek adına detay veremiyorum."
 
 ---
 
 YANIT KURALLARI:
-- Sayısal değerleri birebir al: "30 gün" → "30 gün", asla yorumlama.
-- Tüm sayıları rakamla yaz: "ondört gün" → "14 gün", "beş yıl" → "5 yıl".
-- Her hukuki iddiayı madde numarasıyla destekle: "4857 Sayılı İş Kanunu, Madde 17"
-- Madde numarası bulunamıyorsa o iddiayı yazma.
-- Yanıtı Türkçe yaz.
+- Sayısal değerleri bağlamdan olduğu gibi al; tüm sayıları rakamla yaz.
+- Hukuki jargonu herkesin anlayacağı günlük dile çevir.
+- "Harika bir soru!", "Gelin birlikte inceleyelim" gibi yapay, aşırı şatafatlı ifadeler kullanma. Doğal ve samimi ol.
+- Bölüm başlıklarını (AÇIKLAMA, HUKUKİ DAYANAKLAR vb.) yanıtta yazma; sadece içeriği yaz.
+- Hukuki dayanakları yanıt metnine dahil etme; bunlar zaten ayrıca gösterilmektedir.
 
 ---
 
 ÇIKTI FORMATI:
 
-AÇIKLAMA
-[Soruyu doğrudan yanıtla. 2–4 cümle. Tarafların hak ve yükümlülüklerini belirt.]
+[Kullanıcıya samimi bir dille, durumu anlatan kısa ve öz bir açıklama. Tarafların haklarını vurgula. Bölüm başlığı olmadan doğrudan yaz.]
 
-HUKUKİ DAYANAKLAR
-- [Kanun No] Sayılı [Kanun Adı], Madde [No]
-
-UYARI *(yalnızca gerekirse)*
-- [Mülga bilgi / istisnai durum / kapsam sınırı]
+UYARI *(yalnızca gerçekten gerekirse — istisnalar veya dikkat edilmesi gereken kritik bir nokta varsa)*
+- [İstisna veya uyarı]
 
 ---
 
@@ -188,7 +180,8 @@ SORU: {question}
 CEVAP:
 """
 
-JUDGE_SYSTEM_PROMPT = """Sen katı, tarafsız ve sıfır toleranslı bir Hukuk Profesörü ve Değerlendiricisin (LLM Judge). 
+JUDGE_SYSTEM_PROMPT = """
+Sen katı, tarafsız ve sıfır toleranslı bir Hukuk Profesörü ve Değerlendiricisin (LLM Judge). 
 Görevin, bir yapay zeka asistanının verdiği cevabı, 'Beklenen Cevap' ve 'Kanun Bağlamı' ile karşılaştırarak 0.0 ile 1.0 arasında puanlamaktır.
 
 HUKUKİ KATI KURALLAR (BUNLARA KESİNLİKLE UY):
@@ -240,46 +233,37 @@ Beklenen çıktı (başka hiçbir şey yok):
 # ─────────────────────────────────────────────
 # TEST VE PUANLAMA AĞIRLIKLARI
 # ─────────────────────────────────────────────
+# RETRIEVAL METRİKLERİ AĞIRLIKLARI
+RETRIEVAL_WEIGHTS = {
+    "precision": 0.50,
+    "recall":    0.50,
+}
+
+# GENERATION METRİKLERİ AĞIRLIKLARI
+GENERATION_WEIGHTS = {
+    "faithfulness":        0.35,
+    "answer_relevance":    0.35,
+    "answer_correctness":  0.30,
+}
+
+# GENEL PUANLAMA AĞIRLIKLARI
 SCORING_WEIGHTS = {
-    "judge_weight":     0.70,
-    "heuristic_weight": 0.30,
+    "retrieval_weight":  0.40,
+    "generation_weight": 0.60,
 }
 
-JUDGE_SUBWEIGHTS = {
-    "correctness":   0.30,
-    "faithfulness":  0.25, 
-    "relevance":     0.25,
-    "completeness":  0.20,
-}
-
-HEURISTIC_SUBWEIGHTS = {
-    "semantic_correctness": 0.25,  
-    "citation_accuracy":    0.28,  
-    "answer_consistency":   0.18,  
-    "quote_presence":       0.15,
-    "response_quality":     0.10, 
-    "keyword_coverage":     0.04,
-}
-
-MUST_SHOULD_WEIGHTS = {
-    "must_weight":   0.80,
-    "should_weight": 0.20,
-}
-
+# METRIK EŞİKLERİ
 TEST_THRESHOLDS = {
-    "pass_threshold":          0.70, 
-    "relevance_threshold":     0.62,   
-    "faithfulness_threshold":  0.75,  
-    "citation_threshold":      0.68,   
-    "consistency_threshold":   0.60,  
-    "semantic_threshold":      0.58,   
+    "pass_threshold":              0.70,
+    "precision_threshold":         0.60,
+    "recall_threshold":            0.50,
+    "faithfulness_threshold":      0.75,
+    "answer_relevance_threshold":  0.65,
+    "answer_correctness_threshold": 0.70,
 }
 
 METRIC_WEIGHTS = {
-    "citation_weight":          2.0,
-    "keyword_weight":           0.4,
-    "response_quality_weight":  0.5,
-    "latency_weight":           0.1,
+    "latency_weight": 0.1,
 }
 
 TEST_CONFIG_DEFAULTS = {
@@ -290,8 +274,6 @@ TEST_CONFIG_DEFAULTS = {
 }
 
 LATENCY_THRESHOLD_MS = 8_000
-
-
 
 RETRIEVER_K = 20
 HYBRID_KEYWORD_WEIGHTS = {

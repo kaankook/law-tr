@@ -1,0 +1,789 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hukuk Asistanı</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&family=Instrument+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+
+<style>
+/* ============================================================
+   DESIGN TOKENS
+   Sistem: 4pt tabanlı grid, Apple HIG renk uyumu
+   ============================================================ */
+:root {
+  /* Surfaces */
+  --c-bg:      #F5F5F7;
+  --c-surf:    #FFFFFF;
+
+  /* Ink */
+  --c-ink:     #1D1D1F;
+  --c-ink-2:   #6E6E73;
+  --c-ink-3:   #AEAEB2;
+
+  /* Interactive */
+  --c-accent:  #0055D4;
+  --c-accent-h:#003FAD;
+
+  /* Message */
+  --c-user:    #0F172A;
+
+  /* Structure */
+  --c-line:    rgba(0,0,0,0.07);
+  --c-line-2:  rgba(0,0,0,0.11);
+
+  /* Status */
+  --c-green:   #34C759;
+  --c-err-bg:  #FFF5F4;
+  --c-err-bd:  rgba(255,59,48,0.14);
+  --c-err-ink: #B52B1E;
+
+  /* Typography */
+  --f-serif: 'Newsreader', Georgia, serif;
+  --f-sans:  'Instrument Sans', 'Helvetica Neue', sans-serif;
+
+  /* Spacing scale — 4pt base */
+  --s1: 4px;  --s2: 8px;   --s3: 12px;
+  --s4: 16px; --s5: 20px;  --s6: 24px;
+  --s8: 32px; --s10: 40px; --s12: 48px;
+
+  /* Radii */
+  --r-xs:  6px;  --r-sm: 10px; --r-md: 14px;
+  --r-lg:  18px; --r-xl: 22px; --r-2xl: 28px;
+  --r-pill: 999px;
+
+  /* Elevation */
+  --sh-card:  0 1px 2px rgba(0,0,0,0.045), 0 2px 7px rgba(0,0,0,0.038);
+  --sh-input: 0 2px 9px rgba(0,0,0,0.055), 0 1px 3px rgba(0,0,0,0.038);
+  --sh-input-up: 0 4px 18px rgba(0,0,0,0.072), 0 1px 4px rgba(0,0,0,0.042);
+
+  /* Easing */
+  --ease:   cubic-bezier(0.32, 0.72, 0, 1);
+  --spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+/* ============================================================
+   RESET
+   ============================================================ */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html {
+  height: 100%;
+  background:
+    radial-gradient(ellipse 130% 55% at 50% 0,
+      rgba(255,255,255,0.52) 0%,
+      transparent 60%),
+    var(--c-bg);
+}
+
+body {
+  height: 100%;
+  font-family: var(--f-sans);
+  font-size: 15px;
+  line-height: 1.5;
+  color: var(--c-ink);
+  background: transparent;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+  box-sizing: border-box;
+}
+
+/* ============================================================
+   LAYOUT
+   ============================================================ */
+.app {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: 740px;
+  height: 100%;
+  max-height: calc(100vh - 32px);
+  border: 1px solid var(--c-line-2);
+  border-radius: var(--r-2xl);
+  overflow: hidden;
+  box-shadow: 0 0 0 1px var(--c-line), 0 8px 32px rgba(0,0,0,0.06), 0 2px 8px rgba(0,0,0,0.04);
+}
+
+/* ============================================================
+   HEADER
+   Premium vitreous header — blur + fading separator
+   ============================================================ */
+.hdr {
+  flex-shrink: 0;
+  text-align: center;
+  padding: var(--s6) var(--s8) var(--s5);
+  background: rgba(245,245,247,0.80);
+  backdrop-filter: saturate(180%) blur(26px);
+  -webkit-backdrop-filter: saturate(180%) blur(26px);
+  position: relative;
+  z-index: 30;
+}
+
+/* Fading separator — avoids harsh hard line */
+.hdr::after {
+  content: '';
+  position: absolute;
+  left: var(--s8); right: var(--s8); bottom: 0;
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent 0%, var(--c-line-2) 15%,
+    var(--c-line-2) 85%, transparent 100%
+  );
+}
+
+.hdr-title {
+  font-family: var(--f-serif);
+  font-size: 21px;
+  font-weight: 500;
+  letter-spacing: -0.025em;
+  color: var(--c-ink);
+  line-height: 1.2;
+  font-optical-sizing: auto;
+}
+
+.hdr-title i {
+  font-style: italic;
+  color: var(--c-ink-2);
+}
+
+.hdr-sub {
+  margin-top: 3px;
+  font-size: 10.5px;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--c-ink-3);
+}
+
+.hdr-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--s1);
+  margin-top: var(--s3);
+  padding: 3px 10px 3px 7px;
+  background: rgba(0,0,0,0.042);
+  border-radius: var(--r-pill);
+  font-size: 11px;
+  font-weight: 500;
+  color: var(--c-ink-2);
+  letter-spacing: 0.005em;
+  user-select: none;
+}
+
+.hdr-dot {
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: var(--c-green);
+  flex-shrink: 0;
+  box-shadow: 0 0 0 2px rgba(52,199,89,0.2);
+}
+
+/* ============================================================
+   MESSAGES
+   ============================================================ */
+.msgs {
+  flex: 1;
+  overflow-y: auto;
+  padding: var(--s8) var(--s8) var(--s4);
+  display: flex;
+  flex-direction: column;
+  gap: var(--s5);
+  overscroll-behavior: contain;
+  scroll-behavior: smooth;
+}
+
+.msgs::-webkit-scrollbar       { width: 5px; }
+.msgs::-webkit-scrollbar-track { background: transparent; }
+.msgs::-webkit-scrollbar-thumb {
+  background: rgba(0,0,0,0.09);
+  border-radius: 3px;
+}
+.msgs::-webkit-scrollbar-thumb:hover { background: rgba(0,0,0,0.15); }
+
+/* ============================================================
+   EMPTY STATE
+   ============================================================ */
+.empty {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--s3);
+  text-align: center;
+  padding: var(--s12);
+  pointer-events: none;
+  user-select: none;
+  animation: emptyIn 0.9s var(--ease) both;
+}
+
+@keyframes emptyIn {
+  from { opacity: 0; transform: translateY(14px) scale(0.97); }
+  to   { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+.empty-glyph {
+  font-family: var(--f-serif);
+  font-size: 60px;
+  line-height: 1;
+  color: var(--c-ink);
+  opacity: 0.05;
+}
+
+.empty-title {
+  font-family: var(--f-serif);
+  font-size: 23px;
+  font-weight: 500;
+  letter-spacing: -0.022em;
+  color: var(--c-ink);
+  opacity: 0.22;
+  font-optical-sizing: auto;
+}
+
+.empty-hint {
+  font-size: 13px;
+  color: var(--c-ink-3);
+  line-height: 1.75;
+  max-width: 270px;
+  opacity: 0.9;
+}
+
+/* ============================================================
+   MESSAGE ROWS
+   Each message slides up on entry
+   ============================================================ */
+.row {
+  display: flex;
+  flex-direction: column;
+  animation: rowIn 0.26s var(--ease) both;
+}
+
+@keyframes rowIn {
+  from { opacity: 0; transform: translateY(11px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.row.u { align-items: flex-end; }
+.row.a { align-items: flex-start; }
+
+/* ============================================================
+   BUBBLES
+   User: near-black navy  |  AI: white card with shadow
+   ============================================================ */
+.bbl {
+  max-width: 76%;
+  font-size: 15px;
+  line-height: 1.6;
+  word-break: break-word;
+  overflow-wrap: anywhere;
+}
+
+/* — User bubble — */
+.row.u .bbl {
+  padding: var(--s3) var(--s5);
+  background: var(--c-user);
+  color: rgba(255,255,255,0.92);
+  border-radius: var(--r-xl) var(--r-xl) var(--r-xs) var(--r-xl);
+  letter-spacing: -0.005em;
+  /* subtle top highlight for depth */
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.07);
+}
+
+/* — AI bubble — */
+.row.a .bbl {
+  padding: var(--s4) var(--s5);
+  background: var(--c-surf);
+  color: var(--c-ink);
+  border: 1px solid var(--c-line);
+  border-radius: var(--r-xl) var(--r-xl) var(--r-xl) var(--r-xs);
+  box-shadow: var(--sh-card);
+  line-height: 1.7;
+}
+
+/* — Error state — */
+.row.a .bbl.err {
+  background: var(--c-err-bg);
+  border-color: var(--c-err-bd);
+  color: var(--c-err-ink);
+}
+
+/* Paragraph spacing inside AI bubble */
+.bbl p { margin: 0; }
+.bbl p + p { margin-top: 12px; }
+
+/* ============================================================
+   TYPING INDICATOR
+   Three dots with staggered bounce
+   ============================================================ */
+.typing {
+  display: flex;
+  animation: rowIn 0.26s var(--ease) both;
+}
+
+.typing-bbl {
+  padding: 13px 15px;
+  background: var(--c-surf);
+  border: 1px solid var(--c-line);
+  border-radius: var(--r-xl) var(--r-xl) var(--r-xl) var(--r-xs);
+  box-shadow: var(--sh-card);
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.tdot {
+  width: 5px; height: 5px;
+  border-radius: 50%;
+  background: var(--c-ink-3);
+  animation: tdot 1.25s ease-in-out infinite;
+}
+.tdot:nth-child(2) { animation-delay: 0.17s; }
+.tdot:nth-child(3) { animation-delay: 0.34s; }
+
+@keyframes tdot {
+  0%, 55%, 100% { transform: translateY(0); opacity: 0.3; }
+  27%            { transform: translateY(-5px); opacity: 1; }
+}
+
+/* ============================================================
+   META — Stats + Sources
+   Delayed entrance so it doesn't compete with the message
+   ============================================================ */
+.meta {
+  margin-top: var(--s2);
+  padding: 0 var(--s1);
+  display: flex;
+  flex-direction: column;
+  gap: var(--s2);
+  max-width: 76%;
+  animation: rowIn 0.3s 0.07s var(--ease) both;
+}
+
+.srcs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--s1);
+}
+
+/* Source tag pill — neutral, not accent-colored (reduces noise) */
+.src {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 3px 9px;
+  background: rgba(0,0,0,0.035);
+  border: 1px solid var(--c-line);
+  border-radius: var(--r-pill);
+  font-size: 11.5px;
+  color: var(--c-ink-2);
+  font-weight: 500;
+  white-space: nowrap;
+  max-width: 220px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  cursor: default;
+  transition: background 150ms var(--ease);
+}
+.src:hover { background: rgba(0,0,0,0.062); }
+
+.src-law {
+  font-weight: 600;
+  color: var(--c-ink);
+  font-size: 11px;
+  flex-shrink: 0;
+}
+
+/* ============================================================
+   INPUT ZONE
+   Floating shell — rises above messages with gradient fade
+   ============================================================ */
+.input-zone {
+  flex-shrink: 0;
+  padding: var(--s2) var(--s8) var(--s6);
+  position: relative;
+}
+
+/* Fade gradient — blends last message into input */
+.input-zone::before {
+  content: '';
+  position: absolute;
+  inset: -40px 0 0 0;
+  background: linear-gradient(to bottom, transparent 0%, var(--c-bg) 58%);
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* Input container — the premium "pill" */
+.input-shell {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  gap: var(--s2);
+  background: var(--c-surf);
+  border: 1px solid var(--c-line-2);
+  border-radius: var(--r-2xl);
+  padding: 10px var(--s3) 10px var(--s5);
+  box-shadow: var(--sh-input);
+  align-items: flex-end;
+  transition:
+    border-color 200ms var(--ease),
+    box-shadow   200ms var(--ease);
+}
+
+.input-shell:focus-within {
+  border-color: rgba(0, 85, 212, 0.28);
+  box-shadow:
+    var(--sh-input-up),
+    0 0 0 3.5px rgba(0, 85, 212,0.07);
+}
+
+/* Auto-growing textarea */
+.ta {
+  flex: 1;
+  min-height: 26px;
+  max-height: 148px;
+  border: none;
+  outline: none;
+  resize: none;
+  overflow-y: auto;
+  scrollbar-width: none;
+  background: transparent;
+  font-family: var(--f-sans);
+  font-size: 15px;
+  font-weight: 400;
+  color: var(--c-ink);
+  line-height: 1.5;
+  padding: 0;
+  margin-bottom: 5px;
+}
+.ta::-webkit-scrollbar { display: none; }
+.ta::placeholder { color: var(--c-ink-3); opacity: 1; }
+
+/* Send button */
+.send {
+  flex-shrink: 0;
+  align-self: flex-end;
+  width: 36px; height: 36px;
+  border: none;
+  border-radius: var(--r-md);
+  background: var(--c-accent);
+  color: #fff;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition:
+    background  150ms var(--ease),
+    transform   150ms var(--spring),
+    opacity     150ms;
+}
+.send:hover:not(:disabled)  { background: var(--c-accent-h); transform: scale(1.07); }
+.send:active:not(:disabled) { transform: scale(0.92); transition-duration: 70ms; }
+.send:disabled {
+  opacity: 0.34;
+  cursor: not-allowed;
+  transform: none !important;
+}
+.send svg { width: 15px; height: 15px; display: block; }
+
+/* Icon swap — arrow ↔ spinner */
+.send .ico-spin { display: none; }
+.send.busy .ico-arr  { display: none; }
+.send.busy .ico-spin { display: block; animation: spin 0.78s linear infinite; transform-origin: 50% 50%; }
+
+@keyframes spin { to { transform: rotate(360deg); } }
+
+/* ============================================================
+   RESPONSIVE — 620px breakpoint
+   ============================================================ */
+@media (max-width: 620px) {
+  .hdr { padding: var(--s5) var(--s5) var(--s4); }
+  .hdr::after { left: var(--s5); right: var(--s5); }
+  .msgs { padding: var(--s5) var(--s4) var(--s3); gap: var(--s4); }
+  .input-zone { padding: var(--s2) var(--s4) var(--s5); }
+  .bbl  { max-width: 90%; }
+  .meta { max-width: 90%; }
+}
+</style>
+</head>
+
+<body>
+<div class="app">
+
+  <!-- ═══════════════════════════
+       HEADER
+  ═══════════════════════════════ -->
+  <header class="hdr">
+    <h1 class="hdr-title">Hukuk <i>Asistanı</i></h1>
+    <p class="hdr-sub">Türk İş Hukuku</p>
+    <div class="hdr-pill">
+      <span class="hdr-dot"></span>
+      <span id="modelLbl">Hazır</span>
+    </div>
+  </header>
+
+  <!-- ═══════════════════════════
+       MESSAGES
+  ═══════════════════════════════ -->
+  <main class="msgs" id="msgs">
+    <div class="empty" id="empty">
+      <div class="empty-glyph">⚖</div>
+      <div class="empty-title">Nasıl yardımcı olabilirim?</div>
+      <p class="empty-hint">
+        Türk iş hukukuna ilişkin  <br>
+        sorularınızı yanıtlamaya hazırım.
+      </p>
+    </div>
+  </main>
+
+  <!-- ═══════════════════════════
+       INPUT
+  ═══════════════════════════════ -->
+  <div class="input-zone">
+    <div class="input-shell">
+      <textarea
+        class="ta" id="ta"
+        placeholder="Hukuki sorunuzu yazın…"
+        rows="1" spellcheck="true" autocorrect="on"
+      ></textarea>
+      <button class="send" id="btn" disabled aria-label="Gönder">
+        <!-- Up-arrow send icon -->
+        <svg class="ico-arr" viewBox="0 0 16 16" fill="none">
+          <path d="M8 12.5V3.5M8 3.5L4.5 7M8 3.5L11.5 7"
+                stroke="currentColor" stroke-width="1.8"
+                stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        <!-- Spinner for loading state -->
+        <svg class="ico-spin" viewBox="0 0 16 16" fill="none">
+          <circle cx="8" cy="8" r="5.5" stroke="currentColor" stroke-width="1.5"
+                  stroke-dasharray="21 13" stroke-linecap="round"/>
+        </svg>
+      </button>
+    </div>
+  </div>
+
+</div>
+
+<script>
+/* ============================================================
+   CONFIG
+   ============================================================ */
+const QUERY_EP  = '/api/query';
+const CONFIG_EP = '/api/config';
+
+/* ============================================================
+   DOM
+   ============================================================ */
+const msgsEl   = document.getElementById('msgs');
+const emptyEl  = document.getElementById('empty');
+const taEl     = document.getElementById('ta');
+const btnEl    = document.getElementById('btn');
+const modelLbl = document.getElementById('modelLbl');
+
+/* ============================================================
+   STATE
+   ============================================================ */
+let busy   = false;
+let seeded = false;
+
+/* ============================================================
+   INIT — load config, wire events
+   ============================================================ */
+(async () => {
+  try {
+    const r = await fetch(CONFIG_EP);
+    /* config fetched but model/top-k info not displayed */
+  } catch { /* keep 'Hazır' */ }
+
+  taEl.addEventListener('input',   onInput);
+  taEl.addEventListener('keydown', onKey);
+  btnEl.addEventListener('click',  submit);
+  taEl.focus();
+})();
+
+/* ============================================================
+   INPUT HANDLING
+   ============================================================ */
+function onInput() {
+  resize();
+  syncBtn();
+}
+
+function onKey(e) {
+  if (e.key === 'Enter' && !e.shiftKey && !e.isComposing) {
+    e.preventDefault();
+    if (!busy && taEl.value.trim()) submit();
+  }
+}
+
+function resize() {
+  taEl.style.height = '0';
+  taEl.style.height = Math.min(taEl.scrollHeight, 148) + 'px';
+}
+
+function syncBtn() {
+  btnEl.disabled = !taEl.value.trim() || busy;
+}
+
+/* ============================================================
+   SUBMIT
+   ============================================================ */
+async function submit() {
+  const q = taEl.value.trim();
+  if (!q || busy) return;
+
+  taEl.value = '';
+  taEl.style.height = '';
+
+  seed();
+  appendUser(q);
+  setBusy(true);
+  const typEl = appendTyping();
+
+  try {
+    const res  = await fetch(QUERY_EP, {
+      method:  'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body:    JSON.stringify({ question: q })
+    });
+    typEl.remove();
+
+    if (!res.ok) throw new Error(`HTTP ${res.status}`);
+    const data = await res.json();
+
+    if (data.error) {
+      appendAI(data.error, true);
+    } else {
+      appendAI(data.answer, false);
+      if (data.sources?.length) appendSources(data.sources);
+    }
+  } catch (err) {
+    typEl.remove();
+    appendAI(`Bağlantı hatası: ${err.message}`, true);
+  } finally {
+    setBusy(false);
+    taEl.focus();
+  }
+}
+
+/* ============================================================
+   STATE HELPERS
+   ============================================================ */
+function seed() {
+  if (!seeded) { emptyEl.style.display = 'none'; seeded = true; }
+}
+
+function setBusy(state) {
+  busy = state;
+  if (state) {
+    btnEl.disabled = true;
+    btnEl.classList.add('busy');
+  } else {
+    btnEl.classList.remove('busy');
+    syncBtn();
+  }
+}
+
+/* ============================================================
+   DOM BUILDERS
+   ============================================================ */
+function appendUser(text) {
+  const row = mk('div', 'row u');
+  const bbl = mk('div', 'bbl');
+  bbl.textContent = text;
+  row.append(bbl);
+  msgsEl.append(row);
+  tick();
+}
+
+function appendTyping() {
+  const el = mk('div', 'typing');
+  el.innerHTML = `
+    <div class="typing-bbl">
+      <div class="tdot"></div>
+      <div class="tdot"></div>
+      <div class="tdot"></div>
+    </div>`;
+  msgsEl.append(el);
+  tick();
+  return el;
+}
+
+function appendAI(text, isError = false) {
+  const row = mk('div', 'row a');
+  const bbl = mk('div', isError ? 'bbl err' : 'bbl');
+  bbl.innerHTML = render(text);
+  row.append(bbl);
+  msgsEl.append(row);
+  tick();
+  return row;
+}
+
+const SOURCE_SCORE_THRESHOLD = 0.55;
+
+function appendSources(sources) {
+  /* Sadece skoru olan VE threshold üzerindeki kaynakları göster */
+  const relevant = sources.filter(s =>
+    s.score != null && s.score >= SOURCE_SCORE_THRESHOLD
+  );
+
+  if (!relevant.length) return;
+
+  const meta = mk('div', 'meta');
+  const sl   = mk('div', 'srcs');
+
+  relevant.forEach(s => {
+    const tag = mk('div', 'src');
+    tag.title = s.article_reference;
+    tag.innerHTML =
+      `<span class="src-law">${esc(String(s.law_number))}</span> ${esc(s.article_reference)}`;
+    sl.append(tag);
+  });
+
+  meta.append(sl);
+  msgsEl.append(meta);
+  tick();
+}
+
+/* ============================================================
+   UTILITIES
+   ============================================================ */
+function mk(tag, cls) {
+  const el = document.createElement(tag);
+  if (cls) el.className = cls;
+  return el;
+}
+
+function esc(str) {
+  const d = document.createElement('div');
+  d.textContent = String(str);
+  return d.innerHTML;
+}
+
+/* Light markdown: escape first, then format.
+   Bold/italic matched before newlines so they can't span
+   paragraph breaks and create invalid nesting. */
+function render(raw) {
+  const e = esc(raw);
+  const f = e
+    .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
+    .replace(/\*(.+?)\*/g,     '<em>$1</em>')
+    .replace(/\n\n+/g,         '</p><p>')
+    .replace(/\n/g,            '<br>');
+  return `<p>${f}</p>`;
+}
+
+function tick() {
+  requestAnimationFrame(() => { msgsEl.scrollTop = msgsEl.scrollHeight; });
+}
+</script>
+</body>
+</html>

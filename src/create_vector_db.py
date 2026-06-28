@@ -1,7 +1,5 @@
 # python -m src.create_vector_db
-
 from __future__ import annotations
-
 import json
 import importlib.util
 import logging
@@ -9,7 +7,6 @@ import sys
 from pathlib import Path
 from typing import List
 
-# Proje kökünü import yolu içine ekle.
 _PROJECT_ROOT = Path(__file__).parent.parent
 if str(_PROJECT_ROOT) not in sys.path:
     sys.path.insert(0, str(_PROJECT_ROOT))
@@ -20,25 +17,16 @@ from src.config import (
     COLLECTION_NAME,
     DB_PATH,
     EMBEDDING_MODEL_NAME,
-    JSON_FILE_PATH,
+    SPARSE_MODEL_NAME,
 )
-
 logger = logging.getLogger(__name__)
-logging.basicConfig(
-    level=logging.INFO,
-    format="%(asctime)s [%(levelname)s] %(name)s — %(message)s",
-)
-
-# Hibrit arama için kullanılacak sparse model.
-SPARSE_MODEL_NAME = "Qdrant/bm25"
-
 
 def _check_dependencies() -> None:
     required_modules = {
-        "qdrant_client": "qdrant-client",
-        "langchain_qdrant": "langchain-qdrant",
+        "qdrant_client":        "qdrant-client",
+        "langchain_qdrant":     "langchain-qdrant",
         "langchain_huggingface": "langchain-huggingface",
-        "fastembed": "fastembed",
+        "fastembed":            "fastembed",
     }
 
     missing_packages = [
@@ -55,13 +43,12 @@ def _check_dependencies() -> None:
         )
         sys.exit(1)
 
-
 def save_to_qdrant(
-    documents: List[LangchainDocument],
-    persist_directory: str = DB_PATH,
-    collection_name: str = COLLECTION_NAME,
-    batch_size: int = 50,
-) -> bool:
+    documents:          List[LangchainDocument],
+    persist_directory:  str = DB_PATH,
+    collection_name:    str = COLLECTION_NAME,
+    batch_size:         int = 50,
+) -> None:
     if not documents:
         logger.error("Kayıt yapılmadı: Boş belge listesi")
         raise ValueError("Documents list cannot be empty")
@@ -108,12 +95,10 @@ def save_to_qdrant(
         Path(persist_directory).mkdir(parents=True, exist_ok=True)
 
         # Belgeleri sabit boyutlu parçalara ayır.
-        batches = [
-            documents[i : i + batch_size] for i in range(0, len(documents), batch_size)
-        ]
+        batches       = [documents[i: i + batch_size] for i in range(0, len(documents), batch_size)]
         total_batches = len(batches)
-        first_batch = batches[0]
-        
+        first_batch   = batches[0]
+
         logger.info(f"İlk batch işleniyor ve koleksiyon oluşturuluyor ({len(first_batch)} döküman)…")
         try:
             # İlk batch ile koleksiyon kurulur; sonraki batch'ler eklenir.
@@ -127,33 +112,29 @@ def save_to_qdrant(
             )
         except Exception as e:
             raise RuntimeError(f"QdrantVectorStore ilk batch hatası: {e}") from e
-            
+
         logger.info(f"✓ Batch 1/{total_batches} kaydedildi ({len(first_batch)} döküman)")
 
         # Kalan batch'leri aynı koleksiyona ekle.
+        # FIX 6: For loop içindeki gereksiz boş satır kaldırıldı.
         for batch_num, batch in enumerate(batches[1:], start=2):
-
             try:
                 qdrant_vector_store.add_documents(batch)
             except Exception as e:
                 raise RuntimeError(
                     f"Batch {batch_num}/{total_batches} eklenirken hata: {e}"
                 ) from e
-
-            logger.info(
-                f"✓ Batch {batch_num}/{total_batches} kaydedildi ({len(batch)} döküman)"
-            )
+            logger.info(f"✓ Batch {batch_num}/{total_batches} kaydedildi ({len(batch)} döküman)")
 
         try:
             # Harici client açmadan mevcut store client'ı ile sayım doğrulaması yap.
-            client = qdrant_vector_store.client
+            client       = qdrant_vector_store.client
             count_result = client.count(collection_name=collection_name)
             logger.info(f"✓ Koleksiyon doğrulaması: {count_result.count} döküman Qdrant'ta")
         except Exception as e:
             logger.warning(f"Koleksiyon doğrulama yapılamadı (devam ediliyor): {e}")
 
         logger.info("✓ Qdrant vektör veritabanı başarıyla oluşturuldu ve kaydedildi")
-        return True
 
     except (ValueError, RuntimeError):
         raise
@@ -168,13 +149,20 @@ def load_chunks_from_json(json_path: str) -> List[LangchainDocument]:
         with open(json_path, "r", encoding="utf-8") as f:
             data = json.load(f)
 
-        documents = [
-            LangchainDocument(
-                page_content=item["page_content"],
-                metadata=item["metadata"],
+        documents = []
+        for i, item in enumerate(data):
+            if "page_content" not in item or "metadata" not in item:
+                raise KeyError(
+                    f"JSON item [{i}] eksik alan: "
+                    f"{'page_content' if 'page_content' not in item else 'metadata'}"
+                )
+            documents.append(
+                LangchainDocument(
+                    page_content=item["page_content"],
+                    metadata=item["metadata"],
+                )
             )
-            for item in data
-        ]
+
         logger.info(f"✓ {len(documents)} chunk yüklendi")
         return documents
     except Exception as e:
@@ -183,7 +171,7 @@ def load_chunks_from_json(json_path: str) -> List[LangchainDocument]:
 
 
 def main() -> None:
-    # CLI çalıştırmasında önce bağımlılıkları doğrula.
+    from src.config import JSON_FILE_PATH
     _check_dependencies()
 
     logger.info("=" * 70)
@@ -191,7 +179,6 @@ def main() -> None:
     logger.info("=" * 70)
 
     try:
-        # Hazırlanmış chunk JSON dosyasını yükle.
         documents = load_chunks_from_json(JSON_FILE_PATH)
 
         if not documents:
@@ -213,4 +200,8 @@ def main() -> None:
 
 
 if __name__ == "__main__":
+    logging.basicConfig(
+        level=logging.INFO,
+        format="%(asctime)s [%(levelname)s] %(name)s — %(message)s",
+    )
     main()

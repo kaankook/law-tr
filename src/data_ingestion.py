@@ -1,5 +1,4 @@
 #python src/data_ingestion.py
-
 from __future__ import annotations
 import asyncio
 import hashlib
@@ -12,7 +11,6 @@ from dataclasses import dataclass, field
 from pathlib import Path
 from typing import Any, Dict, List, Optional
 
-# Add project root to path for imports
 _PROJECT_ROOT = Path(__file__).parent.parent
 if str(_PROJECT_ROOT) not in sys.path:
     sys.path.insert(0, str(_PROJECT_ROOT))
@@ -20,8 +18,6 @@ if str(_PROJECT_ROOT) not in sys.path:
 from docx import Document
 from langchain_core.documents import Document as LangchainDocument
 from openai import AsyncOpenAI
-
-# Import with validation
 try:
     from src.config import (
         CHUNK_CFG,
@@ -34,8 +30,6 @@ try:
         PROCESSED_DIR,
         RAW_DATA_DIR,
         SOURCE_FORMAT_MAPPING,
-        SOURCE_MAPPING,
-        STATS_FILE_PATH,
     )
 except ImportError as e:
     raise ImportError(f"Configuration import failed: {e}") from e
@@ -44,48 +38,41 @@ from src.law_mapping_resolver import LawMappingResolver
 
 logger = logging.getLogger(__name__)
 
+
 class MetadataKey:
-    """Constants for document chunk metadata keys.
-    
-    Centralized key definitions prevent silent typos and improve IDE autocomplete.
-    Used in _make_chunk(), _ArticleBuffer, and load_and_chunk_legislation().
-    """
     # Source information
-    SOURCE = "source"
-    DOSYA_ADI = "dosya_adi"
-    LAW_NUMBER = "law_number"
-    
+    SOURCE            = "source"
+    DOSYA_ADI         = "dosya_adi"
+    LAW_NUMBER        = "law_number"
+
     # Document structure
     ARTICLE_REFERENCE = "article_reference"
-    ARTICLE_NUMBER = "article_number"
-    ARTICLE_TYPE = "article_type"
-    
+    ARTICLE_NUMBER    = "article_number"
+    ARTICLE_TYPE      = "article_type"
+
     # Chunk information
-    CHUNK_ID = "chunk_id"
-    CHUNK_INDEX = "chunk_index"
-    CHUNK_TOTAL = "chunk_total"
-    CHUNK_PART = "chunk_part"
-    PREV_CHUNK_ID = "prev_chunk_id"
-    NEXT_CHUNK_ID = "next_chunk_id"
-    
+    CHUNK_ID          = "chunk_id"
+    CHUNK_INDEX       = "chunk_index"
+    CHUNK_TOTAL       = "chunk_total"
+    CHUNK_PART        = "chunk_part"
+    PREV_CHUNK_ID     = "prev_chunk_id"
+    NEXT_CHUNK_ID     = "next_chunk_id"
+
     # Mülga (deprecated) information
-    IS_MULGA_SOURCE = "is_mulga_source"
-    IS_PARTIAL_MULGA = "is_partial_mulga"
-    MAPS_TO_LAW_NO = "maps_to_law_no"
-    MAPS_TO_LAW_NAME = "maps_to_law_name"
-    MULGA_SCOPE = "mulga_scope"
-    MULGA_EXCEPTION = "mulga_exception"
-    
+    IS_MULGA_SOURCE   = "is_mulga_source"
+    IS_PARTIAL_MULGA  = "is_partial_mulga"
+    MAPS_TO_LAW_NO    = "maps_to_law_no"
+    MAPS_TO_LAW_NAME  = "maps_to_law_name"
+    MULGA_SCOPE       = "mulga_scope"
+    MULGA_EXCEPTION   = "mulga_exception"
+
     # Size metrics
-    CHAR_COUNT = "char_count"
-    WORD_COUNT = "word_count"
-logging.basicConfig(
-    level=logging.INFO,
-    format="%(asctime)s [%(levelname)s] %(name)s — %(message)s",
-    datefmt="%H:%M:%S",
-)
+    CHAR_COUNT        = "char_count"
+    WORD_COUNT        = "word_count"
 
-
+# ─────────────────────────────────────────────
+# REGEX PAREKSİLERİ
+# ─────────────────────────────────────────────
 _RE_ARTICLE = re.compile(
     r"^\s*"
     r"(?P<type>Geçici\s+Madde|GEÇİCİ\s+MADDE|Ek\s+Madde|EK\s+MADDE|MADDE|Madde)\s*"
@@ -97,36 +84,30 @@ _RE_ARTICLE_BARE = re.compile(
     r"^\s*(?P<type>Madde|MADDE)\s*(?P<no>\d+[A-Za-z0-9/]*)\s*$",
     re.IGNORECASE,
 )
-_RE_FIKRA = re.compile(r"^\s*\((\d+)\)\s*(.*)$", re.DOTALL)
-
-_RE_BENT = re.compile(r"^\s*[a-zA-ZçşğüöıÇŞĞÜÖİ]\)\s", re.UNICODE)
-
-_RE_ROMAN = re.compile(
+_RE_FIKRA        = re.compile(r"^\s*\((\d+)\)\s*(.*)$", re.DOTALL)
+_RE_BENT         = re.compile(r"^\s*[a-zA-ZçşğüöıÇŞĞÜÖİ]\)\s", re.UNICODE)
+_RE_ROMAN        = re.compile(
     r"^\s*(I{1,3}|IV|VI{0,3}|IX|X{1,3})\s*[\.\-–]\s*\S",
     re.IGNORECASE,
 )
 
-
-_RE_MULGA = re.compile(
-    r"\b(mülga|iptal\s+edilmiştir?|yürürlükten\s+kaldırılmıştır?)\b",
-    re.IGNORECASE,
-)
-
-_RE_FOOTNOTE_LINE = re.compile(r"^\s*\[\^[\w-]+\]:?\s*$", re.MULTILINE)
+_RE_FOOTNOTE_LINE   = re.compile(r"^\s*\[\^[\w-]+\]:?\s*$", re.MULTILINE)
 _RE_INLINE_FOOTNOTE = re.compile(r"\^\[?\d+\]?\^")
-_RE_CANCELLED = re.compile(r"\((?:\.{2,3}|…)\)")
-_CANCELLED_TOKEN = "__MULGA_CANCELLED__"
+_RE_CANCELLED       = re.compile(r"\((?:\.{2,3}|…)\)")
+_CANCELLED_TOKEN    = "__MULGA_CANCELLED__"
 
 _RE_META = re.compile(
     r"^(Kanun\s+Numara|Kabul\s+Tarihi|Yayımlandığı|Resmî\s+Gazete|Düstur)",
     re.IGNORECASE,
 )
 
-# Pre-compiled regex patterns for article type detection
 _RE_GECICI_MADDE = re.compile(r"\bgecici\s+madde\b", re.IGNORECASE)
-_RE_EK_MADDE = re.compile(r"\bek\s+madde\b", re.IGNORECASE)
+_RE_EK_MADDE     = re.compile(r"\bek\s+madde\b", re.IGNORECASE)
 
 
+# ─────────────────────────────────────────────
+# YARDIMCI FONKSİYONLAR
+# ─────────────────────────────────────────────
 def _clean(text: str) -> str:
     """Metni normalize et: boşlukları temizle, bölünmüş kelimeler birleştir."""
     text = re.sub(r"[\u200b\u200c\u200d\ufeff\xa0]", " ", text)
@@ -137,21 +118,18 @@ def _clean(text: str) -> str:
     text = re.sub(r"\s+", " ", text)
     return text.strip()
 
-
 def _md5(s: str, n: int = 16) -> str:
     return hashlib.md5(s.encode()).hexdigest()[:n]
 
-
 def _article_ref(raw_type: str, no: str) -> str:
     """Madde türüne göre referans formatı döndür (Geçici/Ek/Normal)."""
-    t = raw_type.lower()
+    t        = raw_type.lower()
     no_clean = str(no).strip() if no else ""
     if _RE_GECICI_MADDE.search(t):
         return f"Geçici Madde {no_clean}".rstrip()
     if _RE_EK_MADDE.search(t):
         return f"Ek Madde {no_clean}".rstrip()
     return f"Madde {no_clean}".rstrip()
-
 
 def _article_type(raw_type: str) -> str:
     """Madde türünü belirle (gecici_madde/ek_madde/madde)."""
@@ -162,28 +140,26 @@ def _article_type(raw_type: str) -> str:
         return "ek_madde"
     return "madde"
 
-
 def _chunk_id(source: str, ref: str, idx: int) -> str:
     """Chunk için benzersiz ID üret: safe_name_index_hash."""
-    h = _md5(f"{source}||{ref}||{idx}", 16)
+    h    = _md5(f"{source}||{ref}||{idx}", 16)
     safe = re.sub(r"[\s\W]", "_", f"{source}_{ref}", flags=re.UNICODE)[:50]
     return f"{safe}_{idx}_{h}"
 
-
 def _is_empty_fikra(text: str) -> bool:
-    """Check if fikra line is empty or whitespace-only."""
+    """Fıkra satırı boş mu kontrol et."""
     m = _RE_FIKRA.match(text)
     return bool(m) and (not m.group(2) or not m.group(2).strip())
 
 
-
-
-
+# ─────────────────────────────────────────────
+# BLOK YAPISI
+# ─────────────────────────────────────────────
 @dataclass
 class _Block:
     """Metinsellik bloğu: BENT (a), b), ...), ROMAN (I., II.), FIKRA (1), (2) grupları."""
     lines: List[str] = field(default_factory=list)
-    kind: str = "fikra" 
+    kind: str = "fikra"
 
     def add(self, line: str) -> None:
         self.lines.append(line)
@@ -198,7 +174,6 @@ class _Block:
     def empty(self) -> bool:
         return not self.lines
 
-
 def _is_closing_clause(line: str, prev: str) -> bool:
     """Satır, BENT maddesi devamı mı kontrol et."""
     if not _RE_BENT.match(prev):
@@ -207,7 +182,6 @@ def _is_closing_clause(line: str, prev: str) -> bool:
     if not s:
         return False
     return s[0].islower() or len(s) < 80
-
 
 def _build_blocks(lines: List[str]) -> List[_Block]:
     """Satırları yapısal bloklar halinde grupla: BENT, ROMAN, FIKRA veya metin."""
@@ -253,7 +227,6 @@ def _build_blocks(lines: List[str]) -> List[_Block]:
 
     return blocks
 
-
 def _split_sentences(text: str, target: int) -> List[str]:
     """Metni cümle sınırlarında böl (Türkçe duyarlı)."""
     sents = re.split(r"(?<=[\.\?\!])\s+(?=[A-ZİÇŞĞÜÖ\(])", text)
@@ -270,7 +243,6 @@ def _split_sentences(text: str, target: int) -> List[str]:
         chunks.append(buf.strip())
     return chunks or [text]
 
-
 def split_article(
     article_text: str,
     article_ref: str,
@@ -282,13 +254,15 @@ def split_article(
         return []
     if len(text) <= target_size:
         return [text]
+
     blocks: List[_Block] = _build_blocks([l.strip() for l in text.split("\n") if l.strip()])
     if not blocks:
         sentences = _split_sentences(text, target_size)
         return sentences if sentences else [text]
+
     groups: List[List[_Block]] = []
-    cur_grp: List[_Block] = []
-    cur_len: int = len(article_ref) + 2
+    cur_grp: List[_Block]      = []
+    cur_len: int               = len(article_ref) + 2
 
     for blk in blocks:
         blen: int = blk.charlen()
@@ -297,7 +271,8 @@ def split_article(
                 groups.append(cur_grp)
                 cur_grp, cur_len = [], len(article_ref) + 2
             for piece in _split_sentences(blk.text, target_size):
-                pb = _Block(); pb.add(piece)
+                pb = _Block()
+                pb.add(piece)
                 groups.append([pb])
         elif cur_len + blen + 2 > target_size and cur_grp:
             groups.append(cur_grp)
@@ -310,7 +285,7 @@ def split_article(
     if cur_grp:
         groups.append(cur_grp)
 
-    total: int = len(groups)
+    total: int     = len(groups)
     result: List[str] = []
     for i, grp in enumerate(groups):
         body: str = "\n\n".join(b.text for b in grp)
@@ -321,8 +296,9 @@ def split_article(
 
     return result if result else [text]
 
-
-
+# ─────────────────────────────────────────────
+# CHUNK OLUŞTURMA
+# ─────────────────────────────────────────────
 def _make_chunk(
     content: str,
     meta: Dict[str, Any],
@@ -341,11 +317,13 @@ def _make_chunk(
         ctx_parts.append(f"PARÇA: {chunk_idx}/{chunk_total}")
     if meta_safe.get(MetadataKey.IS_MULGA_SOURCE):
         ctx_parts.append(f"[MÜLGA → {meta_safe.get(MetadataKey.MAPS_TO_LAW_NAME, '')}]")
+
     final = (
         f"BAĞLAM: {' | '.join(ctx_parts)}\n\n"
         f"İÇERİK:\n{content}"
     )
     chunk_id = _chunk_id(meta_safe["source"], meta_safe["article_reference"], chunk_idx)
+
     output_meta: Dict[str, Any] = {
         MetadataKey.SOURCE:            meta_safe[MetadataKey.SOURCE],
         MetadataKey.DOSYA_ADI:         meta_safe[MetadataKey.DOSYA_ADI],
@@ -363,30 +341,26 @@ def _make_chunk(
         MetadataKey.WORD_COUNT:        len(content.split()),
     }
 
-    # --- Dinamik mülga alanları (sadece True ise eklenir) -----------------
+    # Dinamik mülga alanları — sadece mülga kaynak ise eklenir
     if meta_safe.get(MetadataKey.IS_MULGA_SOURCE):
         output_meta[MetadataKey.IS_MULGA_SOURCE]  = True
         output_meta[MetadataKey.MAPS_TO_LAW_NO]   = meta_safe.get(MetadataKey.MAPS_TO_LAW_NO, "")
-        output_meta[MetadataKey.MAPS_TO_LAW_NAME]  = meta_safe.get(MetadataKey.MAPS_TO_LAW_NAME, "")
+        output_meta[MetadataKey.MAPS_TO_LAW_NAME] = meta_safe.get(MetadataKey.MAPS_TO_LAW_NAME, "")
         output_meta[MetadataKey.MULGA_SCOPE]       = meta_safe.get(MetadataKey.MULGA_SCOPE, "")
         output_meta[MetadataKey.MULGA_EXCEPTION]   = meta_safe.get(MetadataKey.MULGA_EXCEPTION, "")
     if meta_safe.get(MetadataKey.IS_PARTIAL_MULGA):
-        output_meta[MetadataKey.IS_PARTIAL_MULGA] = True
+        output_meta[MetadataKey.IS_PARTIAL_MULGA]  = True
 
     return LangchainDocument(page_content=final, metadata=output_meta)
 
-
+# ─────────────────────────────────────────────
+# DOCX NORMALIZE
+# ─────────────────────────────────────────────
 @dataclass
 class _Para:
-    """Normalized paragraph from DOCX document.
-    
-    Fields:
-        style: Paragraph style name (e.g., "Normal", "Heading 1")
-        text: Cleaned paragraph text
-    """
+    """DOCX'ten normalize edilmiş paragraf."""
     style: str
-    text: str
-
+    text:  str
 
 def _normalize(doc: Document) -> List[_Para]:
     """DOCX paragraflarını normalize et, devam satırlarını birleştir."""
@@ -400,7 +374,7 @@ def _normalize(doc: Document) -> List[_Para]:
         except Exception as e:
             logger.warning(f"Paragraf {i} hatasında ({type(e).__name__}), atlanıyor: {e}")
             continue
-            
+
         if not t or _RE_META.match(t):
             continue
 
@@ -423,24 +397,24 @@ def _normalize(doc: Document) -> List[_Para]:
 
     return raw
 
+# ─────────────────────────────────────────────
+# MAKALE BUFFER
+# ─────────────────────────────────────────────
 class _ArticleBuffer:
     """Madde metni biriktir, hazır olunca chunk olarak döndür."""
     def __init__(self, resolver: LawMappingResolver) -> None:
-        self._res: LawMappingResolver = resolver
-        self.lines: List[str] = []
-        self.meta: Dict[str, Any] = {}
+        self._res:  LawMappingResolver = resolver
+        self.lines: List[str]          = []
+        self.meta:  Dict[str, Any]     = {}
 
     def reset(self, meta: Dict[str, Any]) -> None:
-        """Reset buffer with new metadata."""
         self.lines = []
-        self.meta = dict(meta)
+        self.meta  = dict(meta)
 
     def empty(self) -> bool:
-        """Check if buffer has no content."""
         return not self.lines
 
     def add(self, text: str) -> None:
-        """Add line to buffer."""
         if text:
             self.lines.append(text)
 
@@ -448,7 +422,7 @@ class _ArticleBuffer:
         if not self.lines:
             return
 
-        full = "\n".join(self.lines).strip()
+        full                 = "\n".join(self.lines).strip()
         has_cancelled_marker = _CANCELLED_TOKEN in full
         if has_cancelled_marker:
             full = full.replace(_CANCELLED_TOKEN, "mülga")
@@ -458,10 +432,11 @@ class _ArticleBuffer:
             return
 
         if len(full) < CHUNK_CFG.min_chunk_chars:
-            if _RE_MULGA.search(full):
-                logger.debug("Atlandı (mülga, <%d char): %s", CHUNK_CFG.min_chunk_chars, self.meta.get("article_reference"))
-            else:
-                logger.debug("Atlandı (çok kısa, <%d char): %s", CHUNK_CFG.min_chunk_chars, self.meta.get("article_reference"))
+            logger.debug(
+                "Atlandı (<%d char): %s",
+                CHUNK_CFG.min_chunk_chars,
+                self.meta.get("article_reference"),
+            )
             self.lines = []
             return
 
@@ -469,31 +444,29 @@ class _ArticleBuffer:
         law_no = self.meta.get("law_number", "")
         art_no = self.meta.get("article_number", "")
 
-        self.meta.update(self._res.get_metadata_flags(law_no, art_no))
+        chunk_meta = dict(self.meta)
+        chunk_meta.update(self._res.get_metadata_flags(law_no, art_no))
         if has_cancelled_marker:
-            self.meta[MetadataKey.IS_PARTIAL_MULGA] = True
-            self.meta[MetadataKey.IS_MULGA_SOURCE] = True
+            chunk_meta[MetadataKey.IS_PARTIAL_MULGA] = True
+            chunk_meta[MetadataKey.IS_MULGA_SOURCE]  = True
 
-        if len(full) > CHUNK_CFG.target_size:
-            subs = split_article(full, ref, CHUNK_CFG.target_size)
-        else:
-            subs = [full]
-
+        subs  = split_article(full, ref, CHUNK_CFG.target_size) if len(full) > CHUNK_CFG.target_size else [full]
         total = len(subs)
+
         for i, sub in enumerate(subs):
             idx     = i + 1
-            prev_id = _chunk_id(self.meta["source"], ref, idx - 1) if i > 0 else None
-            next_id = _chunk_id(self.meta["source"], ref, idx + 1) if i < total - 1 else None
-            self.meta["article_chunk_index"] = idx
-            self.meta["article_chunk_total"]  = total
-            out.append(_make_chunk(sub, self.meta, idx, total, prev_id, next_id))
+            prev_id = _chunk_id(chunk_meta["source"], ref, idx - 1) if i > 0           else None
+            next_id = _chunk_id(chunk_meta["source"], ref, idx + 1) if i < total - 1   else None
+            out.append(_make_chunk(sub, chunk_meta, idx, total, prev_id, next_id))
 
         self.lines = []
 
-
+# ─────────────────────────────────────────────
+# YÜKLEME FONKSİYONLARI
+# ─────────────────────────────────────────────
 def load_and_chunk_legislation(
     file_path: str,
-    resolver: LawMappingResolver,
+    resolver:  LawMappingResolver,
 ) -> List[LangchainDocument]:
     """Kanun dosyasını yükle ve maddelere göre böl."""
     if not os.path.exists(file_path):
@@ -508,7 +481,7 @@ def load_and_chunk_legislation(
 
     fname  = os.path.basename(file_path)
     src    = SOURCE_FORMAT_MAPPING.get(fname)
-    name   = src.display_name if src else SOURCE_MAPPING.get(fname, fname)
+    name   = src.display_name if src else fname
     law_no = src.law_number   if src else ""
 
     logger.info("İşleniyor: %s", name)
@@ -518,7 +491,7 @@ def load_and_chunk_legislation(
     except Exception as exc:
         logger.error("Paragraflara normalize etme hatasi (%s): %s", fname, exc, exc_info=True)
         return []
-    
+
     chunks: List[LangchainDocument] = []
 
     base_meta = {
@@ -534,9 +507,9 @@ def load_and_chunk_legislation(
     buf.reset(base_meta)
 
     for para in paras:
-        t = para.text
-
+        t     = para.text
         art_m = _RE_ARTICLE.match(t) or _RE_ARTICLE_BARE.match(t)
+
         if art_m:
             buf.flush(chunks)
 
@@ -561,10 +534,9 @@ def load_and_chunk_legislation(
     logger.info("  → %d chunk", len(chunks))
     return chunks
 
-
 def load_all_documents(
     directory_path: str,
-    resolver: LawMappingResolver,
+    resolver:       LawMappingResolver,
 ) -> List[LangchainDocument]:
     """Dizindeki tüm kanun dosyalarını yükle ve böl."""
     dp = Path(directory_path)
@@ -592,20 +564,16 @@ def load_all_documents(
     logger.info("TOPLAM: %d chunk işlendi", len(all_docs))
     return all_docs
 
-
-
-
-
-# LLM Zenginleştirme
+# ─────────────────────────────────────────────
+# LLM ZENGİNLEŞTİRME
+# ─────────────────────────────────────────────
 _openai_client = AsyncOpenAI()
-
 
 def _extract_article_text(page_content: str) -> str:
     """'İÇERİK:' bloğundan sonraki metni çıkar."""
     marker = "İÇERİK:\n"
-    pos = page_content.find(marker)
+    pos    = page_content.find(marker)
     return page_content[pos + len(marker):].strip() if pos != -1 else page_content.strip()
-
 
 def _inject_enrichment(page_content: str, summary: str, questions: List[str]) -> str:
     """Özet ve soruları content'e ekle: ÖZET - SORULAR - İÇERİK sırası."""
@@ -616,17 +584,17 @@ def _inject_enrichment(page_content: str, summary: str, questions: List[str]) ->
         parts.append("SORULAR:\n" + "\n".join(f"- {q}" for q in questions))
     if not parts:
         return page_content
-    block = "\n\n".join(parts)
+
+    block  = "\n\n".join(parts)
     marker = "İÇERİK:\n"
-    pos = page_content.find(marker)
+    pos    = page_content.find(marker)
     if pos != -1:
         return f"{page_content[:pos].rstrip()}\n\n{block}\n\n{page_content[pos:]}"
     return f"{block}\n\n{page_content}"
 
-
 async def _enrich_single(
-    doc: LangchainDocument,
-    sem: asyncio.Semaphore,
+    doc:     LangchainDocument,
+    sem:     asyncio.Semaphore,
     retries: int,
 ) -> LangchainDocument:
     """Bir chunk'ı LLM'den özet + sorularla zenginleştir (üstel backoff ile retry)."""
@@ -653,15 +621,15 @@ async def _enrich_single(
                     max_tokens=512,
                 )
 
-            parsed = json.loads(response.choices[0].message.content or "{}")
-            summary: str       = parsed.get("ozet", "").strip()
-            questions: List[str] = [q.strip() for q in parsed.get("sorular", []) if q.strip()]
+            parsed    = json.loads(response.choices[0].message.content or "{}")
+            summary:   str        = parsed.get("ozet", "").strip()
+            questions: List[str]  = [q.strip() for q in parsed.get("sorular", []) if q.strip()]
 
             if not summary and not questions:
                 logger.warning("Boş LLM yanıtı: %s", article_ref)
                 return doc
 
-            new_meta = dict(doc.metadata)
+            new_meta                  = dict(doc.metadata)
             new_meta["llm_summary"]   = summary
             new_meta["llm_questions"] = " | ".join(questions)
             new_meta["llm_enriched"]  = True
@@ -683,11 +651,10 @@ async def _enrich_single(
     logger.error("Zenginleştirme başarısız, orijinal chunk korunuyor [%s]: %s", article_ref, last_exc)
     return doc
 
-
 async def enrich_chunks(
-    docs: List[LangchainDocument],
+    docs:        List[LangchainDocument],
     concurrency: Optional[int] = None,
-    retries: Optional[int] = None,
+    retries:     Optional[int] = None,
 ) -> List[LangchainDocument]:
     """Tüm chunk'ları LLM ile zenginleştir (özet + sorular)."""
     _concurrency = concurrency if concurrency is not None else LLM_ENRICHMENT_CONCURRENCY
@@ -704,25 +671,29 @@ async def enrich_chunks(
     )
 
     enriched = sum(1 for r in results if r.metadata.get("llm_enriched"))
-    logger.info("Zenginleştirme tamamlandı — ✓ %d başarılı | ✗ %d atlandı/başarısız", enriched, len(results) - enriched)
+    logger.info(
+        "Zenginleştirme tamamlandı — ✓ %d başarılı | ✗ %d atlandı/başarısız",
+        enriched, len(results) - enriched,
+    )
     return results
 
-
+# ─────────────────────────────────────────────
+# İSTATİSTİK
+# ─────────────────────────────────────────────
 def generate_statistics(documents: List[LangchainDocument]) -> dict:
     """Chunk istatistikleri: kaynak, tip, boyut, mülga, çok-parçalı maddeler."""
-    # Check for empty documents list FIRST
     if not documents:
         logger.warning("Belge listesi boş - istatistik oluşturulamadı")
         return {
-            "total_chunks": 0,
-            "by_source": {},
-            "by_article_type": {},
-            "mulga_chunks": 0,
-            "char_count": {"min": 0, "max": 0, "avg": 0.0},
+            "total_chunks":        0,
+            "by_source":           {},
+            "by_article_type":     {},
+            "mulga_chunks":        0,
+            "char_count":          {"min": 0, "max": 0, "avg": 0.0},
             "multi_part_articles": [],
-            "error": "No documents provided",
+            "error":               "No documents provided",
         }
-    
+
     stats: dict = {
         "total_chunks":        len(documents),
         "by_source":           {},
@@ -735,67 +706,87 @@ def generate_statistics(documents: List[LangchainDocument]) -> dict:
     seen_multi: Dict[str, int] = {}
 
     for d in documents:
-        m  = d.metadata
-        cc = m.get("char_count", len(d.page_content))
-        stats["by_source"][m.get("source","?")] = \
-            stats["by_source"].get(m.get("source","?"), 0) + 1
-        stats["by_article_type"][m.get("article_type","?")] = \
-            stats["by_article_type"].get(m.get("article_type","?"), 0) + 1
-        total_chars += cc
-        stats["char_count"]["min"] = min(stats["char_count"]["min"], cc)
-        stats["char_count"]["max"] = max(stats["char_count"]["max"], cc)
+        m   = d.metadata
+        cc  = m.get("char_count", len(d.page_content))
+        src = m.get("source", "?")
+        atp = m.get("article_type", "?")
+
+        stats["by_source"][src]       = stats["by_source"].get(src, 0) + 1
+        stats["by_article_type"][atp] = stats["by_article_type"].get(atp, 0) + 1
+        total_chars                  += cc
+        stats["char_count"]["min"]    = min(stats["char_count"]["min"], cc)
+        stats["char_count"]["max"]    = max(stats["char_count"]["max"], cc)
+
         if m.get(MetadataKey.IS_MULGA_SOURCE):
             stats["mulga_chunks"] += 1
-        ct = m.get("chunk_total", 1)
-        if ct > 1:
-            art = m.get("article_reference", "")
-            if art and art not in seen_multi:
-                seen_multi[art] = ct
 
-    if documents:
-        stats["char_count"]["avg"] = round(total_chars / len(documents), 1)
+        ct  = m.get("chunk_total", 1)
+        art = m.get("article_reference", "")
+        if ct > 1 and art and art not in seen_multi:
+            seen_multi[art] = ct
+
+    stats["char_count"]["avg"] = round(total_chars / len(documents), 1)
     if stats["char_count"]["min"] == float("inf"):
         stats["char_count"]["min"] = 0
+
     stats["multi_part_articles"] = [
-        {"article": k, "parts": v} 
+        {"article": k, "parts": v}
         for k, v in sorted(seen_multi.items(), key=lambda x: x[1], reverse=True)
     ]
-    
-    logger.info("İstatistik: %d chunk, %d kaynak, %d mülga, %d çok parçalı madde",
-                stats["total_chunks"], len(stats["by_source"]), 
-                stats["mulga_chunks"], len(stats["multi_part_articles"]))
-    
+
+    logger.info(
+        "İstatistik: %d chunk, %d kaynak, %d mülga, %d çok parçalı madde",
+        stats["total_chunks"], len(stats["by_source"]),
+        stats["mulga_chunks"], len(stats["multi_part_articles"]),
+    )
     return stats
 
-
-
+# ─────────────────────────────────────────────
+# MAIN
+# ─────────────────────────────────────────────
 if __name__ == "__main__":
-    import sys
+    from src.config import STATS_FILE_PATH
+
     os.makedirs(str(PROCESSED_DIR), exist_ok=True)
     logger.info("### TÜRK İŞ HUKUKU RAG — CHUNKLAMA ###")
+
+    logging.basicConfig(
+        level=logging.INFO,
+        format="%(asctime)s [%(levelname)s] %(name)s — %(message)s",
+        datefmt="%H:%M:%S",
+    )
+    
     resolver = LawMappingResolver(MAPPING_FILE_PATH)
-    docs = load_all_documents(str(RAW_DATA_DIR), resolver)
+    docs     = load_all_documents(str(RAW_DATA_DIR), resolver)
+
     if not docs:
         logger.error("Belge işlenemedi.")
         sys.exit(1)
-    docs = asyncio.run(enrich_chunks(docs))
 
+    docs  = asyncio.run(enrich_chunks(docs))
     stats = generate_statistics(docs)
+
     logger.info("Toplam chunk      : %d", stats["total_chunks"])
     logger.info("Mülga chunk       : %d", stats["mulga_chunks"])
-    logger.info("Char min/max/avg  : %d / %d / %.1f",
-                stats["char_count"]["min"],
-                stats["char_count"]["max"],
-                stats["char_count"]["avg"])
+    logger.info(
+        "Char min/max/avg  : %d / %d / %.1f",
+        stats["char_count"]["min"],
+        stats["char_count"]["max"],
+        stats["char_count"]["avg"],
+    )
     logger.info("Kaynak dağılımı:")
     for src, cnt in sorted(stats["by_source"].items()):
         logger.info("  %-50s %d", src, cnt)
+
     multi = stats["multi_part_articles"]
     if multi:
-        logger.info("Çok parçalı (%d madde) — en parçalanmış %d:", len(multi),
-                    max((x["parts"] for x in multi), default=0))
+        logger.info(
+            "Çok parçalı (%d madde) — en parçalanmış %d:",
+            len(multi), max((x["parts"] for x in multi), default=0),
+        )
         for x in multi[:5]:
             logger.info("  - %s: %d parça", x["article"], x["parts"])
+
     with open(JSON_FILE_PATH, "w", encoding="utf-8") as f:
         json.dump(
             [{"page_content": d.page_content, "metadata": d.metadata} for d in docs],
@@ -803,6 +794,7 @@ if __name__ == "__main__":
         )
     with open(STATS_FILE_PATH, "w", encoding="utf-8") as f:
         json.dump(stats, f, ensure_ascii=False, indent=2)
+
     logger.info("=" * 70)
     logger.info("✓ Chunklama tamamlandı: %s (%d chunk)", JSON_FILE_PATH, len(docs))
     logger.info("  İstatistik: %s", STATS_FILE_PATH)

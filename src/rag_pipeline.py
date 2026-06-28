@@ -3,7 +3,7 @@ import os
 import time
 import logging
 import re
-from typing import List, Dict, Any, Optional, Union, Tuple, TYPE_CHECKING
+from typing import List, Dict, Any, Optional, Tuple, TYPE_CHECKING
 from dataclasses import dataclass, field
 
 from qdrant_client import QdrantClient
@@ -24,6 +24,7 @@ else:
         from sentence_transformers import CrossEncoder
     except ImportError:
         CrossEncoder = None
+
 from src.config import (
     DB_PATH,
     COLLECTION_NAME,
@@ -41,6 +42,7 @@ from src.config import (
     RERANKER_CFG,
     QUERY_ANALYSIS_CFG,
     ENABLE_NEIGHBOR_CHUNKS,
+    MIN_CHUNK_CHARS,          # [FIX-1] method içinden buraya taşındı
 )
 from src.law_mapping_resolver import LawMappingResolver
 
@@ -57,16 +59,29 @@ except Exception as e:
     _law_resolver = None
 
 
-# Model bazlı düşünme etiketi desenleri.
+# ─────────────────────────────────────────────
+# Düşünme etiketi yapılandırması
+# ─────────────────────────────────────────────
+
+# generate() için regex desenleri
 MODEL_THINKING_PATTERNS: Dict[str, str] = {
     "deepseek": r"<think>.*?</think>\s*",
     "qwen":     r"<think>.*?</think>\s*",
     "claude":   r"<claude_thinking>.*?</claude_thinking>\s*",
 }
 
+# [FIX-2] stream_query() için (open_tag, close_tag) eşlemeleri.
+# MODEL_THINKING_PATTERNS ile tek kaynak olarak hizalanmıştır;
+# her iki yerde ayrı ayrı model adı kontrolü yoktur.
+_MODEL_THINK_TAGS: Dict[str, Tuple[str, str]] = {
+    "deepseek": ("<think>",           "</think>"),
+    "qwen":     ("<think>",           "</think>"),
+    "claude":   ("<claude_thinking>", "</claude_thinking>"),
+}
+
 
 def _get_thinking_pattern(model_name: str) -> Optional[str]:
-    # Model adına göre uygun düşünme etiketi regex'ini döndür.
+    """generate() için model adına göre regex deseni döndürür."""
     model_lower = model_name.lower()
     for model_key, pattern in MODEL_THINKING_PATTERNS.items():
         if model_key in model_lower:
@@ -74,8 +89,21 @@ def _get_thinking_pattern(model_name: str) -> Optional[str]:
     return None
 
 
+def _get_think_tags(model_name: str) -> Tuple[str, str]:
+    """[FIX-2] stream_query() için (open_tag, close_tag) döndürür.
+
+    stream_query() içindeki manuel if/elif zincirinin yerini alır;
+    _MODEL_THINK_TAGS tek kaynak olarak kullanılır.
+    """
+    model_lower = model_name.lower()
+    for key, tags in _MODEL_THINK_TAGS.items():
+        if key in model_lower:
+            return tags
+    return "", ""
+
+
 def _cuda_available() -> bool:
-    # Torch yüklüyse CUDA kullanılabilirliğini kontrol et.
+    """Torch yüklüyse CUDA kullanılabilirliğini kontrol eder."""
     try:
         import torch
         return torch.cuda.is_available()
@@ -84,7 +112,7 @@ def _cuda_available() -> bool:
 
 
 def _validate_config() -> None:
-    # Kritik config alanlarını başlangıçta doğrula.
+    """Kritik config alanlarını modül yüklenirken doğrular."""
     logger.info("Konfigürasyon validasyonu başlıyor...")
 
     required_retrieval = {
@@ -130,7 +158,6 @@ def _validate_config() -> None:
         f"extract_law_number={QUERY_ANALYSIS_CFG['extract_law_number']}"
     )
 
-    # Temel string alanlarının tipini doğrula.
     for var_name, var_val in [
         ("DB_PATH",              DB_PATH),
         ("COLLECTION_NAME",      COLLECTION_NAME),
@@ -171,11 +198,15 @@ except ValueError as e:
     raise
 
 
+# ─────────────────────────────────────────────
+# LLM fabrikası
+# ─────────────────────────────────────────────
+
 def create_chat_model(
     model_name: str,
     temperature: float = TEMPERATURE,
-) -> Union[ChatGoogleGenerativeAI, ChatOpenAI, ChatOllama]:
-    # Model adına göre uygun sağlayıcıyı seç.
+) -> ChatGoogleGenerativeAI | ChatOpenAI | ChatOllama:
+    """Model adına göre uygun LLM sağlayıcısını seçer ve döndürür."""
     model_lower = model_name.lower()
 
     if "gemini" in model_lower:
@@ -240,14 +271,22 @@ def create_chat_model(
     )
 
 
+# ─────────────────────────────────────────────
+# Yardımcı fonksiyon
+# ─────────────────────────────────────────────
+
 def get_article_reference(metadata: Dict[str, Any]) -> str:
-    # Önce yeni alanı, yoksa geriye dönük uyumluluk alanını kullan.
+    """Önce yeni alanı, yoksa geriye dönük uyumluluk alanını döndürür."""
     return metadata.get("article_reference") or metadata.get("article", "")
 
 
+# ─────────────────────────────────────────────
+# Veri yapıları
+# ─────────────────────────────────────────────
+
 @dataclass
 class RetrievalResult:
-    # Retrieval sonuçlarını ve gecikme metriklerini taşır.
+    """Retrieval sonuçlarını ve gecikme metriklerini taşır."""
     documents:           List[Document]
     scores:              List[float] = field(default_factory=list)
     latency_ms:          float = 0.0   # Toplam retrieval süresi (qdrant + reranker)
@@ -265,7 +304,7 @@ class RetrievalResult:
 
 @dataclass
 class GenerationResult:
-    # LLM üretim çıktısı ve metrikleri.
+    """LLM üretim çıktısı ve metrikleri."""
     answer:      str
     latency_ms:  float = 0.0
     token_usage: Dict[str, int] = field(default_factory=dict)
@@ -274,7 +313,7 @@ class GenerationResult:
 
 @dataclass
 class RAGResult:
-    # Uçtan uca RAG sonucu.
+    """Uçtan uca RAG sonucu."""
     question:         str
     answer:           str
     retrieval:        RetrievalResult
@@ -289,7 +328,6 @@ class RAGResult:
             "retrieved_contexts":    self.retrieval.contexts,
             "retrieved_articles":    [get_article_reference(m) for m in self.retrieval.metadata_list],
             "retrieved_sources":     [m.get("source", "") for m in self.retrieval.metadata_list],
-            # Latency metrikleri raporlama için ayrı tutulur.
             "retrieval_latency_ms":  self.retrieval.latency_ms,
             "qdrant_latency_ms":     self.retrieval.qdrant_latency_ms,
             "reranker_latency_ms":   self.retrieval.reranker_latency_ms,
@@ -300,8 +338,13 @@ class RAGResult:
             "mulga_warnings":        self.mulga_warnings,
         }
 
+
+# ─────────────────────────────────────────────
+# Ana pipeline sınıfı
+# ─────────────────────────────────────────────
+
 class RAGPipeline:
-    # Türk hukuk dokümanları için retrieval + generation pipeline'ı.
+    """Türk hukuk dokümanları için retrieval + generation pipeline'ı."""
 
     def __init__(
         self,
@@ -335,13 +378,13 @@ class RAGPipeline:
         self._prompt:            Optional[ChatPromptTemplate]    = None
         self._reranker:          Optional["CrossEncoder"]        = None
 
+    # ── Lazy properties ──────────────────────
+
     @property
     def embeddings(self) -> HuggingFaceEmbeddings:
         if self._embeddings is None:
             try:
-                logger.info(
-                    f"Dense embedding modeli yükleniyor: {self.embedding_model_name}"
-                )
+                logger.info(f"Dense embedding modeli yükleniyor: {self.embedding_model_name}")
                 self._embeddings = HuggingFaceEmbeddings(
                     model_name=self.embedding_model_name,
                     model_kwargs={"device": "cuda" if _cuda_available() else "cpu"},
@@ -359,9 +402,7 @@ class RAGPipeline:
     def sparse_embeddings(self) -> FastEmbedSparse:
         if self._sparse_embeddings is None:
             try:
-                logger.info(
-                    f"Sparse embedding modeli yükleniyor: {SPARSE_MODEL_NAME}"
-                )
+                logger.info(f"Sparse embedding modeli yükleniyor: {SPARSE_MODEL_NAME}")
                 self._sparse_embeddings = FastEmbedSparse(model_name=SPARSE_MODEL_NAME)
                 logger.info("Sparse embedding modeli başarıyla yüklendi")
             except Exception as e:
@@ -373,7 +414,7 @@ class RAGPipeline:
 
     @property
     def qdrant_client(self) -> QdrantClient:
-        # Qdrant client, vectorstore ilklenirken hazırlanır.
+        """vectorstore lazy init ile birlikte oluşturulur."""
         _ = self.vectorstore  # _qdrant_client'ı initialize eder
         return self._qdrant_client
 
@@ -401,7 +442,7 @@ class RAGPipeline:
         return self._vectorstore
 
     @property
-    def llm(self) -> Union[ChatGoogleGenerativeAI, ChatOpenAI, ChatOllama]:
+    def llm(self) -> ChatGoogleGenerativeAI | ChatOpenAI | ChatOllama:
         if self._llm is None:
             try:
                 logger.info(f"LLM yükleniyor: {self.model_name}")
@@ -427,40 +468,87 @@ class RAGPipeline:
     def reranker(self) -> CrossEncoder:
         if self._reranker is None:
             try:
-                import torch
+                # [FIX-3] `import torch` kaldırıldı; _cuda_available() zaten hallediyor.
                 from sentence_transformers import CrossEncoder
-                
+
                 model_name = RERANKER_CFG["model_name"]
                 device     = "cuda" if _cuda_available() else "cpu"
                 logger.info(f"Cross-encoder yükleniyor: {model_name} ({device})")
-                
-                # Reranker modeli yüklenir.
+
                 self._reranker = CrossEncoder(
                     model_name,
                     device=device,
-                    max_length=RERANKER_CFG.get("max_length", 1024)
+                    max_length=RERANKER_CFG.get("max_length", 1024),
                 )
-                
-                # GPU'da FP16 ile hızlandır.
+
                 if device == "cuda":
                     self._reranker.model.half()
-                
+
                 logger.info(f"Tokenizer max_length → {RERANKER_CFG.get('max_length', 1024)}")
-                
-                self._reranker.predict([("warm-up", "warm-up")], batch_size=RERANKER_CFG.get("batch_size", 32))
+                self._reranker.predict(
+                    [("warm-up", "warm-up")],
+                    batch_size=RERANKER_CFG.get("batch_size", 32),
+                )
                 logger.info("Cross-encoder başarıyla yüklendi ve FP16'ya optimize edildi")
             except Exception as e:
                 raise RuntimeError(f"Cross-encoder yüklenemedi: {e}") from e
-        return self._reranker   
-    
+        return self._reranker
+
+    # ── Yardımcı metodlar ────────────────────
+
+    def _build_context(self, docs: List[Document]) -> Tuple[str, List[str]]:
+        """[FIX-4] Dokümanlardan context stringi ve mülga uyarı listesi üretir.
+
+        query() ve stream_query() her ikisi de bu metodu kullanır;
+        tekrarlanan context_parts/mulga_warnings bloğu artık tek yerdedir.
+        """
+        parts:        List[str] = []
+        warnings:     List[str] = []
+        seen_warnings: set      = set()
+
+        for i, doc in enumerate(docs, 1):
+            law_no     = doc.metadata.get("law_number", "")
+            article_no = doc.metadata.get("article_number", "")
+            warning    = (
+                _law_resolver.build_context_warning(law_no, article_no)
+                if _law_resolver else ""
+            )
+
+            chunk_text = doc.page_content
+            if warning:
+                chunk_text = warning + "\n\n" + chunk_text
+                if warning not in seen_warnings:
+                    warnings.append(warning)
+                    seen_warnings.add(warning)
+
+            logger.debug(
+                f"  [{i}] {doc.metadata.get('source', 'N/A')[:25]} | "
+                f"{doc.metadata.get('article_reference', '')} | "
+                f"{len(chunk_text)} char"
+            )
+            parts.append(chunk_text)
+
+        return "\n\n---\n\n".join(parts), warnings
+
+    def _make_error_result(self, question: str, label: str, exc: Exception) -> RAGResult:
+        """[FIX-5] batch_query hata RAGResult'lerini tek yerden üretir."""
+        return RAGResult(
+            question=question,
+            answer=f"{label}: {exc}",
+            retrieval=RetrievalResult(documents=[]),
+            generation=GenerationResult(answer="", model_name=self.model_name),
+            total_latency_ms=0,
+        )
+
+    # ── Temel pipeline adımları ──────────────
+
     def _retrieve_and_rerank(
         self,
         question: str,
     ) -> Tuple[List[Document], float, float]:
-        # Qdrant retrieval + reranking adımlarını çalıştır.
+        """Qdrant retrieval + reranking adımlarını çalıştırır."""
         law_filter = None
         if QUERY_ANALYSIS_CFG.get("extract_law_number"):
-            # Sorgudan kanun numarasını yakalayıp metadata filtresi uygula.
             law_match = re.search(r"(\d{3,5})", question)
             if law_match:
                 law_no = law_match.group(1)
@@ -497,9 +585,7 @@ class RAGPipeline:
 
         qdrant_ms = (time.time() - qdrant_start) * 1000
 
-        # Çok kısa chunk'ları ele.
-        from src.config import MIN_CHUNK_CHARS
-
+        # [FIX-1] MIN_CHUNK_CHARS artık top-level import'tan gelir.
         filtered = [d for d in docs if len(d.page_content) >= MIN_CHUNK_CHARS]
 
         if not filtered and docs:
@@ -510,8 +596,8 @@ class RAGPipeline:
             return [], qdrant_ms, 0.0
 
         reranker_start = time.time()
-        reranked = self.rerank(question, filtered)
-        reranker_ms = (time.time() - reranker_start) * 1000
+        reranked       = self.rerank(question, filtered)
+        reranker_ms    = (time.time() - reranker_start) * 1000
 
         logger.info(
             f"✅ Pipeline: Qdrant={qdrant_ms:.0f}ms ({len(docs)} doc) → "
@@ -519,27 +605,26 @@ class RAGPipeline:
         )
 
         return reranked, qdrant_ms, reranker_ms
-        
+
     def rerank(self, question: str, documents: List[Document]) -> List[Document]:
+        """CrossEncoder ile belgeleri yeniden sıralar ve eşik altındakileri eleр."""
         if not documents:
             return documents
 
-        top_x = RERANKER_CFG.get("top_n", 5)
+        top_x     = RERANKER_CFG.get("top_n", 5)
         threshold = RERANKER_CFG.get("threshold_score", 0.60)
 
         try:
             pairs = []
             for doc in documents:
                 # Small-to-Big: Reranker'a kısa özet metni ver.
-                summary = doc.metadata.get("llm_summary", "")
+                summary   = doc.metadata.get("llm_summary", "")
                 questions = doc.metadata.get("llm_questions", "")
-                
-                if summary or questions:
-                    small_text = f"ÖZET: {summary} SORULAR: {questions}".strip()
-                else:
-                    # Güvenli fallback: metnin baş kısmını kullan.
-                    small_text = doc.page_content[:400] 
-                
+                small_text = (
+                    f"ÖZET: {summary} SORULAR: {questions}".strip()
+                    if summary or questions
+                    else doc.page_content[:400]
+                )
                 pairs.append((question, small_text))
 
             scores = self.reranker.predict(
@@ -547,38 +632,39 @@ class RAGPipeline:
                 batch_size=RERANKER_CFG.get("batch_size", 16),
             )
 
-            scored = sorted(zip(documents, scores), key=lambda x: x[1], reverse=True)
+            scored        = sorted(zip(documents, scores), key=lambda x: x[1], reverse=True)
+            filtered_docs: List[Document] = []
 
-            logger.info(f"── TOP-{top_x} Reranker Sonuçları (Threshold: {threshold} | Mod: Small-to-Big) ──")
-            
-            filtered_docs = []
-            
+            logger.info(
+                f"── TOP-{top_x} Reranker Sonuçları "
+                f"(Threshold: {threshold} | Mod: Small-to-Big) ──"
+            )
+
             for i, (doc, score) in enumerate(scored[:top_x]):
-                ref = doc.metadata.get('article_reference', 'Bilinmiyor')
-                bar_len = int(max(0, score) * 20)
-                bar = "█" * bar_len
-                
+                ref    = doc.metadata.get("article_reference", "Bilinmiyor")
+                bar    = "█" * int(max(0, score) * 20)
+                status = "✅ LLM'e Gidiyor" if score >= threshold else "❌ Elendi"
+                logger.info(f"   [{i+1}] {score:.4f} {bar.ljust(20)} | {ref} ({status})")
+
                 doc.metadata["rerank_score"] = float(score)
-                
                 if score >= threshold:
-                    logger.info(f"   [{i+1}] {score:.4f} {bar.ljust(20)} | {ref} (✅ LLM'e Gidiyor)")
                     filtered_docs.append(doc)
-                else:
-                    logger.info(f"   [{i+1}] {score:.4f} {bar.ljust(20)} | {ref} (❌ Elendi)")
 
             if not filtered_docs and scored:
-                logger.warning(f"⚠️ Hiçbir belge {threshold} eşiğini geçemedi! Sadece en yüksek skorlu 1 belge kurtarıldı.")
-                best_doc = scored[0][0]
-                filtered_docs.append(best_doc)
+                logger.warning(
+                    f"⚠️ Hiçbir belge {threshold} eşiğini geçemedi! "
+                    "Sadece en yüksek skorlu 1 belge kurtarıldı."
+                )
+                filtered_docs.append(scored[0][0])
 
             return filtered_docs
 
         except Exception as e:
             logger.error(f"Reranking hatası: {e}")
             return documents[:top_x]
-   
+
     def _fetch_chunk_by_id(self, chunk_id: str) -> Optional[Document]:
-        # Qdrant'tan chunk_id'ye göre tek doküman çek.
+        """Qdrant'tan chunk_id'ye göre tek doküman çeker."""
         try:
             results, _ = self.qdrant_client.scroll(
                 collection_name=COLLECTION_NAME,
@@ -609,12 +695,12 @@ class RAGPipeline:
         main_chunks: List[Document],
         k_neighbors: int = 1,
     ) -> List[Document]:
-        # Rerank sonrası komşu chunk'ları context'e ekle.
+        """Rerank sonrası komşu chunk'ları context'e ekler."""
         if not ENABLE_NEIGHBOR_CHUNKS:
             return main_chunks
 
         neighbors = []
-        seen_ids = {
+        seen_ids  = {
             doc.metadata.get("chunk_id")
             for doc in main_chunks
             if doc.metadata.get("chunk_id")
@@ -623,27 +709,25 @@ class RAGPipeline:
         for doc in main_chunks:
             meta = doc.metadata
 
-            # Önceki komşular
             for i in range(1, k_neighbors + 1):
                 prev_key = "prev_chunk_id" if i == 1 else f"prev_chunk_id_{i}"
-                prev_meta_id = meta.get(prev_key)
-                if prev_meta_id and prev_meta_id not in seen_ids:
-                    neighbor = self._fetch_chunk_by_id(prev_meta_id)
+                prev_id  = meta.get(prev_key)
+                if prev_id and prev_id not in seen_ids:
+                    neighbor = self._fetch_chunk_by_id(prev_id)
                     if neighbor:
                         neighbors.append(neighbor)
-                        seen_ids.add(prev_meta_id)
-                        logger.debug(f"Komşu chunk: prev={prev_meta_id}")
+                        seen_ids.add(prev_id)
+                        logger.debug(f"Komşu chunk: prev={prev_id}")
 
-            # Sonraki komşular
             for i in range(1, k_neighbors + 1):
                 next_key = "next_chunk_id" if i == 1 else f"next_chunk_id_{i}"
-                next_meta_id = meta.get(next_key)
-                if next_meta_id and next_meta_id not in seen_ids:
-                    neighbor = self._fetch_chunk_by_id(next_meta_id)
+                next_id  = meta.get(next_key)
+                if next_id and next_id not in seen_ids:
+                    neighbor = self._fetch_chunk_by_id(next_id)
                     if neighbor:
                         neighbors.append(neighbor)
-                        seen_ids.add(next_meta_id)
-                        logger.debug(f"Komşu chunk: next={next_meta_id}")
+                        seen_ids.add(next_id)
+                        logger.debug(f"Komşu chunk: next={next_id}")
 
         if neighbors:
             logger.info(f"Neighbor chunks eklendi: {len(neighbors)} komşu")
@@ -652,22 +736,19 @@ class RAGPipeline:
         return main_chunks
 
     def generate(self, question: str, context: str) -> GenerationResult:
-        # Prompt zinciri ile yanıt üret ve gerekiyorsa think etiketlerini temizle.
+        """Prompt zinciri ile yanıt üretir; think etiketlerini temizler."""
         start_time = time.time()
 
-        chain = self.prompt | self.llm | StrOutputParser()
+        chain  = self.prompt | self.llm | StrOutputParser()
         answer = chain.invoke({"context": context, "question": question})
 
         thinking_pattern = _get_thinking_pattern(self.model_name)
         if thinking_pattern:
             answer = re.sub(
-                thinking_pattern,
-                "",
-                answer,
-                flags=re.DOTALL,
+                thinking_pattern, "", answer, flags=re.DOTALL
             ).strip()
 
-        latency_ms = (time.time() - start_time) * 1000
+        latency_ms  = (time.time() - start_time) * 1000
         token_usage = getattr(self.llm, "last_token_usage", {}) or {}
 
         return GenerationResult(
@@ -677,62 +758,28 @@ class RAGPipeline:
             model_name=self.model_name,
         )
 
-    def query(
-        self,
-        question: str,
-        k: Optional[int] = None,  # Gelecekteki override için; şu an RETRIEVAL_CFG["k"] geçerli
-    ) -> RAGResult:
-        # Tam akış: retrieve -> rerank -> komşu zenginleştirme -> generate.
+    def query(self, question: str) -> RAGResult:
+        """Tam akış: retrieve → rerank → komşu zenginleştirme → generate."""
         if not question or not question.strip():
             raise ValueError("Soru metni boş olamaz.")
 
         total_start = time.time()
 
         reranked_docs, qdrant_ms, reranker_ms = self._retrieve_and_rerank(question)
-
-        # Komşu chunk zenginleştirmesi.
         final_docs = self.retrieve_neighbor_chunks(reranked_docs)
 
         retrieval_result = RetrievalResult(
             documents=final_docs,
-            scores=[],
             latency_ms=qdrant_ms + reranker_ms,
             qdrant_latency_ms=qdrant_ms,
             reranker_latency_ms=reranker_ms,
         )
 
-        # Context birleştir ve mülga uyarılarını topla.
-        context_parts = []
-        mulga_warnings = []
-        seen_warnings = set()
+        # [FIX-4] _build_context ile context + mülga uyarıları tek noktada üretilir.
+        context, mulga_warnings = self._build_context(final_docs)
 
-        for i, doc in enumerate(final_docs, 1):
-            law_no = doc.metadata.get("law_number", "")
-            article_no = doc.metadata.get("article_number", "")
-
-            warning = None
-            if _law_resolver:
-                warning = _law_resolver.build_context_warning(law_no, article_no)
-
-            chunk_text = doc.page_content
-            if warning:
-                chunk_text = warning + "\n\n" + chunk_text
-                if warning not in seen_warnings:
-                    mulga_warnings.append(warning)
-                    seen_warnings.add(warning)
-
-            logger.debug(
-                f"  [{i}] {doc.metadata.get('source', 'N/A')[:25]} | "
-                f"{doc.metadata.get('article_reference', '')} | "
-                f"{len(chunk_text)} char"
-            )
-            context_parts.append(chunk_text)
-
-        context = "\n\n---\n\n".join(context_parts)
-
-        # Nihai cevabı üret.
         generation_result = self.generate(question, context)
-        total_latency = (time.time() - total_start) * 1000
+        total_latency     = (time.time() - total_start) * 1000
 
         logger.info(
             f"Query tamamlandı | "
@@ -753,7 +800,7 @@ class RAGPipeline:
         )
 
     def stream_query(self, question: str):
-        # Yanıtı stream ederken düşünme etiketlerini stateful şekilde temizle.
+        """Yanıtı stream ederken düşünme etiketlerini stateful şekilde temizler."""
         if not question or not question.strip():
             raise ValueError("Soru metni boş olamaz.")
 
@@ -771,38 +818,17 @@ class RAGPipeline:
             f"Reranker={reranker_ms:.0f}ms, docs={len(final_docs)}"
         )
 
-        context_parts = []
-        for doc in final_docs:
-            law_no = doc.metadata.get("law_number", "")
-            article_no = doc.metadata.get("article_number", "")
+        # [FIX-4] _build_context kullanılır; mülga_warnings stream'de gösterilmez.
+        context, _ = self._build_context(final_docs)
 
-            warning = None
-            if _law_resolver:
-                warning = _law_resolver.build_context_warning(law_no, article_no)
-
-            chunk_text = doc.page_content
-            if warning:
-                chunk_text = warning + "\n\n" + chunk_text
-            context_parts.append(chunk_text)
-
-        context = "\n\n---\n\n".join(context_parts)
-
-        model_lower = self.model_name.lower()
-        if "claude" in model_lower:
-            open_tag = "<claude_thinking>"
-            close_tag = "</claude_thinking>"
-        elif "deepseek" in model_lower or "qwen" in model_lower:
-            open_tag = "<think>"
-            close_tag = "</think>"
-        else:
-            open_tag = ""
-            close_tag = ""
+        # [FIX-2] Manuel if/elif zinciri kaldırıldı; _get_think_tags tek kaynak.
+        open_tag, close_tag = _get_think_tags(self.model_name)
 
         try:
-            chain = self.prompt | self.llm | StrOutputParser()
+            chain         = self.prompt | self.llm | StrOutputParser()
             output_buffer = ""
-            pending = ""
-            is_thinking = False
+            pending       = ""
+            is_thinking   = False
 
             for chunk in chain.stream({"context": context, "question": question}):
                 if not chunk:
@@ -811,20 +837,20 @@ class RAGPipeline:
                 if not open_tag:
                     output_buffer += chunk
                 else:
-                    data = pending + chunk
+                    data    = pending + chunk
                     pending = ""
-                    cursor = 0
+                    cursor  = 0
 
                     while cursor < len(data):
                         if is_thinking:
                             end_idx = data.find(close_tag, cursor)
                             if end_idx == -1:
-                                tail_len = max(len(close_tag) - 1, 0)
+                                tail_len  = max(len(close_tag) - 1, 0)
                                 keep_from = max(cursor, len(data) - tail_len)
-                                pending = data[keep_from:]
-                                cursor = len(data)
+                                pending   = data[keep_from:]
+                                cursor    = len(data)
                             else:
-                                cursor = end_idx + len(close_tag)
+                                cursor      = end_idx + len(close_tag)
                                 is_thinking = False
                         else:
                             start_idx = data.find(open_tag, cursor)
@@ -841,11 +867,11 @@ class RAGPipeline:
                             else:
                                 if start_idx > cursor:
                                     output_buffer += data[cursor:start_idx]
-                                cursor = start_idx + len(open_tag)
+                                cursor      = start_idx + len(open_tag)
                                 is_thinking = True
 
                 while len(output_buffer) >= STREAM_CHUNK_SIZE:
-                    emit_chunk = output_buffer[:STREAM_CHUNK_SIZE]
+                    emit_chunk    = output_buffer[:STREAM_CHUNK_SIZE]
                     output_buffer = output_buffer[STREAM_CHUNK_SIZE:]
                     yield emit_chunk
 
@@ -865,12 +891,12 @@ class RAGPipeline:
         delay_seconds: float = 1.0,
         show_progress: bool = True,
     ) -> List[RAGResult]:
-        # Soruları sırayla çalıştır, hata olsa da batch'i sürdür.
+        """Soruları sırayla çalıştırır; hata olsa da batch'i sürdürür."""
         if not questions or not isinstance(questions, list):
             raise ValueError("Sorular listesi boş olamaz.")
 
-        results = []
-        total = len(questions)
+        results      = []
+        total        = len(questions)
         failed_count = 0
 
         for i, question in enumerate(questions):
@@ -880,42 +906,22 @@ class RAGPipeline:
             try:
                 results.append(self.query(question))
 
+            # [FIX-5] Her except bloğundaki tekrarlı RAGResult inşaatı
+            # _make_error_result() ile tek noktaya çekildi.
             except ValueError as e:
                 logger.warning(f"Soru #{i + 1} validation hatası: {e}")
                 failed_count += 1
-                results.append(
-                    RAGResult(
-                        question=question,
-                        answer=f"VALIDATION_ERROR: {e}",
-                        retrieval=RetrievalResult(documents=[]),
-                        generation=GenerationResult(answer="", model_name=self.model_name),
-                        total_latency_ms=0,
-                    )
-                )
+                results.append(self._make_error_result(question, "VALIDATION_ERROR", e))
+
             except RuntimeError as e:
                 logger.error(f"Soru #{i + 1} runtime hatası: {e}")
                 failed_count += 1
-                results.append(
-                    RAGResult(
-                        question=question,
-                        answer=f"RUNTIME_ERROR: {e}",
-                        retrieval=RetrievalResult(documents=[]),
-                        generation=GenerationResult(answer="", model_name=self.model_name),
-                        total_latency_ms=0,
-                    )
-                )
+                results.append(self._make_error_result(question, "RUNTIME_ERROR", e))
+
             except Exception as e:
                 logger.error(f"Soru #{i + 1} beklenmeyen hata: {e}", exc_info=True)
                 failed_count += 1
-                results.append(
-                    RAGResult(
-                        question=question,
-                        answer=f"UNEXPECTED_ERROR: {e}",
-                        retrieval=RetrievalResult(documents=[]),
-                        generation=GenerationResult(answer="", model_name=self.model_name),
-                        total_latency_ms=0,
-                    )
-                )
+                results.append(self._make_error_result(question, "UNEXPECTED_ERROR", e))
 
             if i < total - 1 and delay_seconds > 0:
                 time.sleep(delay_seconds)
@@ -929,6 +935,7 @@ class RAGPipeline:
 
         return results
 
+
 if __name__ == "__main__":
     logging.basicConfig(
         level=logging.INFO,
@@ -938,7 +945,7 @@ if __name__ == "__main__":
     logger.info("RAG Pipeline Test başlıyor")
     pipeline = RAGPipeline()
 
-    test_question = "Hırsızlıığın cezası nedir?"
+    test_question = "Hırsızlığın cezası nedir?"   # [FIX-6] Typo düzeltildi
     logger.info(f"Test sorusu: {test_question}")
 
     result = pipeline.query(test_question)

@@ -1,14 +1,4 @@
-"""
-law_mapping_resolver.py — Mülga Kanun Haritalayıcısı
-------------------------------------------------------
-Chunklama SIRASINDA  : metadata'ya mulga_flag + maps_to ekle.
-Retrieval SIRASINDA  : MappingEnrichedRetriever içinde uyarı metni üret.
-
-Bu modül chunker.py ve retriever'dan bağımsız; her ikisi de import eder.
-"""
-
 from __future__ import annotations
-
 import json
 import logging
 from dataclasses import dataclass
@@ -30,8 +20,7 @@ class MappingEntry:
     new_law_name: str
     scope: str                        # kapsam açıklaması
     warning_text: str                 # LLM context'ine eklenen uyarı
-    is_partial: bool = False          # kısmen mülga mı? (ör. 1475 md.14)
-    exception_note: Optional[str] = None  # istisna açıklaması
+    exception_note: Optional[str] = None  # istisna açıklaması (varsa kısmi mülga)
 
 
 # ─────────────────────────────────────────────
@@ -41,7 +30,7 @@ class LawMappingResolver:
     """
     law_mapping.json'ı yükler ve iki kullanım noktasına servis eder:
 
-    1. Chunker → `get_metadata_flags(law_number, article_number)`
+    1. Chunker → `Youtube_flags(law_number, article_number)`
        Metadata'ya eklenmesi gereken alanları döndürür.
 
     2. Retriever → `build_context_warning(law_number, article_number)`
@@ -49,7 +38,6 @@ class LawMappingResolver:
     """
 
     def __init__(self, mapping_file: str | Path) -> None:
-        self._entries: Dict[str, MappingEntry] = {}
         self._by_old_law_no: Dict[str, List[MappingEntry]] = {}
         self._load(Path(mapping_file))
 
@@ -61,6 +49,7 @@ class LawMappingResolver:
             raw: dict = json.load(f)
 
         skipped_meta = {"_META", "_TEMIZ_KAYNAKLAR", "_MULGA_KAYNAKLAR"}
+        loaded_count = 0
 
         for key, val in raw.items():
             if key in skipped_meta or not isinstance(val, dict):
@@ -82,13 +71,12 @@ class LawMappingResolver:
                 new_law_name=val.get("guncel_kanun_adi", ""),
                 scope=val.get("kapsam", ""),
                 warning_text=val.get("sistem_uyarisi", ""),
-                is_partial=bool(val.get("kritik_istisna")),
                 exception_note=val.get("kritik_istisna"),
             )
-            self._entries[key] = entry
             self._by_old_law_no.setdefault(old_no, []).append(entry)
+            loaded_count += 1
 
-        logger.info("Mapping yüklendi: %d giriş", len(self._entries))
+        logger.info("Mapping yüklendi: %d giriş", loaded_count)
 
     # ─────────────────────────────────────────
     # Chunker'ın kullandığı metot
@@ -108,7 +96,7 @@ class LawMappingResolver:
             "maps_to_law_no": "4857",
             "maps_to_law_name": "4857 Sayılı İş Kanunu",
             "mulga_scope": "...",
-            "mulga_exception": None,
+            "mulga_exception": "",
         }
         """
         matches = self._by_old_law_no.get(law_number, [])
@@ -123,13 +111,11 @@ class LawMappingResolver:
             }
 
         # Madde numarasına özel eşleşme varsa önceliklendir
-        # (ör. 1475 md.14 → kıdem tazminatı, diğerleri → 4857)
         best = self._find_best_match(matches, article_number)
-        is_partial = best.is_partial and bool(best.exception_note)
 
         return {
             "is_mulga_source": True,
-            "is_partial_mulga": is_partial,
+            "is_partial_mulga": bool(best.exception_note),
             "maps_to_law_no": best.new_law_no,
             "maps_to_law_name": best.new_law_name,
             "mulga_scope": best.scope,
@@ -192,8 +178,9 @@ class LawMappingResolver:
         return list(self._by_old_law_no.keys())
 
     def __repr__(self) -> str:
+        total_entries = sum(len(entries) for entries in self._by_old_law_no.values())
         return (
             f"LawMappingResolver("
-            f"entries={len(self._entries)}, "
+            f"entries={total_entries}, "
             f"mulga_laws={len(self._by_old_law_no)})"
         )
